@@ -1,0 +1,43 @@
+﻿@{
+}
+<style>
+    .href a {
+        margin: auto 5px;
+    }
+</style>
+<div class="well">
+    @using (Html.BeginForm("LogList", null, FormMethod.Get, new { @class = "form-horizontal", @id = "from_add" }))
+    {
+        <div class="href">
+            @Html.ActionLink("CurrentWeb", "LogList", new { type = 1 }, new { target = "_self" })
+        </div>
+    }
+    <div class="table-responsive">
+        <table class="table table-bordered table-condensed table-hover">
+            <caption>@ViewBag.Title</caption>
+            <thead class="bg-primary">
+                <tr>
+                    <th width="300">日志名</th>
+                    <th width="150">大小</th>
+                    <th>更新日间</th>
+                </tr>
+            </thead>
+            <tbody>
+                @{
+                    List<Moqikaka.Tmp.BLL.Page.ServerLog.ServerLogBLL.FileData> datas = ViewBag.datas as List<Moqikaka.Tmp.BLL.Page.ServerLog.ServerLogBLL.FileData>;
+                    if (datas != null && datas.Count > 0)
+                    {
+                        foreach (Moqikaka.Tmp.BLL.Page.ServerLog.ServerLogBLL.FileData item in datas)
+                        {
+                            <tr>
+                                <td>@Html.ActionLink(item.FileName, "LogView", new { type = ViewBag.Type, name = item.FileName }, new { target = "_blank" }) </td>
+                                <td>@item.Size KB</td>
+                                <td>@item.LastModify.ToString("yyyy-MM-dd HH:mm:ss")</td>
+                            </tr>
+                        }
+                    }
+                }
+            </tbody>
+        </table>
+    </div>
+</div>

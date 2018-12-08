@@ -1,0 +1,9 @@
+E:\wx\net\Spider\Spider\obj\Debug\Spider.csproj.CoreCompileInputs.cache
+E:\wx\net\Spider\Spider\bin\Debug\Spider.exe.config
+E:\wx\net\Spider\Spider\bin\Debug\Spider.exe
+E:\wx\net\Spider\Spider\bin\Debug\Spider.pdb
+E:\wx\net\Spider\Spider\bin\Debug\MySql.Data.dll
+E:\wx\net\Spider\Spider\obj\Debug\Spider.csproj.CopyComplete
+E:\wx\net\Spider\Spider\obj\Debug\Spider.exe
+E:\wx\net\Spider\Spider\obj\Debug\Spider.pdb
+E:\wx\net\Spider\Spider\obj\Debug\Spider.csprojAssemblyReference.cache
