@@ -1,0 +1,103 @@
+page {
+  background-color: #f7e0dd;
+}
+
+.body {
+  padding: 10px;
+  text-align: justify;
+}
+
+.index {
+  display: block;
+  margin: 20px;
+  text-align: center;
+  font-size: 25px;
+}
+
+.question, .answer {
+  padding: 10px;
+  border: darkmagenta 1px solid;
+  background-color: bisque;
+  border-radius: 5px;
+}
+
+.question {
+  min-height: 150px;
+  font-size: 22px;
+  line-height: 33px;
+  color: darkmagenta;
+}
+
+.share {
+  display: block;
+  padding: 10px;
+  text-align: center;
+}
+
+.share button::after {
+  border: none;
+  display: none;
+}
+
+.share button {
+  display: inline-block;
+  font-size: 15px;
+  margin: 0px;
+  padding: 5px;
+  box-sizing: border-box;
+  line-height: 25px;
+  margin-top: 10px;
+  color: darkorange;
+  border: darkorange solid 1px;
+  background-color: #f7e0dd;
+}
+
+.answer {
+  font-size: 30px;
+  line-height: 40px;
+  color: green;
+  text-align: center;
+  margin: 20px auto;
+}
+
+.answer view {
+  vertical-align: middle;
+}
+
+.buttons {
+  font-size: 18px;
+  text-align: center;
+}
+
+.buttons view {
+  padding: 10px;
+  box-sizing: border-box;
+  color: white;
+}
+
+.pre, .next, .ans {
+  display: inline-block;
+  text-align: center;
+  border-radius: 5px;
+  margin: auto 5px;
+}
+
+.pre {
+  background-color: darkmagenta;
+}
+
+.next {
+  background-color: green;
+}
+
+.ans {
+  background-color: hotpink;
+}
+
+.redirect {
+  margin-top: 40px;
+  text-align: center;
+  font-size: 14px;
+  color: darkorange;
+  text-decoration: underline;
+}

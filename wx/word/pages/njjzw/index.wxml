@@ -1,0 +1,32 @@
+<view class='body'>
+  <view class='header'> </view>
+  <view class='content'>
+    <!-- <view class='index'>
+      第 {{currentIndex}} 题
+    </view> -->
+    <view class='question'>
+      <text>{{question}}</text>
+    </view>
+    <!-- <view class='index'>
+      答案
+    </view> -->
+    <view class='answer'>
+      <view>
+        <text>{{showAnswer?answer:"****"}}</text>
+      </view>
+    </view>
+    <view class='share'>
+      <button open-type="share">分享此题</button>
+    </view>
+    <view class='buttons'>
+      <view class='pre' bind:tap='pretap'>上一题</view>
+      <view class='ans' bind:tap='showanswertap'>查看答案</view>
+      <view class='next' bind:tap='nexttap'>下一题</view>
+    </view>
+  </view>
+  <view class='redirect' bind:tap='redirectToTap'>
+    <text>猜谜语</text>
+  </view>
+  <view class='footer'></view>
+</view>
+<!-- <button bind:tap='cleardatatap'>清空数据</button> -->

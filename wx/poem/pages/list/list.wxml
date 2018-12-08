@@ -1,0 +1,12 @@
+<!--pages/list/list.wxml-->
+<view class='container'>
+  <navigator wx:for="{{titleList}}" wx:key="key{{index}}" url='../detail/detail?title={{item.value}}'>
+    <view class='poemTitleView'>
+      <text data-value='{{item.value}}'>{{item.text.title}}</text>
+    </view>
+  </navigator>
+</view>
+
+<view>你说什么
+<text> 　　，呵呵，湔吧</text>
+哎呀</view>

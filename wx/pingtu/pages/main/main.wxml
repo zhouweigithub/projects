@@ -1,0 +1,53 @@
+<view>
+  <view class='view_top' style='height:{{containerWidth/2}}px;'>
+    <view class='view_top_left' style='width:{{containerWidth/2}}px;height:{{containerWidth/2}}px;'>
+      <!-- <text class='boldText' style='display:{{maxRecord=="00:00"?"none":""}}'>个人纪录</text>
+      <text class='recordTime' style='display:{{maxRecord=="00:00"?"none":""}}'>{{maxRecord}}</text>
+      <text class='boldText'>当前用时</text>
+      <text class='currentTime'>{{usingTime}}</text> -->
+      <view class='time_view'>
+        <text class='boldText'>当前用时</text>
+        <text class='currentTime'>{{usingTime}}</text>
+      </view>
+    </view>
+    <view class='view_top_right' style='background-image: url({{imgSrc}});width:{{containerWidth/2}}px;height:{{containerWidth/2}}px;background-size:{{containerWidth/2}}px {{containerWidth/2}}px;'>
+    </view>
+  </view>
+  <view class='view_main' style="margin:{{containerMarginRate}};width:{{containerWidthRate}};height:{{containerWidth}}px;" bind:touchstart="touchstart" bind:touchend="touchend">
+    <view wx:for="{{arrary}}" wx:key="key{{index}}" class='piece' data-origx="{{item.origx}}" data-origy="{{item.origy}}" data-curx="{{item.curx}}" data-cury="{{item.cury}}" style='background-image: url({{imgSrc}});background-position:{{item.imgx}}px {{item.imgy}}px;background-size:{{containerWidth}}px {{containerWidth}}px;width:{{pieceWidth}}px;height:{{pieceHeight}}px;top:{{item.top}}px;left:{{item.left}}px;'></view>
+  </view>
+
+  <view class='winView' style='display:{{iswin?"blockk":"none"}};top:{{containerWidth-70}}px;left:{{(windowWidth-250)/2}}px;'>
+    <view class='dialog_content_view'>{{successMsg}}</view>
+    <view class='dialog_button_view'>
+      <view class='dialog_button_view_left' bindtap='restarttap'>重新开始</view>
+      <view class='dialog_button_view_right' bindtap='closettap'>关闭</view>
+    </view>
+  </view>
+
+  <view class='buttons'>
+    <button class='setting' bindtap='settingtap' size="mini">设置</button>
+    <button bindtap='selectmodeltap' size="mini">模式</button>
+    <button class='refresh' bindtap='restarttap' size="mini" type='primary'>重新开始</button>
+    <button class='share' id="shareBtn" size='mini' open-type="share" type="warn" hover-class="other-button-hover">分享</button>
+  </view>
+
+  <!-- 选择模式 -->
+  <view class='modelView' style='display:{{showModelSelect?"block":"none"}}'>
+    <view class='modelSingleContainer' bindtap='freemodeltap'>
+      <text class='name'>简单模式</text>
+      <text class='comment'>滑动交换相邻格子</text>
+    </view>
+    <view class='modelSingleContainer currentModel' bindtap='classicmodeltap'>
+      <text class='name'>经典模式</text>
+      <text class='comment'>滑动交换空白格子</text>
+    </view>
+    <view class='modelSingleContainer' bindtap='hallengemodeltap'>
+      <text class='name'>挑战模式</text>
+      <text class='comment'>限时完成简单模式或经典模式</text>
+    </view>
+  </view>
+
+  <view class='fullscreamView' style='display:{{showFullScreemMask?"blockk":"none"}};height:{{windowHeight}}px;'></view>
+
+</view>

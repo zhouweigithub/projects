@@ -1,0 +1,376 @@
+page {
+  text-align: center;
+}
+
+view {
+  text-align: center;
+}
+
+.view_main {
+  text-align: left;
+  box-shadow: 3px 3px 3px grey;
+}
+
+.piece {
+  display: inline-block;
+  position: absolute;
+  background-repeat: no-repeat;
+  z-index: 400;
+}
+
+.view_top {
+  width: 80%;
+  height: 100px;
+  display: block;
+  text-align: center;
+  margin: auto;
+}
+
+.view_top_left {
+  font-family: '黑体';
+  display: block;
+  /* vertical-align: top; */
+  text-align: left;
+  float: left;
+}
+
+.view_top_left text {
+  color: green;
+  clear: both;
+}
+
+.view_top_left .currentTime {
+  font-weight: bold;
+  display: block;
+}
+
+.view_top_right {
+  width: 100px;
+  height: 100px;
+  display: block;
+  text-align: right;
+  background-repeat: no-repeat;
+  background-size: 100px 100px;
+  box-shadow: 3px 3px 3px grey;
+  float: right;
+}
+
+.time_view {
+  display: inline-block;
+  border: solid green 1px;
+  box-shadow: 3px 3px 3px grey;
+}
+
+.time_view text {
+  padding: 10px;
+  display: block;
+}
+
+.time_view .boldText {
+  background-color: green;
+  color: white;
+}
+
+.time_view .currentTime {
+  color: green;
+}
+
+.winView {
+  margin: auto;
+  text-align: center;
+  display: block;
+  position: absolute;
+  width: 250px;
+  background-color: rgb(255, 255, 255);
+  box-sizing: border-box;
+  z-index: 600;
+}
+
+.winView label {
+  display: block;
+}
+
+.winView .close {
+  float: right;
+}
+
+.winView .close image {
+  width: 20px;
+  height: 20px;
+  margin: 8px;
+  position: absolute;
+  right: 0px;
+}
+
+.fullscreamView {
+  width: 100%;
+  position: absolute;
+  top: 0px;
+  left: 0px;
+  z-index: 500;
+  background-color: rgba(36, 34, 34, 0.597);
+  overflow: hidden;
+}
+
+.alertview {
+  position: absolute;
+  top: 50%;
+  left: 41%;
+  z-index: 700;
+  color: white;
+  padding: 5px;
+  font-size: 12px;
+  background-color: rgba(36, 34, 34, 1);
+  border-radius: 5px;
+}
+
+.dialog_content_view {
+  width: 100%;
+  padding: 20px 10px;
+  box-sizing: border-box;
+  font-size: 20px;
+  font-family: '黑体';
+  font-weight: bold;
+  background-color: azure;
+}
+
+.dialog_content_view image {
+  display: block;
+  width: 50px;
+  height: 50px;
+}
+
+.dialog_content_view text {
+  display: block;
+}
+
+.dialog_content_view .success {
+  color: #16692f;
+}
+
+.dialog_content_view .fail {
+  color: #bb1e19;
+}
+
+.dialog_button_view {
+  width: 100%;
+  /* height: 40px; */
+  padding: 0;
+  font-size: 15px;
+  font-family: '黑体';
+}
+
+.dialog_button_view_again {
+  display: inline-block;
+  width: 33%;
+  height: 100%;
+  background-color: hsla(302, 25%, 28%, 0.87);
+  color: white;
+  line-height: 40px;
+}
+
+.dialog_button_view_gate {
+  display: inline-block;
+  width: 33%;
+  height: 100%;
+  background-color: hsla(108, 49%, 23%, 0.836);
+  color: white;
+  line-height: 40px;
+}
+
+.dialog_button_view_next {
+  display: inline-block;
+  width: 33%;
+  height: 100%;
+  line-height: 40px;
+  background-color: green;
+  color: white;
+}
+
+.dialog_button_view_share {
+  width: 34%;
+  display: inline-block;
+  padding: 0;
+  margin: 0;
+  height: 40px;
+  vertical-align: bottom;
+}
+
+.dialog_button_view_share .share {
+  width: 100%;
+  font-size: 15px;
+  border: 0;
+  background-color: hsl(0, 75%, 42%);
+  display: inline-block;
+  line-height: 40px;
+  border-radius: 0;
+  padding: 0;
+  color: white;
+  margin: 0;
+}
+
+.dialog_button_view_share button::after {
+  border: none;
+  display: none;
+}
+
+.buttons button {
+  margin: 0 2px;
+}
+
+.ordeal {
+  width: 80%;
+  display: block;
+  margin: auto;
+  margin-top: 20px;
+  font-size: 20px;
+  padding: 10px;
+  border: 1px solid green;
+  color: green;
+  box-sizing: border-box;
+  line-height: 20px;
+  box-shadow: 3px 3px 3px grey;
+}
+
+.ordeal text {
+  font-weight: bold;
+  font-size: 30px;
+}
+
+.selectGateView {
+  position: absolute;
+  width: 80%;
+  display: block;
+  top: 15%;
+  left: 10%;
+  z-index: 600;
+  background-color: white;
+  box-sizing: border-box;
+  overflow: scroll;
+}
+
+.selectGateView .outContainer {
+  padding: 10px;
+  box-sizing: border-box;
+  background-color: whitesmoke;
+  border: 1px solid whitesmoke;
+}
+
+.selectGateView .selectGateTitle {
+  width: 100%;
+  font-size: 20px;
+  /* color: rgb(116, 134, 92); */
+  line-height: 50px;
+  background-color: gainsboro;
+  color: rgb(116, 134, 92);
+}
+
+.selectGateView .selectGateTitle image {
+  width: 20px;
+  height: 20px;
+  margin: 15px;
+  position: absolute;
+  right: 0px;
+}
+
+.selectGateView .gateContainer {
+  text-align: center;
+  overflow: scroll;
+}
+
+.selectGateView  .gateView {
+  display: inline-block;
+  width: 50px;
+  height: 50px;
+  text-align: center;
+  vertical-align: middle;
+  margin: 5px;
+}
+
+.lockedView {
+  background-color: hsla(0, 7%, 58%, 0.39);
+}
+
+.selectGateView  .gateView .title {
+  font-size: 13px;
+  line-height: 17px;
+  background-color: rgb(116, 134, 92);
+  display: block;
+  color: white;
+}
+
+.selectGateView  .gateView .content {
+  text-align: center;
+  height: 33px;
+  width: 100%;
+  display: block;
+  margin: auto;
+}
+
+.selectGateView .lockedView {
+  background-color: rgba(214, 231, 189, 0.685);
+  background-image: url("http://ullfly.com/images/wx/icon/lock.png");
+  background-size: 20px 20px;
+  background-repeat: no-repeat;
+  background-position: 15px 23px;
+}
+
+.selectGateView .unlockedView {
+  background-color: rgba(186, 236, 110, 0.685);
+}
+
+.selectGateView  .gateView text {
+  font-size: 14px;
+  line-height: 35px;
+}
+
+/* 隐藏scroll-view的滚动条 */
+
+::-webkit-scrollbar {
+  width: 0;
+  height: 0;
+  color: transparent;
+}
+
+.currentGate {
+  border: 1px solid rgb(116, 134, 92);
+}
+
+.modelView {
+  position: absolute;
+  width: 80%;
+  display: block;
+  top: 20%;
+  left: 10%;
+  z-index: 600;
+  background-color: rgb(255, 255, 255);
+  box-sizing: border-box;
+  overflow: scroll;
+  border: solid 1px grey;
+}
+
+.modelView .name {
+  display: block;
+  margin: 15px 15px 0px 15px;
+  line-height: 40px;
+  font-size: 25px;
+  color: black;
+}
+
+.modelView .comment {
+  display: block;
+  color: grey;
+  font-size: 13px;
+  line-height: 18px;
+  margin: 0px 15px 15px 15px;
+}
+
+.modelView .modelSingleContainer {
+  border: solid 1px grey;
+  margin: 10px;
+}
+
+.modelView .currentModel {
+  border: solid 1px green;
+  background-color: rgba(172, 255, 47, 0.493);
+}

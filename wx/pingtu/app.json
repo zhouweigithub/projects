@@ -1,0 +1,15 @@
+{
+  "pages": [
+    "pages/challenge/challenge",
+    "pages/main/main",
+    "pages/slide/slide",
+    "pages/picture/picture"
+  ],
+  "window": {
+    "backgroundTextStyle": "light",
+    "navigationBarBackgroundColor": "#ffffff",
+    "navigationBarTitleText": "WeChat",
+    "navigationBarTextStyle": "black",
+    "backgroundColor": "#ffffff"
+  }
+}

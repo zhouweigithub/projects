@@ -1,0 +1,8 @@
+<!--pages/detail/detail.wxml-->
+<view class='container'>
+  <view class='title'>{{title.title}}</view>
+  <view class='content'>{{content}}</view>
+  <view class='back'>
+    <button bindtap='navigateBack' size='default' type='primary'>返回</button>
+  </view>
+</view>

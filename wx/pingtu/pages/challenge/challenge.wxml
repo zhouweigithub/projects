@@ -1,0 +1,94 @@
+<view class='view_top'>
+  <view class='view_top_left'>
+    <view class='time_view'>
+      <text class='boldText'>剩余时间</text>
+      <text class='currentTime'>{{leftTimeString}}</text>
+    </view>
+  </view>
+  <view class='view_top_right' style='background-image: url({{imgSrc}});'>
+  </view>
+</view>
+
+<view class='ordeal'> 第
+  <text>{{gate}}</text> 关</view>
+
+<!-- 经典模式 -->
+<view class='main' style='display:{{isfree?"none":"block"}}'>
+  <view class='view_main' style="margin:20px auto 30px auto;width:{{containerWidthRate}};height:{{containerWidth}}px;" bind:touchstart="touchstart" bind:touchend="touchend">
+    <view wx:for="{{arrary}}" wx:key="key{{index}}" class='piece' data-origx="{{item.origx}}" data-origy="{{item.origy}}" data-curx="{{item.curx}}" data-cury="{{item.cury}}" style='background-image: url({{imgSrc}});background-position:{{item.imgx}}px {{item.imgy}}px;background-size:{{containerWidth}}px {{containerWidth}}px;width:{{pieceWidth}}px;height:{{pieceHeight}}px;top:{{item.top}}px;left:{{item.left}}px;'></view>
+  </view>
+</view>
+<!-- 经典模式 -->
+
+<!-- 自由模式 -->
+<view class='slide' style='display:{{isfree?"block":"none"}}'>
+  <view class='view_main' style="margin:20px auto 30px auto;width:{{containerWidthRate}};height:{{containerWidth}}px;">
+    <view wx:for="{{arrary}}" wx:key="key{{index}}" class='piece' data-origx="{{item.origx}}" data-origy="{{item.origy}}" data-curx="{{item.curx}}" data-cury="{{item.cury}}" style='background-image: url({{imgSrc}});background-position:{{item.imgx}}px {{item.imgy}}px;background-size:{{containerWidth}}px {{containerWidth}}px;width:{{pieceWidth}}px;height:{{pieceHeight}}px;top:{{item.top}}px;left:{{item.left}}px;'
+      catchtouchstart="touchstart" catchtouchend="touchend"></view>
+  </view>
+</view>
+<!-- 自由模式 -->
+
+<view class='winView' style='display:{{showWinDialog?"blockk":"none"}};top:{{containerWidth-70}}px;left:{{(windowWidth-250)/2}}px;'>
+  <view class='close' bindtap='closewintap'>
+    <image src='http://ullfly.com/images/wx/icon/close.png' bind:tap='closewintap'></image>
+  </view>
+  <view class='dialog_content_view'>
+    <image style='display:{{iswin?"inline-block":"none"}}' src='http://ullfly.com/images/wx/icon/success.png'></image>
+    <image style='display:{{!iswin?"inline-block":"none"}}' src='http://ullfly.com/images/wx/icon/fail.png'></image>
+    <text class='{{iswin?"success":"fail"}}'>{{successMsg}}</text>
+  </view>
+  <view class='dialog_button_view'>
+    <view class='dialog_button_view_again' bindtap='restarttap'>再玩一次</view>
+    <view style='display:{{iswin?"none":"inline-block"}}' class='dialog_button_view_gate' bindtap='selectgatetap'>选择关卡</view>
+    <view style='display:{{!iswin?"none":"inline-block"}}' class='dialog_button_view_next' bindtap='nexttap'>下一关</view>
+    <view class='dialog_button_view_share'>
+      <button class='share' open-type="share" data-state='{{iswin?"success":"fail"}}'>{{iswin?"分享":"求助"}}</button>
+    </view>
+  </view>
+</view>
+
+<view class='buttons'>
+  <button bindtap='selectmodeltap' size="mini">选择模式</button>
+  <button bindtap='selectgatetap' size="mini" type='primary'>选择关卡</button>
+  <button size='mini' open-type="share" type="warn" hover-class="other-button-hover">分享</button>
+</view>
+
+<!-- 选择关卡 -->
+<view class='selectGateView' style='display:{{showGateSelect?"block":"none"}}'>
+  <view class='selectGateTitle'>
+    <text>选择关卡</text>
+    <image src='http://ullfly.com/images/wx/icon/close.png' bind:tap='closegatetap'></image>
+  </view>
+  <view class='outContainer'>
+    <view class='gateContainer' style='height:{{windowHeight*0.6}}px'>
+      <view class='gateView {{item.passTime!=null?"unlockedView":"lockedView"}} {{item.gate==gate?"currentGate":""}}' wx:for="{{allGates}}" wx:key="key{{index}}" capture-bind:tap='gatetap' data-islocked='{{item.passTime!=null?"false":"true"}}' data-gate='{{item.gate}}'>
+        <view class='title'>#{{item.gate}}</view>
+        <view class='content '>
+          <text style='display:{{item.passTime!=null?"inline-block":"none"}}'>{{item.passTime>0?item.passTime+"s":"?"}}</text>
+        </view>
+      </view>
+    </view>
+  </view>
+</view>
+
+<!-- 选择模式 -->
+<view class='modelView' style='display:{{showModelSelect?"block":"none"}}'>
+  <view class='modelSingleContainer' bindtap='freemodeltap'>
+    <text class='name'>简单模式</text>
+    <text class='comment'>滑动交换相邻格子</text>
+  </view>
+  <view class='modelSingleContainer' bindtap='classicmodeltap'>
+    <text class='name'>经典模式</text>
+    <text class='comment'>滑动交换空白格子</text>
+  </view>
+  <view class='modelSingleContainer currentModel' bindtap='hallengemodeltap'>
+    <text class='name'>挑战模式</text>
+    <text class='comment'>限时完成简单模式或经典模式</text>
+  </view>
+</view>
+
+<view class='alertview' style='display:{{showAlertText?"blockk":"none"}};'>{{alerttext}}</view>
+
+<!-- 全屏遮罩层 -->
+<view class='fullscreamView' style='display:{{showFullScreemMask?"blockk":"none"}};height:{{windowHeight}}px;'></view>
