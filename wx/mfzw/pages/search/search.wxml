@@ -1,0 +1,38 @@
+<view class='vbody'>
+  <view class='searchView'>
+    <input type='text' confirm-type='search' placeholder='搜索'></input>
+  </view>
+  <view class='resultView'>
+    <view bind:tap='itemClick'>2017年江苏高考满分作文：我的奋斗</view>
+    <view bind:tap='itemClick'>2017年江苏高考满分作文：我的奋斗</view>
+    <view bind:tap='itemClick'>2017年江苏高考满分作文：我的奋斗</view>
+    <view bind:tap='itemClick'>2017年江苏高考满分作文：我的奋斗</view>
+    <view bind:tap='itemClick'>2017年江苏高考满分作文：我的奋斗</view>
+    <view bind:tap='itemClick'>2017年江苏高考满分作文：我的奋斗</view>
+    <view bind:tap='itemClick'>2017年江苏高考满分作文：我的奋斗</view>
+    <view bind:tap='itemClick'>2017年江苏高考满分作文：我的奋斗</view>
+    <view bind:tap='itemClick'>2017年江苏高考满分作文：我的奋斗</view>
+    <view bind:tap='itemClick'>2017年江苏高考满分作文：我的奋斗</view>
+    <view bind:tap='itemClick'>2017年江苏高考满分作文：我的奋斗</view>
+    <view bind:tap='itemClick'>2017年江苏高考满分作文：我的奋斗</view>
+    <view bind:tap='itemClick'>2017年江苏高考满分作文：我的奋斗</view>
+    <view bind:tap='itemClick'>2017年江苏高考满分作文：我的奋斗</view>
+    <view bind:tap='itemClick'>2017年江苏高考满分作文：我的奋斗</view>
+    <view bind:tap='itemClick'>2017年江苏高考满分作文：我的奋斗</view>
+    <view bind:tap='itemClick'>2017年江苏高考满分作文：我的奋斗</view>
+    <view bind:tap='itemClick'>2017年江苏高考满分作文：我的奋斗</view>
+    <view bind:tap='itemClick'>2017年江苏高考满分作文：我的奋斗</view>
+    <view bind:tap='itemClick'>2017年江苏高考满分作文：我的奋斗</view>
+    <view bind:tap='itemClick'>2017年江苏高考满分作文：我的奋斗</view>
+    <view bind:tap='itemClick'>2017年江苏高考满分作文：我的奋斗</view>
+    <view bind:tap='itemClick'>2017年江苏高考满分作文：我的奋斗</view>
+    <view bind:tap='itemClick'>2017年江苏高考满分作文：我的奋斗</view>
+    <view bind:tap='itemClick'>2017年江苏高考满分作文：我的奋斗</view>
+    <view bind:tap='itemClick'>2017年江苏高考满分作文：我的奋斗</view>
+    <view bind:tap='itemClick'>2017年江苏高考满分作文：我的奋斗</view>
+    <view bind:tap='itemClick'>2017年江苏高考满分作文：我的奋斗</view>
+    <view bind:tap='itemClick'>2017年江苏高考满分作文：我的奋斗</view>
+    <view bind:tap='itemClick'>2017年江苏高考满分作文：我的奋斗</view>
+  </view>
+
+</view>

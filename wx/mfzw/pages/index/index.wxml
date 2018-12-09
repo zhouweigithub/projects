@@ -1,0 +1,31 @@
+<view class='vbody'>
+  <view class="topView">
+    <image src='../../images/img1.jpg' mode='scaleToFill'></image>
+  </view>
+  <view class='searchView'>
+    <input type='text' confirm-type='search' placeholder='搜索'></input>
+  </view>
+  <view class='yearsView'>
+    <view bind:tap='itemClick'>2018</view>
+    <view bind:tap='itemClick'>2017</view>
+    <view bind:tap='itemClick'>2016</view>
+    <view bind:tap='itemClick'>2015</view>
+    <view bind:tap='itemClick'>2014</view>
+    <view bind:tap='itemClick'>2013</view>
+    <view bind:tap='itemClick'>2012</view>
+    <view bind:tap='itemClick'>2011</view>
+    <view bind:tap='itemClick'>2010</view>
+    <view bind:tap='itemClick'>2009</view>
+    <view bind:tap='itemClick'>2008</view>
+    <view bind:tap='itemClick'>2007</view>
+    <view bind:tap='itemClick'>2006</view>
+    <view bind:tap='itemClick'>2005</view>
+    <view bind:tap='itemClick'>2004</view>
+    <view bind:tap='itemClick'>2003</view>
+    <view bind:tap='itemClick'>2002</view>
+    <view bind:tap='itemClick'>2001</view>
+    <view bind:tap='itemClick'>2000</view>
+    <view bind:tap='itemClick'>1999</view>
+  </view>
+  <view class='bottomView'></view>
+</view>

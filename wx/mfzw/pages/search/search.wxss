@@ -1,0 +1,28 @@
+
+
+.vbody>view {
+  background-color: #eaf8dd;
+}
+
+.searchView {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+}
+
+.searchView input {
+  padding: 10px;
+}
+
+.resultView {
+  margin-top: 50px;
+}
+
+.resultView view {
+  padding: 10px;
+  text-align: left;
+  border-bottom: thin solid #c2d8a4;
+}
+
+

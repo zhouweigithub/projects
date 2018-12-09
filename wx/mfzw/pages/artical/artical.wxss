@@ -1,0 +1,61 @@
+.vbody {
+  margin: 10px;
+}
+
+.gomainView {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+}
+
+.title {
+  font-size: 25px;
+  padding: 10px;
+}
+
+.summary {
+  padding: 10px;
+  margin-bottom: 30px;
+  border-bottom: thin solid #c2d8a4;
+}
+
+.summary text {
+  font-size: 14px;
+  margin: auto 10px;
+}
+
+.content {
+  text-align: justify;
+  font-size: 18px;
+  line-height: 30px;
+}
+
+.shareView {
+  position: fixed;
+  bottom: 80px;
+  right: 20px;
+}
+
+.shareView button {
+  background: transparent;
+  width: 30px;
+  height: 30px;
+  padding: 0;
+}
+
+.shareView button::after {
+  border: none;
+  display: none;
+}
+
+.gomainView {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+}
+
+.gomainView image, .shareView image {
+  width: 30px;
+  height: 30px;
+  opacity: 0.4;
+}
