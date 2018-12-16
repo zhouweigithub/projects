@@ -105,7 +105,7 @@ export default class pinggu {
 
   getContainerPosition(screenWidth, marginRate, marginTop) {
     var n = (screenWidth * this.containerMarginRate);
-    var marginToTop = marginTop ? marginTop : n + ((screenWidth * marginRate) / 2);
+    var marginToTop = marginTop ? marginTop : ((screenWidth * marginRate) / 3 + 15);
     return {
       x: marginToTop,
       y: n

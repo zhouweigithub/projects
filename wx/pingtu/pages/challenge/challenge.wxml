@@ -49,7 +49,7 @@
 </view>
 
 <view class='buttons'>
-  <button bindtap='selectmodeltap' size="mini">选择模式</button>
+  <button bindtap='selectmodeltap' size="mini" class='btnModel'>选择模式</button>
   <button bindtap='selectgatetap' size="mini" type='primary'>选择关卡</button>
   <button size='mini' open-type="share" type="warn" hover-class="other-button-hover">分享</button>
 </view>

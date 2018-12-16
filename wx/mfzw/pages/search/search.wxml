@@ -3,36 +3,78 @@
     <input type='text' confirm-type='search' placeholder='搜索'></input>
   </view>
   <view class='resultView'>
-    <view bind:tap='itemClick'>2017年江苏高考满分作文：我的奋斗</view>
-    <view bind:tap='itemClick'>2017年江苏高考满分作文：我的奋斗</view>
-    <view bind:tap='itemClick'>2017年江苏高考满分作文：我的奋斗</view>
-    <view bind:tap='itemClick'>2017年江苏高考满分作文：我的奋斗</view>
-    <view bind:tap='itemClick'>2017年江苏高考满分作文：我的奋斗</view>
-    <view bind:tap='itemClick'>2017年江苏高考满分作文：我的奋斗</view>
-    <view bind:tap='itemClick'>2017年江苏高考满分作文：我的奋斗</view>
-    <view bind:tap='itemClick'>2017年江苏高考满分作文：我的奋斗</view>
-    <view bind:tap='itemClick'>2017年江苏高考满分作文：我的奋斗</view>
-    <view bind:tap='itemClick'>2017年江苏高考满分作文：我的奋斗</view>
-    <view bind:tap='itemClick'>2017年江苏高考满分作文：我的奋斗</view>
-    <view bind:tap='itemClick'>2017年江苏高考满分作文：我的奋斗</view>
-    <view bind:tap='itemClick'>2017年江苏高考满分作文：我的奋斗</view>
-    <view bind:tap='itemClick'>2017年江苏高考满分作文：我的奋斗</view>
-    <view bind:tap='itemClick'>2017年江苏高考满分作文：我的奋斗</view>
-    <view bind:tap='itemClick'>2017年江苏高考满分作文：我的奋斗</view>
-    <view bind:tap='itemClick'>2017年江苏高考满分作文：我的奋斗</view>
-    <view bind:tap='itemClick'>2017年江苏高考满分作文：我的奋斗</view>
-    <view bind:tap='itemClick'>2017年江苏高考满分作文：我的奋斗</view>
-    <view bind:tap='itemClick'>2017年江苏高考满分作文：我的奋斗</view>
-    <view bind:tap='itemClick'>2017年江苏高考满分作文：我的奋斗</view>
-    <view bind:tap='itemClick'>2017年江苏高考满分作文：我的奋斗</view>
-    <view bind:tap='itemClick'>2017年江苏高考满分作文：我的奋斗</view>
-    <view bind:tap='itemClick'>2017年江苏高考满分作文：我的奋斗</view>
-    <view bind:tap='itemClick'>2017年江苏高考满分作文：我的奋斗</view>
-    <view bind:tap='itemClick'>2017年江苏高考满分作文：我的奋斗</view>
-    <view bind:tap='itemClick'>2017年江苏高考满分作文：我的奋斗</view>
-    <view bind:tap='itemClick'>2017年江苏高考满分作文：我的奋斗</view>
-    <view bind:tap='itemClick'>2017年江苏高考满分作文：我的奋斗</view>
-    <view bind:tap='itemClick'>2017年江苏高考满分作文：我的奋斗</view>
+    <view bind:tap='itemClick'>
+      <view class='title'>没有翅膀的飞翔</view>
+      <view class='summary'>2004年 - 重庆高考 - 满分卷</view>
+    </view>
+    <view bind:tap='itemClick'>
+      <view class='title'>没有翅膀的飞翔</view>
+      <view class='summary'>2004年 - 重庆高考 - 满分卷</view>
+    </view>
+    <view bind:tap='itemClick'>
+      <view class='title'>没有翅膀的飞翔</view>
+      <view class='summary'>2004年 - 重庆高考 - 满分卷</view>
+    </view>
+    <view bind:tap='itemClick'>
+      <view class='title'>没有翅膀的飞翔</view>
+      <view class='summary'>2004年 - 重庆高考 - 满分卷</view>
+    </view>
+    <view bind:tap='itemClick'>
+      <view class='title'>没有翅膀的飞翔</view>
+      <view class='summary'>2004年 - 重庆高考 - 满分卷</view>
+    </view>
+    <view bind:tap='itemClick'>
+      <view class='title'>没有翅膀的飞翔</view>
+      <view class='summary'>2004年 - 重庆高考 - 满分卷</view>
+    </view>
+    <view bind:tap='itemClick'>
+      <view class='title'>没有翅膀的飞翔</view>
+      <view class='summary'>2004年 - 重庆高考 - 满分卷</view>
+    </view>
+    <view bind:tap='itemClick'>
+      <view class='title'>没有翅膀的飞翔</view>
+      <view class='summary'>2004年 - 重庆高考 - 满分卷</view>
+    </view>
+    <view bind:tap='itemClick'>
+      <view class='title'>没有翅膀的飞翔</view>
+      <view class='summary'>2004年 - 重庆高考 - 满分卷</view>
+    </view>
+    <view bind:tap='itemClick'>
+      <view class='title'>没有翅膀的飞翔</view>
+      <view class='summary'>2004年 - 重庆高考 - 满分卷</view>
+    </view>
+    <view bind:tap='itemClick'>
+      <view class='title'>没有翅膀的飞翔</view>
+      <view class='summary'>2004年 - 重庆高考 - 满分卷</view>
+    </view>
+    <view bind:tap='itemClick'>
+      <view class='title'>没有翅膀的飞翔</view>
+      <view class='summary'>2004年 - 重庆高考 - 满分卷</view>
+    </view>
+    <view bind:tap='itemClick'>
+      <view class='title'>没有翅膀的飞翔</view>
+      <view class='summary'>2004年 - 重庆高考 - 满分卷</view>
+    </view>
+    <view bind:tap='itemClick'>
+      <view class='title'>没有翅膀的飞翔</view>
+      <view class='summary'>2004年 - 重庆高考 - 满分卷</view>
+    </view>
+    <view bind:tap='itemClick'>
+      <view class='title'>没有翅膀的飞翔</view>
+      <view class='summary'>2004年 - 重庆高考 - 满分卷</view>
+    </view>
+    <view bind:tap='itemClick'>
+      <view class='title'>没有翅膀的飞翔</view>
+      <view class='summary'>2004年 - 重庆高考 - 满分卷</view>
+    </view>
+    <view bind:tap='itemClick'>
+      <view class='title'>没有翅膀的飞翔</view>
+      <view class='summary'>2004年 - 重庆高考 - 满分卷</view>
+    </view>
+    <view bind:tap='itemClick'>
+      <view class='title'>没有翅膀的飞翔</view>
+      <view class='summary'>2004年 - 重庆高考 - 满分卷</view>
+    </view>
   </view>
 
 </view>

@@ -1,5 +1,4 @@
 /**app.wxss**/
-@import "/pages/wxParse/wxParse.wxss";
 
 page {
   background-color: #eaf8dd;

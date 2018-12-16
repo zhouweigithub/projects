@@ -1,5 +1,6 @@
-
-
+.vbody{
+  margin: auto 20px 30px 20px;
+}
 .vbody>view {
   background-color: #eaf8dd;
 }
@@ -13,16 +14,24 @@
 
 .searchView input {
   padding: 10px;
-}
-
-.resultView {
-  margin-top: 50px;
-}
-
-.resultView view {
-  padding: 10px;
-  text-align: left;
   border-bottom: thin solid #c2d8a4;
 }
 
+.resultView {
+  margin-top: 60px;
+}
 
+.resultView >view {
+  padding: 10px;
+  text-align: left;
+  border-bottom: thin dotted #c2d8a4;
+}
+
+.resultView .title {
+  font-size: 18px;
+  line-height: 30px;
+}
+
+.resultView .summary {
+  font-size: 14px;
+}

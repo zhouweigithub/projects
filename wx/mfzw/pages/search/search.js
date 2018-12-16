@@ -14,11 +14,6 @@ Page({
   onLoad: function(options) {
 
   },
-  onHomeTap: function() {
-    wx.redirectTo({
-      url: '../index/index'
-    });
-  },
   itemClick: function() {
     wx.navigateTo({
       url: '../artical/artical'
