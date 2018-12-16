@@ -1,0 +1,54 @@
+.headView {
+  text-align: center;
+}
+
+.headView button {
+  margin: 20px auto;
+}
+
+.headView image {
+  width: 100px;
+  margin: 20px auto 30px auto;
+  display: block;
+}
+
+.headView text {
+  font-size: 25px;
+  font-weight: bold;
+}
+
+.countView {
+  margin: 30px auto;
+  /* border-top: solid thin gray; *//* background-color: #c1d1bd; */
+}
+
+.countView view {
+  padding: 30px auto;
+  width: 40%;
+  height: 60px;
+  line-height: 60px;
+  display: inline-block;
+  font-size: 20px;
+  border-bottom: solid thin #90948f;
+  border-top: solid thin #90948f;
+}
+
+.favView {
+  border-right: solid thin #90948f;
+}
+
+.listView {
+  width: 80%;
+  margin: 30px auto;
+  font-size: 17px;
+  line-height: 40px;
+  text-align: left;
+}
+
+.listView view {
+  border-bottom: solid thin gray;
+}
+
+.feedbackView .char {
+  float: right;
+}

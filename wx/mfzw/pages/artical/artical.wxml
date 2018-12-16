@@ -1,12 +1,8 @@
 <import src="../wxParse/wxParse.wxml" />
 <view class='vbody'>
   <view class='titleView'>
-    <view class='title'>没有翅膀的飞翔</view>
-    <view class='summary'>
-      <text>2004年</text>
-      <text>重庆高考</text>
-      <text>满分卷</text>
-    </view>
+    <view class='title'>{{title}}</view>
+    <view class='summary'>{{summary}}</view>
   </view>
   <view class='content'>
     <template is="wxParse" data="{{wxParseData:article.nodes}}" />
@@ -28,10 +24,13 @@
     </view>
   </view>
 
-   <view class='favoriteView' bind:tap='onFavoriteTap'>
-    <image src='/images/favorite.png'></image>
+  <view class='userView' bind:tap='onUserTap'>
+    <image src='/images/user.png'></image>
   </view>
- <view class='shareView' bind:tap='onShareTap'>
+  <view class='favoriteView' bind:tap='onFavoriteTap'>
+    <image src='{{isFavorited?"/images/favorited.png":"/images/favorite.png"}}'></image>
+  </view>
+  <view class='shareView' bind:tap='onShareTap'>
     <button class='share' id="shareBtn" size='mini' open-type="share" hover-class="other-button-hover">
       <image src='/images/share.png'></image>
     </button>
@@ -40,3 +39,5 @@
     <image src='/images/home.png'></image>
   </view>
 </view>
+
+<view class='alertview' style='display:{{showAlertText?"blockk":"none"}};'>{{alerttext}}</view>

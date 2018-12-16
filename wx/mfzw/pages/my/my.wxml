@@ -1,0 +1,19 @@
+<view class='headView'>
+  <button wx:if="{{!hasUserInfo && canIUse}}" open-type="getUserInfo" bindgetuserinfo="getUserInfo" size="mini">登录</button>
+  <block wx:else>
+    <image src='{{userInfo.avatarUrl}}' mode='widthFix'></image>
+    <text>{{userInfo.nickName}}</text>
+  </block>
+</view>
+
+<view class='countView'>
+  <view class='favView' bind:tap='favoriteTap'>我的收藏</view>
+  <view class='historyView' bind:tap='historyTap'>历史记录</view>
+</view>
+
+<view class='listView'>
+  <view class='feedbackView' bind:tap='feedbackTap'>
+    <text class='text'>意见反馈</text>
+    <text class='char'>>></text>
+  </view>
+</view>

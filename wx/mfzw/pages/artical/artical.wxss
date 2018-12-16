@@ -50,10 +50,16 @@
   right: 20px;
 }
 
-.gomainView image, .favoriteView image, .shareView image {
+.userView image, .gomainView image, .favoriteView image, .shareView image {
   width: 30px;
   height: 30px;
-  opacity: 0.2;
+  opacity: 0.1;
+}
+
+.userView {
+  position: fixed;
+  bottom: 230px;
+  right: 20px;
 }
 
 .favoriteView {
@@ -92,4 +98,16 @@
 
 .wxParse-p {
   margin: 15px auto;
+}
+
+.alertview {
+  position: fixed;
+  top: 40%;
+  left: 40%;
+  z-index: 700;
+  color: white;
+  padding: 5px;
+  font-size: 12px;
+  background-color: rgba(36, 34, 34, 1);
+  border-radius: 5px;
 }
