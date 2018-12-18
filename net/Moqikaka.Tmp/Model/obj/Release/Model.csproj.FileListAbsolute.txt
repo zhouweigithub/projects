@@ -1,3 +1,0 @@
-E:\SVN\SDKProject\Moqikaka.Tmp\Model\bin\Release\Moqikaka.Tmp.Model.dll
-E:\SVN\SDKProject\Moqikaka.Tmp\Model\obj\Release\Model.csproj.CoreCompileInputs.cache
-E:\SVN\SDKProject\Moqikaka.Tmp\Model\obj\Release\Moqikaka.Tmp.Model.dll

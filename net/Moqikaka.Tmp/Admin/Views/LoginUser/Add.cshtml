@@ -1,30 +1,15 @@
-﻿@model Moqikaka.Tmp.Model.LoginUser
+﻿@model Moqikaka.Tmp.Model.MUser
 @{
     Layout = null;
-    var roleRights = ViewBag.Rights as Moqikaka.Tmp.Model.RoleInfoListModel;
-    var lstIfSuper = new List<SelectListItem>();
-    lstIfSuper.Add(new SelectListItem() { Text = "否", Value = "0" });
-    lstIfSuper.Add(new SelectListItem() { Text = "是", Value = "1" });
 
     var lstStatus = new List<SelectListItem>();
     lstStatus.Add(new SelectListItem() { Text = "正常", Value = "0" });
     lstStatus.Add(new SelectListItem() { Text = "锁定", Value = "1" });
 
-    var lstTypes = new List<SelectListItem>();
-    lstTypes.Add(new SelectListItem() { Text = "普通", Value = "0" });
-    lstTypes.Add(new SelectListItem() { Text = "客服", Value = "1" });
-
-    var lstSmsVerifys = new List<SelectListItem>();
-    lstSmsVerifys.Add(new SelectListItem() { Text = "是", Value = "0" });
-    lstSmsVerifys.Add(new SelectListItem() { Text = "否", Value = "1" });
-
 }
 
-<link href="~/Content/bootstrap-select-master/dist/css/bootstrap-select.min.css?ver=@HttpContext.Current.Application["ver"]" rel="stylesheet" />
-<script src="~/Content/bootstrap-select-master/dist/js/bootstrap-select.min.js?ver=@HttpContext.Current.Application["ver"]"></script>
-
-<div style="width:780px;margin-bottom:15px;margin-top:5px" id="DivShowFirst" class="modal-dialog well">
-    @using (Ajax.BeginForm("Add", "LoginUser", null, new AjaxOptions() { HttpMethod = "Post", LoadingElementId = "div_loading_role", OnSuccess = "onDataMidff" }, new { @class = "form-horizontal" }))
+<div style="width:480px;margin-bottom:15px;margin-top:5px" id="DivShowFirst" class="modal-dialog well">
+    @using (Ajax.BeginForm("Add", null, new AjaxOptions() { HttpMethod = "Post", LoadingElementId = "div_loading_role", OnSuccess = "onDataMidff" }, new { @class = "form-horizontal" }))
     {
         <div class="modal-header">
             <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
@@ -36,91 +21,41 @@
             <div style="background-color: #eee;">
                 @*角色Id*@
                 @Html.HiddenFor(model => model.Id)
-                @Html.HiddenFor(model => model.Roleids)
+                <input type="hidden" id="username_old" value="@Model.UserName" />
                 <table style="margin-bottom:5px;margin-top:5px;padding-top:10px;padding-bottom:10px;width:96%;text-align:left;height:35px;vertical-align:middle" class="table-bordered">
                     <tr style="height:40px;vertical-align:middle">
                         <th style="text-align: right; margin-right: 10px;width:100px;">用户名：</th>
-                        <td><input type="text" id="username" name="username" maxlength="100" value="@Model.Username" style="width:220px;" class="form-control" /></td>
+                        <td><input type="text" id="username" name="username" maxlength="100" value="@Model.UserName" style="width:220px;" class="form-control" /></td>
+                    </tr>
+                    <tr style="height:40px;vertical-align:middle">
                         <th style="text-align: right; margin-left: 20px; margin-right: 10px; width: 100px;">密码：</th>
                         <td><input type="text" id="password" name="password" maxlength="100" value="@Model.Password" style="width:220px;" class="form-control" /></td>
                     </tr>
                     <tr style="height:40px;vertical-align:middle">
                         <th style="text-align: right; margin-right: 10px;width:100px;">姓名：</th>
                         <td><input type="text" id="name" name="name" maxlength="100" value="@Model.Name" style="width:220px;" class="form-control" /></td>
-                        <th style="text-align: right; margin-right: 10px;width:100px;">手机号：</th>
-                        <td><input type="text" id="mobile" name="mobile" maxlength="100" value="@Model.Mobile" style="width:220px;" class="form-control" /></td>
                     </tr>
                     <tr style="height:40px;vertical-align:middle">
-                        <th style="text-align:right;margin-left:20px;margin-right:10px">白名单：</th>
-                        <td>
-                            @Html.DropDownListFor(v => v.SmsVerify, lstSmsVerifys, new { style = "width:220px;", @class = "form-control" })
-                        </td>
                         <th style="text-align:right;margin-left:20px;margin-right:10px">状态：</th>
                         <td>
                             @Html.DropDownListFor(v => v.Status, lstStatus, new { style = "width:220px;", @class = "form-control" })
                         </td>
                     </tr>
-                    <tr style="height:40px;vertical-align:middle">
-                        <th style="text-align: right; margin-right: 10px">超级用户：</th>
-                        <td>
-                            @Html.DropDownListFor(v => v.IfSuper, lstIfSuper, new { style = "width:220px;", @class = "form-control" })
-                        </td>
-                        <th style="text-align: right; margin-right: 10px;width:100px;">类型：</th>
-                        <td>@Html.DropDownListFor(v => v.Type, lstTypes, new { style = "width:220px;", @class = "form-control" })</td>
-                    </tr>
-                    <tr style="height:80px;vertical-align:middle">
-                        <th style="text-align: right; margin-right: 10px">角色：</th>
-                        <td colspan="3" style="vertical-align:top;text-align:left">
-                            <div id="myTabContent">
-                                <div style="float: left; width: 165px;padding-left:8px">
-                                    <label>
-                                        <input type="checkbox" value="" onclick="SelAllRight()" />全选
-                                    </label>
-                                </div>
-                                @foreach (var role in roleRights.RoleList)
-                                {
-                                    <div style="float: left; width: 165px; padding-left: 8px">
-                                        @if (Model.Roleids != null && Model.Roleids.Contains(role.Id.ToString()))
-                                        {
-                                            <label style="font-weight:normal;">
-                                                <input type="checkbox" value="@role.Id" checked="checked" />@role.RolesName
-                                            </label>
-                                        }
-                                        else
-                                        {
-                                            <label style="font-weight:normal;">
-                                                <input type="checkbox" value="@role.Id" />@role.RolesName
-                                            </label>
-                                        }
-                                    </div>
-                                }
-
-                            </div>
-                        </td>
-                    </tr>
-
                 </table>
             </div>
-
-
         </div>
         <div class="modal-footer">
             <a href="#" class="btn btn-primary" data-dismiss="modal">关闭</a>
-            <button type="button" class="btn btn-primary" id="btnSave"><i class="icon-save"></i>保存</button>
+            <button type="button" class="btn btn-primary" id="btnSave">保存</button>
         </div>
     }
 </div>
 <script>
-    //选择所有的权限
-    function SelAllRight() {
-        var isChk = $("#myTabContent").find("input[type='checkbox']:eq(0)").prop("checked");
-        $("#myTabContent").find("input[type='checkbox']").not(":eq(0)").each(function () {
-            $(this).prop("checked", isChk);
-        })
-    }
 
     //保存
     $("#btnSave").on("click", function () {
+
+        debugger;
 
         var strMsg = "";
 
@@ -130,63 +65,43 @@
             }
         }
         if ($("#username").val() == "") {
-            strMsg += "请输入用户名称\r\n";
+            strMsg += "请输入用户名\r\n";
         }
         if ($("#name").val() == "") {
             strMsg += "请输入姓名\r\n";
         }
 
-        var pages = "";
-        //获取权限
-        $("#myTabContent input[type='checkbox']:checked").each(function () {
-            if ($(this).val() != '' && $(this).val() != '') {
-                pages += $(this).val() + ',';
-            }
-        });
-
-        if (pages.length == 0) {
-            strMsg += '请选择角色信息！\r\n';
-        }
         if (strMsg.length > 0) {
             alert(strMsg);
             return;
         }
-        $("#Roleids").val(pages);
+        else {
+            var username = $("#username").val().trim();
+            var username_old = $("#username_old").val().trim();
 
-        //验证是否有角色信息
-        var roleid = $("#Id").val();
-        var RolesName = $("#username").val();
-        $.ajax({
-            type: 'POST',
-            url: '/LoginUser/IsExsitUser',
-            data: { Id: roleid, username: RolesName },
-            success: function (data) {
-                debugger;
-                if (data == "True") {
-                    $("#btnSave").submit();
-                }
-                else {
-                    alert("已经存在该用户姓名，请输入其他用户姓名");
-                }
-            },
-            error: function (error) {
-                alert(GetText("请求异常,信息:") + error.status);
+            if (username_old != "" && username_old == username) {
+                $("#btnSave").submit();
+                return;
             }
-        });
 
-
-    });
-
-    $(function () {
-        @*$("#selectappids").selectpicker();
-        var serverappids = @MvcHtmlString.Create(ViewBag.Appids);
-        if (serverappids &&serverappids.length>0)
-            $("#selectappids").selectpicker("val", serverappids).trigger("change");
-        else
-            $('#selectappids').selectpicker("val", "").trigger("change")*@
-
-
-
+            $.ajax({
+                type: 'POST',
+                url: 'IsExsitUser',
+                data: { username: username },
+                success: function (data) {
+                    debugger;
+                    if (data == "False") {
+                        $("#btnSave").submit();
+                    }
+                    else {
+                        ShowAlert("已经存在该用户名，请输入其他用户名", "warning")
+                    }
+                },
+                error: function (error) {
+                    alert(GetText("请求异常,信息:") + error.status);
+      }
+            });
+        }
     });
 
 </script>

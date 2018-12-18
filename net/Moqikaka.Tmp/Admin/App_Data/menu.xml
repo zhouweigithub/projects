@@ -1,7 +1,11 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <MenuModel>
+  <MenuGroup ID="1" text="内容管理">
+    <MenuItem ID="10" Text="文章管理" Controller="Artical" Action="Index"></MenuItem>
+  </MenuGroup>
+
   <MenuGroup ID="20" text="系统管理">
     <MenuItem ID="201" Text="用户管理" Controller="LoginUser" Action="LoginUserIndex"></MenuItem>
     <MenuItem ID="202" Text="系统日志" Controller="ServerLog" Action="LogList"></MenuItem>
-  </MenuGroup> 
+  </MenuGroup>
 </MenuModel>

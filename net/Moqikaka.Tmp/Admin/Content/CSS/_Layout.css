@@ -55,8 +55,19 @@
 
 .width150px {
     width: 150px;
-    display:inline-block;
+    display: inline-block;
 }
+
+.width220px {
+    width: 220px;
+    display: inline-block;
+}
+
+.width300px {
+    width: 300px;
+    display: inline-block;
+}
+
 .dropdown-menu {
     z-index: 1031;
 }

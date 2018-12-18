@@ -7,7 +7,7 @@
     <IsAddIntoCache>false</IsAddIntoCache>
   </TableSetting>
   <TableSetting>
-    <TableName>t_artical</TableName>
+    <TableName>m_artical</TableName>
     <KeyField>id</KeyField>
     <OrderbyFields>id desc</OrderbyFields>
     <IsAddIntoCache>false</IsAddIntoCache>

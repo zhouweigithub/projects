@@ -34,6 +34,7 @@ namespace Moqikaka.Tmp.Admin.Common
             {
                 return true;
             }
+
             if (HttpContext.Current.Session["LoginUserName"] == null)
             {   //没登录则跳出
                 httpContext.Response.StatusCode = 401;
@@ -41,48 +42,49 @@ namespace Moqikaka.Tmp.Admin.Common
             }
 
             //判断菜单是否是用户拥有的菜单，否则则跳转到登录页面
-            #region 判断菜单是否是用户拥有的菜单，否则则跳转到登录页面
+            //#region 判断菜单是否是用户拥有的菜单，否则则跳转到登录页面
 
 
-            try
-            {
-                if (HttpContext.Current.Session["MenuGrouplist"] != null)
-                {
-                    List<MenuGroup> MenuGrouplist = (List<MenuGroup>)HttpContext.Current.Session["MenuGrouplist"];
-                    bool flag = false;
-                    string[] extraUsernameArray = WebConfigData.ExtraUserNames.Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries);
-                    foreach (var item in MenuGrouplist)
-                    {
-                        foreach (var kk in item.MenuItemList)
-                        {   //有main权限的也给予links的权限
-                            if (kk.Controller == controller || (kk.Controller.ToUpper() == "MAIN" && controller.ToUpper() == "LINKS"))
-                            {
-                                flag = true;
-                                break;
-                            }
-                            else if (extraUsernameArray.Contains(HttpContext.Current.Session["LoginUserName"]))
-                            {
-                                flag = true;
-                                break;
-                            }
-                        }
-                        if (flag)
-                        {
-                            break;
-                        }
-                    }
-                    if (!flag)
-                    {
-                        httpContext.Response.StatusCode = 401;
-                        return false;
-                    }
-                }
-            }
-            catch (System.Exception e)
-            {
-                Util.Log.LogUtil.Write("菜单权限判定时出错啦！" + e.ToString(), Util.Log.LogType.Error);
-            }
-            #endregion
+            //try
+            //{
+            //    if (HttpContext.Current.Session["MenuGrouplist"] != null)
+            //    {
+            //        List<MenuGroup> MenuGrouplist = (List<MenuGroup>)HttpContext.Current.Session["MenuGrouplist"];
+            //        bool flag = false;
+            //        string[] extraUsernameArray = WebConfigData.ExtraUserNames.Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries);
+            //        foreach (var item in MenuGrouplist)
+            //        {
+            //            foreach (var kk in item.MenuItemList)
+            //            {   //有main权限的也给予links的权限
+            //                if (kk.Controller == controller || (kk.Controller.ToUpper() == "MAIN" && controller.ToUpper() == "LINKS"))
+            //                {
+            //                    flag = true;
+            //                    break;
+            //                }
+            //                else if (extraUsernameArray.Contains(HttpContext.Current.Session["LoginUserName"]))
+            //                {
+            //                    flag = true;
+            //                    break;
+            //                }
+            //            }
+            //            if (flag)
+            //            {
+            //                break;
+            //            }
+            //        }
+            //        if (!flag)
+            //        {
+            //            httpContext.Response.StatusCode = 401;
+            //            return false;
+            //        }
+            //    }
+            //}
+            //catch (System.Exception e)
+            //{
+            //    Util.Log.LogUtil.Write("菜单权限判定时出错啦！" + e.ToString(), Util.Log.LogType.Error);
+            //}
+            //#endregion
+
             return true;
         }
 
@@ -96,7 +98,7 @@ namespace Moqikaka.Tmp.Admin.Common
             if (filterContext.HttpContext.Response.StatusCode == 401)
             {
                 #region 热云跳转                
-              
+
                 if (!string.IsNullOrWhiteSpace(ReturnUrl))
                 {
 

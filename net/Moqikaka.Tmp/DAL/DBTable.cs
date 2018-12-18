@@ -19,6 +19,6 @@ namespace Moqikaka.Tmp.DAL
         /// <summary>
         /// 文章表
         /// </summary>
-        public static string t_artical = "t_artical";
+        public static string m_artical = "m_artical";
     }
 }

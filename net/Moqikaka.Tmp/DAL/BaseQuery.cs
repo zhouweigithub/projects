@@ -11,7 +11,7 @@ using System.Collections.Generic;
 using System.Data;
 using System.Reflection;
 using System.Text;
-using Moqikaka.Portal.Model.Common;
+using Moqikaka.Tmp.Model.Common;
 using Moqikaka.Tmp.Common;
 using MySql.Data.MySqlClient;
 

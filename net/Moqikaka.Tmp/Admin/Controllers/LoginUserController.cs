@@ -21,6 +21,7 @@ namespace Moqikaka.Tmp.Admin.Controllers
     /// <summary>
     /// 用户信息
     /// </summary>
+    [Common.CustomAuthorize]
     public class LoginUserController : Controller
     {
         //单例
@@ -62,7 +63,7 @@ namespace Moqikaka.Tmp.Admin.Controllers
             //var roleRights = RoleDAL.GetListRoles();
             //ViewBag.Rights = roleRights;
             ViewBag.Title = "编辑";
-            Model.MUser user = DAL.DBData.GetInstance(DAL.DBTable.m_user).GetEntityByKey<Model.MUser>(model.id);
+            Model.MUser user = DBData.GetInstance(DBTable.m_user).GetEntityByKey<Model.MUser>(model.id);
 
             if (user != null)   //密码不能显示到界面上
                 user.Password = string.Empty;
@@ -108,17 +109,22 @@ namespace Moqikaka.Tmp.Admin.Controllers
                 if (model.Id == 0)
                 {   //新增
                     model.Password = MD5Util.MD5(model.Password);
-                    iReturn = DBData.GetInstance(DAL.DBTable.m_user).Add(model);
+                    iReturn = DBData.GetInstance(DBTable.m_user).Add(model);
                 }
                 else
                 {   //编辑
-                    List<string> excludeFields = new List<string>() { "id", "password" };
+                    MUser serverData = DBData.GetInstance(DBTable.m_user).GetEntityByKey<MUser>(model.Id);
+
+                    serverData.Name = model.Name;
+                    serverData.UserName = model.UserName;
+                    serverData.Status = model.Status;
+
                     if (!string.IsNullOrEmpty(model.Password))
                     {   //填写了密码就修改密码
-                        model.Password = MD5Util.MD5(model.Password);
-                        excludeFields = new List<string>() { "id", "createtime" };
+                        serverData.Password = MD5Util.MD5(model.Password);
                     }
-                    iReturn = DBData.GetInstance(DAL.DBTable.m_user).UpdateByKey(model, excludeFields, model.Id);
+
+                    iReturn = DBData.GetInstance(DBTable.m_user).UpdateByKey(serverData, serverData.Id);
                 }
                 if (iReturn > 0)
                 {
@@ -230,7 +236,7 @@ namespace Moqikaka.Tmp.Admin.Controllers
             bool result = false;
             try
             {
-                if (DBData.GetInstance(DAL.DBTable.m_user).DeleteByKey(Id) > 0)
+                if (DBData.GetInstance(DBTable.m_user).DeleteByKey(Id) > 0)
                     result = true;
             }
             catch (Exception)
@@ -247,12 +253,9 @@ namespace Moqikaka.Tmp.Admin.Controllers
         /// <param name="Id">用户Id</param>
         /// <param name="RolesName">用户名称</param>
         /// <returns></returns>
-        public string IsExsitUser(string Id, string username)
+        public bool IsExsitUser(string username)
         {
-            Model.MUser model = new Model.MUser();
-            model.Id = Convert.ToInt32(Id);
-            model.UserName = username;
-            return LoginUserDAL.IsExsitUserInfo(model).ToString();
+            return (DBData.GetInstance(DBTable.m_user).GetCount($"username='{username}'") > 0);
         }
 
         public string CheckLetter(String password)
