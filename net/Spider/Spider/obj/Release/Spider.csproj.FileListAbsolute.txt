@@ -1,8 +1,0 @@
-E:\wx\net\Spider\Spider\bin\Release\Spider.exe.config
-E:\wx\net\Spider\Spider\bin\Release\Spider.exe
-E:\wx\net\Spider\Spider\bin\Release\Spider.pdb
-E:\wx\net\Spider\Spider\bin\Release\MySql.Data.dll
-E:\wx\net\Spider\Spider\obj\Release\Spider.csproj.CoreCompileInputs.cache
-E:\wx\net\Spider\Spider\obj\Release\Spider.csproj.CopyComplete
-E:\wx\net\Spider\Spider\obj\Release\Spider.exe
-E:\wx\net\Spider\Spider\obj\Release\Spider.pdb

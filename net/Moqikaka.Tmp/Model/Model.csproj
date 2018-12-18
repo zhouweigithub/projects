@@ -52,11 +52,12 @@
   <ItemGroup>
     <Compile Include="Common\TableFieldAttribute.cs" />
     <Compile Include="DataValueModel.cs" />
-    <Compile Include="LoginUser.cs" />
+    <Compile Include="MUser.cs" />
     <Compile Include="LoginUser\LoginUserModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Role\RoleModel.cs" />
     <Compile Include="TableSetting.cs" />
+    <Compile Include="TArtical.cs" />
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

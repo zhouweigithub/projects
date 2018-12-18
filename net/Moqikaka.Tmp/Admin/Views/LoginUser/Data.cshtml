@@ -69,7 +69,6 @@
 
     //删除角色信息
     $("#RoleBody").on("click", ".delrole", function () {
-
         var isdelete = confirm("是否删除此条数据？");
         if (isdelete == true) {
             var userid = $(this).parent().attr("userid");
@@ -79,11 +78,11 @@
                 data: { Id: userid },
                 success: function (data) {
                     if (data == "True") {
-                        alert("删除成功！");
-                        setTimeout(function () { $("#searchbtn").click(); }, "200");
+                        ShowAlert("删除成功", "success")
+                        setTimeout(function () { $("#searchbtn").click(); }, 1000);
                     }
                     else {
-                        alert("删除失败！");
+                        ShowAlert("删除失败", "warning")
                     }
                 }
             })
@@ -100,7 +99,7 @@
         $.ajax({
             type: 'Get',
             url: 'EditGameAuthority',
-            data: { userid: userid,username: username, name: name },
+            data: { userid: userid, username: username, name: name },
             success: function (data) {
                 if (data != null && data != "") {
                     $('#dialog').html(data);
@@ -112,14 +111,14 @@
 
     $("#RoleBody").on("click", ".loginLockEdit", function () {
         var username = $(this).parent().parent().find(".username").text();
-        if(confirm("确定要解除【"+username+"】的登录限制吗？")){
+        if (confirm("确定要解除【" + username + "】的登录限制吗？")) {
             $.ajax({
                 type: 'POST',
                 url: 'UnlockLogin',
-                data: {username: username },
+                data: { username: username },
                 success: function (data) {
                     if (data != null && data.Message) {
-                        alert(data.Message);
+                        onDataMidff(data);
                     }
                 }
             });

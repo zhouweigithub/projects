@@ -169,11 +169,11 @@ namespace Moqikaka.Tmp.DAL.Providers
         public override DataSet ExecuteDataSetParams(string sql, params MySqlParameter[] commandParameters)
         {
             MySqlCommand comm = (MySqlCommand)CreateCommand(sql, commandParameters);
-
             DataSet ds = new DataSet();
-            MySqlDataAdapter adapter = new MySqlDataAdapter();
-
-            adapter.SelectCommand = comm;
+            MySqlDataAdapter adapter = new MySqlDataAdapter
+            {
+                SelectCommand = comm
+            };
             adapter.Fill(ds);
             return ds;
         }

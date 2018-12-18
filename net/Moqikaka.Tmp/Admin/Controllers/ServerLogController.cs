@@ -5,6 +5,7 @@ using System.Web.Mvc;
 
 namespace Moqikaka.Tmp.Admin.Controllers
 {
+    [Common.CustomAuthorize]
     public class ServerLogController : Controller
     {
         /// <summary>

@@ -11,7 +11,7 @@ namespace Spider
     {
         static void Main(string[] args)
         {
-            //UrlSpider.Start();
+            UrlSpider.Start();
 
             do
             {

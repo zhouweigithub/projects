@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Moqikaka.Portal.Model.Common
+namespace Moqikaka.Tmp.Model.Common
 {
     /// <summary>
     /// 数据表字段

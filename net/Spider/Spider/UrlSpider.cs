@@ -66,9 +66,9 @@ namespace Spider
 
         private static void Go()
         {
-            GetUrls("https://www.diyifanwen.com/zuowen/gaozhongzuowen/", isOnlyThisSite);
             GetUrls("http://www.zuowen.com/gaokaozw/lngkmf/", isOnlyThisSite);
-            GetUrls("http://www.gaokao.com/gkzw/gkmfzw/", isOnlyThisSite);
+            //GetUrls("https://www.diyifanwen.com/zuowen/gaozhongzuowen/", isOnlyThisSite);
+            //GetUrls("http://www.gaokao.com/gkzw/gkmfzw/", isOnlyThisSite);
 
             //GetUrls("https://www.baidu.com/s?ie=utf-8&f=8&rsv_bp=1&rsv_idx=1&tn=baidu&wd=%E9%AB%98%E8%80%83%E6%BB%A1%E5%88%86%E4%BD%9C%E6%96%87", isOnlyThisSite);
 
@@ -118,7 +118,7 @@ namespace Spider
                 string title = titleMatch.Groups["Title"].Value;
                 if (titleKeyWordsList.Length > 0)
                 {
-                    if (titleKeyWordsList.Count(a => title.Contains(a)) > 0 &&
+                    if (titleKeyWordsList.Count(a => title.Contains(a)) == titleKeyWordsList.Length &&
                         (exceptKeyWordsList.Length == 0 || exceptKeyWordsList.Count(a => title.Contains(a)) == 0))      //不能包含被排除的关键字
                         GetContent(host, url, html);
                 }

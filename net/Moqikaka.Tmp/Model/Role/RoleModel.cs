@@ -6,7 +6,7 @@
 //日期：2017-09-18
 //修改记录：
 //***********************************************************************************
-using Moqikaka.Portal.Model.Common;
+using Moqikaka.Tmp.Model.Common;
 using System;
 using System.Collections.Generic;
 using System.Linq;
