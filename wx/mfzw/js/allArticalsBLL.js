@@ -4,12 +4,24 @@ function addArticalData(obj) {
   var allArticals = wx.getStorageSync(commonData.allArticalsCacheName);
   if (allArticals == '') {
     allArticals = {};
-    allArticals[obj.id] = obj;
+    allArticals[obj.Id] = obj;
   } else {
-    if (allArticals[obj.id] == null)
-      allArticals[obj.id] = obj;
+    if (allArticals[obj.Id] == null)
+      allArticals[obj.Id] = obj;
   }
   wx.setStorageSync(commonData.allArticalsCacheName, allArticals);
+}
+
+function getArticalById(id) {
+  var allArticals = wx.getStorageSync(commonData.allArticalsCacheName);
+  if (allArticals == '') {
+    return null;
+  } else {
+    if (allArticals[id] != null)
+      return allArticals[id];
+    else
+      return null;
+  }
 }
 
 function isExist(id) {
@@ -17,7 +29,7 @@ function isExist(id) {
   if (allArticals == '') {
     return false;
   } else {
-    if (allArticals[obj.id] == null)
+    if (allArticals[obj.Id] == null)
       return false;
     else
       return true;
@@ -46,5 +58,6 @@ function getArticalsArray(idArray) {
 module.exports = {
   addArticalData: addArticalData,
   isExist: isExist,
-  getArticals: getArticals
+  getArticals: getArticals,
+  getArticalById: getArticalById,
 }

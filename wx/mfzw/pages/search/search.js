@@ -1,23 +1,50 @@
-// pages/search/search.js
+import requestBLL from '../../js/requestBLL.js';
+import commonBLL from '../../js/commonBLL.js';
+
+
 Page({
 
   /**
    * 页面的初始数据
    */
   data: {
-
+    isloading: true,
   },
 
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function(options) {
-
+    if (options.year) {
+      var url = "https://wx.ullfly.com/artidata/getarticallistbyyear";
+      var data = {
+        year: options.year,
+      };
+      requestBLL.getDataFromServer(url, data, this.bindData);
+    }
   },
-  itemClick: function() {
-    wx.navigateTo({
-      url: '../artical/artical'
+  bindData: function(datas) {
+    commonBLL.resetSummaryList(datas);
+    this.setData({
+      datalist: datas,
+      isloading: false,
     });
+  },
+  itemClick: function(option) {
+    wx.navigateTo({
+      url: '../artical/artical?id=' + option.currentTarget.dataset.id
+    });
+  },
+  confirmTap: function(evt) {
+    this.setData({
+      datalist: [],
+      isloading: true,
+    });
+    var url = "https://wx.ullfly.com/artidata/getarticallistbykeyword";
+    var data = {
+      keyword: evt.detail.value,
+    };
+    requestBLL.getDataFromServer(url, data, this.bindData);
   },
   /**
    * 生命周期函数--监听页面初次渲染完成

@@ -1,5 +1,6 @@
 import allArticalsBLL from '../../js/allArticalsBLL.js';
 import historyBLL from '../../js/historyBLL.js';
+import commonBLL from '../../js/commonBLL.js';
 
 Page({
 
@@ -15,14 +16,16 @@ Page({
    */
   onLoad: function(options) {
     var historyIds = historyBLL.getAllHistoryIds();
+    historyIds.reverse();
     var allArticals = allArticalsBLL.getArticals(historyIds);
+    commonBLL.resetSummaryList(allArticals);
     this.setData({
       articals: allArticals
     });
   },
-  itemClick: function() {
+  itemClick: function(option) {
     wx.redirectTo({
-      url: '../artical/artical'
+      url: '../artical/artical?id=' + option.currentTarget.dataset.id
     });
   },
   /**

@@ -6,11 +6,11 @@
     <checkbox-group bind:change="checkboxChange">
       <view wx:for="{{articals}}" class='item'>
         <view class='checkView'>
-          <checkbox value='{{item.id}}' />
+          <checkbox value='{{item.Id}}' />
         </view>
-        <view bind:tap='itemClick'>
-          <view class='title'>{{item.title}}</view>
-          <view class='summary'>{{(item.year!=''?(item.year+"年高考 - "):"")+(item.area!=''?(item.area+"卷 - "):"")+"满分作文"}}</view>
+        <view bind:tap='itemClick' data-id="{{item.Id}}">
+          <view class='title'>{{item.Title}}</view>
+          <view class='summary'>{{item.Summary}}</view>
         </view>
       </view>
     </checkbox-group>

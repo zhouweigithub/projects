@@ -1,28 +1,33 @@
 <import src="../wxParse/wxParse.wxml" />
 <view class='vbody'>
-  <view class='titleView'>
-    <view class='title'>{{title}}</view>
-    <view class='summary'>{{summary}}</view>
-  </view>
-  <view class='content'>
-    <template is="wxParse" data="{{wxParseData:article.nodes}}" />
-  </view>
+  <block wx:if="{{isloading}}">
+    <text>加载中...</text>
+  </block>
+  <block wx:else>
+    <view class='titleView'>
+      <view class='title'>{{data.Title}}</view>
+      <view class='summary'>{{data.Summary}}</view>
+    </view>
+    <view class='content'>
+      <template is="wxParse" data="{{wxParseData:article.nodes}}" />
+    </view>
 
-  <view class='recommends'>
-    <view class='lab'>更多推荐>></view>
-    <view class='item' bind:tap='itemClick'>
-      <view class='title'>没有翅膀的飞翔</view>
-      <view class='comment'>2004年 - 重庆高考 - 满分卷</view>
+    <view class='recommends'>
+      <view class='lab'>更多推荐>></view>
+      <view class='item' bind:tap='itemClick'>
+        <view class='title'>没有翅膀的飞翔</view>
+        <view class='comment'>2004年 - 重庆高考 - 满分卷</view>
+      </view>
+      <view class='item' bind:tap='itemClick'>
+        <view class='title'>没有翅膀的飞翔</view>
+        <view class='comment'>2004年 - 重庆高考 - 满分卷</view>
+      </view>
+      <view class='item' bind:tap='itemClick'>
+        <view class='title'>没有翅膀的飞翔</view>
+        <view class='comment'>2004年 - 重庆高考 - 满分卷</view>
+      </view>
     </view>
-    <view class='item' bind:tap='itemClick'>
-      <view class='title'>没有翅膀的飞翔</view>
-      <view class='comment'>2004年 - 重庆高考 - 满分卷</view>
-    </view>
-    <view class='item' bind:tap='itemClick'>
-      <view class='title'>没有翅膀的飞翔</view>
-      <view class='comment'>2004年 - 重庆高考 - 满分卷</view>
-    </view>
-  </view>
+  </block>
 
   <view class='userView' bind:tap='onUserTap'>
     <image src='/images/user.png'></image>

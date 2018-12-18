@@ -6,6 +6,10 @@ function addHistory(id) {
   if (historyArray == '') {
     historyArray = [id];
   } else {
+    var index = historyArray.indexOf(id);
+    if (index > -1) {
+      historyArray.splice(index, 1);
+    }
     historyArray.push(id);
 
     //只保留50个历史记录

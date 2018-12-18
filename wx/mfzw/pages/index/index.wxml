@@ -3,26 +3,26 @@
     <image src='../../images/back.png' mode='widthFix'></image>
   </view>
   <view class='yearsView'>
-    <view bind:tap='itemClick'>2018</view>
-    <view bind:tap='itemClick'>2017</view>
-    <view bind:tap='itemClick'>2016</view>
-    <view bind:tap='itemClick'>2015</view>
-    <view bind:tap='itemClick'>2014</view>
-    <view bind:tap='itemClick'>2013</view>
-    <view bind:tap='itemClick'>2012</view>
-    <view bind:tap='itemClick'>2011</view>
-    <view bind:tap='itemClick'>2010</view>
-    <view bind:tap='itemClick'>2009</view>
-    <view bind:tap='itemClick'>2008</view>
-    <view bind:tap='itemClick'>2007</view>
-    <view bind:tap='itemClick'>2006</view>
-    <view bind:tap='itemClick'>2005</view>
-    <view bind:tap='itemClick'>2004</view>
-    <view bind:tap='itemClick'>2003</view>
-    <view bind:tap='itemClick'>2002</view>
-    <view bind:tap='itemClick'>2001</view>
-    <view bind:tap='itemClick'>2000</view>
-    <view bind:tap='itemClick'>1999</view>
+    <view bind:tap='itemClick' data-year='2018'>2018</view>
+    <view bind:tap='itemClick' data-year='2017'>2017</view>
+    <view bind:tap='itemClick' data-year='2016'>2016</view>
+    <view bind:tap='itemClick' data-year='2015'>2015</view>
+    <view bind:tap='itemClick' data-year='2014'>2014</view>
+    <view bind:tap='itemClick' data-year='2013'>2013</view>
+    <view bind:tap='itemClick' data-year='2012'>2012</view>
+    <view bind:tap='itemClick' data-year='2011'>2011</view>
+    <view bind:tap='itemClick' data-year='2010'>2010</view>
+    <view bind:tap='itemClick' data-year='2009'>2009</view>
+    <view bind:tap='itemClick' data-year='2008'>2008</view>
+    <view bind:tap='itemClick' data-year='2007'>2007</view>
+    <view bind:tap='itemClick' data-year='2006'>2006</view>
+    <view bind:tap='itemClick' data-year='2005'>2005</view>
+    <view bind:tap='itemClick' data-year='2004'>2004</view>
+    <view bind:tap='itemClick' data-year='2003'>2003</view>
+    <view bind:tap='itemClick' data-year='2002'>2002</view>
+    <view bind:tap='itemClick' data-year='2001'>2001</view>
+    <view bind:tap='itemClick' data-year='2000'>2000</view>
+    <view bind:tap='itemClick' data-year='1999'>1999</view>
   </view>
   <view class='bottomView'></view>
 </view>

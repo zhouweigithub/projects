@@ -1,5 +1,6 @@
 import allArticalsBLL from '../../js/allArticalsBLL.js';
 import favoriteBLL from '../../js/favoriteBLL.js';
+import commonBLL from '../../js/commonBLL.js';
 
 var selectedItemms;
 
@@ -32,14 +33,18 @@ Page({
   onReady: function() {
 
   },
-  itemClick: function() {
+  itemClick: function (option) {
     wx.redirectTo({
-      url: '../artical/artical'
+      url: '../artical/artical?id=' + option.currentTarget.dataset.id
     });
   },
   initDatas: function() {
     var favortedIds = favoriteBLL.getAllFavoriteIds();
     var allArticals = allArticalsBLL.getArticals(favortedIds);
+    commonBLL.resetSummaryList(allArticals);
+    allArticals.sort((a, b) => {
+      return a.CrTime < b.CrTime;
+    });
     this.setData({
       articals: allArticals
     });

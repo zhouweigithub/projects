@@ -1,8 +1,8 @@
 <view class='vbody'>
   <view wx:for="{{articals}}" class='resultView'>
-    <view class='item' bind:tap='itemClick'>
-      <view class='title'>{{item.title}}</view>
-      <view class='summary'>{{(item.year!=''?(item.year+"年高考 - "):"")+(item.area!=''?(item.area+"卷 - "):"")+"满分作文"}}</view>
+    <view class='item' data-id="{{item.Id}}" bind:tap='itemClick'>
+      <view class='title'>{{item.Title}}</view>
+      <view class='summary'>{{item.Summary}}</view>
     </view>
 
   </view>

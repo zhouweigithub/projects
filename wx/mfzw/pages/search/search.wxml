@@ -1,80 +1,16 @@
 <view class='vbody'>
   <view class='searchView'>
-    <input type='text' confirm-type='search' placeholder='搜索'></input>
+    <input type='text' confirm-type='search' bindconfirm="confirmTap" placeholder='搜索'></input>
   </view>
   <view class='resultView'>
-    <view bind:tap='itemClick'>
-      <view class='title'>没有翅膀的飞翔</view>
-      <view class='summary'>2004年 - 重庆高考 - 满分卷</view>
-    </view>
-    <view bind:tap='itemClick'>
-      <view class='title'>没有翅膀的飞翔</view>
-      <view class='summary'>2004年 - 重庆高考 - 满分卷</view>
-    </view>
-    <view bind:tap='itemClick'>
-      <view class='title'>没有翅膀的飞翔</view>
-      <view class='summary'>2004年 - 重庆高考 - 满分卷</view>
-    </view>
-    <view bind:tap='itemClick'>
-      <view class='title'>没有翅膀的飞翔</view>
-      <view class='summary'>2004年 - 重庆高考 - 满分卷</view>
-    </view>
-    <view bind:tap='itemClick'>
-      <view class='title'>没有翅膀的飞翔</view>
-      <view class='summary'>2004年 - 重庆高考 - 满分卷</view>
-    </view>
-    <view bind:tap='itemClick'>
-      <view class='title'>没有翅膀的飞翔</view>
-      <view class='summary'>2004年 - 重庆高考 - 满分卷</view>
-    </view>
-    <view bind:tap='itemClick'>
-      <view class='title'>没有翅膀的飞翔</view>
-      <view class='summary'>2004年 - 重庆高考 - 满分卷</view>
-    </view>
-    <view bind:tap='itemClick'>
-      <view class='title'>没有翅膀的飞翔</view>
-      <view class='summary'>2004年 - 重庆高考 - 满分卷</view>
-    </view>
-    <view bind:tap='itemClick'>
-      <view class='title'>没有翅膀的飞翔</view>
-      <view class='summary'>2004年 - 重庆高考 - 满分卷</view>
-    </view>
-    <view bind:tap='itemClick'>
-      <view class='title'>没有翅膀的飞翔</view>
-      <view class='summary'>2004年 - 重庆高考 - 满分卷</view>
-    </view>
-    <view bind:tap='itemClick'>
-      <view class='title'>没有翅膀的飞翔</view>
-      <view class='summary'>2004年 - 重庆高考 - 满分卷</view>
-    </view>
-    <view bind:tap='itemClick'>
-      <view class='title'>没有翅膀的飞翔</view>
-      <view class='summary'>2004年 - 重庆高考 - 满分卷</view>
-    </view>
-    <view bind:tap='itemClick'>
-      <view class='title'>没有翅膀的飞翔</view>
-      <view class='summary'>2004年 - 重庆高考 - 满分卷</view>
-    </view>
-    <view bind:tap='itemClick'>
-      <view class='title'>没有翅膀的飞翔</view>
-      <view class='summary'>2004年 - 重庆高考 - 满分卷</view>
-    </view>
-    <view bind:tap='itemClick'>
-      <view class='title'>没有翅膀的飞翔</view>
-      <view class='summary'>2004年 - 重庆高考 - 满分卷</view>
-    </view>
-    <view bind:tap='itemClick'>
-      <view class='title'>没有翅膀的飞翔</view>
-      <view class='summary'>2004年 - 重庆高考 - 满分卷</view>
-    </view>
-    <view bind:tap='itemClick'>
-      <view class='title'>没有翅膀的飞翔</view>
-      <view class='summary'>2004年 - 重庆高考 - 满分卷</view>
-    </view>
-    <view bind:tap='itemClick'>
-      <view class='title'>没有翅膀的飞翔</view>
-      <view class='summary'>2004年 - 重庆高考 - 满分卷</view>
-    </view>
+    <block wx:if="{{isloading}}">
+      <text>加载中...</text>
+    </block>
+    <block wx:else>
+      <view wx:for="{{datalist}}" wx:key="{{index}}" data-id='{{item.Id}}' bindtap='itemClick'>
+        <view class='title'>{{item.Title}}</view>
+        <view class='summary'>{{item.Summary}}</view>
+      </view>
+    </block>
   </view>
-
 </view>
