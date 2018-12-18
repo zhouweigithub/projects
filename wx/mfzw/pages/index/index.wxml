@@ -1,9 +1,6 @@
 <view class='vbody'>
   <view class="topView">
-    <image src='../../images/img1.jpg' mode='scaleToFill'></image>
-  </view>
-  <view class='searchView'>
-    <input type='text' confirm-type='search' placeholder='搜索'></input>
+    <image src='../../images/back.png' mode='widthFix'></image>
   </view>
   <view class='yearsView'>
     <view bind:tap='itemClick'>2018</view>

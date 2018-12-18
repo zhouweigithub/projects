@@ -1,4 +1,6 @@
-// pages/search/search.js
+import allArticalsBLL from '../../js/allArticalsBLL.js';
+import historyBLL from '../../js/historyBLL.js';
+
 Page({
 
   /**
@@ -12,10 +14,14 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function(options) {
-
+    var historyIds = historyBLL.getAllHistoryIds();
+    var allArticals = allArticalsBLL.getArticals(historyIds);
+    this.setData({
+      articals: allArticals
+    });
   },
   itemClick: function() {
-    wx.navigateTo({
+    wx.redirectTo({
       url: '../artical/artical'
     });
   },

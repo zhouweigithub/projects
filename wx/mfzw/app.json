@@ -1,8 +1,12 @@
 {
   "pages": [
-      "pages/index/index",
-  "pages/artical/artical",
-    "pages/search/search"
+    "pages/my/my",
+    "pages/index/index",
+    "pages/artical/artical",
+    "pages/search/search",
+    "pages/favorite/favorite",
+    "pages/history/history",
+    "pages/feedback/feedback"
   ],
   "window": {
     "backgroundTextStyle": "light",

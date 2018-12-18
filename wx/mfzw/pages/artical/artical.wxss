@@ -1,27 +1,23 @@
+@import "/pages/wxParse/wxParse.wxss";
+
 .vbody {
-  margin: 10px;
+  margin: 20px;
 }
 
-.gomainView {
-  position: fixed;
-  bottom: 20px;
-  right: 20px;
-}
-
-.title {
+.titleView .title {
   font-size: 25px;
   padding: 10px;
 }
 
-.summary {
+.titleView .summary {
   padding: 10px;
-  margin-bottom: 30px;
+  margin-bottom: 20px;
   border-bottom: thin solid #c2d8a4;
 }
 
-.summary text {
+.titleView .summary text {
   font-size: 14px;
-  margin: auto 10px;
+  margin: auto 7px;
 }
 
 .content {
@@ -32,7 +28,7 @@
 
 .shareView {
   position: fixed;
-  bottom: 80px;
+  bottom: 110px;
   right: 20px;
 }
 
@@ -50,12 +46,68 @@
 
 .gomainView {
   position: fixed;
-  bottom: 20px;
+  bottom: 50px;
   right: 20px;
 }
 
-.gomainView image, .shareView image {
+.userView image, .gomainView image, .favoriteView image, .shareView image {
   width: 30px;
   height: 30px;
-  opacity: 0.4;
+  opacity: 0.1;
+}
+
+.userView {
+  position: fixed;
+  bottom: 230px;
+  right: 20px;
+}
+
+.favoriteView {
+  position: fixed;
+  bottom: 170px;
+  right: 20px;
+}
+
+.recommends {
+  text-align: left;
+  margin: 30px 10px;
+}
+
+.recommends .lab {
+  font-size: 20px;
+}
+
+.recommends .item {
+  border-bottom: thin dotted #c2d8a4;
+  margin: 5px;
+  padding: 5px;
+}
+
+.recommends .title {
+  font-size: 18px;
+  line-height: 30px;
+}
+
+.recommends .comment {
+  font-size: 14px;
+}
+
+.content p {
+  margin: 10px auto;
+}
+
+.wxParse-p {
+  margin: 15px auto;
+}
+
+.alertview {
+  position: fixed;
+  top: 40%;
+  left: 40%;
+  z-index: 700;
+  color: white;
+  padding: 5px;
+  font-size: 12px;
+  background-color: rgba(36, 34, 34, 1);
+  border-radius: 5px;
 }

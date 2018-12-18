@@ -1,17 +1,37 @@
 <import src="../wxParse/wxParse.wxml" />
 <view class='vbody'>
   <view class='titleView'>
-    <view class='title'>我的自白</view>
-    <view class='summary'>
-      <text>2017年</text>
-      <text>海南卷</text>
-    </view>
+    <view class='title'>{{title}}</view>
+    <view class='summary'>{{summary}}</view>
   </view>
   <view class='content'>
     <template is="wxParse" data="{{wxParseData:article.nodes}}" />
   </view>
+
+  <view class='recommends'>
+    <view class='lab'>更多推荐>></view>
+    <view class='item' bind:tap='itemClick'>
+      <view class='title'>没有翅膀的飞翔</view>
+      <view class='comment'>2004年 - 重庆高考 - 满分卷</view>
+    </view>
+    <view class='item' bind:tap='itemClick'>
+      <view class='title'>没有翅膀的飞翔</view>
+      <view class='comment'>2004年 - 重庆高考 - 满分卷</view>
+    </view>
+    <view class='item' bind:tap='itemClick'>
+      <view class='title'>没有翅膀的飞翔</view>
+      <view class='comment'>2004年 - 重庆高考 - 满分卷</view>
+    </view>
+  </view>
+
+  <view class='userView' bind:tap='onUserTap'>
+    <image src='/images/user.png'></image>
+  </view>
+  <view class='favoriteView' bind:tap='onFavoriteTap'>
+    <image src='{{isFavorited?"/images/favorited.png":"/images/favorite.png"}}'></image>
+  </view>
   <view class='shareView' bind:tap='onShareTap'>
-    <button class='share' id="shareBtn" size='mini' open-type="share" hover-class="other-button-hover" >
+    <button class='share' id="shareBtn" size='mini' open-type="share" hover-class="other-button-hover">
       <image src='/images/share.png'></image>
     </button>
   </view>
@@ -19,3 +39,5 @@
     <image src='/images/home.png'></image>
   </view>
 </view>
+
+<view class='alertview' style='display:{{showAlertText?"blockk":"none"}};'>{{alerttext}}</view>

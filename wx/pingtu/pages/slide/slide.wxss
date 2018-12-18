@@ -27,9 +27,9 @@ view {
 
 .view_top_left {
   font-family: '黑体';
-  display: inline-block;
-  vertical-align: top;
+  display: block;
   text-align: left;
+  float: left;
 }
 
 .view_top_left text {
@@ -43,10 +43,11 @@ view {
 }
 
 .view_top_right {
-  display: inline-block;
+  display: block;
   text-align: right;
   background-repeat: no-repeat;
   box-shadow: 3px 3px 3px grey;
+  float: right;
 }
 
 .time_view {
@@ -170,4 +171,21 @@ view {
 .modelView .currentModel {
   border: solid 1px green;
   background-color: rgba(172, 255, 47, 0.493);
+}
+
+.adView {
+  width: 80%;
+  text-align: center;
+  margin: 10px auto auto auto;
+  box-shadow: 3px 3px 3px grey;
+}
+
+.btnModel {
+  background-color: blueviolet;
+  color: white;
+}
+
+.setting {
+  background-color: dodgerblue;
+  color: white;
 }

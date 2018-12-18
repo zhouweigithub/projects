@@ -26,6 +26,12 @@ Page({
       var storageIndex = wx.getStorageSync(common.currentMyIndex);
       if (storageIndex != "")
         currentIndex = parseInt(storageIndex);
+      else {
+        //随机初始化第一条数据
+        var maxCount = bll.getQuestionCount();
+        var ranNum = common.getRandomNum(0, maxCount - 1);
+        currentIndex = ranNum;
+      }
     }
     this.InitQuestion();
   },

@@ -334,6 +334,7 @@ view {
 
 .currentGate {
   border: 1px solid rgb(116, 134, 92);
+  box-shadow: 3px 3px 3px rgb(116, 134, 92);
 }
 
 .modelView {
@@ -373,4 +374,9 @@ view {
 .modelView .currentModel {
   border: solid 1px green;
   background-color: rgba(172, 255, 47, 0.493);
+}
+
+.btnModel {
+  background-color: blueviolet;
+  color: white;
 }

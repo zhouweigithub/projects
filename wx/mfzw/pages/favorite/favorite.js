@@ -1,4 +1,8 @@
-// pages/search/search.js
+import allArticalsBLL from '../../js/allArticalsBLL.js';
+import favoriteBLL from '../../js/favoriteBLL.js';
+
+var selectedItemms;
+
 Page({
 
   /**
@@ -12,12 +16,15 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function(options) {
-
+    selectedItemms = [];
+    this.initDatas();
   },
-  itemClick: function() {
-    wx.navigateTo({
-      url: '../artical/artical'
-    });
+  deleteTap: function(evt) {
+    favoriteBLL.deleteFavorites(selectedItemms);
+    this.initDatas();
+  },
+  checkboxChange: function(evt) {
+    selectedItemms = evt.detail.value;
   },
   /**
    * 生命周期函数--监听页面初次渲染完成
@@ -25,7 +32,18 @@ Page({
   onReady: function() {
 
   },
-
+  itemClick: function() {
+    wx.redirectTo({
+      url: '../artical/artical'
+    });
+  },
+  initDatas: function() {
+    var favortedIds = favoriteBLL.getAllFavoriteIds();
+    var allArticals = allArticalsBLL.getArticals(favortedIds);
+    this.setData({
+      articals: allArticals
+    });
+  },
   /**
    * 生命周期函数--监听页面显示
    */
