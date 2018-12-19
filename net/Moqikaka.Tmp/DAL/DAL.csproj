@@ -75,6 +75,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ArtiRequestDAL.cs" />
     <Compile Include="DBData.cs" />
     <Compile Include="DBTable.cs" />
     <Compile Include="MArticalDAL.cs" />

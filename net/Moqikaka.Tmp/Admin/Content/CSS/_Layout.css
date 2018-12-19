@@ -71,3 +71,26 @@
 .dropdown-menu {
     z-index: 1031;
 }
+
+nav.menu {
+    width: 250px;
+    position: absolute;
+    top: 40px;
+    left: 0;
+}
+
+#main-container {
+    margin: 60px 40px 40px 280px;
+    padding: 20px;
+    background-color: #f1f0f0;
+    min-height: 50px;
+    border-radius: 5px;
+}
+
+.userTitle {
+    color: #f9f9f9;
+    line-height: 40px;
+    float: left;
+    display: block;
+}
+

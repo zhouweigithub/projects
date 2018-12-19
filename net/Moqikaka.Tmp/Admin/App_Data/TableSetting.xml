@@ -12,4 +12,34 @@
     <OrderbyFields>id desc</OrderbyFields>
     <IsAddIntoCache>false</IsAddIntoCache>
   </TableSetting>
+  <TableSetting>
+    <TableName>m_favorite</TableName>
+    <KeyField></KeyField>
+    <OrderbyFields>crtime desc</OrderbyFields>
+    <IsAddIntoCache>false</IsAddIntoCache>
+  </TableSetting>
+  <TableSetting>
+    <TableName>m_history</TableName>
+    <KeyField>id</KeyField>
+    <OrderbyFields>crtime desc</OrderbyFields>
+    <IsAddIntoCache>false</IsAddIntoCache>
+  </TableSetting>
+  <TableSetting>
+    <TableName>m_page_click_log</TableName>
+    <KeyField></KeyField>
+    <OrderbyFields>clicks desc</OrderbyFields>
+    <IsAddIntoCache>false</IsAddIntoCache>
+  </TableSetting>
+  <TableSetting>
+    <TableName>m_artical_click_log</TableName>
+    <KeyField></KeyField>
+    <OrderbyFields>clicks desc</OrderbyFields>
+    <IsAddIntoCache>false</IsAddIntoCache>
+  </TableSetting>
+  <TableSetting>
+    <TableName>m_user_login_log</TableName>
+    <KeyField>id</KeyField>
+    <OrderbyFields>id desc</OrderbyFields>
+    <IsAddIntoCache>false</IsAddIntoCache>
+  </TableSetting>
 </ArrayOfTableSetting>
