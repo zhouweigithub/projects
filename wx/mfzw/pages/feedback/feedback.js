@@ -1,4 +1,6 @@
-// pages/feedback/feedback.js
+import commonData from '../../js/commonData.js';
+import requestBLL from '../../js/requestBLL.js';
+
 Page({
 
   /**
@@ -12,7 +14,13 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-
+    //增加页面点击量
+    var url = "https://wx.ullfly.com/artidata/addpageclicklog";
+    var data = {
+      DeviceToken: wx.getStorageSync(commonData.deviceTokenCacheName),
+      Page: "feedback",
+    };
+    requestBLL.postDataToServer(url, data);
   },
 
   /**

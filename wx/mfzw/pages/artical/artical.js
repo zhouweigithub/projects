@@ -3,6 +3,7 @@ import historyBLL from '../../js/historyBLL.js';
 import allArticalsBLL from '../../js/allArticalsBLL.js';
 import requestBLL from '../../js/requestBLL.js';
 import commonBLL from '../../js/commonBLL.js';
+import commonData from '../../js/commonData.js';
 
 var WxParse = require('../wxParse/wxParse.js');
 var currentid = 0;
@@ -24,17 +25,36 @@ Page({
       currentid = parseInt(options.id);
       var cachedData = allArticalsBLL.getArticalById(currentid);
       if (cachedData != null) {
-        this.bindData(cachedData);
+        this.bindArtical(cachedData);
       } else {
         var url = "https://wx.ullfly.com/artidata/getartical";
         var data = {
           id: currentid,
         };
-        requestBLL.getDataFromServer(url, data, this.bindData);
+        requestBLL.getDataFromServer(url, data, this.bindArtical);
       }
+      //获取推荐信息
+      var url = "https://wx.ullfly.com/artidata/getarticallistbyrandom";
+      requestBLL.getDataFromServer(url, {}, this.bindMore);
+
+      //增加文章点击量
+      var url = "https://wx.ullfly.com/artidata/addarticalclicklog";
+      var data = {
+        DeviceToken: wx.getStorageSync(commonData.deviceTokenCacheName),
+        Articalid: currentid,
+      };
+      requestBLL.postDataToServer(url, data);
     }
+
+    //增加页面点击量
+    var url = "https://wx.ullfly.com/artidata/addpageclicklog";
+    var data = {
+      DeviceToken: wx.getStorageSync(commonData.deviceTokenCacheName),
+      Page: "artial",
+    };
+    requestBLL.postDataToServer(url, data);
   },
-  bindData: function(data) {
+  bindArtical: function(data) {
     commonBLL.resetSummary(data);
     WxParse.wxParse('article', 'html', data.Content, this, 5);
     var isFavorited = favoriteBLL.isFavorited(currentid);
@@ -45,6 +65,12 @@ Page({
       data: data,
       isFavorited: isFavorited,
       isloading: false,
+    });
+  },
+  bindMore: function(datas) {
+    commonBLL.resetSummaryList(datas);
+    this.setData({
+      moreData: datas,
     });
   },
   onUserTap: function() {
@@ -84,9 +110,9 @@ Page({
       alerttext: "",
     });
   },
-  itemClick: function() {
-    wx.navigateTo({
-      url: '../artical/artical'
+  itemClick: function(evt) {
+    wx.redirectTo({
+      url: '../artical/artical?id=' + evt.currentTarget.dataset.id
     });
   },
   /**

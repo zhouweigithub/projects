@@ -1,4 +1,5 @@
 import commonData from 'commonData.js';
+import requestBLL from 'requestBLL.js';
 
 
 function addFavorite(id) {
@@ -10,6 +11,15 @@ function addFavorite(id) {
       favoriteArray.push(id);
   }
   wx.setStorageSync(commonData.favoriteCacheName, favoriteArray);
+
+  //post to server
+  var url = "https://wx.ullfly.com/artidata/addfavorite";
+  var data = {
+    DeviceToken: wx.getStorageSync(commonData.deviceTokenCacheName),
+    Articalid: id,
+    Openid: ''
+  };
+  requestBLL.postDataToServer(url, data);
 }
 
 function deleteFavorite(id) {

@@ -1,6 +1,6 @@
 <view class='vbody'>
   <view class='searchView'>
-    <input type='text' confirm-type='search' bindconfirm="confirmTap" placeholder='搜索'></input>
+    <input type='text' confirm-type='search' bindconfirm="confirmTap" placeholder='搜索标题或地区'></input>
   </view>
   <view class='resultView'>
     <block wx:if="{{isloading}}">

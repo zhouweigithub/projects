@@ -4,7 +4,7 @@
   </view>
   <view class='resultView'>
     <checkbox-group bind:change="checkboxChange">
-      <view wx:for="{{articals}}" class='item'>
+      <view wx:for="{{articals}}" wx:key="{{index}}" class='item'>
         <view class='checkView'>
           <checkbox value='{{item.Id}}' />
         </view>

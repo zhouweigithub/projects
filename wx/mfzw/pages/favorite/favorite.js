@@ -1,6 +1,8 @@
 import allArticalsBLL from '../../js/allArticalsBLL.js';
 import favoriteBLL from '../../js/favoriteBLL.js';
 import commonBLL from '../../js/commonBLL.js';
+import commonData from '../../js/commonData.js';
+import requestBLL from '../../js/requestBLL.js';
 
 var selectedItemms;
 
@@ -19,6 +21,14 @@ Page({
   onLoad: function(options) {
     selectedItemms = [];
     this.initDatas();
+
+    //增加页面点击量
+    var url = "https://wx.ullfly.com/artidata/addpageclicklog";
+    var data = {
+      DeviceToken: wx.getStorageSync(commonData.deviceTokenCacheName),
+      Page: "favorite",
+    };
+    requestBLL.postDataToServer(url, data);
   },
   deleteTap: function(evt) {
     favoriteBLL.deleteFavorites(selectedItemms);

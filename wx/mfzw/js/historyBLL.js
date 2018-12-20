@@ -1,4 +1,5 @@
 import commonData from 'commonData.js';
+import requestBLL from 'requestBLL.js';
 
 
 function addHistory(id) {
@@ -18,6 +19,15 @@ function addHistory(id) {
       var deleteCount = historyArray.length - maxCout;
       historyArray.splice(0, deleteCount);
     }
+
+    //post to server
+    var url = "https://wx.ullfly.com/artidata/addhistory";
+    var data = {
+      DeviceToken: wx.getStorageSync(commonData.deviceTokenCacheName),
+      Articalid: id,
+      Openid: ''
+    };
+    requestBLL.postDataToServer(url, data);
   }
   wx.setStorageSync(commonData.historyCacheName, historyArray);
 }

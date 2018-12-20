@@ -1,5 +1,6 @@
 import requestBLL from '../../js/requestBLL.js';
 import commonBLL from '../../js/commonBLL.js';
+import commonData from '../../js/commonData.js';
 
 
 Page({
@@ -22,7 +23,14 @@ Page({
       };
       requestBLL.getDataFromServer(url, data, this.bindData);
     }
-  },
+
+    //增加页面点击量
+    var url = "https://wx.ullfly.com/artidata/addpageclicklog";
+    var data = {
+      DeviceToken: wx.getStorageSync(commonData.deviceTokenCacheName),
+      Page: "search",
+    };
+    requestBLL.postDataToServer(url, data); },
   bindData: function(datas) {
     commonBLL.resetSummaryList(datas);
     this.setData({

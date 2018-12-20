@@ -1,6 +1,8 @@
 import allArticalsBLL from '../../js/allArticalsBLL.js';
 import historyBLL from '../../js/historyBLL.js';
 import commonBLL from '../../js/commonBLL.js';
+import commonData from '../../js/commonData.js';
+import requestBLL from '../../js/requestBLL.js';
 
 Page({
 
@@ -22,6 +24,14 @@ Page({
     this.setData({
       articals: allArticals
     });
+
+    //增加页面点击量
+    var url = "https://wx.ullfly.com/artidata/addpageclicklog";
+    var data = {
+      DeviceToken: wx.getStorageSync(commonData.deviceTokenCacheName),
+      Page: "history",
+    };
+    requestBLL.postDataToServer(url, data);
   },
   itemClick: function(option) {
     wx.redirectTo({

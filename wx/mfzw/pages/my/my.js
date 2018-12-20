@@ -1,4 +1,6 @@
 import commonData from '../../js/commonData.js';
+import requestBLL from '../../js/requestBLL.js';
+
 const app = getApp()
 
 Page({
@@ -23,6 +25,14 @@ Page({
         hasUserInfo: true
       })
     }
+
+    //增加页面点击量
+    var url = "https://wx.ullfly.com/artidata/addpageclicklog";
+    var data = {
+      DeviceToken: wx.getStorageSync(commonData.deviceTokenCacheName),
+      Page: "my",
+    };
+    requestBLL.postDataToServer(url, data);
   },
   favoriteTap: function(obj) {
     wx.navigateTo({

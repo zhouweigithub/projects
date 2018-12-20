@@ -27,7 +27,7 @@ function getDataFromServer(url, data, callback) {
   wx.request({
     url: url,
     data: data,
-    method: "post",
+    method: "get",
     dataType: "json",
     success: function(resp) {
       if (callback) {
@@ -41,7 +41,25 @@ function getDataFromServer(url, data, callback) {
   });
 }
 
+function postDataToServer(url, data, callback) {
+  wx.request({
+    url: url,
+    data: data,
+    method: "post",
+    dataType: "json",
+    success: function (resp) {
+      if (callback) {
+        callback(resp.data);
+      }
+    },
+    fail: function (err) {
+      console.log(err);
+    },
+    complete: function (obj) { },
+  });
+}
 
 module.exports = {
   getDataFromServer: getDataFromServer,
+  postDataToServer: postDataToServer,
 }

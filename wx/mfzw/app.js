@@ -1,10 +1,14 @@
-//app.js
+import commonData from 'js/commonData.js';
+import commonBLL from 'js/commonBLL.js';
+
 App({
-  onLaunch: function () {
-    // 展示本地存储能力
-    var logs = wx.getStorageSync('logs') || []
-    logs.unshift(Date.now())
-    wx.setStorageSync('logs', logs)
+  onLaunch: function() {
+
+    //生成用户唯一标识，并存储起来
+    if (wx.getStorageSync(commonData.deviceTokenCacheName) == "")
+      wx.setStorageSync(commonData.deviceTokenCacheName, commonBLL.getRandomString(8));
+    console.log(wx.getStorageSync(commonData.deviceTokenCacheName));
+
 
     // 登录
     wx.login({
