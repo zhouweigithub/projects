@@ -50,15 +50,14 @@ Page({
   },
   initDatas: function() {
     var favortedIds = favoriteBLL.getAllFavoriteIds();
+    favortedIds.reverse();
     var allArticals = allArticalsBLL.getArticals(favortedIds);
-    console.log(allArticals);
     commonBLL.resetSummaryList(allArticals);
-    allArticals.sort((a, b) => {
-      return a.CrTime > b.CrTime;
-    });
+
     for (var i = 0; i < allArticals.length; i++) {
       allArticals[i].checked = false;
     }
+    
     this.setData({
       articals: allArticals
     });

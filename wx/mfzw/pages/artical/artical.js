@@ -97,7 +97,7 @@ Page({
   onShareAppMessage: (res) => {
     if (res.from === 'button') {} else {}
     return {
-      title: msg,
+      title: "高考满分作文，请你欣赏！",
       path: '/pages/artical/artical',
       // imageUrl: pt.getRandomImgSrc(),
       success: (res) => {},

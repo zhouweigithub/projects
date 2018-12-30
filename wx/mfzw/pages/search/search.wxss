@@ -15,7 +15,7 @@
 
 .searchView input {
   padding: 10px;
-  background-color: #cddc39;
+  background-color: rgb(156, 201, 71);
 }
 
 .resultView {

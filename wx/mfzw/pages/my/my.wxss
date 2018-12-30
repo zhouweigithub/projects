@@ -4,8 +4,9 @@
 
 .headView button {
   margin: 50px auto;
-  background-color: white;
-  border: solid thin #90948f;
+  /* background-color: white; */
+  border: solid thin #248311;
+  background: transparent;
 }
 
 .headView button::after {
@@ -36,12 +37,12 @@
   line-height: 60px;
   display: inline-block;
   font-size: 20px;
-  border-bottom: solid thin #90948f;
-  border-top: solid thin #90948f;
+  border-bottom: solid thin #248311;
+  border-top: solid thin #248311;
 }
 
 .favView {
-  border-right: solid thin #90948f;
+  border-right: solid thin #248311;
 }
 
 .listView {
@@ -53,7 +54,7 @@
 }
 
 .listView view {
-  border-bottom: solid thin gray;
+  border-bottom: solid thin #248311;
 }
 
 .feedbackView .char {
@@ -64,7 +65,7 @@
   display: inline-block;
   margin-top: 50px;
   padding: 10px;
-  border: solid thin #90948f;
+  border: solid thin #248311;
   border-radius: 5px;
   /* text-decoration: underline; */
 }

@@ -7,7 +7,6 @@
   margin-bottom: 10px;
 }
 
-
 .vbody>view {
   /* background-color: #eaf8dd; */
 }
@@ -46,7 +45,7 @@
   line-height: 70px;
   text-align: center;
   display: inline-block;
-  border: thin solid #c2d8a4;
+  border: thin solid #248311;
   margin-right: -1px;
   margin-bottom: -1px;
 }

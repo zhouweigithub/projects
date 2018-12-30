@@ -77,7 +77,7 @@
 }
 
 .recommends .item {
-  border-bottom: thin dotted #c2d8a4;
+  /* border-bottom: thin dotted #c2d8a4; */
   margin: 5px;
   padding: 5px;
 }

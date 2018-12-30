@@ -3,7 +3,8 @@
 page {
   /* background-color: #eaf8dd; *//* background-color: white; */
   text-align: center;
-  background: linear-gradient(to top right, #cddc39 0%, #8bc34a 25%, #ffeb3b 100%);
+  /* background: linear-gradient(to top right, #cddc39 0%, #8bc34a 25%, #ffeb3b 100%);*/
+  background: linear-gradient(to top right, #cddc39 -50%, #8bc34a 35%, #ffeb3b 200%);
 }
 
 .shadow {
@@ -31,6 +32,13 @@ page {
 .loadingImg {
   width: 150px;
   height: 150px;
+}
+
+.loadingText {
+  font-size: 14px;
+  text-align: center !important;
+  color: grey;
+  display: block;
 }
 
 .alertview {

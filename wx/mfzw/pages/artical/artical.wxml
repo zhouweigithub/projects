@@ -1,9 +1,9 @@
 <import src="../wxParse/wxParse.wxml" />
 <view class='vbody'>
-  <block wx:if="{{isloading}}">
+  <view wx:if="{{isloading}}" class='loadingText'>
     <!-- <image src='/images/loading.gif' class='loadingImg' mode='widthFix'></image> -->
     加载中...
-  </block>
+  </view>
   <block wx:else>
     <view class='titleView'>
       <view class='title'>{{data.Title}}</view>
@@ -15,7 +15,7 @@
 
     <view class='recommends'>
       <view class='lab'>更多推荐>></view>
-      <view wx:for="{{moreData}}" wx:key="{{index}}" class='item' data-id="{{item.Id}}" bind:tap='itemClick'>
+      <view wx:for="{{moreData}}" wx:key="{{index}}" class='item dottedBorder' data-id="{{item.Id}}" bind:tap='itemClick'>
         <view class='title'>{{item.Title}}</view>
         <view class='comment'>{{item.Summary}}</view>
       </view>
