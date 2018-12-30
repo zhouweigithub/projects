@@ -1,10 +1,8 @@
 <view class='vbody'>
   <view wx:for="{{articals}}" wx:key="{{index}}" class='resultView'>
-    <view class='item' data-id="{{item.Id}}" bind:tap='itemClick'>
+    <view class='item dottedBorder' data-id="{{item.Id}}" bind:tap='itemClick'>
       <view class='title'>{{item.Title}}</view>
       <view class='summary'>{{item.Summary}}</view>
     </view>
-
   </view>
-
 </view>

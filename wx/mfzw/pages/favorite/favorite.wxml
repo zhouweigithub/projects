@@ -1,12 +1,12 @@
 <view class='vbody'>
-  <view class='deleteView'>
+  <view class='deleteView solidBorder'>
     <button bind:tap='deleteTap' size='mini'>删除</button>
   </view>
   <view class='resultView'>
     <checkbox-group bind:change="checkboxChange">
-      <view wx:for="{{articals}}" wx:key="{{index}}" class='item'>
+      <view wx:for="{{articals}}" wx:key="{{index}}" class='item dottedBorder'>
         <view class='checkView'>
-          <checkbox value='{{item.Id}}' />
+          <checkbox value='{{item.Id}}' checked='{{item.checked}}' />
         </view>
         <view bind:tap='itemClick' data-id="{{item.Id}}">
           <view class='title'>{{item.Title}}</view>

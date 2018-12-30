@@ -3,17 +3,19 @@
 }
 
 .vbody>view {
-  background-color: #eaf8dd;
+  /* background-color: #eaf8dd; */
 }
 
 .deleteView {
   text-align: right;
   padding: 10px;
-  border-bottom: thin solid #c2d8a4;
 }
 
 .resultView {
   text-align: left;
+  padding-left: 10px;
+  padding-right: 10px;
+  /* box-sizing: border-box; */
 }
 
 .resultView>view {
@@ -23,16 +25,18 @@
 
 .item {
   display: block;
+  padding: 5px;
 }
 
 .item .checkView {
-  vertical-align: middle;
+  vertical-align: top;
   margin-right: 10px;
   height: 49px;
 }
 
 .item checkbox {
   display: block;
+  margin-top: 10px;
 }
 
 .item >view {

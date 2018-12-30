@@ -1,6 +1,10 @@
 <view class='vbody'>
   <view class="topView">
-    <image src='../../images/back.png' mode='widthFix'></image>
+    <!-- <image src='../../images/back.png' mode='widthFix'></image> -->
+    <view class='headimgView' bind:tap='onUserTap'>
+      <image src='{{avatarUrl}}' mode='widthFix' class='shadow'></image>
+    </view>
+    <view class='headtextView'>高考满分作文</view>
   </view>
   <view class='yearsView'>
     <view bind:tap='itemClick' data-year='2018'>2018</view>

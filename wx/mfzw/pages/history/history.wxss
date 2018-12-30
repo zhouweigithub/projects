@@ -3,14 +3,13 @@
 }
 
 .vbody>view {
-  background-color: #eaf8dd;
+  /* background-color: #eaf8dd; */
 }
 .resultView{
   text-align: left;
 }
 .resultView>view {
   padding: 10px;
-  border-bottom: thin solid #c2d8a4;
 }
 
 .resultView .title {

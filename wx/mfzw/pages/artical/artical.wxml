@@ -1,12 +1,13 @@
 <import src="../wxParse/wxParse.wxml" />
 <view class='vbody'>
   <block wx:if="{{isloading}}">
-    <text>加载中...</text>
+    <!-- <image src='/images/loading.gif' class='loadingImg' mode='widthFix'></image> -->
+    加载中...
   </block>
   <block wx:else>
     <view class='titleView'>
       <view class='title'>{{data.Title}}</view>
-      <view class='summary'>{{data.Summary}}</view>
+      <view class='summary solidBorder'>{{data.Summary}}</view>
     </view>
     <view class='content'>
       <template is="wxParse" data="{{wxParseData:article.nodes}}" />

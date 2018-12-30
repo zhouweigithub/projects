@@ -23,7 +23,7 @@ Page({
       this.setData({
         userInfo: userInfo,
         hasUserInfo: true
-      })
+      });
     }
 
     //增加页面点击量
@@ -47,6 +47,11 @@ Page({
   feedbackTap: function(obj) {
     wx.navigateTo({
       url: '../feedback/feedback'
+    });
+  },
+  backToHomeTap: function(obj) {
+    wx.redirectTo({
+      url: '../index/index'
     });
   },
   getUserInfo: function(e) {

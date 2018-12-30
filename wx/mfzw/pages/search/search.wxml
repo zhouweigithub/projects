@@ -1,13 +1,14 @@
 <view class='vbody'>
-  <view class='searchView'>
+  <view class='searchView solidBorder'>
     <input type='text' confirm-type='search' bindconfirm="confirmTap" placeholder='搜索标题或地区'></input>
   </view>
   <view class='resultView'>
     <block wx:if="{{isloading}}">
-      <text>加载中...</text>
+      <!-- <image src='/images/loading.gif' class='loadingImg' mode='widthFix'></image> -->
+      加载中...
     </block>
     <block wx:else>
-      <view wx:for="{{datalist}}" wx:key="{{index}}" data-id='{{item.Id}}' bindtap='itemClick'>
+      <view class='dottedBorder' wx:for="{{datalist}}" wx:key="{{index}}" data-id='{{item.Id}}' bindtap='itemClick'>
         <view class='title'>{{item.Title}}</view>
         <view class='summary'>{{item.Summary}}</view>
       </view>

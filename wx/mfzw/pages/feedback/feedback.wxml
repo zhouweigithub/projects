@@ -1,2 +1,8 @@
-<!--pages/feedback/feedback.wxml-->
-<text>pages/feedback/feedback.wxml</text>
+<view class='vbody'>
+  <form bindsubmit="bindFormSubmit">
+    <textarea placeholder="200字以内" maxlength='200' name="feedbackvalue" value='{{inputValue}}' />
+    <text class='errmsg'>{{errmsg}}</text>
+    <button form-type="submit" type='primary'>提交</button>
+  </form>
+  <view class='alertview' style='display:{{showAlertText?"blockk":"none"}};'>{{alerttext}}</view>
+</view>

@@ -34,6 +34,13 @@ function deleteFavorite(id) {
       wx.setStorageSync(commonData.favoriteCacheName, favoriteArray);
     }
   }
+  var url = "https://wx.ullfly.com/artidata/DeleteFavorite";
+  var data = {
+    DeviceToken: wx.getStorageSync(commonData.deviceTokenCacheName),
+    Articalid: id,
+    Openid: ''
+  };
+  requestBLL.postDataToServer(url, data);
 }
 
 function deleteFavorites(idArray) {

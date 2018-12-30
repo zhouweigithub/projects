@@ -1,8 +1,9 @@
-.vbody{
+.vbody {
   margin: auto 20px 30px 20px;
 }
+
 .vbody>view {
-  background-color: #eaf8dd;
+  /* background-color: #eaf8dd; */
 }
 
 .searchView {
@@ -14,7 +15,7 @@
 
 .searchView input {
   padding: 10px;
-  border-bottom: thin solid #c2d8a4;
+  background-color: #cddc39;
 }
 
 .resultView {
@@ -24,7 +25,6 @@
 .resultView >view {
   padding: 10px;
   text-align: left;
-  border-bottom: thin dotted #c2d8a4;
 }
 
 .resultView .title {

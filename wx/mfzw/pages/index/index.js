@@ -14,6 +14,15 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function(options) {
+    var headUrl = '/images/unknown.png';
+    var userInfo = wx.getStorageSync(commonData.userInfoCacheName);
+    if (userInfo != "") {
+      headUrl = userInfo.avatarUrl;
+    }
+    this.setData({
+      avatarUrl: headUrl,
+    });
+
     //增加页面点击量
     var url = "https://wx.ullfly.com/artidata/addpageclicklog";
     var data = {
@@ -33,7 +42,11 @@ Page({
   onReady: function() {
 
   },
-
+  onUserTap: function() {
+    wx.navigateTo({
+      url: '../my/my'
+    });
+  },
   /**
    * 生命周期函数--监听页面显示
    */

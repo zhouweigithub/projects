@@ -11,10 +11,10 @@ function resetSummaryList(dataList) {
 function resetSummary(data) {
   data.Summary = "";
   if (data.Year > 0)
-    data.Summary += (data.Year + "年-");
+    data.Summary += (data.Year + "年");
   if (data.Area && data.Area != "")
-    data.Summary += (data.Area + "卷-");
-  data.Summary += "满分作文";
+    data.Summary += ("-" + data.Area + "卷");
+  // data.Summary += "-满分作文";
 }
 
 

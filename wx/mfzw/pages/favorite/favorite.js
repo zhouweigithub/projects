@@ -43,18 +43,22 @@ Page({
   onReady: function() {
 
   },
-  itemClick: function (option) {
-    wx.redirectTo({
+  itemClick: function(option) {
+    wx.navigateTo({
       url: '../artical/artical?id=' + option.currentTarget.dataset.id
     });
   },
   initDatas: function() {
     var favortedIds = favoriteBLL.getAllFavoriteIds();
     var allArticals = allArticalsBLL.getArticals(favortedIds);
+    console.log(allArticals);
     commonBLL.resetSummaryList(allArticals);
     allArticals.sort((a, b) => {
-      return a.CrTime < b.CrTime;
+      return a.CrTime > b.CrTime;
     });
+    for (var i = 0; i < allArticals.length; i++) {
+      allArticals[i].checked = false;
+    }
     this.setData({
       articals: allArticals
     });

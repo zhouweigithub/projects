@@ -3,11 +3,18 @@
 }
 
 .headView button {
-  margin: 20px auto;
+  margin: 50px auto;
+  background-color: white;
+  border: solid thin #90948f;
+}
+
+.headView button::after {
+  border: none;
 }
 
 .headView image {
   width: 100px;
+  height: 100px;
   margin: 20px auto 30px auto;
   display: block;
 }
@@ -51,4 +58,13 @@
 
 .feedbackView .char {
   float: right;
+}
+
+.backToHome {
+  display: inline-block;
+  margin-top: 50px;
+  padding: 10px;
+  border: solid thin #90948f;
+  border-radius: 5px;
+  /* text-decoration: underline; */
 }

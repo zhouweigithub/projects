@@ -1,7 +1,7 @@
 <view class='headView'>
   <button wx:if="{{!hasUserInfo && canIUse}}" open-type="getUserInfo" bindgetuserinfo="getUserInfo" size="mini">登录</button>
   <block wx:else>
-    <image src='{{userInfo.avatarUrl}}' mode='widthFix'></image>
+    <image src='{{userInfo.avatarUrl}}' mode='widthFix' class='shadow'></image>
     <text>{{userInfo.nickName}}</text>
   </block>
 </view>
@@ -17,3 +17,5 @@
     <text class='char'>>></text>
   </view>
 </view>
+
+<view class='backToHome' bind:tap='backToHomeTap'>返回首页</view>

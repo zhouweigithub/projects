@@ -1,14 +1,39 @@
+.topView {
+  display: block;
+  height: 100px;
+}
 
 .topView, .yearsView {
   margin-bottom: 10px;
 }
 
+
 .vbody>view {
-  background-color: #eaf8dd;
+  /* background-color: #eaf8dd; */
 }
 
-.topView image {
-  width: 100%;
+.topView .headimgView {
+  display: block;
+  padding: 20px;
+  /* box-sizing: border-box; */
+  float: left;
+}
+
+.topView .headimgView image {
+  /* width: 100%; */
+  width: 60px;
+  height: 60px;
+}
+
+.topView .headtextView {
+  float: left;
+  display: block;
+  height: 60px;
+  padding: 20px 0;
+  /* box-sizing: border-box; */
+  line-height: 60px;
+  font-size: 30px;
+  font-family: '黑体';
 }
 
 .yearsView {

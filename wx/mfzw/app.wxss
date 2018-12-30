@@ -1,8 +1,13 @@
 /**app.wxss**/
 
 page {
-  background-color: #eaf8dd;
+  /* background-color: #eaf8dd; *//* background-color: white; */
   text-align: center;
+  background: linear-gradient(to top right, #cddc39 0%, #8bc34a 25%, #ffeb3b 100%);
+}
+
+.shadow {
+  box-shadow: 3px 3px 3px grey;
 }
 
 .container {
@@ -15,3 +20,27 @@ page {
   box-sizing: border-box;
 }
 
+.dottedBorder {
+  border-bottom: dotted thin #248311;
+}
+
+.solidBorder {
+  border-bottom: solid thin #248311;
+}
+
+.loadingImg {
+  width: 150px;
+  height: 150px;
+}
+
+.alertview {
+  position: fixed;
+  top: 40%;
+  left: 40%;
+  z-index: 700;
+  color: white;
+  padding: 5px;
+  font-size: 12px;
+  background-color: rgba(36, 34, 34, 1);
+  border-radius: 5px;
+}

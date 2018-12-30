@@ -34,7 +34,7 @@ Page({
     requestBLL.postDataToServer(url, data);
   },
   itemClick: function(option) {
-    wx.redirectTo({
+    wx.navigateTo({
       url: '../artical/artical?id=' + option.currentTarget.dataset.id
     });
   },
