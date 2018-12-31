@@ -42,4 +42,10 @@
     <OrderbyFields>id desc</OrderbyFields>
     <IsAddIntoCache>false</IsAddIntoCache>
   </TableSetting>
+  <TableSetting>
+    <TableName>m_share</TableName>
+    <KeyField>id</KeyField>
+    <OrderbyFields>id desc</OrderbyFields>
+    <IsAddIntoCache>false</IsAddIntoCache>
+  </TableSetting>
 </ArrayOfTableSetting>

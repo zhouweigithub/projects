@@ -239,6 +239,9 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="App_Data\MiniProgromSetting.xml">
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="App_Data\TableSetting.xml">
       <SubType>Designer</SubType>
     </Content>

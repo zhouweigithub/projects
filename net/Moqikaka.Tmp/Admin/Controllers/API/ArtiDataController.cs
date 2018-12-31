@@ -1,5 +1,6 @@
 ﻿using Moqikaka.Tmp.DAL;
 using Moqikaka.Tmp.Model;
+using Moqikaka.Util.Log;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -70,6 +71,16 @@ namespace Moqikaka.Tmp.Admin.Controllers.API
             return Json(result, JsonRequestBehavior.AllowGet);
         }
 
+        [HttpPost]
+        public void LoginPostBack(string code, string name)
+        {
+            List<MiniProgromSetting> settings = BLL.Page.CommonBLL.GetMiniProgromSettingFromFile();
+            MiniProgromSetting setting = settings.FirstOrDefault(a => a.Name == name);
+
+            string url = $"https://api.weixin.qq.com/sns/jscode2session?appid={setting.Appid}&secret={setting.Secret}&js_code={code}&grant_type=authorization_code";
+            string result = Tmp.Common.HttpHelper.GetHtml(url, null, "Get", string.Empty, out string cookie);
+            LogUtil.Write("openid信息：" + result, LogType.Debug);
+        }
 
         [HttpPost]
         public void AddHistory(MHistory model)
@@ -81,6 +92,12 @@ namespace Moqikaka.Tmp.Admin.Controllers.API
         public void AddFavorite(MFavorite model)
         {
             DBData.GetInstance(DBTable.m_favorite).Add(model);
+        }
+
+        [HttpPost]
+        public void DeleteFavorite(MFavorite model)
+        {
+            DBData.GetInstance(DBTable.m_favorite).Delete($"DeviceToken='{model.DeviceToken}' and Articalid='{model.Articalid}'");
         }
 
         [HttpPost]
@@ -107,5 +124,6 @@ namespace Moqikaka.Tmp.Admin.Controllers.API
         {
             ArtiRequestDAL.AddFeedback(model);
         }
+
     }
 }

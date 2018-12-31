@@ -45,7 +45,30 @@ namespace Moqikaka.Tmp.BLL.Page
             dateStyle.DataFormat = dataformat.GetFormat(dateFormatString);
             return dateStyle;
         }
-        
+
+
+        public static List<MiniProgromSetting> GetMiniProgromSettingFromFile()
+        {
+            try
+            {
+                string key = "MiniProgromSetting_cache_2154201";
+                if (MemoryCacheManager.IsSet(key))
+                {
+                    return MemoryCacheManager.Get<List<MiniProgromSetting>>(key);
+                }
+                else
+                {
+                    List<MiniProgromSetting> setting = XmlHelper.XmlDeserializeFromFile<List<MiniProgromSetting>>("~App_Data/MiniProgromSetting.xml", Encoding.UTF8);
+                    MemoryCacheManager.Set(key, setting, 60 * 24);
+                    return setting;
+                }
+            }
+            catch (Exception e)
+            {
+                LogUtil.Write("读取小程序配置文件失败：" + e, LogType.Error);
+                return new List<MiniProgromSetting>();
+            }
+        }
 
     }
 

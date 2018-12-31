@@ -69,7 +69,7 @@ namespace Moqikaka.Tmp.Admin.Controllers
                     serverInfo.Year = model.Year;
                     serverInfo.Area = model.Area;
 
-                    ret = DAL.DBData.GetInstance(DAL.DBTable.m_artical).UpdateByKey(model, model.Id) > 0;
+                    ret = DAL.DBData.GetInstance(DAL.DBTable.m_artical).UpdateByKey(serverInfo, model.Id) > 0;
                 }
                 else
                 {   //添加

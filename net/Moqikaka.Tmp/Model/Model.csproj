@@ -53,6 +53,8 @@
     <Compile Include="Common\TableFieldAttribute.cs" />
     <Compile Include="DataValueModel.cs" />
     <Compile Include="MFeedback.cs" />
+    <Compile Include="MShare.cs" />
+    <Compile Include="MiniProgromSetting.cs" />
     <Compile Include="MUserLoginLog.cs" />
     <Compile Include="MArticalClickLog.cs" />
     <Compile Include="MPageClickLog.cs" />

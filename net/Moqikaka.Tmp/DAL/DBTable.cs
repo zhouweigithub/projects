@@ -44,5 +44,10 @@ namespace Moqikaka.Tmp.DAL
         /// 用户反馈
         /// </summary>
         public static readonly string m_feedback = "m_feedback";
+        /// <summary>
+        /// 用户分享
+        /// </summary>
+        public static readonly string m_share = "m_share";
+
     }
 }

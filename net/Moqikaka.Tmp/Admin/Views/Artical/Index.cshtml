@@ -38,7 +38,7 @@
                             <td>@item.Year </td>
                             <td>@item.Area</td>
                             <td>
-                                @MvcHtmlString.Create(Ajax.ActionLink("i1placeholder", "EditArtical",  new { id = item.Id },
+                                @MvcHtmlString.Create(Ajax.ActionLink("i1placeholder", "EditArtical",  new { id = item.Id, t=DateTime.Now.Ticks },
                                     new AjaxOptions() { HttpMethod = "Post", OnSuccess = "AddModalShow" },
                                     new { @class = "btn btn-mini", style = "padding:0px;", title = "修改" }).ToHtmlString()
                                     .Replace("i1placeholder", " <span class='icon icon-edit' aria-hidden='true'>"))
