@@ -119,6 +119,12 @@ namespace Moqikaka.Tmp.Admin.Controllers.API
         }
 
         [HttpPost]
+        public void AddArticalShareLog(MShare model)
+        {
+            DBData.GetInstance(DBTable.m_share).Add(model);
+        }
+
+        [HttpPost]
         [ValidateInput(false)]
         public void AddFeedback(MFeedback model)
         {
