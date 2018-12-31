@@ -31,7 +31,7 @@
             </div>
             <div>
                 <h4>地区</h4>
-                @Html.DropDownListFor(a => a.Area, ViewBag.AreaList as IEnumerable<SelectListItem>, new { @class = "form-control" })
+                @Html.DropDownListFor(a => a.Area, ViewBag.AreaList as IEnumerable<SelectListItem>,"未知", new { @class = "form-control" })
                 <span id="errArea" class="error"></span>
             </div>
             <div id="exitdiv">
@@ -53,7 +53,7 @@
 
         result = IsValueNotEmpty("Title", "errTitle", "标题") && result;
         result = IsValueNotEmpty("Year", "errYear", "年份") && result;
-        result = IsValueNotEmpty("Area", "errArea", "地区") && result;
+        //result = IsValueNotEmpty("Area", "errArea", "地区") && result;
         result = IsValueNotEmpty("Content", "errContent", "内容") && result;
 
         return result;
