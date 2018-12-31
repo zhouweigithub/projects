@@ -28,7 +28,7 @@
   <view class='favoriteView' bind:tap='onFavoriteTap'>
     <image src='{{isFavorited?"/images/favorited.png":"/images/favorite.png"}}'></image>
   </view>
-  <view class='shareView' bind:tap='onShareTap'>
+  <view class='shareView'>
     <button class='share' id="shareBtn" size='mini' open-type="share" hover-class="other-button-hover">
       <image src='/images/share.png'></image>
     </button>

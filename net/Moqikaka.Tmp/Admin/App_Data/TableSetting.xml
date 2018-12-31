@@ -48,4 +48,10 @@
     <OrderbyFields>id desc</OrderbyFields>
     <IsAddIntoCache>false</IsAddIntoCache>
   </TableSetting>
+  <TableSetting>
+    <TableName>m_device_openid</TableName>
+    <KeyField>deviceToken</KeyField>
+    <OrderbyFields>deviceToken desc</OrderbyFields>
+    <IsAddIntoCache>false</IsAddIntoCache>
+  </TableSetting>
 </ArrayOfTableSetting>

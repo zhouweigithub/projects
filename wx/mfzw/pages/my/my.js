@@ -61,6 +61,21 @@ Page({
         userInfo: e.detail.userInfo,
         hasUserInfo: true
       });
+
+      //登录获取code
+      wx.login({
+        success: function(res) {
+          console.log("code:"+res.code)
+          //发送请求
+          var url = "https://wx.ullfly.com/artidata/LoginPostBack";
+          var data = {
+            deviceid: wx.getStorageSync(commonData.deviceTokenCacheName),
+            code: res.code,
+            name: "gkmfzw",
+          };
+          requestBLL.postDataToServer(url, data);
+        }
+      });
     }
   },
   /**

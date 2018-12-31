@@ -96,11 +96,21 @@ Page({
   },
   onShareAppMessage: (res) => {
     if (res.from === 'button') {} else {}
+
+    //记录文章分享日志
+    var url = "https://wx.ullfly.com/artidata/AddArticalShareLog";
+    var data = {
+      DeviceToken: wx.getStorageSync(commonData.deviceTokenCacheName),
+      Articalid: currentid,
+    };
+    requestBLL.postDataToServer(url, data);
+
     return {
       title: "高考满分作文，请你欣赏！",
       path: '/pages/artical/artical',
       // imageUrl: pt.getRandomImgSrc(),
-      success: (res) => {},
+      success: (res) => { //分享不再回调,所以这里不会再执行
+      },
       fail: (res) => {}
     }
   },

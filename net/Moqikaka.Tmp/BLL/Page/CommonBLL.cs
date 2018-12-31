@@ -58,7 +58,7 @@ namespace Moqikaka.Tmp.BLL.Page
                 }
                 else
                 {
-                    List<MiniProgromSetting> setting = XmlHelper.XmlDeserializeFromFile<List<MiniProgromSetting>>("~App_Data/MiniProgromSetting.xml", Encoding.UTF8);
+                    List<MiniProgromSetting> setting = XmlHelper.XmlDeserializeFromFile<List<MiniProgromSetting>>(Const.RootWebPath + "/App_Data/MiniProgromSetting.xml", Encoding.UTF8);
                     MemoryCacheManager.Set(key, setting, 60 * 24);
                     return setting;
                 }
