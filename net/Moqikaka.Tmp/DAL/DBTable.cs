@@ -48,6 +48,9 @@ namespace Moqikaka.Tmp.DAL
         /// 用户分享
         /// </summary>
         public static readonly string m_share = "m_share";
-
+        /// <summary>
+        /// 设备号与OPENID对应关系
+        /// </summary>
+        public static readonly string m_device_openid = "m_device_openid";
     }
 }

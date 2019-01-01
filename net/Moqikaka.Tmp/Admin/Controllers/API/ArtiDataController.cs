@@ -1,5 +1,6 @@
 ﻿using Moqikaka.Tmp.DAL;
 using Moqikaka.Tmp.Model;
+using Moqikaka.Tmp.Model.wx;
 using Moqikaka.Util.Log;
 using System;
 using System.Collections.Generic;
@@ -72,14 +73,33 @@ namespace Moqikaka.Tmp.Admin.Controllers.API
         }
 
         [HttpPost]
-        public void LoginPostBack(string code, string name)
+        public void LoginPostBack(string deviceid, string code, string name)
         {
-            List<MiniProgromSetting> settings = BLL.Page.CommonBLL.GetMiniProgromSettingFromFile();
-            MiniProgromSetting setting = settings.FirstOrDefault(a => a.Name == name);
+            try
+            {
+                List<MiniProgromSetting> settings = BLL.Page.CommonBLL.GetMiniProgromSettingFromFile();
+                MiniProgromSetting setting = settings.FirstOrDefault(a => a.Name == name);
 
-            string url = $"https://api.weixin.qq.com/sns/jscode2session?appid={setting.Appid}&secret={setting.Secret}&js_code={code}&grant_type=authorization_code";
-            string result = Tmp.Common.HttpHelper.GetHtml(url, null, "Get", string.Empty, out string cookie);
-            LogUtil.Write("openid信息：" + result, LogType.Debug);
+                string url = $"https://api.weixin.qq.com/sns/jscode2session?appid={setting.Appid}&secret={setting.Secret}&js_code={code}&grant_type=authorization_code";
+                string result = Util.Web.WebUtil.GetWebData(url, string.Empty, Util.Web.DataCompress.NotCompress);
+
+                if (!string.IsNullOrWhiteSpace(result))
+                {
+                    WXLoginResult loginResult = Util.Json.JsonUtil.Deserialize<WXLoginResult>(result);
+                    if (loginResult != null)
+                    {
+                        DBData.GetInstance(DBTable.m_device_openid).Add(new MDeviceOpenid()
+                        {
+                            DeviceToken = deviceid,
+                            Openid = loginResult.openid,
+                        });
+                    }
+                }
+            }
+            catch (Exception e)
+            {
+                LogUtil.Write($"获取微信openid出错:deviceid:{deviceid} code:{code} name:{name}", LogType.Error);
+            }
         }
 
         [HttpPost]
@@ -116,6 +136,12 @@ namespace Moqikaka.Tmp.Admin.Controllers.API
         public void AddArticalClickLog(MArticalClickLog model)
         {
             ArtiRequestDAL.AddArticalClickLog(model);
+        }
+
+        [HttpPost]
+        public void AddArticalShareLog(MShare model)
+        {
+            DBData.GetInstance(DBTable.m_share).Add(model);
         }
 
         [HttpPost]

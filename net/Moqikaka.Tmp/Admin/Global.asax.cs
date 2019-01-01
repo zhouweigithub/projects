@@ -1,4 +1,5 @@
 ﻿using Moqikaka.Tmp.Common;
+using Moqikaka.Tmp.Model;
 using Moqikaka.Util.Log;
 using System;
 using System.Collections.Generic;

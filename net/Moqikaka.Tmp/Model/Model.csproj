@@ -52,6 +52,7 @@
   <ItemGroup>
     <Compile Include="Common\TableFieldAttribute.cs" />
     <Compile Include="DataValueModel.cs" />
+    <Compile Include="MDeviceOpenid.cs" />
     <Compile Include="MFeedback.cs" />
     <Compile Include="MShare.cs" />
     <Compile Include="MiniProgromSetting.cs" />
@@ -66,6 +67,7 @@
     <Compile Include="Role\RoleModel.cs" />
     <Compile Include="TableSetting.cs" />
     <Compile Include="TArtical.cs" />
+    <Compile Include="wx\WXLoginResult.cs" />
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
