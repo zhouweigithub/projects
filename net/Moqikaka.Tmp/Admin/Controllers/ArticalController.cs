@@ -121,7 +121,7 @@ namespace Moqikaka.Tmp.Admin.Controllers
         private List<SelectListItem> GetYearList()
         {
             List<SelectListItem> list = new List<SelectListItem>();
-            for (int i = 2018; i >= 2000; i--)
+            for (int i = 2018; i >= 1999; i--)
             {
                 list.Add(new SelectListItem() { Text = i.ToString(), Value = i.ToString() });
             }
