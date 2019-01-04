@@ -107,7 +107,7 @@ Page({
 
     return {
       title: "高考满分作文，请你欣赏！",
-      path: '/pages/artical/artical',
+      path: '/pages/artical/artical?id='+currentid,
       // imageUrl: pt.getRandomImgSrc(),
       success: (res) => { //分享不再回调,所以这里不会再执行
       },
