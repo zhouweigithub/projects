@@ -1,0 +1,129 @@
+﻿@model Sunny.Model.ListLoginUserModel
+@{
+    Layout = null;
+}
+
+
+<h4><span style="font-weight:700;">用户信息列表</span></h4>
+<table class="list_table table table-bordered table-striped table-hover" id="div_datalist_table" style="table-layout:fixed;">
+    <thead style="text-align:center;font-weight:700">
+        <tr>
+            <td style="width: 80px;text-align:center">用户Id</td>
+            <td style="width: 120px; text-align: center">用户名称</td>
+            <td style="width: 120px; text-align: center">姓名</td>
+            <td style="width: 120px; text-align: center">类别</td>
+            <td style="width: 120px; text-align: center">手机号</td>
+            <td style="width: 120px; text-align: center">白名单</td>
+            <td style="width: 250px; text-align:center">角色名称</td>
+            <td style="width: 120px; text-align: center">超级用户</td>
+            <td style="width: 80px; text-align: center">状态</td>
+            <td style="width: 150px;text-align:center">添加时间</td>
+            <td style="width: 200px;text-align:center">操作</td>
+        </tr>
+    </thead>
+    @* 角色内容*@
+    <tbody id="RoleBody">
+        @if (Model != null && Model.LoginUserInfoList != null && Model.LoginUserInfoList.Count > 0)
+        {
+            foreach (var item in Model.LoginUserInfoList)
+            {
+                <tr>
+                    <td style="vertical-align: middle" class="id">@item.id</td>
+                    <td style="vertical-align: middle" class="username">@item.username</td>
+                    <td style="vertical-align: middle" class="name">@item.name</td>
+                    <td style="vertical-align: middle" class="type">@(item.type == 0 ? "普通" : item.type == 1 ? "客服" : "未知")</td>
+                    <td style="vertical-align: middle" class="mobile">@item.Mobile</td>
+                    <td style="vertical-align: middle" class="smsverify">@(item.SmsVerify == 0 ? "是" : "否")</td>
+                    <td style="vertical-align: middle; word-wrap: break-word" class="rolenames">@item.rolenames</td>
+                    <td>@(item.IfSuper == 1 ? "是" : "否")</td>
+                    <td>@(item.Status == 0 ? "正常" : "锁定")</td>
+                    <td class="createtime">@item.createtime.ToString("yyyy-MM-dd HH:mm:ss")</td>
+                    <td style="vertical-align: middle" userid="@item.id">
+                        <img class='editrole' title='编辑' src='/images/Edit.png' style='width: 20px; height: 20px; cursor: pointer;margin-left:10px;'>
+                        <img class='delrole' title='删除' src='/images/Delete.jpg' style='width: 20px; height: 20px; cursor: pointer; margin-left:10px;margin-right:10px'>
+                        <button class="loginLockEdit btn btn-primary" title="解除登录限制">登录解锁</button>
+                    </td>
+                </tr>
+            }
+        }
+    </tbody>
+</table>
+
+<script>
+
+    //编辑角色信息
+    $("#RoleBody").on("click", ".editrole", function () {
+        var id = $(this).parent().attr("userid");
+        $.ajax({
+            type: 'Get',
+            url: 'Edit',
+            data: { id: id },
+            success: function (data) {
+                if (data != null && data != "") {
+                    $('#dialog').html(data);
+                    $('#dialog').modal('show');
+                }
+            }
+        })
+    });
+
+    //删除角色信息
+    $("#RoleBody").on("click", ".delrole", function () {
+        var isdelete = confirm("是否删除此条数据？");
+        if (isdelete == true) {
+            var userid = $(this).parent().attr("userid");
+            $.ajax({
+                type: 'Get',
+                url: 'Delete',
+                data: { Id: userid },
+                success: function (data) {
+                    if (data == "True") {
+                        ShowAlert("删除成功", "success")
+                        setTimeout(function () { $("#searchbtn").click(); }, 1000);
+                    }
+                    else {
+                        ShowAlert("删除失败", "warning")
+                    }
+                }
+            })
+        }
+
+        return false;
+    });
+
+    //编辑游戏权限
+    $("#RoleBody").on("click", ".authorityEdit", function () {
+        var userid = $(this).parent().attr("userid");
+        var username = $(this).parent().parent().find(".username").text();
+        var name = $(this).parent().parent().find(".name").text();
+        $.ajax({
+            type: 'Get',
+            url: 'EditGameAuthority',
+            data: { userid: userid, username: username, name: name },
+            success: function (data) {
+                if (data != null && data != "") {
+                    $('#dialog').html(data);
+                    $('#dialog').modal('show');
+                }
+            }
+        });
+    });
+
+    $("#RoleBody").on("click", ".loginLockEdit", function () {
+        var username = $(this).parent().parent().find(".username").text();
+        if (confirm("确定要解除【" + username + "】的登录限制吗？")) {
+            $.ajax({
+                type: 'POST',
+                url: 'UnlockLogin',
+                data: { username: username },
+                success: function (data) {
+                    if (data != null && data.Message) {
+                        onDataMidff(data);
+                    }
+                }
+            });
+        }
+    });
+
+
+</script>

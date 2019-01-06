@@ -1,0 +1,86 @@
+﻿@model Sunny.Model.RoleInfoListModel
+@{
+    Layout = null;    
+ }
+
+
+    <h4><span style="font-weight:700;">角色数据列表</span></h4>
+    <table class="list_table table table-bordered table-striped table-hover" id="div_datalist_table" style="table-layout:fixed;">
+        <thead style="text-align:center;font-weight:700">
+            <tr>
+                <td style="width:80px;text-align:center">角色Id</td>
+                <td style="width:120px;text-align:center">角色名称</td>
+                <td style="width:180px;text-align:center">描述</td>
+                <td style="text-align:center">页面权限</td>
+                <td style="width:100px;text-align:center">操作</td>
+            </tr>
+        </thead>
+        @* 角色内容*@
+        <tbody id="RoleBody">
+            @if (Model != null && Model.RoleList != null && Model.RoleList.Count > 0)
+            {
+                foreach (var item in Model.RoleList)
+                {
+                    <tr>
+                        <td style="vertical-align: middle" class="Id">@item.Id</td>
+                        <td style="vertical-align: middle" class="RolesName">@item.RolesName</td>
+                        <td style="vertical-align: middle" class="Remark">@item.Remark</td>
+                        <td style="word-wrap:break-word" class="Page">@item.Page</td>
+                        <td style="vertical-align: middle" roleid="@item.Id">
+                            <img class='editrole' title='编辑' src='/images/Edit.png' style='width: 20px; height: 20px; cursor: pointer;margin-left:10px;'>
+
+                            <img class='delrole' title='删除' src='/images/Delete.jpg' style='width: 20px; height: 20px; cursor: pointer; margin-left:10px;margin-right:10px'>
+                        </td>
+                    </tr>
+                }
+            }
+        </tbody>
+    </table>
+
+<script>
+    //编辑角色信息
+    $("#RoleBody").on("click", ".editrole", function () {
+        debugger;
+        var roleid = $(this).parent().attr("roleid");
+        var RolesName = $(this).parent().parent().find(".RolesName").text();
+        var Remark = $(this).parent().parent().find(".Remark").text();
+        var Page = $(this).parent().parent().find(".Page").text();
+        $.ajax({
+            type: 'Get',
+            url: '/Role/Edit',
+            data: { Id: roleid, RolesName: RolesName, Remark: Remark, Page: Page },
+            success: function (data) {
+                if (data != null && data != "") {
+                    $('#dialog').html(data);                         
+                    $('#dialog').modal('show');
+                }
+            }
+        })
+    });
+
+    //删除角色信息
+    $("#RoleBody").on("click", ".delrole", function () {
+
+        var isdelete = confirm("是否删除此条数据？");
+        if (isdelete == true) {
+            debugger;
+            var roleid = $(this).parent().attr("roleid");
+            $.ajax({
+                type: 'Get',
+                url: '/Role/Delete',
+                data: { Id: roleid },
+                success: function (data) {
+                    if (data == "True") {
+                        alert("删除成功！");
+                        setTimeout(function () { $("#searchbtn").click(); }, "200");
+                    }
+                    else {
+                        alert("删除失败！");
+                    }
+                }
+            })
+        }
+
+    });
+
+</script>

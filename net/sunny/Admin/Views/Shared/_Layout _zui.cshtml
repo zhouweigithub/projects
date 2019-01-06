@@ -1,0 +1,156 @@
+﻿@using Sunny.Admin.Mvc.Html
+@{
+    var currentNav = Sunny.Admin.Common.Menu.MenuProvider.GetMenuFromCurrentLoginUser();
+    string currentControler = ViewContext.RouteData.Values["controller"].ToString();
+    string currentAction = ViewContext.RouteData.Values["action"].ToString();
+}
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <title>@ViewBag.Title</title>
+    <link href="~/favicon.ico" rel="shortcut icon" type="image/x-icon" />
+    <meta name="viewport" content="width=device-width" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <script src="~/Scripts/1.11.3-jquery.min.js"></script>
+    <link href="~/Content/zui/css/zui.min.css" rel="stylesheet">
+    <script src="~/Content/zui/js/zui.min.js"></script>
+    <script src="~/Scripts/jquery.unobtrusive-ajax.min.js"></script>
+    <link href="~/Content/zui/css/zui-theme.css" rel="stylesheet" />
+    <link href="~/Content/CSS/_Layout.css" rel="stylesheet" />
+    <script src="~/Scripts/Shared/_Layout_zui.js"></script>
+    @*<script src="~/Scripts/Shared/_Layout.js?ver=@HttpContext.Current.Application["ver"]"></script>*@
+</head>
+<body>
+    <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+        <div class="container-fluid">
+            <!-- 导航头部 -->
+            <div class="navbar-header">
+                <!-- 移动设备上的导航切换按钮 -->
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse-example">
+                    <span class="sr-only">切换导航</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <!-- 品牌名称或logo -->
+                <a class="navbar-brand" href="your/nice/url">后台管理系统</a>
+            </div>
+            <!-- 导航项目 -->
+            <div class="collapse navbar-collapse navbar-collapse-example navbar-right">
+                <span class="userTitle">你好, @User.Identity.Name &nbsp;</span>
+                <!-- 一般导航项目 -->
+                <ul class="nav navbar-nav">
+                    <!-- 导航中的下拉菜单 -->
+                    <li class="dropdown">
+                        <a href="your/nice/url" class="dropdown-toggle" data-toggle="dropdown"><i class="icon icon-user"></i> <i class="icon icon-caret-down"></i></a>
+                        <ul class="dropdown-menu" role="menu">
+                            <li>@Ajax.ActionLink("修改密码", "ChangePassword", "LoginUser", new { }, new AjaxOptions() { HttpMethod = "Get", OnSuccess = "AddModalShow" }, new { })</li>
+                            <li>@MvcHtmlString.Create(Html.ActionLink("l1", "LoginOut", "Home").ToHtmlString().Replace("l1", "注销"))</li>
+                        </ul>
+                    </li>
+                </ul>
+            </div><!-- END .navbar-collapse -->
+        </div>
+    </nav>
+
+    <nav class="menu" data-ride="menu">
+        <ul id="treeMenu" class="tree tree-menu" data-animate="false" data-ride="tree">
+            @foreach (var tempmenu in currentNav)
+            {
+                string groupClass = "";
+                if (tempmenu.MenuItemList.Count(a => currentControler == a.Controller && currentAction == a.Action) > 0)
+                {
+                    groupClass = "open";
+                }
+
+                if (tempmenu.MenuItemList.Count() > 0)
+                {
+                    <li class="@groupClass">
+                        <a href="#"><i class="icon icon-th"></i> @tempmenu.text</a>
+                        <ul>
+                            @foreach (var templistmenu in tempmenu.MenuItemList)
+                            {
+                                string actionClass = "";
+                                if (currentControler == templistmenu.Controller && currentAction == templistmenu.Action)
+                                {
+                                    actionClass = "active";
+                                }
+                                <li class="@actionClass"><a href="@("/"+templistmenu.Controller+"/"+templistmenu.Action)">@templistmenu.Text</a></li>
+                            }
+                        </ul>
+                    </li>
+                }
+                else
+                {
+                    <li>
+                        <a href="javascript:;"><i class="icon icon-th"></i>@tempmenu.text</a>
+                    </li>
+                }
+            }
+        </ul>
+
+
+        @*<li><a href="#"><i class="icon icon-th"></i>首页</a></li>
+                <li><a href="#"><i class="icon icon-user"></i>个人资料</a></li>
+                <li>
+                    <a href="#"><i class="icon icon-time"></i>更新时间</a>
+                    <ul>
+                        <li><a href="#">今天</a></li>
+                        <li><a href="#">明天</a></li>
+                        <li><a href="#">昨天</a></li>
+                        <li><a href="#">本周</a></li>
+                    </ul>
+                </li>
+                <li><a href="#"><i class="icon icon-trash"></i>垃圾篓</a></li>
+                <li><a href="#"><i class="icon icon-list-ul"></i>全部</a></li>
+                <li class="open">
+                    <a href="#"><i class="icon icon-tasks"></i>状态</a>
+                    <ul>
+                        <li>
+                            <a href="#"><i class="icon icon-circle-blank"></i>已就绪</a>
+                            <ul>
+                                <li><a href="#">已取消</a></li>
+                                <li><a href="#">已关闭</a></li>
+                            </ul>
+                        </li>
+                        <li class="active"><a href="#"><i class="icon icon-play-sign"></i>进行中</a></li>
+                        <li><a href="#"><i class="icon icon-ok-sign"></i>已完成</a></li>
+                    </ul>
+                </li>
+            </ul>*@
+
+
+    </nav>
+
+    <div id="main-container">
+
+        <section class="" style="padding:20px 0;min-height:50px;">
+            @RenderBody()
+        </section>
+
+        <!-- 模态框（Modal）页面弹出框 -->
+        @*<div class="modal fade " role="dialog" id="dialog" aria-labelledby="myModalLabel" aria-hidden="true" data-backdrop="static"></div>*@
+
+        <!-- 对话框HTML -->
+        <div class="modal fade" id="dialog" data-backdrop="static">
+            @*<div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span><span class="sr-only">关闭</span></button>
+                            <h4 class="modal-title">标题</h4>
+                        </div>
+                        <div class="modal-body">
+                            <p><textarea id="contentSimple" name="content" class="form-control kindeditorSimple" style="height:150px;width:100%;">Hello, world!</textarea></p>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                            <button type="button" class="btn btn-primary">保存</button>
+                        </div>
+                    </div>
+                </div>*@
+        </div>
+
+    </div>
+
+</body>
+</html>

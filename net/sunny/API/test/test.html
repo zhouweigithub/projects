@@ -1,0 +1,25 @@
+<script src="1.11.3-jquery.min.js"></script>
+
+<script>
+    $(function () {
+
+        var obj = {
+            username: "xxxx",
+            password: "aaaa",
+            name: "ffff",
+            phone: "tttt",
+            birthday: "2015-02-01",
+            state: 1,
+        };
+
+        $.ajax({
+            type: "post",
+            url: "http://localhost:52737/api/student/1",
+            data: obj,
+            dataType: "json",
+            success: function (data) {
+                console.log(data);
+            }
+        });
+    });
+</script>

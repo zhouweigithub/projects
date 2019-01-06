@@ -1,0 +1,85 @@
+﻿@model Sunny.Model.MArtical
+@{
+    Layout = null;
+}
+<style>
+    .modal-dialog {
+        width: 800px;
+    }
+</style>
+<script src="~/Content/zui/lib/kindeditor/kindeditor.min.js"></script>
+<script src="~/Scripts/common.js?ver=@HttpContext.Current.Application["ver"]"></script>
+<script src="~/Scripts/jquery.form.js"></script>
+
+<div class="modal-dialog well">
+    @using (Ajax.BeginForm("EditArticalPost", null, new AjaxOptions() { HttpMethod = "Post", OnSuccess = "onDataMidff" }, new { @class = "form-horizontal", id = "editForm" }))
+    {
+        <div class="modal-header">
+            <h3>@ViewBag.title</h3>
+        </div>
+        <div class="modal-body">
+            @Html.HiddenFor(a => a.Id)
+            <div>
+                <h4>标题</h4>
+                @Html.TextBoxFor(a => a.Title, new { @class = "form-control" })
+                <span id="errTitle" class="error"></span>
+            </div>
+            <div>
+                <h4>年份</h4>
+                @Html.DropDownListFor(a => a.Year, ViewBag.YearList as IEnumerable<SelectListItem>, new { @class = "form-control" })
+                <span id="errYear" class="error"></span>
+            </div>
+            <div>
+                <h4>地区</h4>
+                @Html.DropDownListFor(a => a.Area, ViewBag.AreaList as IEnumerable<SelectListItem>,"未知", new { @class = "form-control" })
+                <span id="errArea" class="error"></span>
+            </div>
+            <div id="exitdiv">
+                <h4>内容</h4>
+                @Html.TextAreaFor(a => a.Content, new { @class = "form-control kindeditorSimple", style = "height:500px;" })
+                <span id="errContent" class="error"></span>
+            </div>
+            <div style="text-align:right;">
+                <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                <button type="submit" class="btn btn-primary">保存</button>
+            </div>
+        </div>
+    }
+</div>
+<script type="text/javascript">
+
+    function isValid_Edit() {
+        var result = true;
+
+        result = IsValueNotEmpty("Title", "errTitle", "标题") && result;
+        result = IsValueNotEmpty("Year", "errYear", "年份") && result;
+        //result = IsValueNotEmpty("Area", "errArea", "地区") && result;
+        result = IsValueNotEmpty("Content", "errContent", "内容") && result;
+
+        return result;
+    }
+
+    $(function () {
+        $("#editForm").submit(function () {
+            return isValid_Edit();
+        });
+
+        setTimeout(CreateEditor, 550);
+    });
+
+    function CreateEditor() {
+        KindEditor.create('textarea.kindeditorSimple', {
+            basePath: '/Content/zui/lib/kindeditor/',
+            bodyClass: 'article-content',
+            resizeType: 1,
+            allowPreviewEmoticons: false,
+            allowImageUpload: false,
+            items: [
+                'source', '|', 'fontname', 'fontsize', '|', 'forecolor', 'hilitecolor', 'bold', 'italic', 'underline',
+                'removeformat', '|', 'justifyleft', 'justifycenter', 'justifyright', 'insertorderedlist',
+                'insertunorderedlist', '|', 'emoticons', 'image', 'link'
+            ]
+        });
+
+    }
+</script>

@@ -1,0 +1,67 @@
+﻿@using Sunny.Model
+@{
+    ViewBag.Title = "文章列表";
+}
+
+@*class="table-responsive"*@
+@using (Html.BeginForm("Index", null, FormMethod.Get, new { @class = "form-horizontal", @id = "from_add" }))
+{
+    <div>
+        年份 @Html.DropDownList("yearPara", ViewBag.YearList as IEnumerable<SelectListItem>, "ALL", new { @class = "form-control width220px" })
+        地区 @Html.DropDownList("areaPara", ViewBag.AreaList as IEnumerable<SelectListItem>, "ALL", new { @class = "form-control width220px" })
+        标题 @Html.TextBox("titlePara", null, new { @class = "form-control width220px" })
+        <button type="submit" class="btn btn-primary" onclick="return IsValid()">查询</button>
+        @Ajax.ActionLink("添加", "EditArtical", new { id = 0 }, new AjaxOptions() { HttpMethod = "Post", OnSuccess = "AddModalShow" }, new { @class = "btn btn-primary" })
+    </div>
+    <div><span id="errproduct" class="error"></span></div>
+}
+<div>
+    <table class="table  table-hover">
+        <caption>文章列表</caption>
+        <thead>
+            <tr>
+                <th style="width:500px;">标题</th>
+                <th style="width:200px;">年份</th>
+                <th style="width:200px;">地区</th>
+                <th>操作</th>
+            </tr>
+        </thead>
+        <tbody>
+            @{
+                List<MArticalBase> datas = ViewBag.datas as List<MArticalBase>;
+                if (datas != null && datas.Count > 0)
+                {
+                    foreach (MArticalBase item in datas)
+                    {
+                        <tr>
+                            <td>@item.Title </td>
+                            <td>@item.Year </td>
+                            <td>@item.Area</td>
+                            <td>
+                                @MvcHtmlString.Create(Ajax.ActionLink("i1placeholder", "EditArtical",  new { id = item.Id, t=DateTime.Now.Ticks },
+                                    new AjaxOptions() { HttpMethod = "Post", OnSuccess = "AddModalShow" },
+                                    new { @class = "btn btn-mini", style = "padding:0px;", title = "修改" }).ToHtmlString()
+                                    .Replace("i1placeholder", " <span class='icon icon-edit' aria-hidden='true'>"))
+                                &nbsp;&nbsp;&nbsp;
+                                @MvcHtmlString.Create(Ajax.ActionLink("i1placeholder", "DeleteArtical", new { id = item.Id },
+                                     new AjaxOptions() { HttpMethod = "Post", OnBegin = "return confirm('确认删除？')", OnSuccess = "onDataMidff" },
+                                     new { @class = "btn btn-mini", style = "padding:0px;", title = "删除" }).ToHtmlString()
+                                     .Replace("i1placeholder", " <span class='icon icon-trash' aria-hidden='true'>"))
+                            </td>
+                        </tr>
+                    }
+                }
+            }
+        </tbody>
+    </table>
+</div>
+
+<ul class="pager"></ul>
+
+<script type="text/javascript">
+    var page=@ViewBag.Page;
+    var pagesize=@ViewBag.PageSize;
+    var totalTotalRecordCount=@ViewBag.TotalCount;
+</script>
+
+<script src="~/Scripts/Artical/Index.js?ver=@HttpContext.Current.Application["ver"]"></script>
