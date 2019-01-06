@@ -51,6 +51,17 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Appointment.cs" />
+    <Compile Include="Deliver.cs" />
+    <Compile Include="Discount.cs" />
+    <Compile Include="Order.cs" />
+    <Compile Include="OrderDiscount.cs" />
+    <Compile Include="OrderSpecificationDetail.cs" />
+    <Compile Include="Product.cs" />
+    <Compile Include="ProductDetail.cs" />
+    <Compile Include="ProductSpecificationDetail.cs" />
+    <Compile Include="Specification.cs" />
+    <Compile Include="SpecificationDetail.cs" />
+    <Compile Include="Category.cs" />
     <Compile Include="ClassComment.cs" />
     <Compile Include="ClassStudent.cs" />
     <Compile Include="Coach.cs" />

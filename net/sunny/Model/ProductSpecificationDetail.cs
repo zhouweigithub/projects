@@ -8,37 +8,27 @@ using System.Threading.Tasks;
 namespace Sunny.Model
 {
     /// <summary>
-    /// 优惠券基本信息
+    /// 商品各规格与价格表
     /// </summary>
-    public class Coupon
+    public class ProductSpecificationDetail
     {
-        public int id { get; set; }
         /// <summary>
-        /// 课程id
+        /// 商品id
         /// </summary>
         [TableField]
-        public string name { get; set; }
+        public int product_id { get; set; }
         /// <summary>
-        /// 教练id
+        /// 分类详情id
         /// </summary>
         [TableField]
-        public int money { get; set; }
+        public int specification_detail_id { get; set; }
         /// <summary>
-        /// 商品分类限定
-        /// </summary>
-        public int category_id { get; set; }
-        /// <summary>
-        /// 开始时间
+        /// 价格
         /// </summary>
         [TableField]
-        public DateTime start_time { get; set; }
+        public decimal price { get; set; }
         /// <summary>
-        /// 结束时间
-        /// </summary>
-        [TableField]
-        public DateTime end_time { get; set; }
-        /// <summary>
-        /// 状态0正常1不可用
+        /// 0正常 1禁用
         /// </summary>
         [TableField]
         public short state { get; set; }
