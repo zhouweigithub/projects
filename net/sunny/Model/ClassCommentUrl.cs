@@ -8,9 +8,9 @@ using System.Threading.Tasks;
 namespace Sunny.Model
 {
     /// <summary>
-    /// 课程结束后教练评论的内容
+    /// 课程结束后教练上传的图片或视频信息
     /// </summary>
-    public class ClassComment
+    public class ClassCommentUrl
     {
         public int id { get; set; }
         /// <summary>
@@ -19,10 +19,15 @@ namespace Sunny.Model
         [TableField]
         public int class_id { get; set; }
         /// <summary>
-        /// 教练评论的文字内容
+        /// 教练上传的图片或视频地址
         /// </summary>
         [TableField]
-        public string comment { get; set; }
+        public string url { get; set; }
+        /// <summary>
+        /// 类型0图片 1视频
+        /// </summary>
+        [TableField]
+        public short type { get; set; }
         /// <summary>
         /// 创建时间
         /// </summary>

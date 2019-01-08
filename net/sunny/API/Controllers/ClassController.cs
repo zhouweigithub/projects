@@ -24,7 +24,7 @@ namespace API.Controllers
         [HttpGet]
         public IHttpActionResult GetByStudent(int sudentid, short state)
         {
-            List<Class> classList = ClassDAL.GetClass(sudentid, 0, state);
+            List<Class> classList = ClassDAL.GetClassByStudentId(sudentid, state);
             return Json(classList);
         }
 
@@ -32,7 +32,7 @@ namespace API.Controllers
         [HttpGet]
         public IHttpActionResult GetByCoach(int coachid, short state)
         {
-            List<Class> classList = ClassDAL.GetClass(coachid, 0, state);
+            List<Class> classList = ClassDAL.GetClassByCoachId(coachid, state);
             return Json(classList);
         }
     }

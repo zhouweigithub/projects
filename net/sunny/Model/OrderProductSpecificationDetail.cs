@@ -8,29 +8,29 @@ using System.Threading.Tasks;
 namespace Sunny.Model
 {
     /// <summary>
-    /// 提现记录
+    /// 订单商品的规格与价格表
     /// </summary>
-    public class WithDrawal
+    public class OrderProductSpecificationDetail
     {
-        public int id { get; set; }
         /// <summary>
-        /// 教练id
+        /// 订单id
         /// </summary>
         [TableField]
-        public int coach_id { get; set; }
+        public int order_id { get; set; }
         /// <summary>
-        /// 提现金额
+        /// 商品id
         /// </summary>
         [TableField]
-        public decimal money { get; set; }
+        public int product_id { get; set; }
         /// <summary>
-        /// 状态0成功 1失败
+        /// 规格组合id
         /// </summary>
         [TableField]
-        public short state { get; set; }
+        public int plan_code { get; set; }
         /// <summary>
-        /// 创建时间
+        /// 价格
         /// </summary>
-        public DateTime crtime { get; set; }
+        [TableField]
+        public decimal price { get; set; }
     }
 }

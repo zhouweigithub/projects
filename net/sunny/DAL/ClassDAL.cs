@@ -1,5 +1,6 @@
 ﻿using MySql.Data.MySqlClient;
 using Sunny.Model;
+using Sunny.Model.Custom;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -9,6 +10,9 @@ using System.Threading.Tasks;
 
 namespace Sunny.DAL
 {
+    /// <summary>
+    /// 上课信息操作类
+    /// </summary>
     public class ClassDAL
     {
         /// <summary>
@@ -25,6 +29,19 @@ INNER JOIN coach c ON a.coach_id=c.id
 INNER JOIN (
 	SELECT class_id,COUNT(1)studentCount FROM class_student WHERE student_id='{0}' and state='{1}' GROUP BY class_id
 ) d ON a.id=d.class_id";
+
+        /// <summary>
+        /// 获取上课后教练的评论
+        /// </summary>
+        private static readonly string getClassCommentListSql = @"SELECT b.name,b.headimg,c.comment,GROUP_CONCAT(d.url)urls,a.crtime FROM class a
+INNER JOIN coach b ON a.coach_id=b.id
+INNER JOIN class_comment c ON a.id=c.class_id
+INNER JOIN class_comment_url d ON a.id=d.class_id
+WHERE 1=1 {0}
+GROUP BY a.id
+ORDER BY a.crtime DESC
+";
+
 
         /// <summary>
         /// 根据教练id获取课程列表
@@ -87,6 +104,49 @@ INNER JOIN (
             }
 
             return new List<Class>();
+        }
+
+        /// <summary>
+        /// 获取某次上课后教练给的评论
+        /// </summary>
+        /// <param name="classId">上课id</param>
+        /// <param name="courseId">课程id</param>
+        /// <returns></returns>
+        public static List<ClassCommentJson> GetClassCommentList(int classId, int courseId)
+        {
+            try
+            {
+                string where = string.Empty;
+                if (classId != 0)
+                {
+                    where += " and a.id = @classId";
+                }
+                if (courseId != 0)
+                {
+                    where += " and a.course_id = @courseId";
+                }
+
+                using (DBHelper dbhelper = new DBHelper())
+                {
+                    MySqlParameter[] commandParameters = new MySqlParameter[] {
+                        new MySqlParameter("@classId", classId),
+                        new MySqlParameter("@courseId", courseId),
+                    };
+
+                    DataTable dt = dbhelper.ExecuteDataTableParams(string.Format(getClassCommentListSql, where), commandParameters);
+
+                    if (dt != null && dt.Rows.Count > 0)
+                    {
+                        return dt.ToList<ClassCommentJson>();
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                Util.Log.LogUtil.Write("GetClassCommentList 出错：" + ex, Util.Log.LogType.Error);
+            }
+
+            return new List<ClassCommentJson>();
         }
 
     }

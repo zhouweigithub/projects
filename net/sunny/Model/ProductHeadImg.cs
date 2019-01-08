@@ -8,21 +8,21 @@ using System.Threading.Tasks;
 namespace Sunny.Model
 {
     /// <summary>
-    /// 课程结束后教练评论的内容
+    /// 商品的头部图片
     /// </summary>
-    public class ClassComment
+    public class ProductHeadImg
     {
         public int id { get; set; }
         /// <summary>
-        /// 课程id
+        /// 商品id
         /// </summary>
         [TableField]
-        public int class_id { get; set; }
+        public int product_id { get; set; }
         /// <summary>
-        /// 教练评论的文字内容
+        /// 头部图片地址
         /// </summary>
         [TableField]
-        public string comment { get; set; }
+        public string headimg_url { get; set; }
         /// <summary>
         /// 创建时间
         /// </summary>

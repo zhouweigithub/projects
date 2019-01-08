@@ -38,6 +38,11 @@ namespace Sunny.Model
         [TableField]
         public string phone { get; set; }
         /// <summary>
+        /// 头像图片地址
+        /// </summary>
+        [TableField]
+        public string headimg { get; set; }
+        /// <summary>
         /// 自身照片
         /// </summary>
         [TableField]

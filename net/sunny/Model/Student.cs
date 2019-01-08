@@ -40,6 +40,11 @@ namespace Sunny.Model
         [TableField]
         public DateTime birthday { get; set; }
         /// <summary>
+        /// 头像图片地址
+        /// </summary>
+        [TableField]
+        public string headimg { get; set; }
+        /// <summary>
         /// 0正常 1受限
         /// </summary>
         [TableField]

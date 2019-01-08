@@ -54,6 +54,11 @@ namespace Sunny.Model
         [TableField]
         public int max_buy_count { get; set; }
         /// <summary>
+        /// 主图
+        /// </summary>
+        [TableField]
+        public string main_img { get; set; }
+        /// <summary>
         /// 状态0正常 1禁用
         /// </summary>
         [TableField]

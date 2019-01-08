@@ -51,18 +51,30 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Appointment.cs" />
+    <Compile Include="Custom\ClassCommentJson.cs" />
+    <Compile Include="Custom\CourseInfoJson.cs" />
+    <Compile Include="Campus.cs" />
+    <Compile Include="Custom\CouponListJson.cs" />
+    <Compile Include="ProductHeadImg.cs" />
+    <Compile Include="ClassComment.cs" />
+    <Compile Include="Custom\CourseListJson.cs" />
     <Compile Include="Deliver.cs" />
     <Compile Include="Discount.cs" />
     <Compile Include="Order.cs" />
+    <Compile Include="OrderCoupon.cs" />
+    <Compile Include="OrderProduct.cs" />
+    <Compile Include="OrderProductSpecificationDetail.cs" />
+    <Compile Include="ProductDiscount.cs" />
+    <Compile Include="ProductSpecificationDetailPrice.cs" />
+    <Compile Include="ReceiverInfo.cs" />
     <Compile Include="OrderDiscount.cs" />
-    <Compile Include="OrderSpecificationDetail.cs" />
     <Compile Include="Product.cs" />
     <Compile Include="ProductDetail.cs" />
     <Compile Include="ProductSpecificationDetail.cs" />
     <Compile Include="Specification.cs" />
     <Compile Include="SpecificationDetail.cs" />
     <Compile Include="Category.cs" />
-    <Compile Include="ClassComment.cs" />
+    <Compile Include="ClassCommentUrl.cs" />
     <Compile Include="ClassStudent.cs" />
     <Compile Include="Coach.cs" />
     <Compile Include="CoachCaption.cs" />
@@ -76,7 +88,6 @@
     <Compile Include="StudentCourse.cs" />
     <Compile Include="Venue.cs" />
     <Compile Include="WithDrawal.cs" />
-    <Compile Include="Course.cs" />
     <Compile Include="PayDetail.cs" />
     <Compile Include="Class.cs" />
     <Compile Include="Common\TableFieldAttribute.cs" />

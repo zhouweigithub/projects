@@ -26,7 +26,7 @@ namespace Sunny.Model
         /// 商品折扣金额
         /// </summary>
         [TableField]
-        public decimal descount_money { get; set; }
+        public decimal discount_money { get; set; }
         /// <summary>
         /// 优惠券抵扣金额
         /// </summary>

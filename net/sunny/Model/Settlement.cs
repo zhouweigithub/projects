@@ -21,17 +21,17 @@ namespace Sunny.Model
         /// 本次课时总费用
         /// </summary>
         [TableField]
-        public float total_money { get; set; }
+        public decimal total_money { get; set; }
         /// <summary>
         /// 教练所得费用
         /// </summary>
         [TableField]
-        public float coach_money { get; set; }
+        public decimal coach_money { get; set; }
         /// <summary>
         /// 平台所得费用
         /// </summary>
         [TableField]
-        public float platform_money { get; set; }
+        public decimal platform_money { get; set; }
         /// <summary>
         /// 教练分成比例
         /// </summary>

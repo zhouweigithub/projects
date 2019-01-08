@@ -8,24 +8,24 @@ using System.Threading.Tasks;
 namespace Sunny.Model
 {
     /// <summary>
-    /// 课程结束后教练评论的内容
+    /// 商品各规格与价格表
     /// </summary>
-    public class ClassComment
+    public class ProductSpecificationDetailPrice
     {
-        public int id { get; set; }
         /// <summary>
-        /// 课程id
+        /// 商品id
         /// </summary>
         [TableField]
-        public int class_id { get; set; }
+        public int product_id { get; set; }
         /// <summary>
-        /// 教练评论的文字内容
+        /// 规格组合方案代码，用来区分不同种规格组合
         /// </summary>
         [TableField]
-        public string comment { get; set; }
+        public string plan_code { get; set; }
         /// <summary>
-        /// 创建时间
+        /// 该规格组合对应的价格
         /// </summary>
-        public DateTime crtime { get; set; }
+        [TableField]
+        public decimal price { get; set; }
     }
 }

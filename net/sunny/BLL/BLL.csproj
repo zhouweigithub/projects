@@ -81,6 +81,8 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="API\CampusBLL.cs" />
+    <Compile Include="API\CourseBLL.cs" />
     <Compile Include="Page\ServerLog\ServerLogBLL.cs" />
     <Compile Include="Page\CommonBLL.cs">
       <SubType>Code</SubType>

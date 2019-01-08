@@ -80,5 +80,26 @@ namespace Sunny.DAL
         /// 提现记录
         /// </summary>
         public static readonly string withdrawal = "withdrawal";
+
+        public static readonly string campus = "campus";
+        public static readonly string category = "category";
+        public static readonly string class_comment_url = "class_comment_url";
+        public static readonly string deliver = "deliver";
+        public static readonly string discount = "discount";
+        public static readonly string order = "order";
+        public static readonly string order_coupon = "order_coupon";
+        public static readonly string order_discount = "order_discount";
+        public static readonly string order_product = "order_product";
+        public static readonly string order_product_specification_detail = "order_product_specification_detail";
+        public static readonly string product = "product";
+        public static readonly string product_detail = "product_detail";
+        public static readonly string product_discount = "product_discount";
+        public static readonly string product_headimg = "product_headimg";
+        public static readonly string product_specification_detail = "product_specification_detail";
+        public static readonly string product_specification_detail_price = "product_specification_detail_price";
+        public static readonly string receiver_info = "receiver_info";
+        public static readonly string specification = "specification";
+        public static readonly string specification_detail = "specification_detail";
+
     }
 }

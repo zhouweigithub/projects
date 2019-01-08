@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 namespace Sunny.Model.Common
 {
     /// <summary>
-    /// 数据表字段
+    /// 允许修改的数据表字段
     /// </summary>
     [AttributeUsage(AttributeTargets.Property, AllowMultiple = false, Inherited = false)]
     public class TableFieldAttribute : Attribute

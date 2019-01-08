@@ -81,6 +81,8 @@
     <Compile Include="Base\DBHelper.cs" />
     <Compile Include="Base\DBOperator.cs" />
     <Compile Include="ClassDAL.cs" />
+    <Compile Include="CouponDAL.cs" />
+    <Compile Include="CourseDAL.cs" />
     <Compile Include="Function\DataTableExTen.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Base\MySql.cs" />

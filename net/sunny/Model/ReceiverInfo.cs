@@ -8,24 +8,30 @@ using System.Threading.Tasks;
 namespace Sunny.Model
 {
     /// <summary>
-    /// 课程结束后教练评论的内容
+    /// 收货地址
     /// </summary>
-    public class ClassComment
+    public class ReceiverInfo
     {
         public int id { get; set; }
         /// <summary>
-        /// 课程id
+        /// 用户id
         /// </summary>
         [TableField]
-        public int class_id { get; set; }
+        public int user_id { get; set; }
         /// <summary>
-        /// 教练评论的文字内容
+        /// 收货电话
         /// </summary>
         [TableField]
-        public string comment { get; set; }
+        public string phone { get; set; }
         /// <summary>
-        /// 创建时间
+        /// 收货地址
         /// </summary>
+        [TableField]
+        public string address { get; set; }
+        /// <summary>
+        /// 立减金额
+        /// </summary>
+        [TableField]
         public DateTime crtime { get; set; }
     }
 }

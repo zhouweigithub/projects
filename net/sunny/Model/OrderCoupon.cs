@@ -8,44 +8,44 @@ using System.Threading.Tasks;
 namespace Sunny.Model
 {
     /// <summary>
-    /// 场馆信息
+    /// 订单优惠券信息
     /// </summary>
-    public class Venue
+    public class OrderCoupon
     {
-        public int id { get; set; }
         /// <summary>
-        /// 名称
+        /// 订单id
+        /// </summary>
+        [TableField]
+        public int order_id { get; set; }
+        /// <summary>
+        /// 商品id
+        /// </summary>
+        [TableField]
+        public int product_id { get; set; }
+        /// <summary>
+        /// 优惠券id
+        /// </summary>
+        [TableField]
+        public int coupon_id { get; set; }
+        /// <summary>
+        /// 优惠券名称
         /// </summary>
         [TableField]
         public string name { get; set; }
         /// <summary>
-        /// 编码
+        /// 优惠券金额
         /// </summary>
         [TableField]
-        public string code { get; set; }
+        public decimal price { get; set; }
         /// <summary>
-        /// 区域
+        /// 优惠券数量
         /// </summary>
         [TableField]
-        public int campus_id { get; set; }
+        public int count { get; set; }
         /// <summary>
-        /// 地址
+        /// 优惠总金额
         /// </summary>
         [TableField]
-        public string address { get; set; }
-        /// <summary>
-        /// 简介
-        /// </summary>
-        [TableField]
-        public string summary { get; set; }
-        /// <summary>
-        /// 状态 0正常 1受限
-        /// </summary>
-        [TableField]
-        public short state { get; set; }
-        /// <summary>
-        /// 创建时间
-        /// </summary>
-        public DateTime crtime { get; set; }
+        public decimal money { get; set; }
     }
 }

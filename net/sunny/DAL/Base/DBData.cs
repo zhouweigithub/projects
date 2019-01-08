@@ -49,6 +49,26 @@ namespace Sunny.DAL
             InstanceList.Add("student_course", new BaseQuery("student_course", "id", "id", false));
             InstanceList.Add("venue", new BaseQuery("venue", "id", "id", false));
             InstanceList.Add("withdrawal", new BaseQuery("withdrawal", "id", "id", false));
+
+            InstanceList.Add("campus", new BaseQuery("campus", "id", "id", false));
+            InstanceList.Add("category", new BaseQuery("category", "id", "id", false));
+            InstanceList.Add("class_comment_url", new BaseQuery("class_comment_url", "", "", false));
+            InstanceList.Add("deliver", new BaseQuery("deliver", "id", "id", false));
+            InstanceList.Add("discount", new BaseQuery("discount", "id", "id", false));
+            InstanceList.Add("order", new BaseQuery("order", "order_id", "order_id", false));
+            InstanceList.Add("order_coupon", new BaseQuery("order_coupon", "", "", false));
+            InstanceList.Add("order_product", new BaseQuery("order_product", "", "", false));
+            InstanceList.Add("order_product_specification_detail", new BaseQuery("order_product_specification_detail", "", "", false));
+            InstanceList.Add("product", new BaseQuery("product", "id", "id", false));
+            InstanceList.Add("product_detail", new BaseQuery("product_detail", "product_id", "product_id", false));
+            InstanceList.Add("product_discount", new BaseQuery("product_discount", "", "", false));
+            InstanceList.Add("product_headimg", new BaseQuery("product_headimg", "id", "id", false));
+            InstanceList.Add("product_specification_detail", new BaseQuery("product_specification_detail", "", "", false));
+            InstanceList.Add("product_specification_detail_price", new BaseQuery("product_specification_detail_price", "", "", false));
+            InstanceList.Add("receiver_info", new BaseQuery("receiver_info", "id", "id", false));
+            InstanceList.Add("specification", new BaseQuery("specification", "id", "id", false));
+            InstanceList.Add("specification_detail", new BaseQuery("specification_detail", "id", "id", false));
+
         }
 
         /// <summary>
