@@ -16,7 +16,7 @@ namespace Sunny.Model
         /// 订单id
         /// </summary>
         [TableField]
-        public int order_id { get; set; }
+        public string order_id { get; set; }
         /// <summary>
         /// 商品id
         /// </summary>
@@ -26,7 +26,7 @@ namespace Sunny.Model
         /// 规格组合id
         /// </summary>
         [TableField]
-        public int plan_code { get; set; }
+        public string plan_code { get; set; }
         /// <summary>
         /// 价格
         /// </summary>

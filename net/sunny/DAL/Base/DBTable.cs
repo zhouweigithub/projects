@@ -81,25 +81,87 @@ namespace Sunny.DAL
         /// </summary>
         public static readonly string withdrawal = "withdrawal";
 
+        /// <summary>
+        /// 校区
+        /// </summary>
         public static readonly string campus = "campus";
+        /// <summary>
+        /// 商品分类
+        /// </summary>
         public static readonly string category = "category";
+        /// <summary>
+        /// 上课后教练上传的图片或视频
+        /// </summary>
         public static readonly string class_comment_url = "class_comment_url";
+        /// <summary>
+        /// 送货方式
+        /// </summary>
         public static readonly string deliver = "deliver";
+        /// <summary>
+        /// 折扣基本信息
+        /// </summary>
         public static readonly string discount = "discount";
+        /// <summary>
+        /// 购物订单信息
+        /// </summary>
         public static readonly string order = "order";
+        /// <summary>
+        /// 订单使用的优惠券
+        /// </summary>
         public static readonly string order_coupon = "order_coupon";
+        /// <summary>
+        /// 订单涉及的折扣
+        /// </summary>
         public static readonly string order_discount = "order_discount";
+        /// <summary>
+        /// 订单中的商品
+        /// </summary>
         public static readonly string order_product = "order_product";
+        /// <summary>
+        /// 订单商品的规格信息
+        /// </summary>
         public static readonly string order_product_specification_detail = "order_product_specification_detail";
+        /// <summary>
+        /// 商品表
+        /// </summary>
         public static readonly string product = "product";
+        /// <summary>
+        /// 商品详情
+        /// </summary>
         public static readonly string product_detail = "product_detail";
+        /// <summary>
+        /// 商品折扣信息
+        /// </summary>
         public static readonly string product_discount = "product_discount";
+        /// <summary>
+        /// 商品的头部滚动图片
+        /// </summary>
         public static readonly string product_headimg = "product_headimg";
+        /// <summary>
+        /// 商品的规格详情
+        /// </summary>
         public static readonly string product_specification_detail = "product_specification_detail";
+        /// <summary>
+        /// 商品各规格组的价格
+        /// </summary>
         public static readonly string product_specification_detail_price = "product_specification_detail_price";
+        /// <summary>
+        /// 收货人信息
+        /// </summary>
         public static readonly string receiver_info = "receiver_info";
+        /// <summary>
+        /// 规格分类名
+        /// </summary>
         public static readonly string specification = "specification";
+        /// <summary>
+        /// 规格详情
+        /// </summary>
         public static readonly string specification_detail = "specification_detail";
+        /// <summary>
+        /// 课时
+        /// </summary>
+        public static readonly string hours = "hours";
+
 
     }
 }

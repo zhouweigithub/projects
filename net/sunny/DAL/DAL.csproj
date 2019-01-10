@@ -75,17 +75,22 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AppointmentDAL.cs" />
     <Compile Include="Base\DBData.cs" />
     <Compile Include="Base\DBTable.cs" />
     <Compile Include="Base\BaseQuery.cs" />
     <Compile Include="Base\DBHelper.cs" />
     <Compile Include="Base\DBOperator.cs" />
+    <Compile Include="CategoryDAL.cs" />
     <Compile Include="ClassDAL.cs" />
     <Compile Include="CouponDAL.cs" />
     <Compile Include="CourseDAL.cs" />
     <Compile Include="Function\DataTableExTen.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Base\MySql.cs" />
+    <Compile Include="DiscountDAL.cs" />
+    <Compile Include="SpecificationDAL.cs" />
+    <Compile Include="StudentCouponDAL.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Common\Common.csproj">

@@ -45,4 +45,37 @@ namespace Sunny.Model.Custom
         public List<ClassCommentJson> CommentsList;
 
     }
+
+    /// <summary>
+    /// 课程的价格信息
+    /// </summary>
+    public class CoursePriceInfoJson
+    {
+        /// <summary>
+        /// 课程id
+        /// </summary>
+        public int courseid;
+        /// <summary>
+        /// 课程名称
+        /// </summary>
+        public string course_name;
+        /// <summary>
+        /// 原价
+        /// </summary>
+        public decimal price;
+        /// <summary>
+        /// 折扣金额
+        /// </summary>
+        public decimal discount_money;
+        /// <summary>
+        /// 折扣id
+        /// </summary>
+        public int discount_id;
+        /// <summary>
+        /// 折扣名称
+        /// </summary>
+        public string discount_name;
+
+    }
+
 }

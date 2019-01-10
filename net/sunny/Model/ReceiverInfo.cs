@@ -19,6 +19,10 @@ namespace Sunny.Model
         [TableField]
         public int user_id { get; set; }
         /// <summary>
+        /// 收货人姓名
+        /// </summary>
+        public string name { get; set; }
+        /// <summary>
         /// 收货电话
         /// </summary>
         [TableField]

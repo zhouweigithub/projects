@@ -51,13 +51,20 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Appointment.cs" />
-    <Compile Include="Custom\ClassCommentJson.cs" />
-    <Compile Include="Custom\CourseInfoJson.cs" />
+    <Compile Include="Course.cs" />
+    <Compile Include="Custom\CustDisscount.cs" />
+    <Compile Include="Hours.cs" />
+    <Compile Include="Request\OrderRequest.cs" />
+    <Compile Include="Request\ProductRequest.cs" />
+    <Compile Include="Request\TmpCoupon.cs" />
+    <Compile Include="Response\ClassCommentJson.cs" />
+    <Compile Include="Response\CourseInfoJson.cs" />
     <Compile Include="Campus.cs" />
-    <Compile Include="Custom\CouponListJson.cs" />
+    <Compile Include="Response\CouponListJson.cs" />
     <Compile Include="ProductHeadImg.cs" />
     <Compile Include="ClassComment.cs" />
-    <Compile Include="Custom\CourseListJson.cs" />
+    <Compile Include="Response\AppointmentCourseListJson.cs" />
+    <Compile Include="Response\CourseListJson.cs" />
     <Compile Include="Deliver.cs" />
     <Compile Include="Discount.cs" />
     <Compile Include="Order.cs" />

@@ -8,60 +8,46 @@ using System.Threading.Tasks;
 namespace Sunny.Model
 {
     /// <summary>
-    /// 课程基础信息
+    /// 已购买的课程信息
     /// </summary>
     public class Course
     {
         public int id { get; set; }
         /// <summary>
-        /// 课程名称
+        /// 学员id
         /// </summary>
         [TableField]
-        public string name { get; set; }
+        public int student_id { get; set; }
         /// <summary>
-        /// 课程简介
+        /// 商品id
         /// </summary>
         [TableField]
-        public string summary { get; set; }
+        public int product_id { get; set; }
         /// <summary>
-        /// 价格
+        /// 场馆id
         /// </summary>
         [TableField]
-        public int price { get; set; }
+        public int venue_id { get; set; }
         /// <summary>
-        /// 原价
+        /// 订单id
         /// </summary>
         [TableField]
-        public int original_price { get; set; }
+        public string order_id { get; set; }
         /// <summary>
-        /// 学员最大人数
+        /// 最大教学人数
         /// </summary>
         [TableField]
-        public short maxStudentCount { get; set; }
+        public int max_count { get; set; }
         /// <summary>
-        /// 学时
+        /// 总学时
         /// </summary>
         [TableField]
-        public short class_hour { get; set; }
+        public int hour { get; set; }
         /// <summary>
-        /// 开始日期
+        /// 已完成学时
         /// </summary>
         [TableField]
-        public DateTime start_date { get; set; }
-        /// <summary>
-        /// 结束日期
-        /// </summary>
-        public DateTime end_date { get; set; }
-        /// <summary>
-        /// 状态0正常 1不可用
-        /// </summary>
-        [TableField]
-        public short state { get; set; }
-        /// <summary>
-        /// 教练资金分成比例
-        /// </summary>
-        [TableField]
-        public float rate { get; set; }
+        public int over_hour { get; set; }
         /// <summary>
         /// 创建时间
         /// </summary>

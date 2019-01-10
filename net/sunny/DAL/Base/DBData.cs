@@ -69,6 +69,9 @@ namespace Sunny.DAL
             InstanceList.Add("specification", new BaseQuery("specification", "id", "id", false));
             InstanceList.Add("specification_detail", new BaseQuery("specification_detail", "id", "id", false));
 
+            InstanceList.Add("hours", new BaseQuery("hours", "product_id", "product_id", false));
+
+
         }
 
         /// <summary>

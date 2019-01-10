@@ -14,20 +14,10 @@ namespace Sunny.Model
     {
         public int id { get; set; }
         /// <summary>
-        /// 学员id
-        /// </summary>
-        [TableField]
-        public int student_id { get; set; }
-        /// <summary>
         /// 课程id
         /// </summary>
         [TableField]
         public int course_id { get; set; }
-        /// <summary>
-        /// 场馆id
-        /// </summary>
-        [TableField]
-        public int venue_id { get; set; }
         /// <summary>
         /// 开始时间
         /// </summary>

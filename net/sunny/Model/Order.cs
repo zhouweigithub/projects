@@ -16,7 +16,11 @@ namespace Sunny.Model
         /// 订单号
         /// </summary>
         [TableField]
-        public int order_id { get; set; }
+        public string order_id { get; set; }
+        /// <summary>
+        /// 用户id
+        /// </summary>
+        public int userid { get; set; }
         /// <summary>
         /// 实际支付金额
         /// </summary>

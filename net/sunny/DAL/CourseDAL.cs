@@ -18,7 +18,7 @@ namespace Sunny.DAL
         /// <summary>
         /// 获取课程信息
         /// </summary>
-        private static readonly string getCourseInfoListSql = @"
+        private static readonly string getCourseListSql = @"
 SELECT a.id courseid,a.name,a.main_img,MIN(d.price)minPrice,MAX(d.price)maxPrice,IFNULL(f.money,0) discount_money FROM product a
 INNER JOIN category b ON a.category_id=b.id
 LEFT JOIN product_specification_detail c ON a.id=c.product_id
@@ -29,7 +29,10 @@ WHERE b.type=0 {0}
 GROUP BY a.id
  ";
 
-        private static readonly string getCourseInfoSql = @"
+        /// <summary>
+        /// 单个课程信息
+        /// </summary>
+        private static readonly string getCourseDetailSql = @"
 SELECT a.id courseid,a.name,MIN(d.price)minPrice,MAX(d.price)maxPrice,IFNULL(f.money,0) discount_money,GROUP_CONCAT(g.headimg_url)heading_urls,h.detail FROM product a
 INNER JOIN category b ON a.category_id=b.id
 LEFT JOIN product_specification_detail c ON a.id=c.product_id
@@ -51,6 +54,19 @@ LEFT JOIN product_specification_detail q ON p.id=q.product_id
 LEFT JOIN specification_detail r ON q.specification_detail_id=r.id
 LEFT JOIN specification s ON r.specification_id=s.id
 ";
+
+        /// <summary>
+        /// 获取课程的价格和折扣信息
+        /// </summary>
+        private static readonly string getCoursePriceSql = @"
+SELECT a.id courseid,a.name course_name,IFNULL(d.price,0)price,IFNULL(f.money,0)discount_money,f.id discount_id,f.name discount_name FROM product a
+LEFT JOIN product_specification_detail_price d ON a.id=d.product_id
+LEFT JOIN product_discount e ON a.id=e.product_id AND e.state=0
+LEFT JOIN discount f ON e.discount_id=f.id AND f.state=0
+WHERE a.id='{0}' AND c.plan_code='{1}'
+GROUP BY a.id
+";
+
 
 
 
@@ -82,7 +98,7 @@ LEFT JOIN specification s ON r.specification_id=s.id
                         new MySqlParameter("@categoryId", categoryId),
                     };
 
-                    DataTable dt = dbhelper.ExecuteDataTableParams(string.Format(getCourseInfoListSql, where), commandParameters);
+                    DataTable dt = dbhelper.ExecuteDataTableParams(string.Format(getCourseListSql, where), commandParameters);
 
                     if (dt != null && dt.Rows.Count > 0)
                     {
@@ -109,7 +125,7 @@ LEFT JOIN specification s ON r.specification_id=s.id
             {
                 using (DBHelper dbhelper = new DBHelper())
                 {
-                    DataTable dt = dbhelper.ExecuteDataTableParams(string.Format(getCourseInfoSql, courseId));
+                    DataTable dt = dbhelper.ExecuteDataTableParams(string.Format(getCourseDetailSql, courseId));
 
                     if (dt != null && dt.Rows.Count > 0)
                     {
@@ -120,6 +136,34 @@ LEFT JOIN specification s ON r.specification_id=s.id
             catch (Exception ex)
             {
                 Util.Log.LogUtil.Write("GetCourseInfo 出错：" + ex, Util.Log.LogType.Error);
+            }
+
+            return null;
+        }
+
+        /// <summary>
+        /// 获取课程的价格和折扣信息
+        /// </summary>
+        /// <param name="courseId">课程id</param>
+        /// <param name="placnCode">规格编码</param>
+        /// <returns></returns>
+        public static CoursePriceInfoJson GetCoursePriceInfo(int courseId, string placnCode)
+        {
+            try
+            {
+                using (DBHelper dbhelper = new DBHelper())
+                {
+                    DataTable dt = dbhelper.ExecuteDataTableParams(string.Format(getCoursePriceSql, courseId, placnCode));
+
+                    if (dt != null && dt.Rows.Count > 0)
+                    {
+                        return dt.ToList<CoursePriceInfoJson>().First();
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                Util.Log.LogUtil.Write("GetCoursePriceInfo 出错：" + ex, Util.Log.LogType.Error);
             }
 
             return null;
