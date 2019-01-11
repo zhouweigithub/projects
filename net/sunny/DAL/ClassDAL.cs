@@ -49,23 +49,31 @@ VALUES(@product_id,@coach_id,@venue_id,@hour,@max_count,@start_time,@end_time,0,
         /// 获取教练可接单的预约信息
         /// </summary>
         private static readonly string getBookingListOfCoach = @"
-SELECT a.id classid,a.hour,a.max_count,a.start_time,a.end_time,b.name course_name,COUNT(c.student_id)booked_count FROM class a
-INNER JOIN product b ON a.product_id=b.id
-INNER JOIN coachcaption_venue d ON a.venue_id=d.venue_id
-INNER JOIN coach_caption e ON d.coach_id=e.caption_id
-LEFT JOIN class_student c ON a.id=c.class_id 
-WHERE a.start_time>NOW() AND a.coach_id=0 AND (ISNULL(c.state) OR c.state=0) AND e.coach_id=1
-GROUP BY classid
-HAVING a.max_count>COUNT(c.student_id)
+SELECT a.id booking_id,a.start_time,a.end_time,b.over_hour+1 `hour`,b.max_count,b.over_hour,b.product_id,
+c.name product_name,c.main_img,k.name venue_name FROM booking_student a
+INNER JOIN course b ON a.course_id=b.id
+INNER JOIN product c ON b.product_id=c.id
+INNER JOIN coachcaption_venue d ON b.venue_id=d.venue_id
+INNER JOIN coach_caption e ON d.coach_id=e.caption_id AND b.venue_id=d.venue_id
+INNER JOIN venue k ON b.venue_id=k.id
+LEFT JOIN booking_coach_queue f ON a.id=f.booking_student_id AND f.end_time>NOW()
+INNER JOIN (
+	-- 获取上课时间未到，并且上课学员已预约满的时间段
+	SELECT start_time,end_time,max_count FROM class p
+	INNER JOIN class_student q ON p.id=q.class_id
+	WHERE coach_id=1 AND start_time>NOW() 
+	GROUP BY p.id HAVING max_count=COUNT(1)
+)g ON NOT(a.start_time>=g.end_time OR a.end_time<=g.start_time) -- 排除时间交叉同时已预约完成的时间段
+INNER JOIN (
+	-- 获取上课时间未到，并且上课学员未预约满的数据
+	SELECT p.venue_id,p.product_id,p.hour,p.start_time,p.end_time,p.max_count FROM class p
+	INNER JOIN class_student q ON p.id=q.class_id
+	WHERE coach_id=1 AND start_time>NOW() 
+	GROUP BY p.id HAVING max_count>COUNT(1)
+)h ON a.start_time=h.start_time AND a.end_time=h.end_time 
+    AND NOT(b.venue_id=h.venue_id AND b.product_id=h.product_id AND b.over_hour+1=h.hour) -- 排除时间段相同，但内容不同的项
 
-SELECT a.id classid,a.hour,a.max_count,a.start_time,a.end_time,b.name course_name,f.student_id FROM class a
-INNER JOIN product b ON a.product_id=b.id
-INNER JOIN coachcaption_venue d ON a.venue_id=d.venue_id
-INNER JOIN coach_caption e ON d.coach_id=e.caption_id
-INNER JOIN class_student f ON a.id=f.class_id AND f.state=0 
-INNER JOIN course g ON f.student_id=g.student_id AND a.product_id=g.product_id  AND d.venue_id=g.venue_id
-WHERE a.start_time>NOW() AND (a.coach_id=0 OR a.coach_id=1) AND e.coach_id=1
-
+WHERE a.start_time>NOW() AND a.state=0 AND e.coach_id='1' AND (ISNULL(f.coach_id) OR f.coach_id=e.coach_id)
 ";
 
         /// <summary>
