@@ -82,6 +82,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="API\CampusBLL.cs" />
+    <Compile Include="API\ClassBLL.cs" />
     <Compile Include="API\CourseBLL.cs" />
     <Compile Include="API\OrderBLL.cs" />
     <Compile Include="Page\ServerLog\ServerLogBLL.cs" />

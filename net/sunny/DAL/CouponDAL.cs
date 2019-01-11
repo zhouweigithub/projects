@@ -25,6 +25,13 @@ LEFT JOIN category c ON b.category_id=c.id OR b.category_id=0
 WHERE b.state=0 AND c.type=0 AND a.student_id='{0}'
  ";
 
+        private static readonly string getCouponDefaultOfStudentSql = @"
+SELECT b.id,b.name,b.money FROM student_coupon a
+INNER JOIN coupon b ON a.coupon_id=b.id
+WHERE b.category_id='{0}' AND a.student_id='{1}'
+ORDER BY b.money DESC
+LIMIT 1
+";
 
         /// <summary>
         /// 获取优惠券信息
@@ -52,6 +59,29 @@ WHERE b.state=0 AND c.type=0 AND a.student_id='{0}'
 
             return new List<CouponListJson>();
         }
+
+        public static CouponListJson GetCouponDefaultOfStudent(int studentId, int categoryId)
+        {
+            try
+            {
+                using (DBHelper dbhelper = new DBHelper())
+                {
+                    DataTable dt = dbhelper.ExecuteDataTable(string.Format(getCouponDefaultOfStudentSql, categoryId, studentId));
+
+                    if (dt != null && dt.Rows.Count > 0)
+                    {
+                        return dt.ToList<CouponListJson>().First();
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                Util.Log.LogUtil.Write("GetCouponDefaultOfStudent 出错：" + ex, Util.Log.LogType.Error);
+            }
+
+            return null;
+        }
+
 
     }
 }

@@ -51,8 +51,10 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Appointment.cs" />
+    <Compile Include="CourseType.cs" />
     <Compile Include="Course.cs" />
     <Compile Include="Custom\CustDisscount.cs" />
+    <Compile Include="BookingCoachQueue.cs" />
     <Compile Include="Hours.cs" />
     <Compile Include="Request\OrderRequest.cs" />
     <Compile Include="Request\ProductRequest.cs" />

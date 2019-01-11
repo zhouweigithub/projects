@@ -8,30 +8,26 @@ using System.Threading.Tasks;
 namespace Sunny.Model
 {
     /// <summary>
-    /// 上课的学生
+    /// 商品分类
     /// </summary>
-    public class ClassStudent
+    public class CourseType
     {
+        public int id { get; set; }
         /// <summary>
-        /// 上课id
+        /// 名称
         /// </summary>
         [TableField]
-        public int class_id { get; set; }
+        public string name { get; set; }
         /// <summary>
-        /// 学员id
+        /// 最大上课人数
         /// </summary>
         [TableField]
-        public int student_id { get; set; }
+        public int max_people { get; set; }
         /// <summary>
-        /// 0预约中 1预约成功 2已上课 3已评价
+        /// 状态0正常 1禁用
         /// </summary>
         [TableField]
         public short state { get; set; }
-        /// <summary>
-        /// 学员给本次上课打分
-        /// </summary>
-        [TableField]
-        public float marking { get; set; }
         /// <summary>
         /// 创建时间
         /// </summary>

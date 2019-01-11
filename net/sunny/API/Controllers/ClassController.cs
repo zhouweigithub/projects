@@ -4,6 +4,7 @@ using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Web.Http;
+using Sunny.BLL.API;
 using Sunny.DAL;
 using Sunny.Model;
 
@@ -34,6 +35,13 @@ namespace API.Controllers
         {
             List<Class> classList = ClassDAL.GetClassByCoachId(coachid, state);
             return Json(classList);
+        }
+
+        [HttpPost]
+        public IHttpActionResult Booking(int studentid, int productId, DateTime start_time, DateTime end_time)
+        {
+            bool result = ClassBLL.Booking(studentid, productId, start_time);
+            return Json(result);
         }
     }
 }

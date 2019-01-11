@@ -12,10 +12,10 @@ namespace Sunny.DAL
     /// </summary>
     public class DBTable
     {
-        /// <summary>
-        /// 预约请求
-        /// </summary>
-        public static readonly string appointment = "appointment";
+        ///// <summary>
+        ///// 预约请求
+        ///// </summary>
+        //public static readonly string appointment = "appointment";
         /// <summary>
         /// 具体每次上课信息
         /// </summary>
@@ -45,17 +45,17 @@ namespace Sunny.DAL
         /// </summary>
         public static readonly string coupon = "coupon";
         /// <summary>
-        /// 课程基础信息
+        /// 购买成功的课程表
         /// </summary>
         public static readonly string course = "course";
-        /// <summary>
-        /// 支付信息
-        /// </summary>
-        public static readonly string pay_detail = "pay_detail";
-        /// <summary>
-        /// 支付时使用的优惠券信息
-        /// </summary>
-        public static readonly string pay_detail_coupon = "pay_detail_coupon";
+        ///// <summary>
+        ///// 支付信息
+        ///// </summary>
+        //public static readonly string pay_detail = "pay_detail";
+        ///// <summary>
+        ///// 支付时使用的优惠券信息
+        ///// </summary>
+        //public static readonly string pay_detail_coupon = "pay_detail_coupon";
         /// <summary>
         /// 教练上课后资金结算
         /// </summary>
@@ -68,10 +68,10 @@ namespace Sunny.DAL
         /// 学员的优惠券信息
         /// </summary>
         public static readonly string student_coupon = "student_coupon";
-        /// <summary>
-        /// 学生预约课程情况
-        /// </summary>
-        public static readonly string student_course = "student_course";
+        ///// <summary>
+        ///// 学生预约课程情况
+        ///// </summary>
+        //public static readonly string student_course = "student_course";
         /// <summary>
         /// 场馆信息
         /// </summary>
@@ -161,7 +161,18 @@ namespace Sunny.DAL
         /// 课时
         /// </summary>
         public static readonly string hours = "hours";
-
+        /// <summary>
+        /// 上课人数分类
+        /// </summary>
+        public static readonly string course_type = "course_type";
+        /// <summary>
+        /// 首页顶部滚动图片
+        /// </summary>
+        public static readonly string banner = "banner";
+        /// <summary>
+        /// 接单时教练限定
+        /// </summary>
+        public static readonly string booking_coach_queue = "booking_coach_queue";
 
     }
 }

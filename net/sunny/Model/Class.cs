@@ -17,17 +17,27 @@ namespace Sunny.Model
         /// 课程id
         /// </summary>
         [TableField]
-        public int course_id { get; set; }
+        public int product_id { get; set; }
         /// <summary>
         /// 教练id
         /// </summary>
         [TableField]
         public int coach_id { get; set; }
         /// <summary>
+        /// 第几课时
+        /// </summary>
+        [TableField]
+        public int hour { get; set; }
+        /// <summary>
         /// 场馆id
         /// </summary>
         [TableField]
         public int venue_id { get; set; }
+        /// <summary>
+        /// 最大教学人数
+        /// </summary>
+        [TableField]
+        public int max_count { get; set; }
         /// <summary>
         /// 开始时间
         /// </summary>
@@ -44,7 +54,7 @@ namespace Sunny.Model
         [TableField]
         public float rate { get; set; }
         /// <summary>
-        /// 0未上课 1已上课
+        /// 0未上课 1已上课 2教练已评价
         /// </summary>
         [TableField]
         public short state { get; set; }

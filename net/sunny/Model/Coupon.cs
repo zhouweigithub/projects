@@ -28,6 +28,10 @@ namespace Sunny.Model
         /// </summary>
         public int category_id { get; set; }
         /// <summary>
+        /// 一次能否使用多张(0可以 1不可以)
+        /// </summary>
+        public short multiple { get; set; }
+        /// <summary>
         /// 开始时间
         /// </summary>
         [TableField]

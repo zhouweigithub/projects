@@ -13,7 +13,7 @@ namespace Sunny.BLL.API
     public class CourseBLL
     {
         /// <summary>
-        /// 获取课程详情
+        /// 获取课程详情，包含评论
         /// </summary>
         /// <param name="courseId"></param>
         /// <returns></returns>
@@ -22,7 +22,7 @@ namespace Sunny.BLL.API
             //课程基本信息
             CourseInfoJson courseInfo = CourseDAL.GetCourseInfo(courseId);
             //课程评论信息
-            List<ClassCommentJson> comments = ClassDAL.GetClassCommentList(0, courseId);
+            List<ClassCommentJson> comments = ClassDAL.GetClassCommentList(0, courseId, 10);
 
             courseInfo.CommentsList = comments;
             return courseInfo;

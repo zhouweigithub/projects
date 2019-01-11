@@ -32,7 +32,7 @@ namespace Sunny.DAL
         /// </summary>
         private static void CreateInstanceList()
         {
-            InstanceList.Add("appointment", new BaseQuery("appointment", "id", "id", false));
+            //InstanceList.Add("appointment", new BaseQuery("appointment", "id", "id", false));
             InstanceList.Add("class", new BaseQuery("class", "id", "id", false));
             InstanceList.Add("class_comment", new BaseQuery("class_comment", "class_id", "class_id", false));
             InstanceList.Add("class_student", new BaseQuery("class_student", "", "", false));
@@ -41,12 +41,12 @@ namespace Sunny.DAL
             InstanceList.Add("coachcaption_venue", new BaseQuery("coachcaption_venue", "coach_id", "coach_id", false));
             InstanceList.Add("coupon", new BaseQuery("coupon", "id", "id", false));
             InstanceList.Add("course", new BaseQuery("course", "id", "id", false));
-            InstanceList.Add("pay_detail", new BaseQuery("pay_detail", "id", "id", false));
-            InstanceList.Add("pay_detail_coupon", new BaseQuery("pay_detail_coupon", "", "", false));
+            //InstanceList.Add("pay_detail", new BaseQuery("pay_detail", "id", "id", false));
+            //InstanceList.Add("pay_detail_coupon", new BaseQuery("pay_detail_coupon", "", "", false));
             InstanceList.Add("settlement", new BaseQuery("settlement", "class_id", "class_id", false));
             InstanceList.Add("student", new BaseQuery("student", "id", "id", false));
             InstanceList.Add("student_coupon", new BaseQuery("student_coupon", "id", "id", false));
-            InstanceList.Add("student_course", new BaseQuery("student_course", "id", "id", false));
+            //InstanceList.Add("student_course", new BaseQuery("student_course", "id", "id", false));
             InstanceList.Add("venue", new BaseQuery("venue", "id", "id", false));
             InstanceList.Add("withdrawal", new BaseQuery("withdrawal", "id", "id", false));
 
@@ -70,7 +70,8 @@ namespace Sunny.DAL
             InstanceList.Add("specification_detail", new BaseQuery("specification_detail", "id", "id", false));
 
             InstanceList.Add("hours", new BaseQuery("hours", "product_id", "product_id", false));
-
+            InstanceList.Add("banner", new BaseQuery("banner", "id", "id", false));
+            InstanceList.Add("booking_coach_queue", new BaseQuery("booking_coach_queue", "", "", false));
 
         }
 

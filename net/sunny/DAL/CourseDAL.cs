@@ -76,7 +76,7 @@ GROUP BY a.id
         /// <param name="name">课程名字</param>
         /// <param name="categoryId">分类id</param>
         /// <returns></returns>
-        public static List<CourseListJson> GetCourseList(string name, int categoryId)
+        public static List<CourseListJson> GetCourseList(string name, int categoryId, int page, int pageSize)
         {
             try
             {
@@ -98,7 +98,7 @@ GROUP BY a.id
                         new MySqlParameter("@categoryId", categoryId),
                     };
 
-                    DataTable dt = dbhelper.ExecuteDataTableParams(string.Format(getCourseListSql, where), commandParameters);
+                    DataTable dt = dbhelper.ExecuteDataTablePageParams(string.Format(getCourseListSql, where), pageSize, page, commandParameters);
 
                     if (dt != null && dt.Rows.Count > 0)
                     {
