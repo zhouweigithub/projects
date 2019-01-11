@@ -59,6 +59,7 @@
     <Compile Include="Request\OrderRequest.cs" />
     <Compile Include="Request\ProductRequest.cs" />
     <Compile Include="Request\TmpCoupon.cs" />
+    <Compile Include="Response\ClassBookingOfCoach.cs" />
     <Compile Include="Response\ClassCommentJson.cs" />
     <Compile Include="Response\CourseInfoJson.cs" />
     <Compile Include="Campus.cs" />

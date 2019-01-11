@@ -7,6 +7,7 @@ using System.Web.Http;
 using Sunny.BLL.API;
 using Sunny.DAL;
 using Sunny.Model;
+using Sunny.Model.Custom;
 
 namespace API.Controllers
 {
@@ -42,6 +43,13 @@ namespace API.Controllers
         {
             bool result = ClassBLL.Booking(studentid, productId, start_time);
             return Json(result);
+        }
+
+        [HttpGet]
+        public IHttpActionResult GetByCoach(int coachid)
+        {
+            List<ClassBookingOfCoach> classList = ClassDAL.GetBookingListOfCoach(coachid);
+            return Json(classList);
         }
     }
 }
