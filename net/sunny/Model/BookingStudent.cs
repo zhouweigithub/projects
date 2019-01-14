@@ -8,23 +8,34 @@ using System.Threading.Tasks;
 namespace Sunny.Model
 {
     /// <summary>
-    /// 接单时教练限定
+    /// 用户下的预订信息
     /// </summary>
-    public class BookingCoachQueue
+    public class BookingStudent
     {
+        public int Id { get; set; }
         /// <summary>
         /// course.id
         /// </summary>
         [TableField]
         public int course_id { get; set; }
         /// <summary>
-        /// 教练id
+        /// 预订上课开始时间
         /// </summary>
         [TableField]
-        public int coach_id { get; set; }
+        public DateTime start_time { get; set; }
         /// <summary>
-        /// 结束时间（此时间前，仅限coach_id能接class_id这一单）
+        /// 预订上课结束时间
         /// </summary>
+        [TableField]
         public DateTime end_time { get; set; }
+        /// <summary>
+        /// 状态0正常 1无效
+        /// </summary>
+        [TableField]
+        public short state { get; set; }
+        /// <summary>
+        /// 创建时间
+        /// </summary>
+        public DateTime crtime { get; set; }
     }
 }

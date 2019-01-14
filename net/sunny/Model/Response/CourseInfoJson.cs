@@ -14,35 +14,35 @@ namespace Sunny.Model.Custom
         /// <summary>
         /// 课程id
         /// </summary>
-        public int CourseId;
+        public int courseid { get; set; }
         /// <summary>
         /// 课程名称
         /// </summary>
-        public string Name;
+        public string name { get; set; }
         /// <summary>
         /// 最低价
         /// </summary>
-        public string MinPrice;
+        public decimal min_price { get; set; }
         /// <summary>
         /// 最高价
         /// </summary>
-        public string MaxPrice;
+        public decimal max_price { get; set; }
         /// <summary>
         /// 优惠金额
         /// </summary>
-        public string Discount_Money;
+        public decimal discount_money { get; set; }
         /// <summary>
         /// 头部图片地址
         /// </summary>
-        public string Heading_Urls;
+        public string heading_urls { get; set; }
         /// <summary>
         /// 商品详情
         /// </summary>
-        public string Detail;
+        public string detail { get; set; }
         /// <summary>
         /// 课程的评论
         /// </summary>
-        public List<ClassCommentJson> CommentsList;
+        public List<ClassCommentJson> commentslist { get; set; } = new List<ClassCommentJson>();
 
     }
 
@@ -54,27 +54,27 @@ namespace Sunny.Model.Custom
         /// <summary>
         /// 课程id
         /// </summary>
-        public int courseid;
+        public int courseid { get; set; }
         /// <summary>
         /// 课程名称
         /// </summary>
-        public string course_name;
+        public string course_name { get; set; }
         /// <summary>
         /// 原价
         /// </summary>
-        public decimal price;
+        public decimal price { get; set; }
         /// <summary>
         /// 折扣金额
         /// </summary>
-        public decimal discount_money;
+        public decimal discount_money { get; set; }
         /// <summary>
         /// 折扣id
         /// </summary>
-        public int discount_id;
+        public int discount_id { get; set; }
         /// <summary>
         /// 折扣名称
         /// </summary>
-        public string discount_name;
+        public string discount_name { get; set; }
 
     }
 

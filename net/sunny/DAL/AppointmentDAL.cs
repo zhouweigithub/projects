@@ -65,7 +65,7 @@ WHERE a.student_id='1' AND b.start_time>NOW()
         }
 
         /// <summary>
-        /// 获取时间还没到的预约记录
+        /// 获取时间还没到的上课记录
         /// </summary>
         /// <param name="studentId"></param>
         /// <returns></returns>

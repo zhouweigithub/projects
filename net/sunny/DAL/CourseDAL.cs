@@ -19,7 +19,7 @@ namespace Sunny.DAL
         /// 获取课程信息
         /// </summary>
         private static readonly string getCourseListSql = @"
-SELECT a.id courseid,a.name,a.main_img,MIN(d.price)minPrice,MAX(d.price)maxPrice,IFNULL(f.money,0) discount_money FROM product a
+SELECT a.id courseid,a.name,a.main_img,MIN(d.price)min_price,MAX(d.price)max_price,IFNULL(f.money,0) discount_money FROM product a
 INNER JOIN category b ON a.category_id=b.id
 LEFT JOIN product_specification_detail c ON a.id=c.product_id
 LEFT JOIN product_specification_detail_price d ON c.product_id=d.product_id AND c.plan_code=d.plan_code
@@ -30,10 +30,25 @@ GROUP BY a.id
  ";
 
         /// <summary>
+        /// 随机获取课程信息
+        /// </summary>
+        private static readonly string getCourseListRandomSql = @"
+SELECT a.id courseid,a.name,a.main_img,MIN(d.price)min_price,MAX(d.price)max_price,IFNULL(f.money,0) discount_money FROM product a
+INNER JOIN category b ON a.category_id=b.id
+LEFT JOIN product_specification_detail c ON a.id=c.product_id
+LEFT JOIN product_specification_detail_price d ON c.product_id=d.product_id AND c.plan_code=d.plan_code
+LEFT JOIN product_discount e ON a.id=e.product_id AND e.state=0
+LEFT JOIN discount f ON e.discount_id=f.id AND f.state=0
+WHERE b.type=0 
+GROUP BY a.id
+ORDER BY RAND()
+LIMIT 2
+ ";
+        /// <summary>
         /// 单个课程信息
         /// </summary>
         private static readonly string getCourseDetailSql = @"
-SELECT a.id courseid,a.name,MIN(d.price)minPrice,MAX(d.price)maxPrice,IFNULL(f.money,0) discount_money,GROUP_CONCAT(g.headimg_url)heading_urls,h.detail FROM product a
+SELECT a.id courseid,a.name,MIN(d.price)min_price,MAX(d.price)max_price,IFNULL(f.money,0) discount_money,GROUP_CONCAT(g.headimg_url)heading_urls,h.detail FROM product a
 INNER JOIN category b ON a.category_id=b.id
 LEFT JOIN product_specification_detail c ON a.id=c.product_id
 LEFT JOIN product_specification_detail_price d ON c.product_id=d.product_id AND c.plan_code=d.plan_code
@@ -113,6 +128,37 @@ GROUP BY a.id
 
             return new List<CourseListJson>();
         }
+
+        /// <summary>
+        /// 随机获取首页上的商品
+        /// </summary>
+        /// <param name="name"></param>
+        /// <param name="categoryId"></param>
+        /// <param name="page"></param>
+        /// <param name="pageSize"></param>
+        /// <returns></returns>
+        public static List<CourseListJson> GetRandomCourseList()
+        {
+            try
+            {
+                using (DBHelper dbhelper = new DBHelper())
+                {
+                    DataTable dt = dbhelper.ExecuteDataTable(getCourseListRandomSql);
+
+                    if (dt != null && dt.Rows.Count > 0)
+                    {
+                        return dt.ToList<CourseListJson>();
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                Util.Log.LogUtil.Write("GetRandomCourseList 出错：" + ex, Util.Log.LogType.Error);
+            }
+
+            return new List<CourseListJson>();
+        }
+
 
         /// <summary>
         /// 获取单个课程的信息

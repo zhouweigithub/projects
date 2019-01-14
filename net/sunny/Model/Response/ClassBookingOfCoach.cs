@@ -14,30 +14,30 @@ namespace Sunny.Model.Custom
         /// <summary>
         /// 预约id
         /// </summary>
-        public int classid;
+        public int classid { get; set; }
         /// <summary>
         /// 预约的学时
         /// </summary>
-        public int hour;
+        public int hour { get; set; }
         /// <summary>
         /// 最大教学人数
         /// </summary>
-        public int max_count;
+        public int max_count { get; set; }
         /// <summary>
         /// 上课的开始时间
         /// </summary>
-        public int start_time;
+        public int start_time { get; set; }
         /// <summary>
         /// 上课的结束时间
         /// </summary>
-        public DateTime end_time;
+        public DateTime end_time { get; set; }
         /// <summary>
         /// 课程名称
         /// </summary>
-        public int course_name;
+        public string course_name { get; set; }
         /// <summary>
         /// 已预约的学生人数
         /// </summary>
-        public int booked_count;
+        public int booked_count { get; set; }
     }
 }

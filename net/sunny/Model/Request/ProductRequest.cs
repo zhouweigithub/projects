@@ -8,31 +8,31 @@ namespace Sunny.Model.Request
 {
     public class ProductRequest
     {
-        public int ProuductId { get; set; }
-        public int Count { get; set; }
+        public int prouductid { get; set; }
+        public int count { get; set; }
         /// <summary>
         /// 规格编号
         /// </summary>
-        public string PlanCode { get; set; }
+        public string plan_code { get; set; }
         /// <summary>
         /// 原始价格
         /// </summary>
-        public decimal PlanPrice { get; set; }
+        public decimal plan_price { get; set; }
         /// <summary>
         /// 折扣id
         /// </summary>
-        public int DiscountIds { get; set; }
+        public int discountids { get; set; }
         /// <summary>
         /// 折扣后价格
         /// </summary>
-        public decimal Price { get; set; }
+        public decimal price { get; set; }
         /// <summary>
         /// 最大教学人数
         /// </summary>
-        public int MaxPerson { get; set; }
+        public int max_person { get; set; }
         /// <summary>
         /// 场馆id
         /// </summary>
-        public int VenueId { get; set; }
+        public int venueid { get; set; }
     }
 }

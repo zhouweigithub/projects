@@ -173,6 +173,9 @@ namespace Sunny.DAL
         /// 接单时教练限定
         /// </summary>
         public static readonly string booking_coach_queue = "booking_coach_queue";
-
+        /// <summary>
+        /// 用户下的预订信息
+        /// </summary>
+        public static readonly string booking_student = "booking_student";
     }
 }

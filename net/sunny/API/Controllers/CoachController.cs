@@ -12,7 +12,6 @@ namespace API.Controllers
     public class CoachController : ApiController
     {
 
-        [Route("get")]
         [HttpGet]
         public IHttpActionResult GetById(int id)
         {
@@ -21,7 +20,7 @@ namespace API.Controllers
             return Json(result);
         }
 
-        [Route("isexist")]
+        [Route("api/coach/isexist")]
         [HttpGet]
         public IHttpActionResult IsExist(string username)
         {
@@ -42,6 +41,7 @@ namespace API.Controllers
             return Json(result);
         }
 
+        [Route("api/coach/Create")]
         [HttpPost]
         public IHttpActionResult Create(CoachRequest data)
         {

@@ -12,7 +12,7 @@ namespace API.Controllers
     public class StudentController : ApiController
     {
 
-        [Route("get")]
+        [Route("api/student/get")]
         [HttpGet]
         public IHttpActionResult GetById(int id)
         {
@@ -21,7 +21,7 @@ namespace API.Controllers
             return Json(result);
         }
 
-        [Route("isexist")]
+        [Route("api/student/isexist")]
         [HttpGet]
         public IHttpActionResult IsExist(string username)
         {
@@ -44,6 +44,7 @@ namespace API.Controllers
 
         // POST: api/Student
         [HttpPost]
+        [Route("api/student/create")]
         public IHttpActionResult Create(StudentRequest data)
         {
             ResponseResult result = null;

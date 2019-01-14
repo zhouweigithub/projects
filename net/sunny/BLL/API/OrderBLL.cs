@@ -16,12 +16,12 @@ namespace Sunny.DAL
         /// </summary>
         /// <param name="orderRequest"></param>
         /// <returns></returns>
-        public int CreateOrder(OrderRequest orderRequest)
+        public static int CreateOrder(OrderRequest orderRequest)
         {
             if (CheckOrderRequest(orderRequest, out decimal dissMoney, out decimal couponMoney))
             {
-                ReceiverInfo receiver = DBData.GetInstance(DBTable.receiver_info).GetEntityByKey<ReceiverInfo>(orderRequest.ReceiverId);
-                Student user = DBData.GetInstance(DBTable.student).GetEntity<Student>($"username='{orderRequest.UserName}'");
+                ReceiverInfo receiver = DBData.GetInstance(DBTable.receiver_info).GetEntityByKey<ReceiverInfo>(orderRequest.ceceiverid);
+                Student user = DBData.GetInstance(DBTable.student).GetEntity<Student>($"username='{orderRequest.user_name}'");
                 string orderId = CreateOrderId(user.id);
                 int insertCount = DBData.GetInstance(DBTable.order).Add(new Order()
                 {
@@ -30,10 +30,10 @@ namespace Sunny.DAL
                     receiver = receiver.name,
                     crdate = DateTime.Today,
                     crtime = DateTime.Now,
-                    deliver_id = orderRequest.DeliverId,
+                    deliver_id = orderRequest.deliverid,
                     freight = 0,
-                    message = orderRequest.Message,
-                    money = orderRequest.Money,
+                    message = orderRequest.message,
+                    money = orderRequest.money,
                     state = 0,
                     userid = user.id,
                     discount_money = dissMoney,
@@ -59,14 +59,14 @@ namespace Sunny.DAL
         /// </summary>
         /// <param name="orderRequest"></param>
         /// <param name="orderId"></param>
-        private void SaveOrderExtraInfo(OrderRequest orderRequest, string orderId, int userid)
+        private static void SaveOrderExtraInfo(OrderRequest orderRequest, string orderId, int userid)
         {
             try
             {
-                CreateCourse(orderRequest.Products, orderId, userid);
+                CreateCourse(orderRequest.products, orderId, userid);
                 CreateOrderCoupons(orderRequest, orderId);
-                CreateOrderDiscount(orderRequest.Products, orderId);
-                CreateOrderProduct(orderRequest.Products, orderId);
+                CreateOrderDiscount(orderRequest.products, orderId);
+                CreateOrderProduct(orderRequest.products, orderId);
             }
             catch (Exception e)
             {
@@ -92,11 +92,11 @@ namespace Sunny.DAL
         /// </summary>
         /// <param name="orderRequest"></param>
         /// <returns></returns>
-        private bool CheckOrderRequest(OrderRequest orderRequest, out decimal dissMoney, out decimal couponMoney)
+        private static bool CheckOrderRequest(OrderRequest orderRequest, out decimal dissMoney, out decimal couponMoney)
         {
             dissMoney = 0;
             couponMoney = 0;
-            return CheckProductPrice(orderRequest.Products, out dissMoney) && CheckCoupons(orderRequest, out couponMoney);
+            return CheckProductPrice(orderRequest.products, out dissMoney) && CheckCoupons(orderRequest, out couponMoney);
         }
 
         /// <summary>
@@ -104,19 +104,19 @@ namespace Sunny.DAL
         /// </summary>
         /// <param name="orderRequest"></param>
         /// <returns></returns>
-        private bool CheckCoupons(OrderRequest orderRequest, out decimal money)
+        private static bool CheckCoupons(OrderRequest orderRequest, out decimal money)
         {
             money = 0;
             try
             {
-                string productIds = string.Join(",", orderRequest.Products.Select(a => a.ProuductId));
-                string couponIds = string.Join(",", orderRequest.Coupons.Select(a => a.id));
-                Student user = DBData.GetInstance(DBTable.student).GetEntity<Student>($"username='{orderRequest.UserName}'");
+                string productIds = string.Join(",", orderRequest.products.Select(a => a.prouductid));
+                string couponIds = string.Join(",", orderRequest.coupons.Select(a => a.id));
+                Student user = DBData.GetInstance(DBTable.student).GetEntity<Student>($"username='{orderRequest.user_name}'");
                 List<Coupon> coupons = StudentCouponDAL.GetStudentCouponList(user.id, couponIds, productIds);
-                if (coupons.Count != orderRequest.Coupons.Length)
+                if (coupons.Count != orderRequest.coupons.Length)
                     return false;   //若传入的优惠券数量和服务器上查出来的优惠券对不上，则无效
 
-                if (orderRequest.CouponMoney != coupons.Sum(a => a.money))
+                if (orderRequest.coupon_money != coupons.Sum(a => a.money))
                     return false;   //若传入的优惠券的金额和服务器上查出来 的金额对不上，则无效
 
                 money = coupons.Sum(a => a.money);
@@ -134,18 +134,18 @@ namespace Sunny.DAL
         /// </summary>
         /// <param name="orderRequest"></param>
         /// <param name="orderId"></param>
-        private void CreateOrderCoupons(OrderRequest orderRequest, string orderId)
+        private static void CreateOrderCoupons(OrderRequest orderRequest, string orderId)
         {
-            string productIds = string.Join(",", orderRequest.Products.Select(a => a.ProuductId));
-            string couponIds = string.Join(",", orderRequest.Coupons.Select(a => a.id));
-            Student user = DBData.GetInstance(DBTable.student).GetEntity<Student>($"username='{orderRequest.UserName}'");
+            string productIds = string.Join(",", orderRequest.products.Select(a => a.prouductid));
+            string couponIds = string.Join(",", orderRequest.coupons.Select(a => a.id));
+            Student user = DBData.GetInstance(DBTable.student).GetEntity<Student>($"username='{orderRequest.user_name}'");
             List<Coupon> coupons = StudentCouponDAL.GetStudentCouponList(user.id, couponIds, productIds);
 
             foreach (Coupon item in coupons)
             {
                 try
                 {
-                    int count = orderRequest.Coupons.First(a => a.id == item.id).count;
+                    int count = orderRequest.coupons.First(a => a.id == item.id).count;
                     DBData.GetInstance(DBTable.order_coupon).Add(new OrderCoupon()
                     {
                         order_id = orderId,
@@ -168,7 +168,7 @@ namespace Sunny.DAL
         /// </summary>
         /// <param name="products"></param>
         /// <returns></returns>
-        private bool CheckProductPrice(List<ProductRequest> products, out decimal money)
+        private static bool CheckProductPrice(List<ProductRequest> products, out decimal money)
         {
             money = 0;
             if (products.Count == 0)
@@ -178,8 +178,8 @@ namespace Sunny.DAL
             {
                 try
                 {
-                    CoursePriceInfoJson info = CourseDAL.GetCoursePriceInfo(item.ProuductId, item.PlanCode);
-                    if (info.price - info.discount_money != item.Price)
+                    CoursePriceInfoJson info = CourseDAL.GetCoursePriceInfo(item.prouductid, item.plan_code);
+                    if (info.price - info.discount_money != item.price)
                         return false;
 
                     money += info.discount_money;
@@ -198,7 +198,7 @@ namespace Sunny.DAL
         /// <param name="products"></param>
         /// <param name="orderId"></param>
         /// <returns></returns>
-        private bool CreateOrderDiscount(List<ProductRequest> products, string orderId)
+        private static bool CreateOrderDiscount(List<ProductRequest> products, string orderId)
         {
             if (products.Count == 0)
                 return false;
@@ -207,7 +207,7 @@ namespace Sunny.DAL
             {
                 try
                 {
-                    CoursePriceInfoJson info = CourseDAL.GetCoursePriceInfo(item.ProuductId, item.PlanCode);
+                    CoursePriceInfoJson info = CourseDAL.GetCoursePriceInfo(item.prouductid, item.plan_code);
                     DBData.GetInstance(DBTable.order_coupon).Add(new OrderDiscount()
                     {
                         order_id = orderId,
@@ -231,7 +231,7 @@ namespace Sunny.DAL
         /// <param name="products"></param>
         /// <param name="orderId"></param>
         /// <returns></returns>
-        private bool CreateOrderProduct(List<ProductRequest> products, string orderId)
+        private static bool CreateOrderProduct(List<ProductRequest> products, string orderId)
         {
             if (products.Count == 0)
                 return false;
@@ -240,26 +240,26 @@ namespace Sunny.DAL
             {
                 try
                 {
-                    Product product = DBData.GetInstance(DBTable.product).GetEntityByKey<Product>(item.ProuductId);
-                    CustDisscount discount = DiscountDAL.GetDisscountByProductId(item.ProuductId);
+                    Product product = DBData.GetInstance(DBTable.product).GetEntityByKey<Product>(item.prouductid);
+                    CustDisscount discount = DiscountDAL.GetDisscountByProductId(item.prouductid);
                     //存储订单中的商品信息
                     DBData.GetInstance(DBTable.order_coupon).Add(new OrderProduct()
                     {
                         order_id = orderId,
-                        product_id = item.ProuductId,
+                        product_id = item.prouductid,
                         product_name = product.name,
-                        count = item.Count,
-                        price = item.Price,
-                        discount_amount = discount.money * item.Count,
-                        total_amount = item.Price * item.Count,
+                        count = item.count,
+                        price = item.price,
+                        discount_amount = discount.money * item.count,
+                        total_amount = item.price * item.count,
                     });
                     //存储订单中各商品的规格信息
                     DBData.GetInstance(DBTable.order_product_specification_detail).Add(new OrderProductSpecificationDetail()
                     {
                         order_id = orderId,
-                        product_id = item.ProuductId,
-                        plan_code = item.PlanCode,
-                        price = item.Price,
+                        product_id = item.prouductid,
+                        plan_code = item.plan_code,
+                        price = item.price,
                     });
                 }
                 catch (Exception e)
@@ -276,7 +276,7 @@ namespace Sunny.DAL
         /// <param name="orderRequest"></param>
         /// <param name="userid"></param>
         /// <returns></returns>
-        private bool CreateCourse(List<ProductRequest> products, string orderId, int userid)
+        private static bool CreateCourse(List<ProductRequest> products, string orderId, int userid)
         {
             if (products.Count == 0)
                 return false;
@@ -285,19 +285,19 @@ namespace Sunny.DAL
             {
                 try
                 {
-                    Category category = CategoryDAL.GetCategoryByProductId(item.ProuductId);
+                    Category category = CategoryDAL.GetCategoryByProductId(item.prouductid);
                     if (category.type == 0)
                     {
-                        Hours hour = DBData.GetInstance(DBTable.hours).GetEntityByKey<Hours>(item.ProuductId);
+                        Hours hour = DBData.GetInstance(DBTable.hours).GetEntityByKey<Hours>(item.prouductid);
 
                         //存储订单中各商品的规格信息
                         DBData.GetInstance(DBTable.course).Add(new Course()
                         {
-                            product_id = item.ProuductId,
+                            product_id = item.prouductid,
                             student_id = userid,
-                            venue_id = item.VenueId,
+                            venue_id = item.venueid,
                             order_id = orderId,
-                            max_count = item.MaxPerson,
+                            max_count = item.max_person,
                             hour = hour.hour,
                             over_hour = 0,
                         });

@@ -12,14 +12,14 @@ namespace API.Controllers
     public class CouponController : ApiController
     {
 
-        // GET: api/Coupon/5
+        [HttpGet]
         public IHttpActionResult Get(int studentId)
         {
             List<CouponListJson> result = CouponDAL.GetCouponList(studentId);
             return Json(result);
         }
 
-        [Route("GetDefault")]
+        [Route("api/coupon/GetDefault")]
         [HttpGet]
         public IHttpActionResult Get(int studentId, int categoryId)
         {

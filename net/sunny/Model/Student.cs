@@ -45,6 +45,11 @@ namespace Sunny.Model
         [TableField]
         public string headimg { get; set; }
         /// <summary>
+        /// 账户余额
+        /// </summary>
+        [TableField]
+        public string cash { get; set; }
+        /// <summary>
         /// 0正常 1受限
         /// </summary>
         [TableField]

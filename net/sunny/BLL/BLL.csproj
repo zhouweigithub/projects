@@ -81,6 +81,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="API\AppointmentBLL.cs" />
     <Compile Include="API\CampusBLL.cs" />
     <Compile Include="API\ClassBLL.cs" />
     <Compile Include="API\CourseBLL.cs" />

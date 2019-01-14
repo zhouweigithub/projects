@@ -14,26 +14,26 @@ namespace Sunny.Model.Custom
         /// <summary>
         /// 课程id
         /// </summary>
-        public int CourseId;
+        public int courseid { get; set; }
         /// <summary>
         /// 课程名称
         /// </summary>
-        public string Name;
+        public string name { get; set; }
         /// <summary>
         /// 主图
         /// </summary>
-        public string Main_Img;
+        public string main_img { get; set; }
         /// <summary>
         /// 最低价
         /// </summary>
-        public string MinPrice;
+        public decimal min_price { get; set; }
         /// <summary>
         /// 最高价
         /// </summary>
-        public string MaxPrice;
+        public decimal max_price { get; set; }
         /// <summary>
         /// 优惠金额
         /// </summary>
-        public string Discount_Money;
+        public decimal discount_money { get; set; }
     }
 }

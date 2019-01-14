@@ -15,6 +15,7 @@ namespace Sunny.DAL
     /// </summary>
     public class ClassDAL
     {
+        #region fiels
         /// <summary>
         /// 获取教练看到的上课信息
         /// </summary>
@@ -44,6 +45,8 @@ limit {1}
 ";
         private static readonly string insertClassSql = @"INSERT IGNORE INTO class (product_id,coach_id,venue_id,hour,max_count,start_time,end_time,state,rate)
 VALUES(@product_id,@coach_id,@venue_id,@hour,@max_count,@start_time,@end_time,0,0);";
+        private static readonly string getLastInsertId = "SELECT LAST_INSERT_ID();";
+        private static readonly string insertClassStudent = "INSERT INTO class_student (class_id,student_id,state) VALUES('{0}','{1}','0') ;";
 
         /// <summary>
         /// 获取教练可接单的预约信息
@@ -61,20 +64,26 @@ INNER JOIN (
 	-- 获取上课时间未到，并且上课学员已预约满的时间段
 	SELECT start_time,end_time,max_count FROM class p
 	INNER JOIN class_student q ON p.id=q.class_id
-	WHERE coach_id=1 AND start_time>NOW() 
+	WHERE coach_id='{0}' AND start_time>NOW() 
 	GROUP BY p.id HAVING max_count=COUNT(1)
 )g ON NOT(a.start_time>=g.end_time OR a.end_time<=g.start_time) -- 排除时间交叉同时已预约完成的时间段
 INNER JOIN (
 	-- 获取上课时间未到，并且上课学员未预约满的数据
 	SELECT p.venue_id,p.product_id,p.hour,p.start_time,p.end_time,p.max_count FROM class p
 	INNER JOIN class_student q ON p.id=q.class_id
-	WHERE coach_id=1 AND start_time>NOW() 
+	WHERE coach_id='{0}' AND start_time>NOW() 
 	GROUP BY p.id HAVING max_count>COUNT(1)
 )h ON a.start_time=h.start_time AND a.end_time=h.end_time 
     AND NOT(b.venue_id=h.venue_id AND b.product_id=h.product_id AND b.over_hour+1=h.hour) -- 排除时间段相同，但内容不同的项
 
-WHERE a.start_time>NOW() AND a.state=0 AND e.coach_id='1' AND (ISNULL(f.coach_id) OR f.coach_id=e.coach_id)
+WHERE a.start_time>NOW() AND a.state=0 AND e.coach_id='{0}' AND (ISNULL(f.coach_id) OR f.coach_id=e.coach_id)
 ";
+        #endregion
+
+        /// <summary>
+        /// 查询上次上课教练id
+        /// </summary>
+        private static readonly string getPreCoachOfCourseSql = "SELECT a.coach_id FROM class a INNER JOIN class_student b ON a.id=b.class_id WHERE a.product_id='{0}' ORDER BY a.crtime DESC LIMIT 1;";
 
         /// <summary>
         /// 根据教练id获取课程列表
@@ -182,7 +191,13 @@ WHERE a.start_time>NOW() AND a.state=0 AND e.coach_id='1' AND (ISNULL(f.coach_id
             return new List<ClassCommentJson>();
         }
 
-        public static bool InsertClassData(Class data)
+        /// <summary>
+        /// 插入课程信息
+        /// </summary>
+        /// <param name="studentId">学员id</param>
+        /// <param name="data">课程详情</param>
+        /// <returns></returns>
+        public static bool InsertClassData(int studentId, Class data)
         {
             try
             {
@@ -198,7 +213,13 @@ WHERE a.start_time>NOW() AND a.state=0 AND e.coach_id='1' AND (ISNULL(f.coach_id
                         new MySqlParameter("@end_time",data.end_time),
                     };
 
+                    //插入Class表数据
                     int count = dbhelper.ExecuteNonQueryParams(insertClassSql, paras);
+                    //获取刚插入的id
+                    int newId = dbhelper.ExecuteScalarInt(getLastInsertId);
+                    //向课程对应的学生表里插入数据 
+                    int countStudent = dbhelper.ExecuteNonQuery(string.Format(insertClassStudent, newId, studentId));
+
                     return count > 0;
                 }
             }
@@ -237,6 +258,28 @@ WHERE a.start_time>NOW() AND a.state=0 AND e.coach_id='1' AND (ISNULL(f.coach_id
             return new List<ClassBookingOfCoach>();
         }
 
+        /// <summary>
+        /// 查询上次上课教练id
+        /// </summary>
+        /// <param name="productId"></param>
+        /// <returns></returns>
+        public static int GetPreCoachOfCourse(int productId)
+        {
+            try
+            {
+                using (DBHelper dbhelper = new DBHelper())
+                {
+                    int coachId = dbhelper.ExecuteScalarInt(string.Format(getPreCoachOfCourseSql, productId));
+                    return coachId;
+                }
+            }
+            catch (Exception ex)
+            {
+                Util.Log.LogUtil.Write("GetPreCoachOfCourse 出错：" + ex, Util.Log.LogType.Error);
+            }
+
+            return 0;
+        }
 
 
     }

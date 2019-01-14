@@ -11,38 +11,38 @@ namespace Sunny.Model.Request
         /// <summary>
         /// 用户名
         /// </summary>
-        public string UserName { get; set; }
+        public string user_name { get; set; }
         /// <summary>
         /// 订单实际需要支付的总金额
         /// </summary>
-        public decimal Money { get; set; }
+        public decimal money { get; set; }
         /// <summary>
         /// 优惠券信息
         /// </summary>
-        public TmpCoupon[] Coupons { get; set; }
+        public TmpCoupon[] coupons { get; set; }
         /// <summary>
         /// 使用优惠券减掉的金额
         /// </summary>
-        public decimal CouponMoney { get; set; }
+        public decimal coupon_money { get; set; }
         /// <summary>
         /// 收货人信息
         /// </summary>
-        public int ReceiverId { get; set; }
+        public int ceceiverid { get; set; }
         /// <summary>
         /// 留言
         /// </summary>
-        public string Message { get; set; }
+        public string message { get; set; }
         /// <summary>
         /// 送货方式
         /// </summary>
-        public int DeliverId { get; set; }
+        public int deliverid { get; set; }
         /// <summary>
         /// 运费
         /// </summary>
-        public float Freight { get; set; }
+        public float freight { get; set; }
         /// <summary>
         /// 商品信息
         /// </summary>
-        public List<ProductRequest> Products { get; set; }
+        public List<ProductRequest> products { get; set; }
     }
 }

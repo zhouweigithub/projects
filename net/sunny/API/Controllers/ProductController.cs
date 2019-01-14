@@ -13,19 +13,28 @@ namespace API.Controllers
     public class ProductController : ApiController
     {
 
-        // GET: api/Product/5
+        [HttpGet]
         public IHttpActionResult Get(int id)
         {
             CourseInfoJson result = CourseBLL.GetCourseInfo(id);
             return Json(result);
         }
 
+        [Route("api/product/getlist")]
+        [HttpGet]
         public IHttpActionResult Get(string name, int categoryId, int page, int pageSize)
         {
             List<CourseListJson> result = CourseDAL.GetCourseList(name, categoryId, page, pageSize);
             return Json(result);
         }
 
+        [Route("api/product/random")]
+        [HttpGet]
+        public IHttpActionResult GetRandom()
+        {
+            List<CourseListJson> result = CourseDAL.GetRandomCourseList();
+            return Json(result);
+        }
 
     }
 }

@@ -23,8 +23,7 @@ namespace Sunny.BLL.API
             CourseInfoJson courseInfo = CourseDAL.GetCourseInfo(courseId);
             //课程评论信息
             List<ClassCommentJson> comments = ClassDAL.GetClassCommentList(0, courseId, 10);
-
-            courseInfo.CommentsList = comments;
+            courseInfo.commentslist = comments;
             return courseInfo;
         }
     }

@@ -112,6 +112,10 @@
       <Private>True</Private>
       <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.4\lib\net45\System.Web.WebPages.Razor.dll</HintPath>
     </Reference>
+    <Reference Include="Util, Version=1.2.1.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\Lib\Util.dll</HintPath>
+    </Reference>
     <Reference Include="WebGrease">
       <Private>True</Private>
       <HintPath>..\packages\WebGrease.1.6.0\lib\WebGrease.dll</HintPath>
@@ -169,7 +173,6 @@
     <Compile Include="Controllers\BaseInfoController.cs" />
     <Compile Include="Controllers\CouponController.cs" />
     <Compile Include="Controllers\CourseController.cs" />
-    <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\CoachController.cs" />
     <Compile Include="Controllers\ClassController.cs" />
     <Compile Include="Controllers\OrderController.cs" />

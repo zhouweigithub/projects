@@ -14,7 +14,7 @@ namespace API.Controllers
     public class ClassController : ApiController
     {
 
-        [Route("get")]
+        [Route("api/class/get")]
         [HttpGet]
         public IHttpActionResult GetById(int id)
         {
@@ -22,7 +22,7 @@ namespace API.Controllers
             return Json(result);
         }
 
-        [Route("bystudent")]
+        [Route("api/class/bystudent")]
         [HttpGet]
         public IHttpActionResult GetByStudent(int sudentid, short state)
         {
@@ -30,7 +30,7 @@ namespace API.Controllers
             return Json(classList);
         }
 
-        [Route("bycoach")]
+        [Route("api/class/bycoach")]
         [HttpGet]
         public IHttpActionResult GetByCoach(int coachid, short state)
         {
@@ -38,18 +38,13 @@ namespace API.Controllers
             return Json(classList);
         }
 
-        [HttpPost]
-        public IHttpActionResult Booking(int studentid, int productId, DateTime start_time, DateTime end_time)
-        {
-            bool result = ClassBLL.Booking(studentid, productId, start_time);
-            return Json(result);
-        }
+        //[HttpPost]
+        //public IHttpActionResult Booking(int studentid, int productId, DateTime start_time, DateTime end_time)
+        //{
+        //    bool result = ClassBLL.(studentid, productId, start_time);
+        //    return Json(result);
+        //}
 
-        [HttpGet]
-        public IHttpActionResult GetByCoach(int coachid)
-        {
-            List<ClassBookingOfCoach> classList = ClassDAL.GetBookingListOfCoach(coachid);
-            return Json(classList);
-        }
+
     }
 }

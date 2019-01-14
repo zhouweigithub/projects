@@ -12,7 +12,7 @@ namespace API.Controllers
 {
     public class BaseInfoController : ApiController
     {
-        [Route("GetCampus")]
+        [Route("api/BaseInfo/GetCampus")]
         [HttpGet]
         public IHttpActionResult GetCampus()
         {
@@ -20,7 +20,7 @@ namespace API.Controllers
             return Json(result);
         }
 
-        [Route("GetCampusDic")]
+        [Route("api/BaseInfo/GetCampusDic")]
         [HttpGet]
         public IHttpActionResult GetCampusDic()
         {
@@ -28,7 +28,7 @@ namespace API.Controllers
             return Json(result);
         }
 
-        [Route("GetVenues")]
+        [Route("api/BaseInfo/GetVenues")]
         [HttpGet]
         public IHttpActionResult GetVenues()
         {
@@ -36,7 +36,7 @@ namespace API.Controllers
             return Json(result);
         }
 
-        [Route("GetCourseTypes")]
+        [Route("api/BaseInfo/GetCourseTypes")]
         [HttpGet]
         public IHttpActionResult GetCourseTypes()
         {
@@ -44,7 +44,7 @@ namespace API.Controllers
             return Json(result);
         }
 
-        [Route("GetDelivers")]
+        [Route("api/BaseInfo/GetDelivers")]
         [HttpGet]
         public IHttpActionResult GetDelivers()
         {
