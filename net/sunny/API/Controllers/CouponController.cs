@@ -19,14 +19,13 @@ namespace API.Controllers
             return Json(result);
         }
 
-        [Route("api/coupon/GetDefault")]
         [HttpGet]
+        [Route("api/coupon/GetDefault")]
         public IHttpActionResult Get(int studentId, int categoryId)
         {
             CouponListJson result = CouponDAL.GetCouponDefaultOfStudent(studentId, categoryId);
             return Json(result);
         }
-
 
     }
 }

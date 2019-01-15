@@ -32,8 +32,8 @@ namespace API.Controllers
         /// </summary>
         /// <param name="studentId"></param>
         /// <returns></returns>
-        [Route("api/Appointment/GetBookedTimes")]
         [HttpGet]
+        [Route("api/Appointment/GetBookedTimes")]
         public IHttpActionResult GetBookingTimes(int studentId)
         {
             List<Class> datas = AppointmentDAL.GetAppointmentedInfo(studentId);
@@ -42,8 +42,8 @@ namespace API.Controllers
         }
 
         //获取教练可接单的预约信息
-        [Route("api/Appointment/GetByCoach")]
         [HttpGet]
+        [Route("api/Appointment/GetByCoach")]
         public IHttpActionResult GetByCoach(int coachid)
         {
             List<ClassBookingOfCoach> classList = ClassDAL.GetBookingListOfCoach(coachid);
@@ -51,8 +51,8 @@ namespace API.Controllers
         }
 
         //用户发送预约请求
-        [Route("api/Appointment/SendBooking")]
         [HttpPost]
+        [Route("api/Appointment/SendBooking")]
         public IHttpActionResult SendBooking(int courseId, DateTime startTime, DateTime endTime)
         {
             bool result = AppointmentBLL.AddAppointment(courseId, startTime, endTime);
@@ -60,8 +60,8 @@ namespace API.Controllers
         }
 
         //教练接收预约
-        [Route("api/Appointment/ReceiveBooking")]
         [HttpPost]
+        [Route("api/Appointment/ReceiveBooking")]
         public IHttpActionResult ReceiveBooking(int bookingId, int coachId)
         {
             bool result = AppointmentBLL.ReceiveAppointment(bookingId, coachId);

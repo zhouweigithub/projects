@@ -12,8 +12,8 @@ namespace API.Controllers
     public class StudentController : ApiController
     {
 
-        [Route("api/student/get")]
         [HttpGet]
+        [Route("api/student/get")]
         public IHttpActionResult GetById(int id)
         {
             Student result = DBData.GetInstance(DBTable.student).GetEntityByKey<Student>(id);
@@ -21,8 +21,8 @@ namespace API.Controllers
             return Json(result);
         }
 
-        [Route("api/student/isexist")]
         [HttpGet]
+        [Route("api/student/isexist")]
         public IHttpActionResult IsExist(string username)
         {
             ResponseResult result = null;

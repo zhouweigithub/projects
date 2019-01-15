@@ -14,7 +14,7 @@ namespace Sunny.BLL.API
     public class AppointmentBLL
     {
         /// <summary>
-        /// 添加用户预取预约请求
+        /// 用户发出预约请求
         /// </summary>
         /// <param name="courseId"></param>
         /// <param name="startTime"></param>

@@ -20,16 +20,16 @@ namespace API.Controllers
             return Json(result);
         }
 
-        [Route("api/product/getlist")]
         [HttpGet]
+        [Route("api/product/getlist")]
         public IHttpActionResult Get(string name, int categoryId, int page, int pageSize)
         {
             List<CourseListJson> result = CourseDAL.GetCourseList(name, categoryId, page, pageSize);
             return Json(result);
         }
 
-        [Route("api/product/random")]
         [HttpGet]
+        [Route("api/product/random")]
         public IHttpActionResult GetRandom()
         {
             List<CourseListJson> result = CourseDAL.GetRandomCourseList();

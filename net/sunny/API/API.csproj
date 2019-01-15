@@ -170,9 +170,9 @@
     <Compile Include="Areas\HelpPage\SampleGeneration\TextSample.cs" />
     <Compile Include="Areas\HelpPage\XmlDocumentationProvider.cs" />
     <Compile Include="Controllers\AppointmentController.cs" />
+    <Compile Include="Controllers\BannerController.cs" />
     <Compile Include="Controllers\BaseInfoController.cs" />
     <Compile Include="Controllers\CouponController.cs" />
-    <Compile Include="Controllers\CourseController.cs" />
     <Compile Include="Controllers\CoachController.cs" />
     <Compile Include="Controllers\ClassController.cs" />
     <Compile Include="Controllers\OrderController.cs" />

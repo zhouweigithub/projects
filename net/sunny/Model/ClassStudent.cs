@@ -23,7 +23,7 @@ namespace Sunny.Model
         [TableField]
         public int student_id { get; set; }
         /// <summary>
-        /// 0预约中 1预约成功 2已上课 3已评价
+        /// 0未上课 1已上课 2已评价
         /// </summary>
         [TableField]
         public short state { get; set; }
@@ -32,6 +32,11 @@ namespace Sunny.Model
         /// </summary>
         [TableField]
         public float marking { get; set; }
+        /// <summary>
+        /// 学生评价内容
+        /// </summary>
+        [TableField]
+        public string comment { get; set; }
         /// <summary>
         /// 创建时间
         /// </summary>

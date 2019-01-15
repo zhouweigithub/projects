@@ -12,46 +12,52 @@ namespace API.Controllers
 {
     public class BaseInfoController : ApiController
     {
-        [Route("api/BaseInfo/GetCampus")]
         [HttpGet]
+        [Route("api/BaseInfo/GetCampus")]
         public IHttpActionResult GetCampus()
         {
             IList<Campus> result = DBData.GetInstance(DBTable.campus).GetList<Campus>("state=0");
             return Json(result);
         }
 
-        [Route("api/BaseInfo/GetCampusDic")]
         [HttpGet]
+        [Route("api/BaseInfo/GetCampusDic")]
         public IHttpActionResult GetCampusDic()
         {
             Dictionary<int, List<Venue>> result = CampusBLL.GetCampusDic();
             return Json(result);
         }
 
-        [Route("api/BaseInfo/GetVenues")]
         [HttpGet]
+        [Route("api/BaseInfo/GetVenues")]
         public IHttpActionResult GetVenues()
         {
             IList<Venue> result = DBData.GetInstance(DBTable.venue).GetList<Venue>("state=0");
             return Json(result);
         }
 
-        [Route("api/BaseInfo/GetCourseTypes")]
         [HttpGet]
+        [Route("api/BaseInfo/GetCourseTypes")]
         public IHttpActionResult GetCourseTypes()
         {
             IList<CourseType> result = DBData.GetInstance(DBTable.course_type).GetList<CourseType>("state=0");
             return Json(result);
         }
 
-        [Route("api/BaseInfo/GetDelivers")]
         [HttpGet]
+        [Route("api/BaseInfo/GetDelivers")]
         public IHttpActionResult GetDelivers()
         {
             IList<Deliver> result = DBData.GetInstance(DBTable.deliver).GetList<Deliver>("state=0");
             return Json(result);
         }
 
-
+        [HttpGet]
+        [Route("api/BaseInfo/GetBanner")]
+        public IHttpActionResult GetBanner(short type)
+        {
+            IList<Banner> result = DBData.GetInstance(DBTable.banner).GetList<Banner>($"type='{type}' and state=0");
+            return Json(result);
+        }
     }
 }

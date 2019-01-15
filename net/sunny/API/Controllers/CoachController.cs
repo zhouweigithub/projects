@@ -20,8 +20,8 @@ namespace API.Controllers
             return Json(result);
         }
 
-        [Route("api/coach/isexist")]
         [HttpGet]
+        [Route("api/coach/isexist")]
         public IHttpActionResult IsExist(string username)
         {
             ResponseResult result = null;
@@ -41,8 +41,8 @@ namespace API.Controllers
             return Json(result);
         }
 
-        [Route("api/coach/Create")]
         [HttpPost]
+        [Route("api/coach/Create")]
         public IHttpActionResult Create(CoachRequest data)
         {
             ResponseResult result = null;

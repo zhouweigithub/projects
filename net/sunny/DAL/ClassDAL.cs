@@ -192,7 +192,7 @@ WHERE a.start_time>NOW() AND a.state=0 AND e.coach_id='{0}' AND (ISNULL(f.coach_
         }
 
         /// <summary>
-        /// 插入课程信息
+        /// 插入课程和相应学生信息
         /// </summary>
         /// <param name="studentId">学员id</param>
         /// <param name="data">课程详情</param>

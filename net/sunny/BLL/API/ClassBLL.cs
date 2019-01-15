@@ -28,6 +28,13 @@ namespace Sunny.BLL.API
         //    return ClassDAL.InsertClassData(data: data);
         //}
 
+        public static bool CompleteClass(int classId)
+        {
+            Dictionary<string, object> fieldValueDic = new Dictionary<string, object>();
+            fieldValueDic.Add("state", 1);
+            int count = DBData.GetInstance(DBTable.class_).UpdateByKey(fieldValueDic, classId);
+            return count > 0;
+        }
 
     }
 }
