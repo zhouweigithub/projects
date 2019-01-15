@@ -94,14 +94,11 @@
     <Compile Include="CoachcaptionVenue.cs" />
     <Compile Include="Common\ResponseResult.cs" />
     <Compile Include="Coupon.cs" />
-    <Compile Include="PayDetailCoupon.cs" />
     <Compile Include="Settlement.cs" />
     <Compile Include="Student.cs" />
     <Compile Include="StudentCoupon.cs" />
-    <Compile Include="StudentCourse.cs" />
     <Compile Include="Venue.cs" />
     <Compile Include="WithDrawal.cs" />
-    <Compile Include="PayDetail.cs" />
     <Compile Include="Class.cs" />
     <Compile Include="Common\TableFieldAttribute.cs" />
     <Compile Include="Common\DataValueModel.cs" />
