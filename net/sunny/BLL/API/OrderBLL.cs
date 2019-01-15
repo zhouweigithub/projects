@@ -155,6 +155,8 @@ namespace Sunny.DAL
                         count = count,
                         money = item.money * count,
                     });
+                    //更新用户当前优惠券的状态为已使用
+                    DBData.GetInstance(DBTable.student_coupon).UpdateByKey(new List<string>() { "state" }, new List<object>() { 1 }, item.id);
                 }
                 catch (Exception e)
                 {
@@ -310,6 +312,7 @@ namespace Sunny.DAL
             }
             return true;
         }
+
 
     }
 }

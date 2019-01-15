@@ -8,9 +8,9 @@ using System.Threading.Tasks;
 namespace Sunny.Model
 {
     /// <summary>
-    /// 学员的优惠券信息
+    /// 优惠券获得历史记录
     /// </summary>
-    public class StudentCoupon
+    public class CouponHistory
     {
         public int id { get; set; }
         /// <summary>
@@ -29,12 +29,7 @@ namespace Sunny.Model
         [TableField]
         public int count { get; set; }
         /// <summary>
-        /// 状态0未使用 1已使用
-        /// </summary>
-        [TableField]
-        public short state { get; set; }
-        /// <summary>
-        /// 创建时间
+        /// 获得时间
         /// </summary>
         public DateTime crtime { get; set; }
     }

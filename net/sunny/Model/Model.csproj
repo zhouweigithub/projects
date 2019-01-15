@@ -52,6 +52,8 @@
   <ItemGroup>
     <Compile Include="Appointment.cs" />
     <Compile Include="BookingStudent.cs" />
+    <Compile Include="Banner.cs" />
+    <Compile Include="CouponHistory.cs" />
     <Compile Include="CourseType.cs" />
     <Compile Include="Course.cs" />
     <Compile Include="Custom\CustDisscount.cs" />

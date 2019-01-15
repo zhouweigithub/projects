@@ -39,6 +39,11 @@ namespace Sunny.Model
         [TableField]
         public int detail_id { get; set; }
         /// <summary>
+        /// 销量
+        /// </summary>
+        [TableField]
+        public int sales { get; set; }
+        /// <summary>
         /// 库存数量
         /// </summary>
         [TableField]

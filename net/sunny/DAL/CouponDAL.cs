@@ -29,9 +29,9 @@ WHERE b.state=0 AND c.type=0 AND a.student_id='{0}'
         /// 获取当前订单可用的默认优惠券
         /// </summary>
         private static readonly string getCouponDefaultOfStudentSql = @"
-SELECT b.id,b.name,b.money FROM student_coupon a
+SELECT b.id,b.name,b.money,b.start_time,b.end_time FROM student_coupon a
 INNER JOIN coupon b ON a.coupon_id=b.id
-WHERE b.category_id='{0}' AND a.student_id='{1}'
+WHERE a.state=0 AND b.category_id='{0}' AND a.student_id='{1}'
 ORDER BY b.money DESC
 LIMIT 1
 ";

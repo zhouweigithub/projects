@@ -22,7 +22,7 @@ namespace Sunny.Model
         /// 状态0正常 1禁用
         /// </summary>
         [TableField]
-        public int state { get; set; }
+        public short state { get; set; }
         /// <summary>
         /// 创建时间
         /// </summary>

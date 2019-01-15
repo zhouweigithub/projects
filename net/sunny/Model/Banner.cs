@@ -8,28 +8,23 @@ using System.Threading.Tasks;
 namespace Sunny.Model
 {
     /// <summary>
-    /// 学员的优惠券信息
+    /// 站内各处的图片
     /// </summary>
-    public class StudentCoupon
+    public class Banner
     {
         public int id { get; set; }
         /// <summary>
-        /// 学员id
+        /// 名称
         /// </summary>
         [TableField]
-        public int student_id { get; set; }
+        public string url { get; set; }
         /// <summary>
-        /// 优惠券id
+        /// 类型0首页顶部图片1电话处图片2介绍处图片3介绍内容图片4商城顶部图片
         /// </summary>
         [TableField]
-        public int coupon_id { get; set; }
+        public short type { get; set; }
         /// <summary>
-        /// 数量
-        /// </summary>
-        [TableField]
-        public int count { get; set; }
-        /// <summary>
-        /// 状态0未使用 1已使用
+        /// 状态0正常 1禁用
         /// </summary>
         [TableField]
         public short state { get; set; }

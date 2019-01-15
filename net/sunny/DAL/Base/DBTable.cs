@@ -166,7 +166,7 @@ namespace Sunny.DAL
         /// </summary>
         public static readonly string course_type = "course_type";
         /// <summary>
-        /// 首页顶部滚动图片
+        /// 站内各处的图片
         /// </summary>
         public static readonly string banner = "banner";
         /// <summary>
@@ -177,5 +177,9 @@ namespace Sunny.DAL
         /// 用户下的预订信息
         /// </summary>
         public static readonly string booking_student = "booking_student";
+        /// <summary>
+        /// 优惠券获得历史记录
+        /// </summary>
+        public static readonly string coupon_history = "coupon_history";
     }
 }

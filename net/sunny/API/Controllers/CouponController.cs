@@ -26,5 +26,7 @@ namespace API.Controllers
             CouponListJson result = CouponDAL.GetCouponDefaultOfStudent(studentId, categoryId);
             return Json(result);
         }
+
+
     }
 }
