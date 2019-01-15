@@ -53,6 +53,7 @@
     <Compile Include="Appointment.cs" />
     <Compile Include="BookingStudent.cs" />
     <Compile Include="Banner.cs" />
+    <Compile Include="Category.cs" />
     <Compile Include="CouponHistory.cs" />
     <Compile Include="CourseType.cs" />
     <Compile Include="Course.cs" />
@@ -86,7 +87,6 @@
     <Compile Include="ProductSpecificationDetail.cs" />
     <Compile Include="Specification.cs" />
     <Compile Include="SpecificationDetail.cs" />
-    <Compile Include="Category.cs" />
     <Compile Include="ClassCommentUrl.cs" />
     <Compile Include="ClassStudent.cs" />
     <Compile Include="Coach.cs" />
