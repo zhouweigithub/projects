@@ -1,6 +1,6 @@
 using System;
 
-namespace API.Areas.HelpPage.ModelDescriptions
+namespace Sunny.API.Areas.HelpPage.ModelDescriptions
 {
     public class ParameterAnnotation
     {

@@ -60,15 +60,15 @@ WHERE a.id='{0}'
 GROUP BY a.id
  ";
 
-        /// <summary>
-        /// 获取规格信息
-        /// </summary>
-        private static readonly string getSpecificationInfoSql = @"
-SELECT q.product_id courseid,q.plan_code,s.id specificationid,s.name,r.id specificationdetailid,r.name FROM product p
-LEFT JOIN product_specification_detail q ON p.id=q.product_id
-LEFT JOIN specification_detail r ON q.specification_detail_id=r.id
-LEFT JOIN specification s ON r.specification_id=s.id
-";
+//        /// <summary>
+//        /// 获取规格信息
+//        /// </summary>
+//        private static readonly string getSpecificationInfoSql = @"
+//SELECT q.product_id courseid,q.plan_code,s.id specificationid,s.name,r.id specificationdetailid,r.name FROM product p
+//LEFT JOIN product_specification_detail q ON p.id=q.product_id
+//LEFT JOIN specification_detail r ON q.specification_detail_id=r.id
+//LEFT JOIN specification s ON r.specification_id=s.id
+//";
 
         /// <summary>
         /// 获取课程的价格和折扣信息

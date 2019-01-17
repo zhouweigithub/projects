@@ -3,7 +3,7 @@ using System.Globalization;
 using System.Linq;
 using System.Reflection;
 
-namespace API.Areas.HelpPage.ModelDescriptions
+namespace Sunny.API.Areas.HelpPage.ModelDescriptions
 {
     internal static class ModelNameHelper
     {

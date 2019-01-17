@@ -1,6 +1,6 @@
 using System.Collections.ObjectModel;
 
-namespace API.Areas.HelpPage.ModelDescriptions
+namespace Sunny.API.Areas.HelpPage.ModelDescriptions
 {
     public class ComplexTypeModelDescription : ModelDescription
     {

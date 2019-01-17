@@ -1,7 +1,7 @@
 using System;
 using System.Reflection;
 
-namespace API.Areas.HelpPage.ModelDescriptions
+namespace Sunny.API.Areas.HelpPage.ModelDescriptions
 {
     public interface IModelDocumentationProvider
     {
