@@ -41,6 +41,14 @@ namespace API.Controllers
             return Json(classList);
         }
 
+        [HttpGet]
+        [Route("api/class/classhistory")]
+        public IHttpActionResult GetMyClassHistoryList(int studentId)
+        {
+            List<MyClassHistoryJson> classList = ClassDAL.GetMyClassHistoryList(studentId);
+            return Json(classList);
+        }
+
         [HttpPost]
         [Route("api/class/CompleteClass")]
         public IHttpActionResult CompleteClass(int classId)

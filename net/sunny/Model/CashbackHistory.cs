@@ -8,23 +8,28 @@ using System.Threading.Tasks;
 namespace Sunny.Model
 {
     /// <summary>
-    /// 配送方式基础信息
+    /// 学员邀请返现记录
     /// </summary>
-    public class Deliver
+    public class CashbackHistory
     {
         public int id { get; set; }
         /// <summary>
-        /// 名称
+        /// 学员id
         /// </summary>
         [TableField]
-        public string name { get; set; }
+        public int student_id { get; set; }
         /// <summary>
-        /// 状态0正常 1禁用
+        /// 触发返现的学员id
         /// </summary>
         [TableField]
-        public short state { get; set; }
+        public int from_student_id { get; set; }
         /// <summary>
-        /// 创建时间
+        /// 返现金额
+        /// </summary>
+        [TableField]
+        public decimal money { get; set; }
+        /// <summary>
+        /// 获得时间
         /// </summary>
         public DateTime crtime { get; set; }
     }

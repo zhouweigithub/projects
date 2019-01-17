@@ -20,7 +20,7 @@ namespace Sunny.DAL
         {
             if (CheckOrderRequest(orderRequest, out decimal dissMoney, out decimal couponMoney))
             {
-                ReceiverInfo receiver = DBData.GetInstance(DBTable.receiver_info).GetEntityByKey<ReceiverInfo>(orderRequest.ceceiverid);
+                ReceiverInfo receiver = DBData.GetInstance(DBTable.receiver_info).GetEntityByKey<ReceiverInfo>(orderRequest.receiverid);
                 Student user = DBData.GetInstance(DBTable.student).GetEntity<Student>($"username='{orderRequest.user_name}'");
                 string orderId = CreateOrderId(user.id);
                 int insertCount = DBData.GetInstance(DBTable.order).Add(new Order()
@@ -150,10 +150,9 @@ namespace Sunny.DAL
                     {
                         order_id = orderId,
                         coupon_id = item.id,
-                        price = item.money,
                         name = item.name,
                         count = count,
-                        money = item.money * count,
+                        money = item.money,
                     });
                     //更新用户当前优惠券的状态为已使用
                     DBData.GetInstance(DBTable.student_coupon).UpdateByKey(new List<string>() { "state" }, new List<object>() { 1 }, item.id);
@@ -252,8 +251,10 @@ namespace Sunny.DAL
                         product_name = product.name,
                         count = item.count,
                         price = item.price,
+                        orig_price = item.plan_price,
                         discount_amount = discount.money * item.count,
                         total_amount = item.price * item.count,
+                        venueid = item.venueid,
                     });
                     //存储订单中各商品的规格信息
                     DBData.GetInstance(DBTable.order_product_specification_detail).Add(new OrderProductSpecificationDetail()
@@ -313,6 +314,65 @@ namespace Sunny.DAL
             return true;
         }
 
+        public static List<OrderJson> GetOrderInfo(int userid)
+        {
+            List<OrderJson> result = new List<OrderJson>();
+            List<CustOrderProduct> orderProductList = OrderDAL.GetOrderProductList(userid);
+            string[] orderIds = orderProductList.Select(a => a.order_id).Distinct().ToArray();
+            List<CustOrderProductSpecification> specificationList = OrderDAL.GetOrderProductSpecificationList(orderIds);
+            List<CustOrderCoupon> couponList = OrderDAL.GetOrderCouponList(orderIds);
+
+            foreach (string orderId in orderIds)
+            {
+                CustOrderProduct orderInfo = orderProductList.First(a => a.order_id == orderId);
+                OrderJson orderObj = new OrderJson()
+                {
+                    order_id = orderId,
+                    money = orderInfo.money,
+                    discount_money = orderInfo.discount_money,
+                    coupon_money = orderInfo.coupon_money,
+                    state = orderInfo.state,
+                    crtime = orderInfo.crtime,
+                    coupons = new List<OrderCouponJson>(),
+                    products = new List<OrderProductJson>(),
+                };
+
+                var products = orderProductList.Where(a => a.order_id == orderId);
+                foreach (CustOrderProduct product in products)
+                {
+                    var specification = specificationList.FirstOrDefault(a => a.order_id == orderId && a.product_id == product.product_id);
+                    orderObj.products.Add(new OrderProductJson()
+                    {
+                        order_id = orderId,
+                        product_id = product.product_id,
+                        product_name = product.product_name,
+                        price = product.price,
+                        orig_price = product.orig_price,
+                        count = product.count,
+                        total_amount = product.total_amount,
+                        campus = product.campus_name,
+                        venue_name = product.venue_name,
+                        specifications = specification != null ? specification.specifications : "",
+                    });
+                }
+
+                var coupons = couponList.Where(a => a.order_id == orderId);
+                foreach (CustOrderCoupon coupon in coupons)
+                {
+                    orderObj.coupons.Add(new OrderCouponJson()
+                    {
+                        order_id = orderId,
+                        name = coupon.name,
+                        money = coupon.money,
+                        count = coupon.count,
+                    });
+                }
+
+                result.Add(orderObj);
+            }
+
+            return result;
+        }
 
     }
 }

@@ -18,6 +18,10 @@
         /// application key + username（存储连续输入错误密码最大次数）
         /// </summary>
         public const string Application_Login_Failed_Times_ = "_application_login_failed_times_";
+        /// <summary>
+        /// 获取自动生成的主键，与插入数据的连接相同才有效
+        /// </summary>
+        public const string SELECT_LAST_INSERT_ID_SQL = "SELECT LAST_INSERT_ID()";
 
     }
 }

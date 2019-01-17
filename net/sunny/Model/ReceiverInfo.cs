@@ -17,7 +17,7 @@ namespace Sunny.Model
         /// 用户id
         /// </summary>
         [TableField]
-        public int user_id { get; set; }
+        public int student_id { get; set; }
         /// <summary>
         /// 收货人姓名
         /// </summary>

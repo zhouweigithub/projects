@@ -37,6 +37,10 @@ namespace Sunny.Common
         /// 不需要验证手机号就能登录的ip
         /// </summary>
         public static readonly string IgnoreSmsCodeIp;
+        /// <summary>
+        /// 邀请返现金额
+        /// </summary>
+        public static readonly int CashbackMoney;
 
         static WebConfigData()
         {
@@ -48,6 +52,7 @@ namespace Sunny.Common
                 ExtraUserNames = Config.GetConfigToString("ExtraUserNames");
                 ExtraPageMenuIds = Config.GetConfigToString("ExtraPageMenuIds");
                 IgnoreSmsCodeIp = Config.GetConfigToString("IgnoreSmsCodeIp");
+                CashbackMoney = Config.GetConfigToInt("CashbackMoney");
             }
             catch (Exception e)
             {

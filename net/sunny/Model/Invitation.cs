@@ -8,18 +8,22 @@ using System.Threading.Tasks;
 namespace Sunny.Model
 {
     /// <summary>
-    /// 配送方式基础信息
+    /// 邀请关系
     /// </summary>
-    public class Deliver
+    public class Invitation
     {
-        public int id { get; set; }
         /// <summary>
-        /// 名称
+        /// 用户id
         /// </summary>
         [TableField]
-        public string name { get; set; }
+        public int student_id { get; set; }
         /// <summary>
-        /// 状态0正常 1禁用
+        /// 邀请人id
+        /// </summary>
+        [TableField]
+        public int from_student_id { get; set; }
+        /// <summary>
+        /// 0未发放奖励 1已发放奖励
         /// </summary>
         [TableField]
         public short state { get; set; }

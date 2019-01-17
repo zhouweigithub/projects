@@ -181,5 +181,13 @@ namespace Sunny.DAL
         /// 优惠券获得历史记录
         /// </summary>
         public static readonly string coupon_history = "coupon_history";
+        /// <summary>
+        /// 学员邀请返现记录
+        /// </summary>
+        public static readonly string cashback_history = "cashback_history";
+        /// <summary>
+        /// 学员支付记录
+        /// </summary>
+        public static readonly string pay_record = "pay_record";
     }
 }

@@ -46,7 +46,7 @@ namespace API.Controllers
         [Route("api/Appointment/GetByCoach")]
         public IHttpActionResult GetByCoach(int coachid)
         {
-            List<ClassBookingOfCoach> classList = ClassDAL.GetBookingListOfCoach(coachid);
+            List<ClassBookingOfCoachJson> classList = ClassDAL.GetBookingListOfCoach(coachid);
             return Json(classList);
         }
 

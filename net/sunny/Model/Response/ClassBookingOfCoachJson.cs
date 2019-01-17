@@ -9,7 +9,7 @@ namespace Sunny.Model.Custom
     /// <summary>
     /// 教练可接单的预约信息
     /// </summary>
-    public class ClassBookingOfCoach
+    public class ClassBookingOfCoachJson
     {
         /// <summary>
         /// 预约id

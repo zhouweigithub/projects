@@ -45,7 +45,6 @@ limit {1}
 ";
         private static readonly string insertClassSql = @"INSERT IGNORE INTO class (product_id,coach_id,venue_id,hour,max_count,start_time,end_time,state,rate)
 VALUES(@product_id,@coach_id,@venue_id,@hour,@max_count,@start_time,@end_time,0,0);";
-        private static readonly string getLastInsertId = "SELECT LAST_INSERT_ID();";
         private static readonly string insertClassStudent = "INSERT INTO class_student (class_id,student_id,state) VALUES('{0}','{1}','0') ;";
 
         /// <summary>
@@ -78,6 +77,17 @@ INNER JOIN (
 
 WHERE a.start_time>NOW() AND a.state=0 AND e.coach_id='{0}' AND (ISNULL(f.coach_id) OR f.coach_id=e.coach_id)
 ";
+
+        private static readonly string getMyClassListSql = @"
+SELECT a.id class_id,a.coach_id,a.product_id,a.hour,a.start_time,a.end_time,a.state class_state,b.state student_state,c.hour total_hour,
+d.name product_name,d.main_img,e.name venue_name,f.name campus_name,g.name coach_name,g.phone coach_phone FROM class a 
+INNER JOIN class_student b ON a.id=b.class_id
+INNER JOIN course c ON a.product_id=c.product_id AND b.student_id=c.student_id
+INNER JOIN product d ON a.product_id=d.id
+INNER JOIN venue e ON a.venue_id=e.id
+INNER JOIN campus f ON e.campus_id=f.id
+INNER JOIN coach g ON a.coach_id=g.id
+WHERE b.student_id='{0}'";
         #endregion
 
         /// <summary>
@@ -216,7 +226,7 @@ WHERE a.start_time>NOW() AND a.state=0 AND e.coach_id='{0}' AND (ISNULL(f.coach_
                     //插入Class表数据
                     int count = dbhelper.ExecuteNonQueryParams(insertClassSql, paras);
                     //获取刚插入的id
-                    int newId = dbhelper.ExecuteScalarInt(getLastInsertId);
+                    int newId = dbhelper.ExecuteScalarInt(Common.Const.SELECT_LAST_INSERT_ID_SQL);
                     //向课程对应的学生表里插入数据 
                     int countStudent = dbhelper.ExecuteNonQuery(string.Format(insertClassStudent, newId, studentId));
 
@@ -236,7 +246,7 @@ WHERE a.start_time>NOW() AND a.state=0 AND e.coach_id='{0}' AND (ISNULL(f.coach_
         /// </summary>
         /// <param name="coachId">教练id</param>
         /// <returns></returns>
-        public static List<ClassBookingOfCoach> GetBookingListOfCoach(int coachId)
+        public static List<ClassBookingOfCoachJson> GetBookingListOfCoach(int coachId)
         {
             try
             {
@@ -246,7 +256,7 @@ WHERE a.start_time>NOW() AND a.state=0 AND e.coach_id='{0}' AND (ISNULL(f.coach_
 
                     if (dt != null && dt.Rows.Count > 0)
                     {
-                        return dt.ToList<ClassBookingOfCoach>();
+                        return dt.ToList<ClassBookingOfCoachJson>();
                     }
                 }
             }
@@ -255,7 +265,7 @@ WHERE a.start_time>NOW() AND a.state=0 AND e.coach_id='{0}' AND (ISNULL(f.coach_
                 Util.Log.LogUtil.Write("GetBookingListOfCoach 出错：" + ex, Util.Log.LogType.Error);
             }
 
-            return new List<ClassBookingOfCoach>();
+            return new List<ClassBookingOfCoachJson>();
         }
 
         /// <summary>
@@ -281,6 +291,32 @@ WHERE a.start_time>NOW() AND a.state=0 AND e.coach_id='{0}' AND (ISNULL(f.coach_
             return 0;
         }
 
+        /// <summary>
+        /// 获取我的上课历史
+        /// </summary>
+        /// <param name="studentId"></param>
+        /// <returns></returns>
+        public static List<MyClassHistoryJson> GetMyClassHistoryList(int studentId)
+        {
+            try
+            {
+                using (DBHelper dbhelper = new DBHelper())
+                {
+                    DataTable dt = dbhelper.ExecuteDataTableParams(string.Format(getMyClassListSql, studentId));
+
+                    if (dt != null && dt.Rows.Count > 0)
+                    {
+                        return dt.ToList<MyClassHistoryJson>();
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                Util.Log.LogUtil.Write("GetMyClassHistoryList 出错：" + ex, Util.Log.LogType.Error);
+            }
+
+            return new List<MyClassHistoryJson>();
+        }
 
     }
 }

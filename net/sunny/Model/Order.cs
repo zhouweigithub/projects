@@ -67,7 +67,7 @@ namespace Sunny.Model
         [TableField]
         public decimal freight { get; set; }
         /// <summary>
-        /// 状态0未支付1已支付2已发货3已收货
+        /// 状态0未支付1已支付2已发货3已收货4已评价
         /// </summary>
         [TableField]
         public int state { get; set; }

@@ -27,7 +27,7 @@ namespace Sunny.Model.Request
         /// <summary>
         /// 收货人信息
         /// </summary>
-        public int ceceiverid { get; set; }
+        public int receiverid { get; set; }
         /// <summary>
         /// 留言
         /// </summary>

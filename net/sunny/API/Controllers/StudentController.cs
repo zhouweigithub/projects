@@ -4,6 +4,7 @@ using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Web.Http;
+using Sunny.BLL.Page;
 using Sunny.DAL;
 using Sunny.Model;
 
@@ -42,7 +43,6 @@ namespace API.Controllers
             return Json(result);
         }
 
-        // POST: api/Student
         [HttpPost]
         [Route("api/student/create")]
         public IHttpActionResult Create(StudentRequest data)
@@ -65,10 +65,26 @@ namespace API.Controllers
                 }
                 else
                 {
-                    int insertCount = DBData.GetInstance(DBTable.student).Add(data);
-                    int code = insertCount > 0 ? 0 : -1;
-                    string msg = insertCount > 0 ? "ok" : "fail";
-                    result = new ResponseResult(code, msg);
+                    bool isInvitationCodeExist = DBData.GetInstance(DBTable.student).GetCount($"phone='{data.Invitationcode}'") > 0;
+                    if (isInvitationCodeExist)
+                    {
+                        string smsServerCode = CommonBLL.GetSmsVerificationCodeFromCache(Sunny.Common.SmsVerificationCodeTypeEnum.StudentRegister, data.phone);
+                        if (smsServerCode == data.SmsVerificationCode)
+                        {
+                            bool isAddOk = StudentDAL.AddStudent(data);
+                            int code = isAddOk ? 0 : -1;
+                            string msg = isAddOk ? "ok" : "fail";
+                            result = new ResponseResult(code, msg);
+                        }
+                        else
+                        {
+                            result = new ResponseResult(-1, "短信验证码不正确");
+                        }
+                    }
+                    else
+                    {
+                        result = new ResponseResult(-1, "邀请码不存在");
+                    }
                 }
             }
 

@@ -8,24 +8,21 @@ using System.Threading.Tasks;
 namespace Sunny.Model
 {
     /// <summary>
-    /// 配送方式基础信息
+    /// 学员支付记录
     /// </summary>
-    public class Deliver
+    public class PayRecord
     {
-        public int id { get; set; }
+        public int Id { get; set; }
         /// <summary>
-        /// 名称
+        /// 订单id
         /// </summary>
         [TableField]
-        public string name { get; set; }
+        public int order_id { get; set; }
         /// <summary>
-        /// 状态0正常 1禁用
+        /// 支付金额
         /// </summary>
         [TableField]
-        public short state { get; set; }
-        /// <summary>
-        /// 创建时间
-        /// </summary>
-        public DateTime crtime { get; set; }
+        public int money { get; set; }
+        public int crtime { get; set; }
     }
 }

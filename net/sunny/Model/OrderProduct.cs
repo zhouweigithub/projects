@@ -28,17 +28,27 @@ namespace Sunny.Model
         [TableField]
         public string product_name { get; set; }
         /// <summary>
+        /// 规格组合id
+        /// </summary>
+        [TableField]
+        public string plan_code { get; set; }
+        /// <summary>
         /// 数量
         /// </summary>
         [TableField]
         public int count { get; set; }
         /// <summary>
-        /// 单价
+        /// 折扣后价格
         /// </summary>
         [TableField]
         public decimal price { get; set; }
         /// <summary>
-        /// 总金额
+        /// 原价
+        /// </summary>
+        [TableField]
+        public decimal orig_price { get; set; }
+        /// <summary>
+        /// 去除折扣后的总金额
         /// </summary>
         [TableField]
         public decimal total_amount { get; set; }
@@ -48,9 +58,9 @@ namespace Sunny.Model
         [TableField]
         public decimal discount_amount { get; set; }
         /// <summary>
-        /// 优惠券抵扣金额
+        /// 课程场馆id
         /// </summary>
         [TableField]
-        public decimal coupon_amount { get; set; }
+        public int venueid { get; set; }
     }
 }

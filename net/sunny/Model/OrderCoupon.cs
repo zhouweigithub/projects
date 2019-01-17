@@ -28,17 +28,12 @@ namespace Sunny.Model
         [TableField]
         public string name { get; set; }
         /// <summary>
-        /// 优惠券金额
-        /// </summary>
-        [TableField]
-        public decimal price { get; set; }
-        /// <summary>
         /// 优惠券数量
         /// </summary>
         [TableField]
         public int count { get; set; }
         /// <summary>
-        /// 优惠总金额
+        /// 优惠券金额
         /// </summary>
         [TableField]
         public decimal money { get; set; }

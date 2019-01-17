@@ -86,11 +86,14 @@
     <Compile Include="CouponDAL.cs" />
     <Compile Include="CourseDAL.cs" />
     <Compile Include="Function\DataTableExTen.cs" />
+    <Compile Include="InvitationDAL.cs" />
+    <Compile Include="OrderDAL.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Base\MySql.cs" />
     <Compile Include="DiscountDAL.cs" />
     <Compile Include="SpecificationDAL.cs" />
     <Compile Include="StudentCouponDAL.cs" />
+    <Compile Include="StudentDAL.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Common\Common.csproj">

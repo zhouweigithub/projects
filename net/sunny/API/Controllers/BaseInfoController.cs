@@ -59,5 +59,37 @@ namespace API.Controllers
             IList<Banner> result = DBData.GetInstance(DBTable.banner).GetList<Banner>($"type='{type}' and state=0");
             return Json(result);
         }
+
+        [HttpGet]
+        [Route("api/BaseInfo/GetReceiver")]
+        public IHttpActionResult GetReceiver(int id)
+        {
+            ReceiverInfo result = DBData.GetInstance(DBTable.receiver_info).GetEntityByKey<ReceiverInfo>(id);
+            return Json(result);
+        }
+
+        [HttpGet]
+        [Route("api/BaseInfo/GetReceiverList")]
+        public IHttpActionResult GetReceiverList(int studentId)
+        {
+            IList<ReceiverInfo> result = DBData.GetInstance(DBTable.receiver_info).GetList<ReceiverInfo>($"student_id='{studentId}'");
+            return Json(result);
+        }
+
+        [HttpPost]
+        [Route("api/BaseInfo/UpdateReceiver")]
+        public IHttpActionResult UpdateReceiver(ReceiverInfo info)
+        {
+            int count = DBData.GetInstance(DBTable.receiver_info).UpdateByKey(info, info.id);
+            return Json(count > 0);
+        }
+
+        [HttpPost]
+        [Route("api/BaseInfo/DeleteReceiver")]
+        public IHttpActionResult DeleteReceiver(int id)
+        {
+            int count = DBData.GetInstance(DBTable.receiver_info).DeleteByKey(id);
+            return Json(count > 0);
+        }
     }
 }
