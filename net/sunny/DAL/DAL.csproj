@@ -83,6 +83,7 @@
     <Compile Include="Base\DBOperator.cs" />
     <Compile Include="CategoryDAL.cs" />
     <Compile Include="ClassDAL.cs" />
+    <Compile Include="CoachDAL.cs" />
     <Compile Include="CouponDAL.cs" />
     <Compile Include="CourseDAL.cs" />
     <Compile Include="Function\DataTableExTen.cs" />

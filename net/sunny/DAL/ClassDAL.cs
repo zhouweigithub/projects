@@ -78,7 +78,10 @@ INNER JOIN (
 WHERE a.start_time>NOW() AND a.state=0 AND e.coach_id='{0}' AND (ISNULL(f.coach_id) OR f.coach_id=e.coach_id)
 ";
 
-        private static readonly string getMyClassListSql = @"
+        /// <summary>
+        /// 学生上课历史
+        /// </summary>
+        private static readonly string getStudentClassHistorySql = @"
 SELECT a.id class_id,a.coach_id,a.product_id,a.hour,a.start_time,a.end_time,a.state class_state,b.state student_state,c.hour total_hour,
 d.name product_name,d.main_img,e.name venue_name,f.name campus_name,g.name coach_name,g.phone coach_phone FROM class a 
 INNER JOIN class_student b ON a.id=b.class_id
@@ -87,7 +90,20 @@ INNER JOIN product d ON a.product_id=d.id
 INNER JOIN venue e ON a.venue_id=e.id
 INNER JOIN campus f ON e.campus_id=f.id
 INNER JOIN coach g ON a.coach_id=g.id
-WHERE b.student_id='{0}'";
+WHERE b.student_id='{0}' ORDER BY a.crtime DESC";
+
+        /// <summary>
+        /// 教练上课历史
+        /// </summary>
+        private static readonly string getCoachClassHistorySql = @"
+SELECT a.id class_id,a.coach_id,a.product_id,a.hour,h.hour total_hour,a.start_time,a.end_time,a.state class_state,
+d.name product_name,d.main_img,e.name venue_name,f.name campus_name,g.name coach_name,g.phone coach_phone FROM class a 
+LEFT JOIN product d ON a.product_id=d.id
+LEFT JOIN venue e ON a.venue_id=e.id
+LEFT JOIN campus f ON e.campus_id=f.id
+LEFT JOIN coach g ON a.coach_id=g.id
+LEFT JOIN hours h ON a.product_id=h.product_id
+WHERE g.id='{0}' ORDER BY a.crtime DESC";
         #endregion
 
         /// <summary>
@@ -292,30 +308,57 @@ WHERE b.student_id='{0}'";
         }
 
         /// <summary>
-        /// 获取我的上课历史
+        /// 获取学生的上课历史
         /// </summary>
         /// <param name="studentId"></param>
         /// <returns></returns>
-        public static List<MyClassHistoryJson> GetMyClassHistoryList(int studentId)
+        public static List<StudentClassHistoryJson> GetStudentClassHistoryList(int studentId)
         {
             try
             {
                 using (DBHelper dbhelper = new DBHelper())
                 {
-                    DataTable dt = dbhelper.ExecuteDataTableParams(string.Format(getMyClassListSql, studentId));
+                    DataTable dt = dbhelper.ExecuteDataTableParams(string.Format(getStudentClassHistorySql, studentId));
 
                     if (dt != null && dt.Rows.Count > 0)
                     {
-                        return dt.ToList<MyClassHistoryJson>();
+                        return dt.ToList<StudentClassHistoryJson>();
                     }
                 }
             }
             catch (Exception ex)
             {
-                Util.Log.LogUtil.Write("GetMyClassHistoryList 出错：" + ex, Util.Log.LogType.Error);
+                Util.Log.LogUtil.Write("GetStudentClassHistoryList 出错：" + ex, Util.Log.LogType.Error);
             }
 
-            return new List<MyClassHistoryJson>();
+            return new List<StudentClassHistoryJson>();
+        }
+
+        /// <summary>
+        /// 获取教练的上课历史
+        /// </summary>
+        /// <param name="studentId"></param>
+        /// <returns></returns>
+        public static List<CoachClassHistoryJson> GetCoachClassHistoryList(int studentId)
+        {
+            try
+            {
+                using (DBHelper dbhelper = new DBHelper())
+                {
+                    DataTable dt = dbhelper.ExecuteDataTableParams(string.Format(getCoachClassHistorySql, studentId));
+
+                    if (dt != null && dt.Rows.Count > 0)
+                    {
+                        return dt.ToList<CoachClassHistoryJson>();
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                Util.Log.LogUtil.Write("GetCoachClassHistoryList 出错：" + ex, Util.Log.LogType.Error);
+            }
+
+            return new List<CoachClassHistoryJson>();
         }
 
     }

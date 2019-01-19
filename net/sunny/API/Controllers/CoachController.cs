@@ -4,6 +4,8 @@ using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Web.Http;
+using Sunny.BLL.API;
+using Sunny.Common;
 using Sunny.DAL;
 using Sunny.Model;
 
@@ -42,7 +44,7 @@ namespace API.Controllers
         }
 
         [HttpPost]
-        [Route("api/coach/Create")]
+        [Route("api/coach/create")]
         public IHttpActionResult Create(CoachRequest data)
         {
             ResponseResult result = null;

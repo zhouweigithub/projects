@@ -48,7 +48,7 @@ namespace Sunny.Model
         /// 账户余额
         /// </summary>
         [TableField]
-        public string cash { get; set; }
+        public decimal cash { get; set; }
         /// <summary>
         /// 0正常 1受限
         /// </summary>

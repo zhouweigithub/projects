@@ -61,6 +61,14 @@ namespace API.Controllers
         }
 
         [HttpGet]
+        [Route("api/BaseInfo/GetSiteInfo")]
+        public IHttpActionResult GetSiteInfo()
+        {
+            IList<SiteInfo> result = DBData.GetInstance(DBTable.site_info).GetList<SiteInfo>();
+            return Json(result);
+        }
+
+        [HttpGet]
         [Route("api/BaseInfo/GetReceiver")]
         public IHttpActionResult GetReceiver(int id)
         {

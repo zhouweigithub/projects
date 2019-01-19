@@ -42,10 +42,18 @@ namespace API.Controllers
         }
 
         [HttpGet]
-        [Route("api/class/classhistory")]
-        public IHttpActionResult GetMyClassHistoryList(int studentId)
+        [Route("api/class/studentclasshistory")]
+        public IHttpActionResult GetStudentClassHistoryList(int studentId)
         {
-            List<MyClassHistoryJson> classList = ClassDAL.GetMyClassHistoryList(studentId);
+            List<StudentClassHistoryJson> classList = ClassDAL.GetStudentClassHistoryList(studentId);
+            return Json(classList);
+        }
+
+        [HttpGet]
+        [Route("api/class/coachclasshistory")]
+        public IHttpActionResult GetCoachClassHistoryList(int studentId)
+        {
+            List<CoachClassHistoryJson> classList = ClassDAL.GetCoachClassHistoryList(studentId);
             return Json(classList);
         }
 

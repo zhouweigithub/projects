@@ -24,6 +24,10 @@ namespace Sunny.Model.Custom
         /// </summary>
         public decimal money { get; set; }
         /// <summary>
+        /// 数量
+        /// </summary>
+        public int count { get; set; }
+        /// <summary>
         /// 开始时间
         /// </summary>
         public DateTime start_time { get; set; }

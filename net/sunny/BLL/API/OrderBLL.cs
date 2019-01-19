@@ -63,8 +63,9 @@ namespace Sunny.DAL
         {
             try
             {
+                UpdateBalance(orderRequest, orderId, userid);
                 CreateCourse(orderRequest.products, orderId, userid);
-                CreateOrderCoupons(orderRequest, orderId);
+                CreateOrderCoupons(orderRequest, orderId, userid);
                 CreateOrderDiscount(orderRequest.products, orderId);
                 CreateOrderProduct(orderRequest.products, orderId);
             }
@@ -72,6 +73,28 @@ namespace Sunny.DAL
             {
                 Util.Log.LogUtil.Write("SaveOrderExtraInfo 存储订单的相关信息出错：" + e, Util.Log.LogType.Error);
             }
+        }
+
+        /// <summary>
+        /// 更新余额
+        /// </summary>
+        /// <param name="orderRequest"></param>
+        /// <param name="orderId"></param>
+        /// <param name="userid"></param>
+        private static void UpdateBalance(OrderRequest orderRequest, string orderId, int userid)
+        {
+            StudentDAL.AddCash(userid, -orderRequest.money);
+            Student student = DBData.GetInstance(DBTable.student).GetEntityByKey<Student>(userid);
+            DBData.GetInstance(DBTable.pay_record).Add(new PayRecord()
+            {
+                user_id = userid,
+                money = -orderRequest.money,
+                type = 0,
+                order_id = orderId,
+                user_type = 0,
+                comment = "购买商品",
+                balance = student.cash,
+            });
         }
 
         /// <summary>
@@ -112,14 +135,16 @@ namespace Sunny.DAL
                 string productIds = string.Join(",", orderRequest.products.Select(a => a.prouductid));
                 string couponIds = string.Join(",", orderRequest.coupons.Select(a => a.id));
                 Student user = DBData.GetInstance(DBTable.student).GetEntity<Student>($"username='{orderRequest.user_name}'");
-                List<Coupon> coupons = StudentCouponDAL.GetStudentCouponList(user.id, couponIds, productIds);
-                if (coupons.Count != orderRequest.coupons.Length)
-                    return false;   //若传入的优惠券数量和服务器上查出来的优惠券对不上，则无效
+                List<CustCoupon> serverCoupons = StudentCouponDAL.GetStudentCouponList(user.id, couponIds, productIds);
 
-                if (orderRequest.coupon_money != coupons.Sum(a => a.money))
-                    return false;   //若传入的优惠券的金额和服务器上查出来 的金额对不上，则无效
+                foreach (TmpCoupon item in orderRequest.coupons)
+                {
+                    var tmpServer = serverCoupons.FirstOrDefault(a => a.id == item.id);
+                    if (tmpServer == null || tmpServer.count < item.count || tmpServer.count <= 0)
+                        return false;
+                }
 
-                money = coupons.Sum(a => a.money);
+                money = serverCoupons.Sum(a => a.money * a.count);
                 return true;
             }
             catch (Exception e)
@@ -134,14 +159,14 @@ namespace Sunny.DAL
         /// </summary>
         /// <param name="orderRequest"></param>
         /// <param name="orderId"></param>
-        private static void CreateOrderCoupons(OrderRequest orderRequest, string orderId)
+        private static void CreateOrderCoupons(OrderRequest orderRequest, string orderId, int userid)
         {
             string productIds = string.Join(",", orderRequest.products.Select(a => a.prouductid));
             string couponIds = string.Join(",", orderRequest.coupons.Select(a => a.id));
             Student user = DBData.GetInstance(DBTable.student).GetEntity<Student>($"username='{orderRequest.user_name}'");
-            List<Coupon> coupons = StudentCouponDAL.GetStudentCouponList(user.id, couponIds, productIds);
+            List<CustCoupon> coupons = StudentCouponDAL.GetStudentCouponList(user.id, couponIds, productIds);
 
-            foreach (Coupon item in coupons)
+            foreach (CustCoupon item in coupons)
             {
                 try
                 {
@@ -154,8 +179,9 @@ namespace Sunny.DAL
                         count = count,
                         money = item.money,
                     });
-                    //更新用户当前优惠券的状态为已使用
-                    DBData.GetInstance(DBTable.student_coupon).UpdateByKey(new List<string>() { "state" }, new List<object>() { 1 }, item.id);
+
+                    //更新用户优惠券数量
+                    CouponDAL.AddCouponCount(userid, item.id, -item.count);
                 }
                 catch (Exception e)
                 {

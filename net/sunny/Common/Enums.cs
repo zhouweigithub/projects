@@ -26,7 +26,20 @@ namespace Sunny.Common
         CoachRegister,
     }
 
-
+    /// <summary>
+    /// 用户类型
+    /// </summary>
+    public enum UserType
+    {
+        /// <summary>
+        /// 学员
+        /// </summary>
+        Student = 0,
+        /// <summary>
+        /// 教练
+        /// </summary>
+        Coach = 1
+    }
 
     public class EnumHelper
     {

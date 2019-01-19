@@ -77,11 +77,6 @@ namespace Sunny.DAL
         /// </summary>
         public static readonly string venue = "venue";
         /// <summary>
-        /// 提现记录
-        /// </summary>
-        public static readonly string withdrawal = "withdrawal";
-
-        /// <summary>
         /// 校区
         /// </summary>
         public static readonly string campus = "campus";
@@ -186,8 +181,16 @@ namespace Sunny.DAL
         /// </summary>
         public static readonly string cashback_history = "cashback_history";
         /// <summary>
-        /// 学员支付记录
+        /// 用户资金变动记录
         /// </summary>
         public static readonly string pay_record = "pay_record";
+        /// <summary>
+        /// 站点基本信息
+        /// </summary>
+        public static readonly string site_info = "site_info";
+        /// <summary>
+        /// 热门课程
+        /// </summary>
+        public static readonly string hot_course = "hot_course";
     }
 }

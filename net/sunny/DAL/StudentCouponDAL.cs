@@ -1,4 +1,5 @@
 ﻿using Sunny.Model;
+using Sunny.Model.Custom;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -12,15 +13,15 @@ namespace Sunny.DAL
     {
 
         private static readonly string GetStudentCouponSql = @"
-SELECT a.id,b.money,b.name FROM student_coupon a
+SELECT b.money,b.name,a.count FROM student_coupon a
 INNER JOIN coupon b ON a.coupon_id=b.id
 INNER JOIN category d ON b.category_id=d.id
 INNER JOIN product e ON d.id=e.category_id
-WHERE a.state=0 AND b.state=0 AND b.start_time<NOW() AND b.end_time >NOW() AND a.student_id={0} AND a.id IN({1}) AND e.id IN({2})
-GROUP BY a.id";
+WHERE a.state=0 AND b.state=0 AND b.start_time<NOW() AND b.end_time >NOW() AND a.student_id={0} AND b.id IN({1}) AND e.id IN({2})
+GROUP BY b.id";
 
 
-        public static List<Coupon> GetStudentCouponList(int studentId, string studentCouponIds, string productIds)
+        public static List<CustCoupon> GetStudentCouponList(int studentId, string studentCouponIds, string productIds)
         {
             try
             {
@@ -30,7 +31,7 @@ GROUP BY a.id";
 
                     if (dt != null && dt.Rows.Count > 0)
                     {
-                        return dt.ToList<Coupon>();
+                        return dt.ToList<CustCoupon>();
                     }
                 }
             }
@@ -39,7 +40,7 @@ GROUP BY a.id";
                 Util.Log.LogUtil.Write("GetStudentCouponList 出错：" + ex, Util.Log.LogType.Error);
             }
 
-            return new List<Coupon>();
+            return new List<CustCoupon>();
         }
 
     }

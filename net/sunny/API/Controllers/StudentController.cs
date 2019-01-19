@@ -83,7 +83,7 @@ namespace API.Controllers
                     }
                     else
                     {
-                        result = new ResponseResult(-1, "邀请码不存在");
+                        result = new ResponseResult(-1, "邀请码不正确");
                     }
                 }
             }

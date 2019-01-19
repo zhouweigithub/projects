@@ -12,7 +12,6 @@ namespace Sunny.Model
     /// </summary>
     public class StudentCoupon
     {
-        public int id { get; set; }
         /// <summary>
         /// 学员id
         /// </summary>
@@ -29,7 +28,7 @@ namespace Sunny.Model
         [TableField]
         public int count { get; set; }
         /// <summary>
-        /// 状态0未使用 1已使用
+        /// 状态0正常 1禁用
         /// </summary>
         [TableField]
         public short state { get; set; }

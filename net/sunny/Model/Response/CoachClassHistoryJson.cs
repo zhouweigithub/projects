@@ -7,9 +7,9 @@ using System.Threading.Tasks;
 namespace Sunny.Model.Custom
 {
     /// <summary>
-    /// 上课记录
+    /// 教练上课记录
     /// </summary>
-    public class MyClassHistoryJson
+    public class CoachClassHistoryJson
     {
         /// <summary>
         /// 上课id
@@ -40,10 +40,6 @@ namespace Sunny.Model.Custom
         /// </summary>
         public short class_state { get; set; }
         /// <summary>
-        /// 学生上课状态
-        /// </summary>
-        public short student_state { get; set; }
-        /// <summary>
         /// 该课总课时
         /// </summary>
         public int total_hour { get; set; }
@@ -63,13 +59,5 @@ namespace Sunny.Model.Custom
         /// 校区名称
         /// </summary>
         public string campus_name { get; set; }
-        /// <summary>
-        /// 教练名称
-        /// </summary>
-        public string coach_name { get; set; }
-        /// <summary>
-        /// 教练电话
-        /// </summary>
-        public string coach_phone { get; set; }
     }
 }

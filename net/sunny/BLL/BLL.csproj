@@ -87,6 +87,7 @@
     <Compile Include="API\CouponBLL.cs" />
     <Compile Include="API\CourseBLL.cs" />
     <Compile Include="API\OrderBLL.cs" />
+    <Compile Include="API\WithdrawBLL.cs" />
     <Compile Include="Page\ServerLog\ServerLogBLL.cs" />
     <Compile Include="Page\CommonBLL.cs">
       <SubType>Code</SubType>
