@@ -41,6 +41,14 @@ namespace Sunny.Common
         /// 邀请返现金额
         /// </summary>
         public static readonly int CashbackMoney;
+        /// <summary>
+        /// 小程序APPID
+        /// </summary>
+        public static readonly int MiniAppid;
+        /// <summary>
+        /// 小程序密钥
+        /// </summary>
+        public static readonly int MiniSecret;
 
         static WebConfigData()
         {
@@ -53,6 +61,8 @@ namespace Sunny.Common
                 ExtraPageMenuIds = Config.GetConfigToString("ExtraPageMenuIds");
                 IgnoreSmsCodeIp = Config.GetConfigToString("IgnoreSmsCodeIp");
                 CashbackMoney = Config.GetConfigToInt("CashbackMoney");
+                MiniAppid = Config.GetConfigToInt("MiniAppid");
+                MiniSecret = Config.GetConfigToInt("MiniSecret");
             }
             catch (Exception e)
             {

@@ -15,25 +15,26 @@ namespace API.Controllers
     {
 
         [HttpGet]
-        public IHttpActionResult GetById(int id)
+        [Route("api/coach/get")]
+        public IHttpActionResult GetById(string token)
         {
-            Coach result = DBData.GetInstance(DBTable.coach).GetEntityByKey<Coach>(id);
+            Coach result = DBData.GetInstance(DBTable.coach).GetEntity<Coach>($"username='{token}'");
             result.password = string.Empty;
             return Json(result);
         }
 
         [HttpGet]
         [Route("api/coach/isexist")]
-        public IHttpActionResult IsExist(string username)
+        public IHttpActionResult IsExist(string token)
         {
             ResponseResult result = null;
-            if (string.IsNullOrWhiteSpace(username))
+            if (string.IsNullOrWhiteSpace(token))
             {
                 result = new ResponseResult(-1, "参数不全");
             }
             else
             {
-                int serverCount = DBData.GetInstance(DBTable.coach).GetCount($"username='{username}'");
+                int serverCount = DBData.GetInstance(DBTable.coach).GetCount($"username='{token}'");
                 if (serverCount == 0)
                     result = new ResponseResult(0, "ok", false);
                 else

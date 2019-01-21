@@ -14,16 +14,20 @@ namespace API.Controllers
     public class AppointmentController : ApiController
     {
         [HttpGet]
-        public IHttpActionResult Get(int studentId)
+        [Route("api/appointment/get")]
+        public IHttpActionResult Get(string token)
         {
-            List<AppointmentCourseListJson> result = AppointmentDAL.GetCourseInfoList(studentId, 0);
+            int student_id = DBData.GetInstance(DBTable.student).GetEntity<Student>($"username='{token}'").id;
+            List<AppointmentCourseListJson> result = AppointmentDAL.GetCourseInfoList(student_id, 0);
             return Json(result);
         }
 
         [HttpGet]
-        public IHttpActionResult Get(int studentId, int productId)
+        [Route("api/appointment/get")]
+        public IHttpActionResult Get(string token, int productId)
         {
-            List<AppointmentCourseListJson> result = AppointmentDAL.GetCourseInfoList(studentId, productId);
+            int student_id = DBData.GetInstance(DBTable.student).GetEntity<Student>($"username='{token}'").id;
+            List<AppointmentCourseListJson> result = AppointmentDAL.GetCourseInfoList(student_id, productId);
             return Json(result);
         }
 
@@ -33,38 +37,41 @@ namespace API.Controllers
         /// <param name="studentId"></param>
         /// <returns></returns>
         [HttpGet]
-        [Route("api/Appointment/GetBookedTimes")]
-        public IHttpActionResult GetBookingTimes(int studentId)
+        [Route("api/appointment/GetBookedTimes")]
+        public IHttpActionResult GetBookingTimes(string token)
         {
-            List<Class> datas = AppointmentDAL.GetAppointmentedInfo(studentId);
+            int student_id = DBData.GetInstance(DBTable.student).GetEntity<Student>($"username='{token}'").id;
+            List<Class> datas = AppointmentDAL.GetAppointmentedInfo(student_id);
             var times = datas.Select(a => a.start_time).ToArray();
             return Json(times);
         }
 
         //获取教练可接单的预约信息
         [HttpGet]
-        [Route("api/Appointment/GetByCoach")]
-        public IHttpActionResult GetByCoach(int coachid)
+        [Route("api/appointment/GetByCoach")]
+        public IHttpActionResult GetByCoach(string token)
         {
-            List<ClassBookingOfCoachJson> classList = ClassDAL.GetBookingListOfCoach(coachid);
+            int coach_id = DBData.GetInstance(DBTable.coach).GetEntity<Coach>($"username='{token}'").id;
+            List<ClassBookingOfCoachJson> classList = ClassDAL.GetBookingListOfCoach(coach_id);
             return Json(classList);
         }
 
         //用户发送预约请求
         [HttpPost]
-        [Route("api/Appointment/SendBooking")]
+        [Route("api/appointment/SendBooking")]
         public IHttpActionResult SendBooking(int courseId, DateTime startTime, DateTime endTime)
         {
             bool result = AppointmentBLL.AddAppointment(courseId, startTime, endTime);
             return Json(result);
         }
 
-        //教练接收预约
+        //教练接受预约
         [HttpPost]
-        [Route("api/Appointment/ReceiveBooking")]
-        public IHttpActionResult ReceiveBooking(int bookingId, int coachId)
+        [Route("api/appointment/ReceiveBooking")]
+        public IHttpActionResult ReceiveBooking(int bookingId, string token)
         {
-            bool result = AppointmentBLL.ReceiveAppointment(bookingId, coachId);
+            int coach_id = DBData.GetInstance(DBTable.coach).GetEntity<Coach>($"username='{token}'").id;
+            bool result = AppointmentBLL.ReceiveAppointment(bookingId, coach_id);
             return Json(result);
         }
     }

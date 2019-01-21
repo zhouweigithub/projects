@@ -28,12 +28,50 @@ namespace Sunny.BLL.API
         //    return ClassDAL.InsertClassData(data: data);
         //}
 
-        public static bool CompleteClass(int classId)
+        public static bool CoachCompleteClass(int classId)
         {
             Dictionary<string, object> fieldValueDic = new Dictionary<string, object>();
             fieldValueDic.Add("state", 1);
             int count = DBData.GetInstance(DBTable.class_).UpdateByKey(fieldValueDic, classId);
             return count > 0;
+        }
+
+        /// <summary>
+        /// 教练添加课后的评论
+        /// </summary>
+        /// <param name="classId"></param>
+        /// <param name="commentString"></param>
+        /// <param name="images"></param>
+        /// <param name="videos"></param>
+        /// <returns></returns>
+        public static bool CoachAddClassComment(int classId, string commentString, List<string> images, List<string> videos)
+        {
+            int count1 = DBData.GetInstance(DBTable.class_comment).Add(new ClassComment()
+            {
+                class_id = classId,
+                comment = commentString,
+            });
+
+            foreach (string item in images)
+            {
+                DBData.GetInstance(DBTable.class_comment_url).Add(new ClassCommentUrl()
+                {
+                    class_id = classId,
+                    url = item,
+                    type = 0,
+                });
+            }
+            foreach (string item in videos)
+            {
+                DBData.GetInstance(DBTable.class_comment_url).Add(new ClassCommentUrl()
+                {
+                    class_id = classId,
+                    url = item,
+                    type = 1,
+                });
+            }
+
+            return count1 > 0;
         }
 
     }

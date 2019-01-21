@@ -193,23 +193,21 @@ CREATE TABLE `coach` (
   `password` varchar(64) NOT NULL COMMENT '密码',
   `name` varchar(20) DEFAULT NULL COMMENT '姓名',
   `sex` tinyint(4) DEFAULT '0' COMMENT '性别0男 1女',
-  `phone` varchar(11) DEFAULT NULL COMMENT '电话号码',
+  `phone` varchar(11) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '电话号码',
   `type` tinyint(4) DEFAULT '0' COMMENT '类型0游泳1画画2弹琴3...',
   `level` tinyint(4) DEFAULT '0' COMMENT '教练评级',
   `headimg` varchar(500) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL COMMENT '头像图片地址',
-  `self_img` varchar(500) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL COMMENT '自身照片',
-  `idcard_img` varchar(500) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL COMMENT '身份证照片',
-  `coaching_card_img` varchar(500) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL COMMENT '教练证照片',
   `cash` int(11) NOT NULL DEFAULT '0' COMMENT '账户余额',
   `state` tinyint(4) NOT NULL DEFAULT '0' COMMENT '0正常 1受限',
   `crtime` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
   PRIMARY KEY (`id`),
-  UNIQUE KEY `IX_USERNAME` (`username`)
+  UNIQUE KEY `IX_USERNAME` (`username`),
+  UNIQUE KEY `IX_PHONE` (`phone`)
 ) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8 COMMENT='注册教练信息表';
 
 /*Data for the table `coach` */
 
-insert  into `coach`(`id`,`username`,`password`,`name`,`sex`,`phone`,`type`,`level`,`headimg`,`self_img`,`idcard_img`,`coaching_card_img`,`cash`,`state`,`crtime`) values (1,'xxx','fff','李咏',0,'125412541',0,0,'http://cms-bucket.nosdn.127.net/2355aab3ab86470593a7fe33239a09cb20170105080207.jpg','http://cms-bucket.nosdn.127.net/2355aab3ab86470593a7fe33239a09cb20170105080207.jpg','http://cms-bucket.nosdn.127.net/2355aab3ab86470593a7fe33239a09cb20170105080207.jpg','http://cms-bucket.nosdn.127.net/2355aab3ab86470593a7fe33239a09cb20170105080207.jpg',0,0,'2019-01-08 11:23:10'),(2,'ttt','ss','李白',1,'3456798765',0,0,'http://cms-bucket.nosdn.127.net/2355aab3ab86470593a7fe33239a09cb20170105080207.jpg','http://cms-bucket.nosdn.127.net/2355aab3ab86470593a7fe33239a09cb20170105080207.jpg','http://cms-bucket.nosdn.127.net/2355aab3ab86470593a7fe33239a09cb20170105080207.jpg','http://cms-bucket.nosdn.127.net/2355aab3ab86470593a7fe33239a09cb20170105080207.jpg',0,0,'2019-01-11 16:16:47'),(3,'eee','ggg','陆游',0,'33333333333',0,0,'http://cms-bucket.nosdn.127.net/2355aab3ab86470593a7fe33239a09cb20170105080207.jpg','http://cms-bucket.nosdn.127.net/2355aab3ab86470593a7fe33239a09cb20170105080207.jpg','http://cms-bucket.nosdn.127.net/2355aab3ab86470593a7fe33239a09cb20170105080207.jpg','http://cms-bucket.nosdn.127.net/2355aab3ab86470593a7fe33239a09cb20170105080207.jpg',0,0,'2019-01-11 16:17:45'),(4,'77','88','陈坤',0,'13266945548',0,0,'http://cms-bucket.nosdn.127.net/2355aab3ab86470593a7fe33239a09cb20170105080207.jpg','http://cms-bucket.nosdn.127.net/2355aab3ab86470593a7fe33239a09cb20170105080207.jpg','http://cms-bucket.nosdn.127.net/2355aab3ab86470593a7fe33239a09cb20170105080207.jpg','http://cms-bucket.nosdn.127.net/2355aab3ab86470593a7fe33239a09cb20170105080207.jpg',0,0,'2019-01-11 16:30:57');
+insert  into `coach`(`id`,`username`,`password`,`name`,`sex`,`phone`,`type`,`level`,`headimg`,`cash`,`state`,`crtime`) values (1,'xxx','fff','李咏',0,'125412541',0,0,'http://cms-bucket.nosdn.127.net/2355aab3ab86470593a7fe33239a09cb20170105080207.jpg',0,0,'2019-01-08 11:23:10'),(2,'ttt','ss','李白',1,'3456798765',0,0,'http://cms-bucket.nosdn.127.net/2355aab3ab86470593a7fe33239a09cb20170105080207.jpg',0,0,'2019-01-11 16:16:47'),(3,'eee','ggg','陆游',0,'33333333333',0,0,'http://cms-bucket.nosdn.127.net/2355aab3ab86470593a7fe33239a09cb20170105080207.jpg',0,0,'2019-01-11 16:17:45'),(4,'77','88','陈坤',0,'13266945548',0,0,'http://cms-bucket.nosdn.127.net/2355aab3ab86470593a7fe33239a09cb20170105080207.jpg',0,0,'2019-01-11 16:30:57');
 
 /*Table structure for table `coach_caption` */
 
@@ -225,6 +223,23 @@ CREATE TABLE `coach_caption` (
 /*Data for the table `coach_caption` */
 
 insert  into `coach_caption`(`coach_id`,`caption_id`,`crtime`) values (1,2,'2019-01-11 16:16:16'),(2,2,'2019-01-11 16:30:31'),(3,2,'2019-01-11 16:17:53'),(4,4,'2019-01-11 16:31:10');
+
+/*Table structure for table `coach_img` */
+
+DROP TABLE IF EXISTS `coach_img`;
+
+CREATE TABLE `coach_img` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `coach_id` int(11) NOT NULL COMMENT '教练id',
+  `url` varchar(500) NOT NULL COMMENT '图片地址',
+  `comment` varchar(50) DEFAULT NULL COMMENT '备注',
+  `type` tinyint(4) NOT NULL DEFAULT '0' COMMENT '类型0身份证照1自身照2教练证照',
+  `state` tinyint(4) NOT NULL DEFAULT '0' COMMENT '状态0正常1禁用',
+  `crtime` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='教练上传的自身相关证件照片';
+
+/*Data for the table `coach_img` */
 
 /*Table structure for table `coachcaption_venue` */
 

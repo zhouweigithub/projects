@@ -78,9 +78,10 @@ namespace API.Controllers
 
         [HttpGet]
         [Route("api/BaseInfo/GetReceiverList")]
-        public IHttpActionResult GetReceiverList(int studentId)
+        public IHttpActionResult GetReceiverList(string token)
         {
-            IList<ReceiverInfo> result = DBData.GetInstance(DBTable.receiver_info).GetList<ReceiverInfo>($"student_id='{studentId}'");
+            int student_id = DBData.GetInstance(DBTable.student).GetEntity<Student>($"username='{token}'").id;
+            IList<ReceiverInfo> result = DBData.GetInstance(DBTable.receiver_info).GetList<ReceiverInfo>($"student_id='{student_id}'");
             return Json(result);
         }
 

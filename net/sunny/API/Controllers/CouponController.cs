@@ -1,4 +1,5 @@
 ﻿using Sunny.DAL;
+using Sunny.Model;
 using Sunny.Model.Custom;
 using System;
 using System.Collections.Generic;
@@ -13,17 +14,20 @@ namespace API.Controllers
     {
 
         [HttpGet]
-        public IHttpActionResult Get(int studentId)
+        [Route("api/coupon/get")]
+        public IHttpActionResult Get(string token)
         {
-            List<CouponListJson> result = CouponDAL.GetCouponList(studentId);
+            int student_id = DBData.GetInstance(DBTable.student).GetEntity<Student>($"username='{token}'").id;
+            List<CouponListJson> result = CouponDAL.GetCouponList(student_id);
             return Json(result);
         }
 
         [HttpGet]
         [Route("api/coupon/GetDefault")]
-        public IHttpActionResult Get(int studentId, int categoryId)
+        public IHttpActionResult Get(string token, int categoryId)
         {
-            CouponListJson result = CouponDAL.GetCouponDefaultOfStudent(studentId, categoryId);
+            int student_id = DBData.GetInstance(DBTable.student).GetEntity<Student>($"username='{token}'").id;
+            CouponListJson result = CouponDAL.GetCouponDefaultOfStudent(student_id, categoryId);
             return Json(result);
         }
 

@@ -16,9 +16,10 @@ namespace API.Controllers
 
         [HttpGet]
         [Route("api/order/isbought")]
-        public IHttpActionResult IsBought(int studentid, int productId)
+        public IHttpActionResult IsBought(string token, int productId)
         {
-            int count = DBData.GetInstance(DBTable.course).GetCount($"student_id='{studentid}' and product_id='{productId}'");
+            int student_id = DBData.GetInstance(DBTable.student).GetEntity<Student>($"username='{token}'").id;
+            int count = DBData.GetInstance(DBTable.course).GetCount($"student_id='{student_id}' and product_id='{productId}'");
             return Json(new { result = count > 0 });
         }
 
@@ -32,9 +33,10 @@ namespace API.Controllers
 
         [HttpGet]
         [Route("api/order/getlist")]
-        public IHttpActionResult GetOrderList(int studentId)
+        public IHttpActionResult GetOrderList(string token)
         {
-            List<OrderJson> result = OrderBLL.GetOrderInfo(studentId);
+            int student_id = DBData.GetInstance(DBTable.student).GetEntity<Student>($"username='{token}'").id;
+            List<OrderJson> result = OrderBLL.GetOrderInfo(student_id);
             return Json(result);
         }
 

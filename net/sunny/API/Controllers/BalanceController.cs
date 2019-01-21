@@ -12,10 +12,24 @@ namespace Sunny.API.Controllers
 {
     public class BalanceController : ApiController
     {
+
+        /// <summary>
+        /// 余额记录
+        /// </summary>
+        /// <param name="token"></param>
+        /// <param name="type">0学员1教练</param>
+        /// <returns></returns>
         [HttpGet]
-        public IHttpActionResult Get(int userid)
+        [Route("api/balance/get")]
+        public IHttpActionResult Get(string token, int type)
         {
-            string where = $"crtime>='{DateTime.Now.AddMonths(-3).ToString("yyyy-MM-dd")}'";
+            int userid = 0;
+            if (type == 0)
+                userid = DBData.GetInstance(DBTable.student).GetEntity<Student>($"username='{token}'").id;
+            else
+                userid = DBData.GetInstance(DBTable.coach).GetEntity<Coach>($"username='{token}'").id;
+
+            string where = $"crtime>='{DateTime.Now.AddMonths(-3).ToString("yyyy-MM-dd")}' and user_id='{userid}' and user_type='{type}'";
             IList<PayRecord> records = DBData.GetInstance(DBTable.pay_record).GetList<PayRecord>(where);
             List<PayRecordJson> result = new List<PayRecordJson>();
             foreach (PayRecord item in records)

@@ -53,21 +53,6 @@ namespace Sunny.Model
         [TableField]
         public string headimg { get; set; }
         /// <summary>
-        /// 自身照片
-        /// </summary>
-        [TableField]
-        public string self_img { get; set; }
-        /// <summary>
-        /// 身份证照片
-        /// </summary>
-        [TableField]
-        public string idcard_img { get; set; }
-        /// <summary>
-        /// 教练证照片
-        /// </summary>
-        [TableField]
-        public string coaching_card_img { get; set; }
-        /// <summary>
         /// 账户余额
         /// </summary>
         [TableField]

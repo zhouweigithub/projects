@@ -15,6 +15,7 @@ namespace API.Controllers
     {
 
         [HttpGet]
+        [Route("api/product/get")]
         public IHttpActionResult Get(int id)
         {
             CourseInfoJson result = CourseBLL.GetCourseInfo(id);

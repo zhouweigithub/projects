@@ -192,5 +192,9 @@ namespace Sunny.DAL
         /// 热门课程
         /// </summary>
         public static readonly string hot_course = "hot_course";
+        /// <summary>
+        /// 教练上传的自身相关证件照片
+        /// </summary>
+        public static readonly string coach_img = "coach_img";
     }
 }

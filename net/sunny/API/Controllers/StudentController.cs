@@ -15,25 +15,25 @@ namespace API.Controllers
 
         [HttpGet]
         [Route("api/student/get")]
-        public IHttpActionResult GetById(int id)
+        public IHttpActionResult GetById(string token)
         {
-            Student result = DBData.GetInstance(DBTable.student).GetEntityByKey<Student>(id);
+            Student result = DBData.GetInstance(DBTable.student).GetEntity<Student>($"username='{token}'");
             result.password = string.Empty;
             return Json(result);
         }
 
         [HttpGet]
         [Route("api/student/isexist")]
-        public IHttpActionResult IsExist(string username)
+        public IHttpActionResult IsExist(string token)
         {
             ResponseResult result = null;
-            if (string.IsNullOrWhiteSpace(username))
+            if (string.IsNullOrWhiteSpace(token))
             {
                 result = new ResponseResult(-1, "参数不全");
             }
             else
             {
-                int serverCount = DBData.GetInstance(DBTable.student).GetCount($"username='{username}'");
+                int serverCount = DBData.GetInstance(DBTable.student).GetCount($"username='{token}'");
                 if (serverCount == 0)
                     result = new ResponseResult(0, "ok", false);
                 else

@@ -27,6 +27,21 @@ namespace Sunny.Common
     }
 
     /// <summary>
+    /// 上传文件的分类
+    /// </summary>
+    public enum UploadType
+    {
+        /// <summary>
+        /// 教练上传身份证教练证书等
+        /// </summary>
+        CoachImg,
+        /// <summary>
+        /// 教练上课后上传教学图片和视频
+        /// </summary>
+        CoachComment,
+    }
+
+    /// <summary>
     /// 用户类型
     /// </summary>
     public enum UserType
