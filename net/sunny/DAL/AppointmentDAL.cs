@@ -31,6 +31,21 @@ WHERE a.student_id='1' AND b.start_time>NOW()
 ";
 
         /// <summary>
+        /// 获取1小时后，可以接受之前被限定预约请求的教练信息
+        /// </summary>
+        private static readonly string getCoachInfoCouldRecieveAppointmentSql = @"
+SELECT g.id,g.phone FROM booking_coach_queue a
+INNER JOIN course b ON a.course_id=b.id
+INNER JOIN coachcaption_venue c ON b.venue_id=c.venue_id
+INNER JOIN coach_caption d ON c.coach_id=d.caption_id
+INNER JOIN booking_student f ON a.course_id=f.course_id AND f.state=0 AND f.start_time>NOW()
+INNER JOIN class e ON !(d.coach_id=e.coach_id AND b.venue_id=e.venue_id AND e.start_time=f.start_time)
+INNER JOIN coach g ON d.coach_id=g.id
+WHERE DATE_FORMAT(a.end_time,'%Y-%m-%d %H:%i')=DATE_FORMAT(NOW(),'%Y-%m-%d %H:%i')
+GROUP BY g.id
+";
+
+        /// <summary>
         /// 获取预约页面的课程信息（两个参数同时>0时，能取到具体某一预约详情）
         /// </summary>
         /// <param name="studentId"></param>
@@ -90,6 +105,33 @@ WHERE a.student_id='1' AND b.start_time>NOW()
 
             return new List<Class>();
         }
+
+        /// <summary>
+        /// 获取1小时后，可以接受之前被限定预约请求的教练信息
+        /// </summary>
+        /// <returns></returns>
+        public static List<Coach> GetCoachInfoCouldRecieveAppointment()
+        {
+            try
+            {
+                using (DBHelper dbhelper = new DBHelper())
+                {
+                    DataTable dt = dbhelper.ExecuteDataTable(string.Format(getCoachInfoCouldRecieveAppointmentSql));
+
+                    if (dt != null && dt.Rows.Count > 0)
+                    {
+                        return dt.ToList<Coach>();
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                Util.Log.LogUtil.Write("GetCoachInfoCouldRecieveAppointment 出错：" + ex, Util.Log.LogType.Error);
+            }
+
+            return new List<Coach>();
+        }
+
 
 
     }

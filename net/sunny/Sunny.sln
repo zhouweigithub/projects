@@ -15,6 +15,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Common", "Common\Common.csp
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "API", "API\API.csproj", "{42E5721F-F577-43D5-AC9B-DBD40FE85092}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Service", "Service\Service.csproj", "{B13DBA31-1B14-42CB-8C62-A4B10CDBE610}"
+EndProject
 Global
 	GlobalSection(SubversionScc) = preSolution
 		Svn-Managed = True
@@ -49,12 +51,16 @@ Global
 		{42E5721F-F577-43D5-AC9B-DBD40FE85092}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{42E5721F-F577-43D5-AC9B-DBD40FE85092}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{42E5721F-F577-43D5-AC9B-DBD40FE85092}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B13DBA31-1B14-42CB-8C62-A4B10CDBE610}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B13DBA31-1B14-42CB-8C62-A4B10CDBE610}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B13DBA31-1B14-42CB-8C62-A4B10CDBE610}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B13DBA31-1B14-42CB-8C62-A4B10CDBE610}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
-		VisualSVNWorkingCopyRoot = .
 		SolutionGuid = {9FE08E48-F3DD-4F70-8A1A-FCB83562BB24}
+		VisualSVNWorkingCopyRoot = .
 	EndGlobalSection
 EndGlobal

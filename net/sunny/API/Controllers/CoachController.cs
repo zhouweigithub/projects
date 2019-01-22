@@ -50,8 +50,8 @@ namespace API.Controllers
         {
             ResponseResult result = null;
 
-            if (string.IsNullOrWhiteSpace(data.username) || string.IsNullOrWhiteSpace(data.password) || string.IsNullOrWhiteSpace(data.phone)
-                || string.IsNullOrWhiteSpace(data.CaptionPhone) || string.IsNullOrWhiteSpace(data.SmsVerificationCode))
+            if (string.IsNullOrWhiteSpace(data.username) || string.IsNullOrWhiteSpace(data.phone)
+                || string.IsNullOrWhiteSpace(data.CaptionPhone))
             {
                 result = new ResponseResult(-1, " 参数不全");
             }
@@ -66,10 +66,18 @@ namespace API.Controllers
                 }
                 else
                 {
-                    int insertCount = DBData.GetInstance(DBTable.coach).Add(data);
-                    int code = insertCount > 0 ? 0 : -1;
-                    string msg = insertCount > 0 ? "ok" : "fail";
-                    result = new ResponseResult(code, msg);
+                    //验证教练手机号
+                    if (CoachDAL.IsCaptionPhoneExist(data.CaptionPhone))
+                    {
+                        int insertCount = DBData.GetInstance(DBTable.coach).Add(data);
+                        int code = insertCount > 0 ? 0 : -1;
+                        string msg = insertCount > 0 ? "ok" : "fail";
+                        result = new ResponseResult(code, msg);
+                    }
+                    else
+                    {
+                        result = new ResponseResult(-1, "教练队长手机号不正确");
+                    }
                 }
             }
 

@@ -49,8 +49,8 @@ namespace API.Controllers
         {
             ResponseResult result = null;
 
-            if (string.IsNullOrWhiteSpace(data.username) || string.IsNullOrWhiteSpace(data.password) || string.IsNullOrWhiteSpace(data.phone)
-                || string.IsNullOrWhiteSpace(data.Invitationcode) || string.IsNullOrWhiteSpace(data.SmsVerificationCode))
+            if (string.IsNullOrWhiteSpace(data.username) || string.IsNullOrWhiteSpace(data.phone)
+                || string.IsNullOrWhiteSpace(data.Invitationcode))
             {
                 result = new ResponseResult(-1, " 参数不全");
             }
@@ -68,18 +68,18 @@ namespace API.Controllers
                     bool isInvitationCodeExist = DBData.GetInstance(DBTable.student).GetCount($"phone='{data.Invitationcode}'") > 0;
                     if (isInvitationCodeExist)
                     {
-                        string smsServerCode = CommonBLL.GetSmsVerificationCodeFromCache(Sunny.Common.SmsVerificationCodeTypeEnum.StudentRegister, data.phone);
-                        if (smsServerCode == data.SmsVerificationCode)
-                        {
+                        //string smsServerCode = CommonBLL.GetSmsVerificationCodeFromCache(Sunny.Common.SmsVerificationCodeTypeEnum.StudentRegister, data.phone);
+                        //if (smsServerCode == data.SmsVerificationCode)
+                        //{
                             bool isAddOk = StudentDAL.AddStudent(data);
                             int code = isAddOk ? 0 : -1;
                             string msg = isAddOk ? "ok" : "fail";
                             result = new ResponseResult(code, msg);
-                        }
-                        else
-                        {
-                            result = new ResponseResult(-1, "短信验证码不正确");
-                        }
+                        //}
+                        //else
+                        //{
+                        //    result = new ResponseResult(-1, "短信验证码不正确");
+                        //}
                     }
                     else
                     {

@@ -28,21 +28,29 @@ namespace Sunny.BLL.API
         //    return ClassDAL.InsertClassData(data: data);
         //}
 
+        /// <summary>
+        /// 教练结束上课，更新上课的状态和上课的学生的状态
+        /// </summary>
+        /// <param name="classId"></param>
+        /// <returns></returns>
         public static bool CoachCompleteClass(int classId)
         {
             Dictionary<string, object> fieldValueDic = new Dictionary<string, object>();
             fieldValueDic.Add("state", 1);
+            //更新课程状态
             int count = DBData.GetInstance(DBTable.class_).UpdateByKey(fieldValueDic, classId);
+            //更新学生上课状态
+            int count2 = DBData.GetInstance(DBTable.class_student).Update(fieldValueDic, $"class_id='{classId}'");
             return count > 0;
         }
 
         /// <summary>
         /// 教练添加课后的评论
         /// </summary>
-        /// <param name="classId"></param>
-        /// <param name="commentString"></param>
-        /// <param name="images"></param>
-        /// <param name="videos"></param>
+        /// <param name="classId">上课的id</param>
+        /// <param name="commentString">评论文本</param>
+        /// <param name="images">上课图片集</param>
+        /// <param name="videos">上课视频集</param>
         /// <returns></returns>
         public static bool CoachAddClassComment(int classId, string commentString, List<string> images, List<string> videos)
         {
