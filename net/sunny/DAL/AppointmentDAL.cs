@@ -1,5 +1,6 @@
 ﻿using Sunny.Model;
 using Sunny.Model.Custom;
+using Sunny.Model.Response;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -24,10 +25,23 @@ WHERE 1=1 {0}
 GROUP BY a.id
 ";
 
-        private static readonly string getAppointmentedInfoSql = @"
+        /// <summary>
+        /// 取学员已预约过的课程信息
+        /// </summary>
+        private static readonly string getStudentAppointmentedClassInfoSql = @"
 SELECT b.* FROM class_student a
 INNER JOIN class b ON a.class_id=b.id 
-WHERE a.student_id='1' AND b.start_time>NOW()
+WHERE a.student_id='{0}' AND b.start_time>NOW()
+";
+
+        /// <summary>
+        /// 取教练已预约过的课程信息
+        /// </summary>
+        private static readonly string getCoachAppointmentedClassInfoSql = @"
+SELECT a.*,IF(a.max_count>COUNT(1),FALSE,TRUE)isfull FROM class a
+INNER JOIN class_student b ON a.id=b.class_id
+WHERE a.coach_id='{0}' AND a.start_time>NOW()
+GROUP BY a.id
 ";
 
         /// <summary>
@@ -41,7 +55,7 @@ INNER JOIN coach_caption d ON c.coach_id=d.caption_id
 INNER JOIN booking_student f ON a.course_id=f.course_id AND f.state=0 AND f.start_time>NOW()
 INNER JOIN class e ON !(d.coach_id=e.coach_id AND b.venue_id=e.venue_id AND e.start_time=f.start_time)
 INNER JOIN coach g ON d.coach_id=g.id
-WHERE DATE_FORMAT(a.end_time,'%Y-%m-%d %H:%i')=DATE_FORMAT(NOW(),'%Y-%m-%d %H:%i')
+WHERE DATE_FORMAT(a.end_time,'%Y-%m-%d %H:%i')='{0}'
 GROUP BY g.id
 ";
 
@@ -82,15 +96,15 @@ GROUP BY g.id
         /// <summary>
         /// 获取时间还没到的上课记录
         /// </summary>
-        /// <param name="studentId"></param>
+        /// <param name="studentId">学生id</param>
         /// <returns></returns>
-        public static List<Class> GetAppointmentedInfo(int studentId)
+        public static List<Class> GetStudentAppointmentedInfo(int studentId)
         {
             try
             {
                 using (DBHelper dbhelper = new DBHelper())
                 {
-                    DataTable dt = dbhelper.ExecuteDataTable(string.Format(getAppointmentedInfoSql, studentId));
+                    DataTable dt = dbhelper.ExecuteDataTable(string.Format(getStudentAppointmentedClassInfoSql, studentId));
 
                     if (dt != null && dt.Rows.Count > 0)
                     {
@@ -107,16 +121,44 @@ GROUP BY g.id
         }
 
         /// <summary>
-        /// 获取1小时后，可以接受之前被限定预约请求的教练信息
+        /// 取教练已预约好的课程信息
         /// </summary>
+        /// <param name="coachId">教练id</param>
         /// <returns></returns>
-        public static List<Coach> GetCoachInfoCouldRecieveAppointment()
+        public static List<CoachAppointedClassJson> GetCoachAppointmentedClassInfo(int coachId)
         {
             try
             {
                 using (DBHelper dbhelper = new DBHelper())
                 {
-                    DataTable dt = dbhelper.ExecuteDataTable(string.Format(getCoachInfoCouldRecieveAppointmentSql));
+                    DataTable dt = dbhelper.ExecuteDataTable(string.Format(getCoachAppointmentedClassInfoSql, coachId));
+
+                    if (dt != null && dt.Rows.Count > 0)
+                    {
+                        return dt.ToList<CoachAppointedClassJson>();
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                Util.Log.LogUtil.Write("GetAppointmentedInfo 出错：" + ex, Util.Log.LogType.Error);
+            }
+
+            return new List<CoachAppointedClassJson>();
+        }
+
+
+        /// <summary>
+        /// 获取截止时间后，可以接受之前被限定预约请求的教练信息
+        /// </summary>
+        /// <returns></returns>
+        public static List<Coach> GetCoachInfoCouldRecieveAppointment(string time)
+        {
+            try
+            {
+                using (DBHelper dbhelper = new DBHelper())
+                {
+                    DataTable dt = dbhelper.ExecuteDataTable(string.Format(getCoachInfoCouldRecieveAppointmentSql, time));
 
                     if (dt != null && dt.Rows.Count > 0)
                     {

@@ -71,7 +71,7 @@ namespace Sunny.DAL
             InstanceList.Add("coupon_history", new BaseQuery("coupon_history", "id", "id", false));
             InstanceList.Add("cashback_history", new BaseQuery("cashback_history", "id", "id", false));
             InstanceList.Add("pay_record", new BaseQuery("pay_record", "id", "id", false));
-            InstanceList.Add("site_info", new BaseQuery("site_info", "key", "key", false));
+            InstanceList.Add("site_info", new BaseQuery("site_info", "`key`", "`key`", false));
             InstanceList.Add("hot_course", new BaseQuery("hot_course", "product_id", "product_id", false));
             InstanceList.Add("coach_img", new BaseQuery("coach_img", "id", "id", false));
         }
@@ -89,6 +89,7 @@ namespace Sunny.DAL
             }
             else
             {
+                Util.Log.LogUtil.Write($"{tableName}表未创建数据库实例", Util.Log.LogType.Error);
                 return null;
             }
         }

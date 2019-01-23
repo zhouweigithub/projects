@@ -57,6 +57,7 @@
     <Compile Include="Custom\CustCoupon.cs" />
     <Compile Include="Custom\CustWXLoginResult.cs" />
     <Compile Include="HotCourse.cs" />
+    <Compile Include="Response\CoachAppointedClassJson.cs" />
     <Compile Include="Response\HomePageJson.cs" />
     <Compile Include="Response\MallPageJson.cs" />
     <Compile Include="Response\PayRecordJson.cs" />

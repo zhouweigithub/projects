@@ -18,6 +18,8 @@ namespace Sunny.Service
             AppDomain.CurrentDomain.ProcessExit += CurrentDomain_ProcessExit;
             LogWebConfigData();
 
+            new AppointeBLL();
+
             while (true)
             {
                 System.Threading.Thread.Sleep(60 * 1000);

@@ -46,6 +46,7 @@ limit {1}
         private static readonly string insertClassSql = @"INSERT IGNORE INTO class (product_id,coach_id,venue_id,hour,max_count,start_time,end_time,state,rate)
 VALUES(@product_id,@coach_id,@venue_id,@hour,@max_count,@start_time,@end_time,0,0);";
         private static readonly string insertClassStudent = "INSERT INTO class_student (class_id,student_id,state) VALUES('{0}','{1}','0') ;";
+        private static readonly string getClassIdOfCoachTime = "SELECT id FROM class WHERE coach_id={0} AND start_time='{1}'";
 
         /// <summary>
         /// 获取教练可接单的预约信息
@@ -121,15 +122,8 @@ WHERE g.id='{0}' ORDER BY a.crtime DESC";
         {
             try
             {
-                //string where = GetWhereString(studentId, coachId, state);
                 using (DBHelper dbhelper = new DBHelper())
                 {
-                    //MySqlParameter[] commandParameters = new MySqlParameter[] {
-                    //    new MySqlParameter("@studentId", studentId),
-                    //    new MySqlParameter("@coachId", coachId),
-                    //    new MySqlParameter("@state", state),
-                    //};
-
                     DataTable dt = dbhelper.ExecuteDataTable(string.Format(getClassListOfCoachSql, coachId, state));
 
                     if (dt != null && dt.Rows.Count > 0)
@@ -242,7 +236,7 @@ WHERE g.id='{0}' ORDER BY a.crtime DESC";
                     //插入Class表数据
                     int count = dbhelper.ExecuteNonQueryParams(insertClassSql, paras);
                     //获取刚插入的id
-                    int newId = dbhelper.ExecuteScalarInt(Common.Const.SELECT_LAST_INSERT_ID_SQL);
+                    int newId = dbhelper.ExecuteScalarInt(string.Format(getClassIdOfCoachTime, data.coach_id, data.start_time.ToString("yyyy-MM-dd HH")));
                     //向课程对应的学生表里插入数据 
                     int countStudent = dbhelper.ExecuteNonQuery(string.Format(insertClassStudent, newId, studentId));
 

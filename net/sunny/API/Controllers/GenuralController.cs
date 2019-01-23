@@ -75,7 +75,7 @@ namespace Sunny.API.Controllers
         /// </summary>
         /// <param name="code"></param>
         /// <returns></returns>
-        [HttpPost]
+        [HttpGet]
         [Route("api/genural/getopenid")]
         public IHttpActionResult GetOpenId(string code)
         {

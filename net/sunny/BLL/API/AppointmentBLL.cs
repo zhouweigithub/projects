@@ -13,6 +13,8 @@ namespace Sunny.BLL.API
     /// </summary>
     public class AppointmentBLL
     {
+        private static readonly object lockObject = new object();
+
         /// <summary>
         /// 用户发出预约请求
         /// </summary>
@@ -53,31 +55,62 @@ namespace Sunny.BLL.API
             return false;
         }
 
+
+
         /// <summary>
         /// 教练接收预约
         /// </summary>
-        /// <param name="bookingId"></param>
-        /// <param name="coachId"></param>
+        /// <param name="bookingId">预约id</param>
+        /// <param name="coachId">教练id</param>
+        /// <param name="startTime">教练设定的上课开始时间</param>
+        /// <param name="endTime">教练设定的上课结束时间</param>
+        /// <param name="msg">返回的错误信息</param>
         /// <returns></returns>
-        public static bool ReceiveAppointment(int bookingId, int coachId)
+        public static bool ReceiveAppointment(int bookingId, int coachId, DateTime startTime, DateTime endTime, out string msg)
         {
-            BookingStudent bookingStudent = DBData.GetInstance(DBTable.booking_student).GetEntityByKey<BookingStudent>(bookingId);
-            Course course = DBData.GetInstance(DBTable.course).GetEntityByKey<Course>(bookingStudent.course_id);
-
-            bool result = ClassDAL.InsertClassData(course.student_id, new Class()
+            lock (lockObject)
             {
-                coach_id = coachId,
-                hour = course.over_hour + 1,
-                max_count = course.max_count,
-                product_id = course.product_id,
-                venue_id = course.venue_id,
-                start_time = bookingStudent.start_time,
-                end_time = bookingStudent.end_time,
-                state = 0,
-                rate = 0,
-            });
+                try
+                {
+                    BookingStudent bookingStudent = DBData.GetInstance(DBTable.booking_student).GetEntityByKey<BookingStudent>(bookingId);
+                    if (bookingStudent.state == 1)
+                    {   //当预约请求状态为1，表示已被抢单
+                        msg = "已有人接单";
+                        return false;
+                    }
 
-            return result;
+                    Course course = DBData.GetInstance(DBTable.course).GetEntityByKey<Course>(bookingStudent.course_id);
+
+                    bool result = ClassDAL.InsertClassData(course.student_id, new Class()
+                    {
+                        coach_id = coachId,
+                        hour = course.over_hour + 1,
+                        max_count = course.max_count,
+                        product_id = course.product_id,
+                        venue_id = course.venue_id,
+                        start_time = startTime,
+                        end_time = endTime,
+                        state = 0,
+                        rate = 0,
+                    });
+
+                    //更新该预约请求的状态
+                    Dictionary<string, object> fieldValues = new Dictionary<string, object>();
+                    fieldValues.Add("state", 1);
+                    DBData.GetInstance(DBTable.booking_student).UpdateByKey(fieldValues, bookingStudent.Id);
+
+                    msg = "success";
+
+                    return result;
+                }
+                catch (Exception e)
+                {
+                    msg = "服务内部错误";
+                    Util.Log.LogUtil.Write($"教练接收预约请求失败：bookingId {bookingId} coachId {coachId} startTime {startTime} endTime {endTime} \r\n {e} ", Util.Log.LogType.Error);
+                    return false;
+                }
+            }
+
         }
     }
 }

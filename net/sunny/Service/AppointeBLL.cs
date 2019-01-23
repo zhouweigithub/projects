@@ -12,13 +12,15 @@ namespace Sunny.Service
 {
     public class AppointeBLL
     {
-
+        /// <summary>
+        /// 处理预约请求
+        /// </summary>
         public AppointeBLL()
         {
             Start();
         }
 
-        public void Start()
+        private void Start()
         {
             //启动一个线程，去执行具体任务
             Task.Factory.StartNew(OneMinuteMethod);
@@ -26,22 +28,21 @@ namespace Sunny.Service
 
         private void OneMinuteMethod()
         {
+            //在限定时间内上次教练未接单的，给其他可接单的教练发送可接单的提示信息，同时删去该限定数据
             while (true)
             {
                 try
                 {
                     string currentTimeString = DateTime.Now.ToString("yyyy-MM-dd HH:mm");
-                    IList<BookingCoachQueue> bookingCoaches = DBData.GetInstance(DBTable.booking_coach_queue).GetList<BookingCoachQueue>($"end_time='{currentTimeString}'");
-
-                    List<Coach> coachs = AppointmentDAL.GetCoachInfoCouldRecieveAppointment();
+                    List<Coach> coachs = AppointmentDAL.GetCoachInfoCouldRecieveAppointment(currentTimeString);
                     foreach (Coach item in coachs)
                     {
+                        //item.phone
                         //发送可预约短信
                     }
 
                     //删除限定接单的教练队列
-                    DBData.GetInstance(DBTable.booking_coach_queue).Delete($"end_time='{currentTimeString}'");
-
+                    DBData.GetInstance(DBTable.booking_coach_queue).Delete($"end_time<='{currentTimeString}'");
                 }
                 catch (Exception ex)
                 {
