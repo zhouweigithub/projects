@@ -18,8 +18,18 @@ namespace API.Controllers
         [Route("api/coach/get")]
         public IHttpActionResult GetById(string token)
         {
-            Coach result = DBData.GetInstance(DBTable.coach).GetEntity<Coach>($"username='{token}'");
-            result.password = string.Empty;
+            ResponseResult result = null;
+            try
+            {
+                Coach coach = DBData.GetInstance(DBTable.coach).GetEntity<Coach>($"username='{token}'");
+                //result.password = string.Empty;
+                result = new ResponseResult(0, "ok", coach);
+            }
+            catch (Exception e)
+            {
+                Util.Log.LogUtil.Write($"api/coach/GetById 出错 token {token} \r\n {e}", Util.Log.LogType.Error);
+                result = new ResponseResult(-1, "服务内部错误", null);
+            }
             return Json(result);
         }
 
@@ -35,10 +45,7 @@ namespace API.Controllers
             else
             {
                 int serverCount = DBData.GetInstance(DBTable.coach).GetCount($"username='{token}'");
-                if (serverCount == 0)
-                    result = new ResponseResult(0, "ok", false);
-                else
-                    result = new ResponseResult(0, "ok", true);
+                result = new ResponseResult(0, "ok", serverCount > 0);
             }
 
             return Json(result);

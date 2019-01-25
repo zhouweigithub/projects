@@ -196,5 +196,9 @@ namespace Sunny.DAL
         /// 教练上传的自身相关证件照片
         /// </summary>
         public static readonly string coach_img = "coach_img";
+        /// <summary>
+        /// 课程的价格
+        /// </summary>
+        public static readonly string coruse_price = "coruse_price";
     }
 }

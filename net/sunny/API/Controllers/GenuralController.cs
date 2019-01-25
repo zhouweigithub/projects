@@ -24,7 +24,17 @@ namespace Sunny.API.Controllers
         [Route("api/genural/homepage")]
         public IHttpActionResult GetHomePageDatas()
         {
-            HomePageJson result = CourseBLL.GetHomePageDatas();
+            ResponseResult result = null;
+            try
+            {
+                HomePageJson list = CourseBLL.GetHomePageDatas();
+                result = new ResponseResult(0, "ok", list);
+            }
+            catch (Exception e)
+            {
+                Util.Log.LogUtil.Write($"api/genural/homepage 出错 \r\n {e}", Util.Log.LogType.Error);
+                result = new ResponseResult(-1, "服务内部错误", null);
+            }
             return Json(result);
         }
 
@@ -36,7 +46,17 @@ namespace Sunny.API.Controllers
         [Route("api/genural/mallpage")]
         public IHttpActionResult GetMallPageDatas()
         {
-            MallPageJson result = CourseBLL.GetMallPageDatas();
+            ResponseResult result = null;
+            try
+            {
+                MallPageJson list = CourseBLL.GetMallPageDatas();
+                result = new ResponseResult(0, "ok", list);
+            }
+            catch (Exception e)
+            {
+                Util.Log.LogUtil.Write($"api/genural/mallpage 出错 \r\n {e}", Util.Log.LogType.Error);
+                result = new ResponseResult(-1, "服务内部错误", null);
+            }
             return Json(result);
         }
 
@@ -50,8 +70,18 @@ namespace Sunny.API.Controllers
         [Route("api/genural/withdrawcoach")]
         public IHttpActionResult WithdrawCoach(string token, decimal cash)
         {
-            int coach_id = DBData.GetInstance(DBTable.coach).GetEntity<Coach>($"username='{token}'").id;
-            bool result = WithdrawBLL.Withdraw(coach_id, cash, UserType.Coach);
+            ResponseResult result = null;
+            try
+            {
+                int coach_id = DBData.GetInstance(DBTable.coach).GetEntity<Coach>($"username='{token}'").id;
+                bool list = WithdrawBLL.Withdraw(coach_id, cash, UserType.Coach);
+                result = new ResponseResult(0, "ok", list);
+            }
+            catch (Exception e)
+            {
+                Util.Log.LogUtil.Write($"api/genural/withdrawcoach 出错 token {token} cash {cash} \r\n {e}", Util.Log.LogType.Error);
+                result = new ResponseResult(-1, "服务内部错误", null);
+            }
             return Json(result);
         }
 
@@ -65,8 +95,18 @@ namespace Sunny.API.Controllers
         [Route("api/genural/withdrawstudent")]
         public IHttpActionResult WithdrawStudent(string token, decimal cash)
         {
-            int student_id = DBData.GetInstance(DBTable.student).GetEntity<Student>($"username='{token}'").id;
-            bool result = WithdrawBLL.Withdraw(student_id, cash, UserType.Student);
+            ResponseResult result = null;
+            try
+            {
+                int student_id = DBData.GetInstance(DBTable.student).GetEntity<Student>($"username='{token}'").id;
+                bool list = WithdrawBLL.Withdraw(student_id, cash, UserType.Student);
+                result = new ResponseResult(0, "ok", list);
+            }
+            catch (Exception e)
+            {
+                Util.Log.LogUtil.Write($"api/genural/withdrawstudent 出错 token {token} cash {cash} \r\n {e}", Util.Log.LogType.Error);
+                result = new ResponseResult(-1, "服务内部错误", null);
+            }
             return Json(result);
         }
 
@@ -84,6 +124,9 @@ namespace Sunny.API.Controllers
             {
                 string url = $"https://api.weixin.qq.com/sns/jscode2session?appid={WebConfigData.MiniAppid}&secret={WebConfigData.MiniSecret}&js_code={code}&grant_type=authorization_code";
                 string postBack = Util.Web.WebUtil.GetWebData(url, string.Empty, Util.Web.DataCompress.NotCompress);
+
+                LogUtil.Write($"获取微信openid-url:{url} ", LogType.Debug);
+                LogUtil.Write($"获取微信openid-postBack:{postBack} ", LogType.Debug);
 
                 if (!string.IsNullOrWhiteSpace(postBack))
                 {

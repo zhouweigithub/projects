@@ -44,11 +44,11 @@ namespace Sunny.Common
         /// <summary>
         /// 小程序APPID
         /// </summary>
-        public static readonly int MiniAppid;
+        public static readonly string MiniAppid;
         /// <summary>
         /// 小程序密钥
         /// </summary>
-        public static readonly int MiniSecret;
+        public static readonly string MiniSecret;
 
         static WebConfigData()
         {
@@ -61,8 +61,8 @@ namespace Sunny.Common
                 ExtraPageMenuIds = Config.GetConfigToString("ExtraPageMenuIds");
                 IgnoreSmsCodeIp = Config.GetConfigToString("IgnoreSmsCodeIp");
                 CashbackMoney = Config.GetConfigToInt("CashbackMoney");
-                MiniAppid = Config.GetConfigToInt("MiniAppid");
-                MiniSecret = Config.GetConfigToInt("MiniSecret");
+                MiniAppid = Config.GetConfigToString("MiniAppid");
+                MiniSecret = Config.GetConfigToString("MiniSecret");
             }
             catch (Exception e)
             {

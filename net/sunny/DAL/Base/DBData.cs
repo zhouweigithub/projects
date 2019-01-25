@@ -8,6 +8,9 @@ using System.Threading.Tasks;
 
 namespace Sunny.DAL
 {
+    /// <summary>
+    /// 所有表实例的集合
+    /// </summary>
     public class DBData
     {
 
@@ -74,6 +77,7 @@ namespace Sunny.DAL
             InstanceList.Add("site_info", new BaseQuery("site_info", "`key`", "`key`", false));
             InstanceList.Add("hot_course", new BaseQuery("hot_course", "product_id", "product_id", false));
             InstanceList.Add("coach_img", new BaseQuery("coach_img", "id", "id", false));
+            InstanceList.Add("coruse_price", new BaseQuery("coruse_price", "", "", false));
         }
 
         /// <summary>

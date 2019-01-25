@@ -14,7 +14,7 @@ namespace Sunny.Model.Custom
         /// <summary>
         /// 课程id
         /// </summary>
-        public int courseid { get; set; }
+        public int product_id { get; set; }
         /// <summary>
         /// 课程名称
         /// </summary>
@@ -46,36 +46,36 @@ namespace Sunny.Model.Custom
 
     }
 
-    /// <summary>
-    /// 课程的价格信息
-    /// </summary>
-    public class CoursePriceInfoJson
-    {
-        /// <summary>
-        /// 课程id
-        /// </summary>
-        public int courseid { get; set; }
-        /// <summary>
-        /// 课程名称
-        /// </summary>
-        public string course_name { get; set; }
-        /// <summary>
-        /// 原价
-        /// </summary>
-        public decimal price { get; set; }
-        /// <summary>
-        /// 折扣金额
-        /// </summary>
-        public decimal discount_money { get; set; }
-        /// <summary>
-        /// 折扣id
-        /// </summary>
-        public int discount_id { get; set; }
-        /// <summary>
-        /// 折扣名称
-        /// </summary>
-        public string discount_name { get; set; }
+    ///// <summary>
+    ///// 课程的价格信息
+    ///// </summary>
+    //public class CoursePriceInfoJson
+    //{
+    //    /// <summary>
+    //    /// 课程id
+    //    /// </summary>
+    //    public int product_id { get; set; }
+    //    /// <summary>
+    //    /// 课程名称
+    //    /// </summary>
+    //    public string product_name { get; set; }
+    //    /// <summary>
+    //    /// 最终价格
+    //    /// </summary>
+    //    public decimal price { get; set; }
+    //    /// <summary>
+    //    /// 折扣金额
+    //    /// </summary>
+    //    public decimal discount_money { get; set; }
+    //    /// <summary>
+    //    /// 折扣id
+    //    /// </summary>
+    //    public int discount_id { get; set; }
+    //    /// <summary>
+    //    /// 折扣名称
+    //    /// </summary>
+    //    public string discount_name { get; set; }
 
-    }
+    //}
 
 }

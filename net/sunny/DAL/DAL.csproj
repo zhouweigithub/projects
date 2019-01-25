@@ -85,6 +85,7 @@
     <Compile Include="ClassDAL.cs" />
     <Compile Include="CoachDAL.cs" />
     <Compile Include="CouponDAL.cs" />
+    <Compile Include="ProductDAL.cs" />
     <Compile Include="CourseDAL.cs" />
     <Compile Include="Function\DataTableExTen.cs" />
     <Compile Include="InvitationDAL.cs" />

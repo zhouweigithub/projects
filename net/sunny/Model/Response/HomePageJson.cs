@@ -16,7 +16,7 @@ namespace Sunny.Model.Response
         public string tel_image { get; set; }
         public List<BannerJson> top_images { get; set; }
         public string introduce_image { get; set; }
-        public List<CourseListJson> courses { get; set; }
+        public List<ProductListJson> courses { get; set; }
     }
 
     /// <summary>

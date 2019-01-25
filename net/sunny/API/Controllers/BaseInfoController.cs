@@ -16,7 +16,17 @@ namespace API.Controllers
         [Route("api/BaseInfo/GetCampus")]
         public IHttpActionResult GetCampus()
         {
-            IList<Campus> result = DBData.GetInstance(DBTable.campus).GetList<Campus>("state=0");
+            ResponseResult result = null;
+            try
+            {
+                IList<Campus> list = DBData.GetInstance(DBTable.campus).GetList<Campus>("state=0");
+                result = new ResponseResult(0, "ok", list);
+            }
+            catch (Exception e)
+            {
+                Util.Log.LogUtil.Write($"api/BaseInfo/GetCampus 出错 \r\n {e}", Util.Log.LogType.Error);
+                result = new ResponseResult(-1, "服务内部错误", null);
+            }
             return Json(result);
         }
 
@@ -24,7 +34,17 @@ namespace API.Controllers
         [Route("api/BaseInfo/GetCampusDic")]
         public IHttpActionResult GetCampusDic()
         {
-            Dictionary<int, List<Venue>> result = CampusBLL.GetCampusDic();
+            ResponseResult result = null;
+            try
+            {
+                Dictionary<int, List<Venue>> list = CampusBLL.GetCampusDic();
+                result = new ResponseResult(0, "ok", list);
+            }
+            catch (Exception e)
+            {
+                Util.Log.LogUtil.Write($"api/BaseInfo/GetCampusDic 出错 \r\n {e}", Util.Log.LogType.Error);
+                result = new ResponseResult(-1, "服务内部错误", null);
+            }
             return Json(result);
         }
 
@@ -32,7 +52,17 @@ namespace API.Controllers
         [Route("api/BaseInfo/GetVenues")]
         public IHttpActionResult GetVenues()
         {
-            IList<Venue> result = DBData.GetInstance(DBTable.venue).GetList<Venue>("state=0");
+            ResponseResult result = null;
+            try
+            {
+                IList<Venue> list = DBData.GetInstance(DBTable.venue).GetList<Venue>("state=0");
+                result = new ResponseResult(0, "ok", list);
+            }
+            catch (Exception e)
+            {
+                Util.Log.LogUtil.Write($"api/BaseInfo/GetVenues 出错 \r\n {e}", Util.Log.LogType.Error);
+                result = new ResponseResult(-1, "服务内部错误", null);
+            }
             return Json(result);
         }
 
@@ -40,7 +70,17 @@ namespace API.Controllers
         [Route("api/BaseInfo/GetCourseTypes")]
         public IHttpActionResult GetCourseTypes()
         {
-            IList<CourseType> result = DBData.GetInstance(DBTable.course_type).GetList<CourseType>("state=0");
+            ResponseResult result = null;
+            try
+            {
+                IList<CourseType> list = DBData.GetInstance(DBTable.course_type).GetList<CourseType>("state=0");
+                result = new ResponseResult(0, "ok", list);
+            }
+            catch (Exception e)
+            {
+                Util.Log.LogUtil.Write($"api/BaseInfo/GetCourseTypes 出错 \r\n {e}", Util.Log.LogType.Error);
+                result = new ResponseResult(-1, "服务内部错误", null);
+            }
             return Json(result);
         }
 
@@ -48,7 +88,17 @@ namespace API.Controllers
         [Route("api/BaseInfo/GetDelivers")]
         public IHttpActionResult GetDelivers()
         {
-            IList<Deliver> result = DBData.GetInstance(DBTable.deliver).GetList<Deliver>("state=0");
+            ResponseResult result = null;
+            try
+            {
+                IList<Deliver> list = DBData.GetInstance(DBTable.deliver).GetList<Deliver>("state=0");
+                result = new ResponseResult(0, "ok", list);
+            }
+            catch (Exception e)
+            {
+                Util.Log.LogUtil.Write($"api/BaseInfo/GetDelivers 出错 \r\n {e}", Util.Log.LogType.Error);
+                result = new ResponseResult(-1, "服务内部错误", null);
+            }
             return Json(result);
         }
 
@@ -56,7 +106,17 @@ namespace API.Controllers
         [Route("api/BaseInfo/GetBanner")]
         public IHttpActionResult GetBanner(short type)
         {
-            IList<Banner> result = DBData.GetInstance(DBTable.banner).GetList<Banner>($"type='{type}' and state=0");
+            ResponseResult result = null;
+            try
+            {
+                IList<Banner> list = DBData.GetInstance(DBTable.banner).GetList<Banner>($"type='{type}' and state=0");
+                result = new ResponseResult(0, "ok", list);
+            }
+            catch (Exception e)
+            {
+                Util.Log.LogUtil.Write($"api/BaseInfo/GetBanner 出错 type {type} \r\n {e}", Util.Log.LogType.Error);
+                result = new ResponseResult(-1, "服务内部错误", null);
+            }
             return Json(result);
         }
 
@@ -64,7 +124,17 @@ namespace API.Controllers
         [Route("api/BaseInfo/GetSiteInfo")]
         public IHttpActionResult GetSiteInfo()
         {
-            IList<SiteInfo> result = DBData.GetInstance(DBTable.site_info).GetList<SiteInfo>();
+            ResponseResult result = null;
+            try
+            {
+                IList<SiteInfo> list = DBData.GetInstance(DBTable.site_info).GetList<SiteInfo>();
+                result = new ResponseResult(0, "ok", list);
+            }
+            catch (Exception e)
+            {
+                Util.Log.LogUtil.Write($"api/BaseInfo/GetSiteInfo 出错 \r\n {e}", Util.Log.LogType.Error);
+                result = new ResponseResult(-1, "服务内部错误", null);
+            }
             return Json(result);
         }
 
@@ -72,7 +142,17 @@ namespace API.Controllers
         [Route("api/BaseInfo/GetReceiver")]
         public IHttpActionResult GetReceiver(int id)
         {
-            ReceiverInfo result = DBData.GetInstance(DBTable.receiver_info).GetEntityByKey<ReceiverInfo>(id);
+            ResponseResult result = null;
+            try
+            {
+                ReceiverInfo list = DBData.GetInstance(DBTable.receiver_info).GetEntityByKey<ReceiverInfo>(id);
+                result = new ResponseResult(0, "ok", list);
+            }
+            catch (Exception e)
+            {
+                Util.Log.LogUtil.Write($"api/BaseInfo/GetReceiver 出错 id {id} \r\n {e}", Util.Log.LogType.Error);
+                result = new ResponseResult(-1, "服务内部错误", null);
+            }
             return Json(result);
         }
 
@@ -80,8 +160,18 @@ namespace API.Controllers
         [Route("api/BaseInfo/GetReceiverList")]
         public IHttpActionResult GetReceiverList(string token)
         {
-            int student_id = DBData.GetInstance(DBTable.student).GetEntity<Student>($"username='{token}'").id;
-            IList<ReceiverInfo> result = DBData.GetInstance(DBTable.receiver_info).GetList<ReceiverInfo>($"student_id='{student_id}'");
+            ResponseResult result = null;
+            try
+            {
+                int student_id = DBData.GetInstance(DBTable.student).GetEntity<Student>($"username='{token}'").id;
+                IList<ReceiverInfo> list = DBData.GetInstance(DBTable.receiver_info).GetList<ReceiverInfo>($"student_id='{student_id}'");
+                result = new ResponseResult(0, "ok", list);
+            }
+            catch (Exception e)
+            {
+                Util.Log.LogUtil.Write($"api/BaseInfo/GetReceiverList 出错 token {token} \r\n {e}", Util.Log.LogType.Error);
+                result = new ResponseResult(-1, "服务内部错误", null);
+            }
             return Json(result);
         }
 
@@ -89,16 +179,36 @@ namespace API.Controllers
         [Route("api/BaseInfo/UpdateReceiver")]
         public IHttpActionResult UpdateReceiver(ReceiverInfo info)
         {
-            int count = DBData.GetInstance(DBTable.receiver_info).UpdateByKey(info, info.id);
-            return Json(count > 0);
+            ResponseResult result = null;
+            try
+            {
+                int count = DBData.GetInstance(DBTable.receiver_info).UpdateByKey(info, info.id);
+                result = new ResponseResult(0, "ok", count > 0);
+            }
+            catch (Exception e)
+            {
+                Util.Log.LogUtil.Write($"api/BaseInfo/UpdateReceiver 出错 \r\n {e}", Util.Log.LogType.Error);
+                result = new ResponseResult(-1, "服务内部错误", null);
+            }
+            return Json(result);
         }
 
         [HttpPost]
         [Route("api/BaseInfo/DeleteReceiver")]
         public IHttpActionResult DeleteReceiver(int id)
         {
-            int count = DBData.GetInstance(DBTable.receiver_info).DeleteByKey(id);
-            return Json(count > 0);
+            ResponseResult result = null;
+            try
+            {
+                int count = DBData.GetInstance(DBTable.receiver_info).DeleteByKey(id);
+                result = new ResponseResult(0, "ok", count > 0);
+            }
+            catch (Exception e)
+            {
+                Util.Log.LogUtil.Write($"api/BaseInfo/DeleteReceiver 出错 id {id} \r\n {e}", Util.Log.LogType.Error);
+                result = new ResponseResult(-1, "服务内部错误", null);
+            }
+            return Json(result);
         }
     }
 }

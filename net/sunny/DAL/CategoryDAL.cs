@@ -16,7 +16,6 @@ namespace Sunny.DAL
 
         private static readonly string getCategoryByProductIdSql = "SELECT b.* FROM product a INNER JOIN category b ON a.category_id=b.id WHERE a.id='{0}'";
 
-
         public static Category GetCategoryByProductId(int productId)
         {
             try

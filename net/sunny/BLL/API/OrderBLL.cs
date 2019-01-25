@@ -132,7 +132,7 @@ namespace Sunny.DAL
             money = 0;
             try
             {
-                string productIds = string.Join(",", orderRequest.products.Select(a => a.prouductid));
+                string productIds = string.Join(",", orderRequest.products.Select(a => a.prouduct_id));
                 string couponIds = string.Join(",", orderRequest.coupons.Select(a => a.id));
                 Student user = DBData.GetInstance(DBTable.student).GetEntity<Student>($"username='{orderRequest.user_name}'");
                 List<CustCoupon> serverCoupons = StudentCouponDAL.GetStudentCouponList(user.id, couponIds, productIds);
@@ -161,7 +161,7 @@ namespace Sunny.DAL
         /// <param name="orderId"></param>
         private static void CreateOrderCoupons(OrderRequest orderRequest, string orderId, int userid)
         {
-            string productIds = string.Join(",", orderRequest.products.Select(a => a.prouductid));
+            string productIds = string.Join(",", orderRequest.products.Select(a => a.prouduct_id));
             string couponIds = string.Join(",", orderRequest.coupons.Select(a => a.id));
             Student user = DBData.GetInstance(DBTable.student).GetEntity<Student>($"username='{orderRequest.user_name}'");
             List<CustCoupon> coupons = StudentCouponDAL.GetStudentCouponList(user.id, couponIds, productIds);
@@ -205,7 +205,7 @@ namespace Sunny.DAL
             {
                 try
                 {
-                    CoursePriceInfoJson info = CourseDAL.GetCoursePriceInfo(item.prouductid, item.plan_code);
+                    CustProductPriceInfoJson info = GetPriceInfo(item);
                     if (info.price - info.discount_money != item.price)
                         return false;
 
@@ -234,12 +234,12 @@ namespace Sunny.DAL
             {
                 try
                 {
-                    CoursePriceInfoJson info = CourseDAL.GetCoursePriceInfo(item.prouductid, item.plan_code);
+                    CustProductPriceInfoJson info = GetPriceInfo(item);
                     DBData.GetInstance(DBTable.order_coupon).Add(new OrderDiscount()
                     {
                         order_id = orderId,
                         discount_id = info.discount_id,
-                        product_id = info.courseid,
+                        product_id = info.product_id,
                         name = info.discount_name,
                         money = info.discount_money,
                     });
@@ -267,26 +267,26 @@ namespace Sunny.DAL
             {
                 try
                 {
-                    Product product = DBData.GetInstance(DBTable.product).GetEntityByKey<Product>(item.prouductid);
-                    CustDisscount discount = DiscountDAL.GetDisscountByProductId(item.prouductid);
+                    Product product = DBData.GetInstance(DBTable.product).GetEntityByKey<Product>(item.prouduct_id);
+                    CustDisscount discount = DiscountDAL.GetDisscountByProductId(item.prouduct_id);
                     //存储订单中的商品信息
                     DBData.GetInstance(DBTable.order_coupon).Add(new OrderProduct()
                     {
                         order_id = orderId,
-                        product_id = item.prouductid,
+                        product_id = item.prouduct_id,
                         product_name = product.name,
                         count = item.count,
                         price = item.price,
                         orig_price = item.plan_price,
                         discount_amount = discount.money * item.count,
                         total_amount = item.price * item.count,
-                        venueid = item.venueid,
+                        venueid = item.venue_id,
                     });
                     //存储订单中各商品的规格信息
                     DBData.GetInstance(DBTable.order_product_specification_detail).Add(new OrderProductSpecificationDetail()
                     {
                         order_id = orderId,
-                        product_id = item.prouductid,
+                        product_id = item.prouduct_id,
                         plan_code = item.plan_code,
                         price = item.price,
                     });
@@ -314,19 +314,19 @@ namespace Sunny.DAL
             {
                 try
                 {
-                    Category category = CategoryDAL.GetCategoryByProductId(item.prouductid);
+                    Category category = CategoryDAL.GetCategoryByProductId(item.prouduct_id);
                     if (category.type == 0)
                     {
-                        Hours hour = DBData.GetInstance(DBTable.hours).GetEntityByKey<Hours>(item.prouductid);
+                        Hours hour = DBData.GetInstance(DBTable.hours).GetEntityByKey<Hours>(item.prouduct_id);
 
                         //存储订单中各商品的规格信息
                         DBData.GetInstance(DBTable.course).Add(new Course()
                         {
-                            product_id = item.prouductid,
+                            product_id = item.prouduct_id,
                             student_id = userid,
-                            venue_id = item.venueid,
+                            venue_id = item.venue_id,
                             order_id = orderId,
-                            max_count = item.max_person,
+                            max_count = item.type_id,
                             hour = hour.hour,
                             over_hour = 0,
                         });
@@ -395,6 +395,27 @@ namespace Sunny.DAL
                 }
 
                 result.Add(orderObj);
+            }
+
+            return result;
+        }
+
+        /// <summary>
+        /// 获取商品的价格和折扣信息
+        /// </summary>
+        /// <param name="productRequest"></param>
+        /// <returns></returns>
+        private static CustProductPriceInfoJson GetPriceInfo(ProductRequest productRequest)
+        {
+            CustProductPriceInfoJson result = null;
+            Category category = CategoryDAL.GetCategoryByProductId(productRequest.prouduct_id);
+            if (category.type == 0)
+            {
+                result = CourseDAL.GetCoursePriceInfo(productRequest.prouduct_id, productRequest.venue_id, productRequest.type_id);
+            }
+            else
+            {
+                result = ProductDAL.GetProductPriceInfo(productRequest.prouduct_id, productRequest.plan_code);
             }
 
             return result;

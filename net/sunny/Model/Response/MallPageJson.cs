@@ -10,7 +10,7 @@ namespace Sunny.Model.Response
     public class MallPageJson
     {
         public List<BannerJson> top_images { get; set; }
-        public List<CourseListJson> courses_jp { get; set; }
-        public List<CourseListJson> courses_rm { get; set; }
+        public List<ProductListJson> courses_jp { get; set; }
+        public List<ProductListJson> courses_rm { get; set; }
     }
 }

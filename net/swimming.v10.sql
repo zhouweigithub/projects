@@ -103,11 +103,11 @@ CREATE TABLE `category` (
   `state` tinyint(4) NOT NULL DEFAULT '0' COMMENT '状态0正常 1禁用',
   `crtime` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8 COMMENT='商品分类';
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8 COMMENT='商品分类';
 
 /*Data for the table `category` */
 
-insert  into `category`(`id`,`name`,`parent`,`type`,`state`,`crtime`) values (1,'游泳',0,0,0,'2019-01-07 15:56:42'),(2,'画画',0,1,0,'2019-01-14 14:34:58');
+insert  into `category`(`id`,`name`,`parent`,`type`,`state`,`crtime`) values (1,'游泳',0,0,0,'2019-01-07 15:56:42'),(2,'画画',0,0,0,'2019-01-14 14:34:58'),(3,'弹琴',0,0,0,'2019-01-25 20:05:26'),(4,'炒菜',0,0,0,'2019-01-25 20:05:36'),(5,'泳衣',0,1,0,'2019-01-25 20:05:45'),(6,'护具',0,1,0,'2019-01-25 20:06:04');
 
 /*Table structure for table `class` */
 
@@ -125,12 +125,13 @@ CREATE TABLE `class` (
   `state` tinyint(4) DEFAULT '0' COMMENT '0未上课 1已上课 2教练已评价',
   `rate` float DEFAULT '0' COMMENT '教练分成比例',
   `crtime` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
-  PRIMARY KEY (`id`)
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `IX_UNIQUE` (`coach_id`,`start_time`)
 ) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8 COMMENT='预约成功后的上课信息';
 
 /*Data for the table `class` */
 
-insert  into `class`(`id`,`product_id`,`coach_id`,`venue_id`,`hour`,`max_count`,`start_time`,`end_time`,`state`,`rate`,`crtime`) values (1,1,1,1,5,2,'2019-01-12 11:23:35','2019-01-12 11:23:39',0,0,'2019-01-08 11:23:43'),(2,1,1,1,4,1,'2019-01-13 16:28:35','2019-01-13 16:28:42',0,0,'2019-01-11 16:28:45'),(3,1,1,1,6,1,'2019-01-19 18:59:38','2019-01-19 19:31:23',0,0,'2019-01-11 19:30:59');
+insert  into `class`(`id`,`product_id`,`coach_id`,`venue_id`,`hour`,`max_count`,`start_time`,`end_time`,`state`,`rate`,`crtime`) values (1,1,1,1,5,2,'2019-02-12 11:00:00','2019-01-12 11:23:39',0,0,'2019-01-08 11:23:43'),(2,1,1,1,4,1,'2019-01-13 16:28:35','2019-01-13 16:28:42',0,0,'2019-01-11 16:28:45'),(3,1,1,1,6,1,'2019-01-19 18:59:38','2019-01-19 19:31:23',0,0,'2019-01-11 19:30:59');
 
 /*Table structure for table `class_comment` */
 
@@ -190,7 +191,7 @@ DROP TABLE IF EXISTS `coach`;
 CREATE TABLE `coach` (
   `id` int(11) NOT NULL AUTO_INCREMENT COMMENT '自增',
   `username` varchar(20) NOT NULL COMMENT '用户名',
-  `password` varchar(64) NOT NULL COMMENT '密码',
+  `password` varchar(64) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL COMMENT '密码',
   `name` varchar(20) DEFAULT NULL COMMENT '姓名',
   `sex` tinyint(4) DEFAULT '0' COMMENT '性别0男 1女',
   `phone` varchar(11) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '电话号码',
@@ -255,6 +256,23 @@ CREATE TABLE `coachcaption_venue` (
 /*Data for the table `coachcaption_venue` */
 
 insert  into `coachcaption_venue`(`coach_id`,`venue_id`,`crtime`) values (2,1,'2019-01-11 16:17:05'),(4,2,'2019-01-14 14:44:04');
+
+/*Table structure for table `coruse_price` */
+
+DROP TABLE IF EXISTS `coruse_price`;
+
+CREATE TABLE `coruse_price` (
+  `product_id` int(11) NOT NULL COMMENT '课程商品id',
+  `venud_id` int(11) NOT NULL COMMENT '场馆id',
+  `type_id` int(11) NOT NULL COMMENT '上课人数类型course_type.id',
+  `price` decimal(10,0) NOT NULL DEFAULT '0' COMMENT '价格',
+  `crtime` timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
+  PRIMARY KEY (`product_id`,`venud_id`,`type_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='课程商品的价格';
+
+/*Data for the table `coruse_price` */
+
+insert  into `coruse_price`(`product_id`,`venud_id`,`type_id`,`price`,`crtime`) values (1,1,1,'600','2019-01-25 20:44:46'),(1,2,1,'2','2019-01-25 17:00:01');
 
 /*Table structure for table `coupon` */
 
@@ -540,7 +558,7 @@ CREATE TABLE `product` (
 
 /*Data for the table `product` */
 
-insert  into `product`(`id`,`name`,`code`,`category_id`,`summary`,`detail_id`,`sales`,`stock`,`min_buy_count`,`max_buy_count`,`main_img`,`state`,`crtime`) values (1,'自由泳','ZYY',1,'哈哈，就是随便游啦',1,0,9999,1,9999,'http://img.zcool.cn/community/01b82e56655b2532f8754573e34730.jpg@1280w_1l_2o_100sh.jpg',0,'2019-01-07 15:56:00'),(2,'仰泳','yy',1,'就是低头游啦',2,0,9999,1,9999,'http://p.ananas.chaoxing.com/star3/origin/2069697acd73f47b875d392d7c7be876.jpg',0,'2019-01-08 10:35:14'),(3,'素描基础讲解','SMJC',2,'素描基础知识',3,0,9999,1,9999,'http://pic17.nipic.com/20111127/8831577_105726414163_2.jpg',0,'2019-01-14 14:50:35'),(4,'蛙泳','WY',1,'蛙泳基础知识',0,0,9999,1,9999,'http://pic17.nipic.com/20111127/8831577_105726414163_2.jpg',0,'2019-01-14 15:13:58'),(5,'蝶泳','DY',1,'蝶泳基础知识',0,0,9999,1,9999,'http://pic17.nipic.com/20111127/8831577_105726414163_2.jpg',0,'2019-01-14 15:14:09'),(6,'潜水','QS',1,'潜水基础知识',0,0,9999,1,9999,'http://pic17.nipic.com/20111127/8831577_105726414163_2.jpg',0,'2019-01-14 15:14:58'),(7,'狗刨','GP',1,'狗刨基础知识',0,0,9999,1,9999,'http://pic17.nipic.com/20111127/8831577_105726414163_2.jpg',0,'2019-01-14 15:15:34');
+insert  into `product`(`id`,`name`,`code`,`category_id`,`summary`,`detail_id`,`sales`,`stock`,`min_buy_count`,`max_buy_count`,`main_img`,`state`,`crtime`) values (1,'富贵鸟棉衣男外套2018冬季新款棉服男士修身韩版连帽','ZYY',5,'哈哈，就是随便游啦',1,0,9999,1,9999,'http://img.zcool.cn/community/01b82e56655b2532f8754573e34730.jpg@1280w_1l_2o_100sh.jpg',0,'2019-01-07 15:56:00'),(2,'七匹狼夹克男秋冬加厚加绒保暖外套男士立领休闲青中年','yy',6,'就是低头游啦',2,0,9999,1,9999,'http://p.ananas.chaoxing.com/star3/origin/2069697acd73f47b875d392d7c7be876.jpg',0,'2019-01-08 10:35:14'),(3,'臻杰龙牛仔外套男装夹克修身短外套秋冬季加绒加厚休闲男生','SMJC',6,'素描基础知识',3,0,9999,1,9999,'http://pic17.nipic.com/20111127/8831577_105726414163_2.jpg',0,'2019-01-14 14:50:35'),(4,'蛙泳基础蛙泳基础蛙泳基础','WY',1,'蛙泳基础知识',1,0,9999,1,9999,'http://pic17.nipic.com/20111127/8831577_105726414163_2.jpg',0,'2019-01-14 15:13:58'),(5,'蝶泳基础蝶泳基础蝶泳基础','DY',2,'蝶泳基础知识',2,0,9999,1,9999,'http://pic17.nipic.com/20111127/8831577_105726414163_2.jpg',0,'2019-01-14 15:14:09'),(6,'潜水基础潜水基础潜水基础','QS',1,'潜水基础知识',3,0,9999,1,9999,'http://pic17.nipic.com/20111127/8831577_105726414163_2.jpg',0,'2019-01-14 15:14:58'),(7,'狗刨基础狗刨基础狗刨基础','GP',1,'狗刨基础知识',1,0,9999,1,9999,'http://pic17.nipic.com/20111127/8831577_105726414163_2.jpg',0,'2019-01-14 15:15:34');
 
 /*Table structure for table `product_detail` */
 
@@ -569,11 +587,11 @@ CREATE TABLE `product_discount` (
   `state` tinyint(4) DEFAULT '0' COMMENT '状态0正常 1禁用',
   `crttime` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8 COMMENT='商品折扣信息';
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8 COMMENT='商品折扣信息';
 
 /*Data for the table `product_discount` */
 
-insert  into `product_discount`(`id`,`product_id`,`discount_id`,`start_time`,`end_time`,`state`,`crttime`) values (1,1,1,'2019-01-01 10:46:55','2019-01-16 10:47:01',0,'2019-01-08 10:47:05'),(2,2,2,'2019-01-08 14:52:30','2019-01-23 14:52:34',0,'2019-01-14 14:52:29');
+insert  into `product_discount`(`id`,`product_id`,`discount_id`,`start_time`,`end_time`,`state`,`crttime`) values (1,1,1,'2019-01-25 10:46:55','2019-01-27 10:47:01',0,'2019-01-08 10:47:05'),(2,2,2,'2019-01-08 14:52:30','2019-01-23 14:52:34',0,'2019-01-14 14:52:29'),(3,3,2,'2019-01-25 10:46:55','2019-01-27 10:47:01',0,'2019-01-08 10:47:05');
 
 /*Table structure for table `product_headimg` */
 
@@ -715,7 +733,7 @@ DROP TABLE IF EXISTS `student`;
 CREATE TABLE `student` (
   `id` int(11) NOT NULL AUTO_INCREMENT COMMENT '自增',
   `username` varchar(20) NOT NULL COMMENT '用户名',
-  `password` varchar(64) NOT NULL COMMENT '密码',
+  `password` varchar(64) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL COMMENT '密码',
   `name` varchar(20) DEFAULT NULL COMMENT '姓名',
   `sex` tinyint(4) DEFAULT '0' COMMENT '性别0男 1女',
   `phone` varchar(11) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '电话号码',

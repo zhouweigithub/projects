@@ -53,11 +53,14 @@
     <Compile Include="Appointment.cs" />
     <Compile Include="BookingStudent.cs" />
     <Compile Include="Banner.cs" />
+    <Compile Include="CorusePrice.cs" />
     <Compile Include="CoachImg.cs" />
     <Compile Include="Custom\CustCoupon.cs" />
     <Compile Include="Custom\CustWXLoginResult.cs" />
+    <Compile Include="Custom\CustProductPriceInfoJson.cs" />
     <Compile Include="HotCourse.cs" />
     <Compile Include="Response\CoachAppointedClassJson.cs" />
+    <Compile Include="Response\ProductInfoJson.cs" />
     <Compile Include="Response\HomePageJson.cs" />
     <Compile Include="Response\MallPageJson.cs" />
     <Compile Include="Response\PayRecordJson.cs" />
@@ -87,7 +90,7 @@
     <Compile Include="ProductHeadImg.cs" />
     <Compile Include="ClassComment.cs" />
     <Compile Include="Response\AppointmentCourseListJson.cs" />
-    <Compile Include="Response\CourseListJson.cs" />
+    <Compile Include="Response\ProductListJson.cs" />
     <Compile Include="Deliver.cs" />
     <Compile Include="Discount.cs" />
     <Compile Include="Order.cs" />
