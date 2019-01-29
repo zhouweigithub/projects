@@ -6,9 +6,11 @@ using System.Threading.Tasks;
 
 namespace Sunny.Model.Request
 {
-    public class TmpCoupon
+    public class AddStudentCommentRequest
     {
-        public int id;
-        public int count;
+        public int classId;
+        public string token;
+        public float marking;
+        public string comment;
     }
 }

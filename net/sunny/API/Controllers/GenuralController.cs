@@ -3,6 +3,7 @@ using Sunny.Common;
 using Sunny.DAL;
 using Sunny.Model;
 using Sunny.Model.Custom;
+using Sunny.Model.Request;
 using Sunny.Model.Response;
 using System;
 using System.Collections.Generic;
@@ -68,18 +69,18 @@ namespace Sunny.API.Controllers
         /// <returns></returns>
         [HttpPost]
         [Route("api/genural/withdrawcoach")]
-        public IHttpActionResult WithdrawCoach(string token, decimal cash)
+        public IHttpActionResult WithdrawCoach(WithdrawRequest request)
         {
             ResponseResult result = null;
             try
             {
-                int coach_id = DBData.GetInstance(DBTable.coach).GetEntity<Coach>($"username='{token}'").id;
-                bool list = WithdrawBLL.Withdraw(coach_id, cash, UserType.Coach);
+                int coach_id = DBData.GetInstance(DBTable.coach).GetEntity<Coach>($"username='{request.token}'").id;
+                bool list = WithdrawBLL.Withdraw(coach_id, request.cash, UserType.Coach);
                 result = new ResponseResult(0, "ok", list);
             }
             catch (Exception e)
             {
-                Util.Log.LogUtil.Write($"api/genural/withdrawcoach 出错 token {token} cash {cash} \r\n {e}", Util.Log.LogType.Error);
+                Util.Log.LogUtil.Write($"api/genural/withdrawcoach 出错 token {request.token} cash {request.cash} \r\n {e}", Util.Log.LogType.Error);
                 result = new ResponseResult(-1, "服务内部错误", null);
             }
             return Json(result);
@@ -93,18 +94,18 @@ namespace Sunny.API.Controllers
         /// <returns></returns>
         [HttpPost]
         [Route("api/genural/withdrawstudent")]
-        public IHttpActionResult WithdrawStudent(string token, decimal cash)
+        public IHttpActionResult WithdrawStudent(WithdrawRequest request)
         {
             ResponseResult result = null;
             try
             {
-                int student_id = DBData.GetInstance(DBTable.student).GetEntity<Student>($"username='{token}'").id;
-                bool list = WithdrawBLL.Withdraw(student_id, cash, UserType.Student);
+                int student_id = DBData.GetInstance(DBTable.student).GetEntity<Student>($"username='{request.token}'").id;
+                bool list = WithdrawBLL.Withdraw(student_id, request.cash, UserType.Student);
                 result = new ResponseResult(0, "ok", list);
             }
             catch (Exception e)
             {
-                Util.Log.LogUtil.Write($"api/genural/withdrawstudent 出错 token {token} cash {cash} \r\n {e}", Util.Log.LogType.Error);
+                Util.Log.LogUtil.Write($"api/genural/withdrawstudent 出错 token {request.token} cash {request.cash} \r\n {e}", Util.Log.LogType.Error);
                 result = new ResponseResult(-1, "服务内部错误", null);
             }
             return Json(result);

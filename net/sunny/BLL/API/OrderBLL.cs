@@ -342,10 +342,10 @@ namespace Sunny.DAL
             return true;
         }
 
-        public static List<OrderJson> GetOrderInfo(int userid)
+        public static List<OrderJson> GetOrderInfo(int userid, int state)
         {
             List<OrderJson> result = new List<OrderJson>();
-            List<CustOrderProduct> orderProductList = OrderDAL.GetOrderProductList(userid);
+            List<CustOrderProduct> orderProductList = OrderDAL.GetOrderProductList(userid, state);
             string[] orderIds = orderProductList.Select(a => a.order_id).Distinct().ToArray();
             List<CustOrderProductSpecification> specificationList = OrderDAL.GetOrderProductSpecificationList(orderIds);
             List<CustOrderCoupon> couponList = OrderDAL.GetOrderCouponList(orderIds);

@@ -4,9 +4,11 @@ using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Web.Http;
+using Sunny.BLL.API;
 using Sunny.BLL.Page;
 using Sunny.DAL;
 using Sunny.Model;
+using Sunny.Model.Response;
 
 namespace API.Controllers
 {
@@ -105,6 +107,27 @@ namespace API.Controllers
 
             return Json(result);
         }
+
+        [HttpGet]
+        [Route("api/student/invations")]
+        public IHttpActionResult InvationData(string token)
+        {
+            ResponseResult result = null;
+            try
+            {
+                int student_id = DBData.GetInstance(DBTable.student).GetEntity<Student>($"username='{token}'").id;
+                CashbackHistoryJson data = CashbackHistoryBLL.GetCashbackData(student_id);
+                result = new ResponseResult(0, "ok", data);
+            }
+            catch (Exception e)
+            {
+                Util.Log.LogUtil.Write($"api/student/invations 出错 \r\n {e}", Util.Log.LogType.Error);
+                result = new ResponseResult(-1, "服务内部错误", null);
+            }
+
+            return Json(result);
+        }
+
 
     }
 }

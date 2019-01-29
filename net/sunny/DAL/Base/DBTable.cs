@@ -200,5 +200,9 @@ namespace Sunny.DAL
         /// 课程的价格
         /// </summary>
         public static readonly string coruse_price = "coruse_price";
+        /// <summary>
+        /// 邀请关系
+        /// </summary>
+        public static readonly string invitation = "invitation";
     }
 }

@@ -19,7 +19,7 @@ b.price,b.orig_price,b.total_amount,c.name venue_name,d.name campus_name FROM `o
 INNER JOIN order_product b ON a.order_id=b.order_id
 LEFT JOIN venue c ON b.venueid=c.id
 LEFT JOIN campus d ON c.campus_id=d.id
-WHERE a.userid='{0}'
+WHERE a.userid='{0}' and a.state='{1}'
 ";
         /// <summary>
         /// 取订单中商品的规格信息
@@ -43,18 +43,20 @@ GROUP BY a.order_id,a.product_id
 UPDATE `order` SET state=1 WHERE orderid='{0}';
 INSERT INTO pay_record(order_id,money) VALUES('{0}','{1}');";
 
+
         /// <summary>
         /// 取订单和商品信息
         /// </summary>
-        /// <param name="userid"></param>
+        /// <param name="userid">用户id</param>
+        /// <param name="state">状态0未支付1已支付2已发货3已收货4已评价</param>
         /// <returns></returns>
-        public static List<CustOrderProduct> GetOrderProductList(int userid)
+        public static List<CustOrderProduct> GetOrderProductList(int userid, int state)
         {
             try
             {
                 using (DBHelper dbhelper = new DBHelper())
                 {
-                    DataTable dt = dbhelper.ExecuteDataTable(string.Format(getOrderProductList, userid));
+                    DataTable dt = dbhelper.ExecuteDataTable(string.Format(getOrderProductList, userid, state));
 
                     if (dt != null && dt.Rows.Count > 0)
                     {

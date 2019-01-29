@@ -41,7 +41,7 @@ namespace Sunny.BLL.API
                 {
                     user_id = userid,
                     money = -money,
-                    type = 0,
+                    type = 2,
                     order_id = string.Empty,
                     user_type = (short)user_type,
                     comment = "提现",

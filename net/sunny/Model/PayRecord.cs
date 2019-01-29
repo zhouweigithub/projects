@@ -34,7 +34,7 @@ namespace Sunny.Model
         [TableField]
         public decimal money { get; set; }
         /// <summary>
-        /// 类型0购买商品1返现2提现3上课结算收入4充值
+        /// 类型0购买商品1邀请返现2提现3上课结算收入4充值5注册返现
         /// </summary>
         [TableField]
         public short type { get; set; }

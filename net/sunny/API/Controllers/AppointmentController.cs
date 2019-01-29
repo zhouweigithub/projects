@@ -2,6 +2,7 @@
 using Sunny.DAL;
 using Sunny.Model;
 using Sunny.Model.Custom;
+using Sunny.Model.Request;
 using Sunny.Model.Response;
 using System;
 using System.Collections.Generic;
@@ -118,17 +119,17 @@ namespace API.Controllers
         //用户发送预约请求
         [HttpPost]
         [Route("api/appointment/SendBooking")]
-        public IHttpActionResult SendBooking(int courseId, DateTime startTime, DateTime endTime)
+        public IHttpActionResult SendBooking(SendBookingRequest request)
         {
             ResponseResult result = null;
             try
             {
-                bool isOk = AppointmentBLL.AddAppointment(courseId, startTime, endTime);
+                bool isOk = AppointmentBLL.AddAppointment(request.courseId, request.startTime, request.endTime);
                 result = new ResponseResult(0, "ok", isOk);
             }
             catch (Exception e)
             {
-                Util.Log.LogUtil.Write($"api/appointment/SendBooking 出错 courseId {courseId} startTime {startTime} endTime {endTime}  \r\n {e}", Util.Log.LogType.Error);
+                Util.Log.LogUtil.Write($"api/appointment/SendBooking 出错 courseId {request.courseId} startTime {request.startTime} endTime {request.endTime}  \r\n {e}", Util.Log.LogType.Error);
                 result = new ResponseResult(-1, "服务内部错误", null);
             }
             return Json(result);
@@ -137,18 +138,18 @@ namespace API.Controllers
         //教练接受预约
         [HttpPost]
         [Route("api/appointment/ReceiveBooking")]
-        public IHttpActionResult ReceiveBooking(int bookingId, string token, DateTime startTime, DateTime endTime)
+        public IHttpActionResult ReceiveBooking(ReceiveBookingRequest request)
         {
             ResponseResult result = null;
             try
             {
-                int coach_id = DBData.GetInstance(DBTable.coach).GetEntity<Coach>($"username='{token}'").id;
-                bool isOk = AppointmentBLL.ReceiveAppointment(bookingId, coach_id, startTime, endTime, out string msg);
+                int coach_id = DBData.GetInstance(DBTable.coach).GetEntity<Coach>($"username='{request.token}'").id;
+                bool isOk = AppointmentBLL.ReceiveAppointment(request.bookingId, coach_id, request.startTime, request.endTime, out string msg);
                 result = new ResponseResult(0, "ok", isOk);
             }
             catch (Exception e)
             {
-                Util.Log.LogUtil.Write($"api/appointment/ReceiveBooking 出错 bookingId {bookingId} startTime {startTime} endTime {endTime}  \r\n {e}", Util.Log.LogType.Error);
+                Util.Log.LogUtil.Write($"api/appointment/ReceiveBooking 出错 bookingId {request.bookingId} startTime {request.startTime} endTime {request.endTime}  \r\n {e}", Util.Log.LogType.Error);
                 result = new ResponseResult(-1, "服务内部错误", null);
             }
             return Json(result);

@@ -53,13 +53,13 @@ namespace API.Controllers
 
         [HttpGet]
         [Route("api/order/getlist")]
-        public IHttpActionResult GetOrderList(string token)
+        public IHttpActionResult GetOrderList(string token, int state)
         {
             ResponseResult result = null;
             try
             {
                 int student_id = DBData.GetInstance(DBTable.student).GetEntity<Student>($"username='{token}'").id;
-                List<OrderJson> list = OrderBLL.GetOrderInfo(student_id);
+                List<OrderJson> list = OrderBLL.GetOrderInfo(student_id,state);
                 result = new ResponseResult(0, "ok", list);
             }
             catch (Exception e)
@@ -73,17 +73,17 @@ namespace API.Controllers
 
         [HttpPost]
         [Route("api/order/paysuccess")]
-        public IHttpActionResult PaySucess(string orderId, decimal money)
+        public IHttpActionResult PaySucess(PaySucessRequest request)
         {
             ResponseResult result = null;
             try
             {
-                bool list = OrderDAL.OrderPaySuccess(orderId, money);
+                bool list = OrderDAL.OrderPaySuccess(request.orderId, request.money);
                 result = new ResponseResult(0, "ok", list);
             }
             catch (Exception e)
             {
-                Util.Log.LogUtil.Write($"api/order/paysuccess 出错 orderId {orderId} money {money} \r\n {e}", Util.Log.LogType.Error);
+                Util.Log.LogUtil.Write($"api/order/paysuccess 出错 orderId {request.orderId} money {request.money} \r\n {e}", Util.Log.LogType.Error);
                 result = new ResponseResult(-1, "服务内部错误", null);
             }
             return Json(result);
@@ -92,19 +92,19 @@ namespace API.Controllers
 
         [HttpPost]
         [Route("api/order/updatestate")]
-        public IHttpActionResult UpdateOrderState(string orderId, short state)
+        public IHttpActionResult UpdateOrderState(UpdateOrderStateRequest request)
         {
             ResponseResult result = null;
             try
             {
                 Dictionary<string, object> fieldValue = new Dictionary<string, object>();
-                fieldValue.Add("state", state);
-                int count = DBData.GetInstance(DBTable.order).UpdateByKey(fieldValue, orderId);
+                fieldValue.Add("state", request.state);
+                int count = DBData.GetInstance(DBTable.order).UpdateByKey(fieldValue, request.orderId);
                 result = new ResponseResult(0, "ok", count > 0);
             }
             catch (Exception e)
             {
-                Util.Log.LogUtil.Write($"api/order/updatestate 出错 orderId {orderId} state {state} \r\n {e}", Util.Log.LogType.Error);
+                Util.Log.LogUtil.Write($"api/order/updatestate 出错 orderId {request.orderId} state {request.state} \r\n {e}", Util.Log.LogType.Error);
                 result = new ResponseResult(-1, "服务内部错误", null);
             }
             return Json(result);

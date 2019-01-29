@@ -11,6 +11,7 @@ using Sunny.BLL.API;
 using Sunny.DAL;
 using Sunny.Model;
 using Sunny.Model.Custom;
+using Sunny.Model.Request;
 using Sunny.Model.Response;
 
 namespace API.Controllers
@@ -132,17 +133,17 @@ namespace API.Controllers
 
         [HttpPost]
         [Route("api/class/CoachAddClassComment")]
-        public IHttpActionResult CoachAddClassComment(int classId, string commentString, List<string> images, List<string> videos)
+        public IHttpActionResult CoachAddClassComment(CoachAddClassCommentRequest request)
         {
             ResponseResult result = null;
             try
             {
-                bool list = ClassBLL.CoachAddClassComment(classId, commentString, images, videos);
+                bool list = ClassBLL.CoachAddClassComment(request.classId, request.commentString, request.images, request.videos);
                 result = new ResponseResult(0, "ok", list);
             }
             catch (Exception e)
             {
-                Util.Log.LogUtil.Write($"api/class/CoachAddClassComment 出错 classId {classId} commentString {commentString} images.count {images.Count} videos.count {videos.Count} \r\n {e}", Util.Log.LogType.Error);
+                Util.Log.LogUtil.Write($"api/class/CoachAddClassComment 出错 classId {request.classId} commentString {request.commentString} images.count {request.images.Count} videos.count {request.videos.Count} \r\n {e}", Util.Log.LogType.Error);
                 result = new ResponseResult(-1, "服务内部错误", null);
             }
             return Json(result);
@@ -150,21 +151,21 @@ namespace API.Controllers
 
         [HttpPost]
         [Route("api/class/AddStudentComment")]
-        public IHttpActionResult AddStudentComment(int classId, string token, float marking, string comment)
+        public IHttpActionResult AddStudentComment(AddStudentCommentRequest request)
         {
             ResponseResult result = null;
             try
             {
-                int student_id = DBData.GetInstance(DBTable.student).GetEntity<Student>($"username='{token}'").id;
+                int student_id = DBData.GetInstance(DBTable.student).GetEntity<Student>($"username='{request.token}'").id;
                 Dictionary<string, object> fieldValueDic = new Dictionary<string, object>();
-                fieldValueDic.Add("marking", marking);
-                fieldValueDic.Add("comment", comment);
-                int count = DBData.GetInstance(DBTable.class_student).Update(fieldValueDic, $"class_id='{classId}' and student_id='{student_id}'");
+                fieldValueDic.Add("marking", request.marking);
+                fieldValueDic.Add("comment", request.comment);
+                int count = DBData.GetInstance(DBTable.class_student).Update(fieldValueDic, $"class_id='{request.classId}' and student_id='{student_id}'");
                 result = new ResponseResult(0, "ok", count > 0);
             }
             catch (Exception e)
             {
-                Util.Log.LogUtil.Write($"api/class/AddStudentComment 出错 classId {classId} token {token} marking {marking} comment {comment} \r\n {e}", Util.Log.LogType.Error);
+                Util.Log.LogUtil.Write($"api/class/AddStudentComment 出错 classId {request.classId} token {request.token} marking {request.marking} comment {request.comment} \r\n {e}", Util.Log.LogType.Error);
                 result = new ResponseResult(-1, "服务内部错误", null);
             }
             return Json(result);

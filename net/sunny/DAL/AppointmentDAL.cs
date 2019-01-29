@@ -15,7 +15,7 @@ namespace Sunny.DAL
         private static readonly string getAppointmentInfoSql = @"
 SELECT a.id courseid,b.name course_name,b.main_img,a.hour,a.over_hour,a.max_count,c.name venue_name,
 d.name campus_name,g.name coach_name,g.phone coach_phone,e.start_time,e.end_time,
-IF(a.hour=a.over_hour,'已学完',IF(ISNULL(e.product_id) OR ISNULL(f.student_id),'可预约',IF(e.state=0,'预约中','已预约')))state
+IF(a.hour=a.over_hour,'已学完',IF(ISNULL(e.product_id) AND ISNULL(f.student_id) AND ISNULL(h.course_id),'可预约',IF(e.state=0,'预约中','已预约')))state
 FROM course a
 INNER JOIN product b ON a.product_id=b.id
 INNER JOIN venue c ON a.venue_id=c.id
@@ -23,7 +23,8 @@ INNER JOIN campus d ON c.campus_id=d.id
 LEFT JOIN class e ON e.state=0 AND e.product_id=a.id
 LEFT JOIN class_student f ON a.student_id=f.student_id AND e.id=f.class_id
 LEFT JOIN coach g ON e.coach_id=g.id
-WHERE 1=1 {0}
+LEFT JOIN booking_student h ON a.id=h.course_id AND h.state=0
+WHERE h.course_id IS NULL {0}
 GROUP BY a.id
 ";
 

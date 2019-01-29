@@ -22,6 +22,22 @@
         /// 获取自动生成的主键，与插入数据的连接相同才有效
         /// </summary>
         public const string SELECT_LAST_INSERT_ID_SQL = "SELECT LAST_INSERT_ID()";
+        /// <summary>
+        /// 客服电话
+        /// </summary>
+        public const string SitePhone = "客服电话";
+        /// <summary>
+        /// 用户注册返现金额
+        /// </summary>
+        public const string RegisterBackMoney = "用户注册返现金额";
+        /// <summary>
+        /// 邀请返现金额文本
+        /// </summary>
+        public const string BackCachMoney = "邀请返现金额";
+        /// <summary>
+        /// 邀请返现金额文本
+        /// </summary>
+        public const string SecondBackCachPercent = "二级返现比例";
 
     }
 }

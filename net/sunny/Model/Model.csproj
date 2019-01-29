@@ -58,9 +58,18 @@
     <Compile Include="Custom\CustBookingNotFullTimesInfo.cs" />
     <Compile Include="Custom\CustBookingFullTimes.cs" />
     <Compile Include="Custom\CustCoupon.cs" />
+    <Compile Include="Custom\CustInvationUserInfo.cs" />
     <Compile Include="Custom\CustWXLoginResult.cs" />
     <Compile Include="Custom\CustProductPriceInfoJson.cs" />
     <Compile Include="HotCourse.cs" />
+    <Compile Include="Request\AddStudentCommentRequest.cs" />
+    <Compile Include="Request\WithdrawRequest.cs" />
+    <Compile Include="Request\CoachAddClassCommentRequest.cs" />
+    <Compile Include="Request\UpdateOrderStateRequest.cs" />
+    <Compile Include="Request\ReceiveBookingRequest.cs" />
+    <Compile Include="Request\PaySucessRequest.cs" />
+    <Compile Include="Request\SendBookingRequest.cs" />
+    <Compile Include="Response\CashbackHistoryJson.cs" />
     <Compile Include="Response\ClassCoachJson.cs" />
     <Compile Include="Response\ClassStudentJson.cs" />
     <Compile Include="Response\CoachAppointedClassJson.cs" />
@@ -85,7 +94,6 @@
     <Compile Include="Hours.cs" />
     <Compile Include="Request\OrderRequest.cs" />
     <Compile Include="Request\ProductRequest.cs" />
-    <Compile Include="Request\TmpCoupon.cs" />
     <Compile Include="Response\ClassBookingOfCoachJson.cs" />
     <Compile Include="Response\ClassCommentJson.cs" />
     <Compile Include="Response\CourseInfoJson.cs" />

@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using Sunny.DAL;
 using Sunny.Model;
 using Sunny.Model.Response;
+using Sunny.Common;
 
 namespace Sunny.BLL.API
 {
@@ -40,7 +41,7 @@ namespace Sunny.BLL.API
         {
             string where = "state=0 and type in(0,1,2)";
             IList<Banner> banners = DBData.GetInstance(DBTable.banner).GetList<Banner>(where);
-            SiteInfo phoneInfo = DBData.GetInstance(DBTable.site_info).GetEntityByKey<SiteInfo>("客服电话");
+            SiteInfo phoneInfo = DBData.GetInstance(DBTable.site_info).GetEntityByKey<SiteInfo>(Const.SitePhone);
             List<ProductListJson> courses = CourseDAL.GetCourseList(string.Empty, 0, 1, 10);
             var topImages = banners.Where(a => a.type == 0).Select(b => new BannerJson() { image = b.url }).ToList();
             var telImage = banners.Where(a => a.type == 1).Select(b => b.url).FirstOrDefault();

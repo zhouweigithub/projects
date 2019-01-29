@@ -81,6 +81,7 @@
     <Compile Include="Base\BaseQuery.cs" />
     <Compile Include="Base\DBHelper.cs" />
     <Compile Include="Base\DBOperator.cs" />
+    <Compile Include="CashbackHistoryDAL.cs" />
     <Compile Include="CategoryDAL.cs" />
     <Compile Include="ClassDAL.cs" />
     <Compile Include="CoachDAL.cs" />
