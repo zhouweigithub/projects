@@ -14,30 +14,50 @@ namespace Sunny.Model.Custom
         /// <summary>
         /// 预约id
         /// </summary>
-        public int classid { get; set; }
+        public int booking_id { get; set; }
         /// <summary>
-        /// 预约的学时
+        /// 起始时间
         /// </summary>
-        public int hour { get; set; }
+        public DateTime start_time { get; set; }
         /// <summary>
-        /// 最大教学人数
-        /// </summary>
-        public int max_count { get; set; }
-        /// <summary>
-        /// 上课的开始时间
-        /// </summary>
-        public int start_time { get; set; }
-        /// <summary>
-        /// 上课的结束时间
+        /// 结束时间
         /// </summary>
         public DateTime end_time { get; set; }
         /// <summary>
-        /// 课程名称
+        /// 第几课时
         /// </summary>
-        public string course_name { get; set; }
+        public int hour { get; set; }
         /// <summary>
-        /// 已预约的学生人数
+        /// 最大学生人数
         /// </summary>
-        public int booked_count { get; set; }
+        public int max_count { get; set; }
+        /// <summary>
+        /// 已学完的课时
+        /// </summary>
+        public int over_hour { get; set; }
+        /// <summary>
+        /// 商品id
+        /// </summary>
+        public int product_id { get; set; }
+        /// <summary>
+        /// 商品名称
+        /// </summary>
+        public string product_name { get; set; }
+        /// <summary>
+        /// 商品主图
+        /// </summary>
+        public string main_img { get; set; }
+        /// <summary>
+        /// 场馆名称
+        /// </summary>
+        public string venue_name { get; set; }
+        /// <summary>
+        /// 教练id
+        /// </summary>
+        public int coach_id { get; set; }
+        /// <summary>
+        /// 场馆id
+        /// </summary>
+        public int venue_id { get; set; }
     }
 }

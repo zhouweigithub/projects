@@ -21,10 +21,6 @@ namespace Sunny.Model.Request
         /// </summary>
         public TmpCoupon[] coupons { get; set; }
         /// <summary>
-        /// 使用优惠券减掉的金额
-        /// </summary>
-        public decimal coupon_money { get; set; }
-        /// <summary>
         /// 收货人信息
         /// </summary>
         public int receiverid { get; set; }

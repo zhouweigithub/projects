@@ -19,10 +19,6 @@ namespace Sunny.Model.Request
         /// </summary>
         public decimal plan_price { get; set; }
         /// <summary>
-        /// 折扣id
-        /// </summary>
-        public int discountids { get; set; }
-        /// <summary>
         /// 折扣后价格
         /// </summary>
         public decimal price { get; set; }

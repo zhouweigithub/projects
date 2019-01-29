@@ -38,6 +38,6 @@ namespace Sunny.Model.Custom
         /// <summary>
         /// 状态
         /// </summary>
-        public short status { get; set; }
+        public string status { get; set; }
     }
 }

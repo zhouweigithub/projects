@@ -11,6 +11,7 @@ using Sunny.BLL.API;
 using Sunny.DAL;
 using Sunny.Model;
 using Sunny.Model.Custom;
+using Sunny.Model.Response;
 
 namespace API.Controllers
 {
@@ -37,18 +38,18 @@ namespace API.Controllers
 
         [HttpGet]
         [Route("api/class/bystudent")]
-        public IHttpActionResult GetByStudent(string token, short state)
+        public IHttpActionResult GetByStudent(string token)
         {
             ResponseResult result = null;
             try
             {
                 int student_id = DBData.GetInstance(DBTable.student).GetEntity<Student>($"username='{token}'").id;
-                List<Class> list = ClassDAL.GetClassByStudentId(student_id, state);
+                List<ClassStudentJson> list = ClassDAL.GetClassByStudentId(student_id);
                 result = new ResponseResult(0, "ok", list);
             }
             catch (Exception e)
             {
-                Util.Log.LogUtil.Write($"api/class/bystudent 出错 token {token} state {state} \r\n {e}", Util.Log.LogType.Error);
+                Util.Log.LogUtil.Write($"api/class/bystudent 出错 token {token} \r\n {e}", Util.Log.LogType.Error);
                 result = new ResponseResult(-1, "服务内部错误", null);
             }
             return Json(result);
@@ -56,18 +57,18 @@ namespace API.Controllers
 
         [HttpGet]
         [Route("api/class/bycoach")]
-        public IHttpActionResult GetByCoach(string token, short state)
+        public IHttpActionResult GetByCoach(string token)
         {
             ResponseResult result = null;
             try
             {
                 int coach_id = DBData.GetInstance(DBTable.coach).GetEntity<Coach>($"username='{token}'").id;
-                List<Class> list = ClassDAL.GetClassByCoachId(coach_id, state);
+                List<ClassCoachJson> list = ClassDAL.GetClassByCoachId(coach_id);
                 result = new ResponseResult(0, "ok", list);
             }
             catch (Exception e)
             {
-                Util.Log.LogUtil.Write($"api/class/GetByCoach 出错 token {token} state {state} \r\n {e}", Util.Log.LogType.Error);
+                Util.Log.LogUtil.Write($"api/class/GetByCoach 出错 token {token} \r\n {e}", Util.Log.LogType.Error);
                 result = new ResponseResult(-1, "服务内部错误", null);
             }
             return Json(result);

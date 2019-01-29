@@ -83,6 +83,9 @@ namespace Sunny.DAL
         /// <param name="userid"></param>
         private static void UpdateBalance(OrderRequest orderRequest, string orderId, int userid)
         {
+            if (orderRequest.money == 0)
+                return;
+
             StudentDAL.AddCash(userid, -orderRequest.money);
             Student student = DBData.GetInstance(DBTable.student).GetEntityByKey<Student>(userid);
             DBData.GetInstance(DBTable.pay_record).Add(new PayRecord()
@@ -100,14 +103,13 @@ namespace Sunny.DAL
         /// <summary>
         /// 生成订单号
         /// </summary>
-        /// <param name="userid"></param>
+        /// <param name="userid">用户唯一标识</param>
         /// <returns></returns>
         private static string CreateOrderId(int userid)
         {
-            return string.Format("{0}_{1}_{2}",
-                DateTime.Now.ToString("yyyyMMddHHmmssffff") + Common.Function.GetRangeNumber(4, Common.RangeType.Number),
-                userid,
-                Common.Function.GetRangeNumber(4, Common.RangeType.Number));
+            return string.Format("{0}_{1}", "1" + userid.ToString().PadLeft(6, '0'),
+                DateTime.Now.ToString("yyyyMMddHHmmssffff") + Common.Function.GetRangeNumber(4, Common.RangeType.Number)
+            );
         }
 
         /// <summary>

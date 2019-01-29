@@ -27,8 +27,8 @@ namespace Sunny.API.Controllers
             ResponseResult result = null;
             try
             {
-                HomePageJson list = CourseBLL.GetHomePageDatas();
-                result = new ResponseResult(0, "ok", list);
+                HomePageJson obj = CourseBLL.GetHomePageDatas();
+                result = new ResponseResult(0, "ok", obj);
             }
             catch (Exception e)
             {

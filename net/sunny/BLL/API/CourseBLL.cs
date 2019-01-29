@@ -22,6 +22,7 @@ namespace Sunny.BLL.API
         {
             //课程基本信息
             CourseInfoJson courseInfo = CourseDAL.GetCourseInfo(productId);
+
             //课程评论信息
             if (courseInfo != null)
             {
@@ -42,14 +43,14 @@ namespace Sunny.BLL.API
             SiteInfo phoneInfo = DBData.GetInstance(DBTable.site_info).GetEntityByKey<SiteInfo>("客服电话");
             List<ProductListJson> courses = CourseDAL.GetCourseList(string.Empty, 0, 1, 10);
             var topImages = banners.Where(a => a.type == 0).Select(b => new BannerJson() { image = b.url }).ToList();
-            var telImage = banners.Where(a => a.type == 1).Select(b => b.url).First();
-            var introduceImage = banners.Where(a => a.type == 2).Select(b => b.url).First();
+            var telImage = banners.Where(a => a.type == 1).Select(b => b.url).FirstOrDefault();
+            var introduceImage = banners.Where(a => a.type == 2).Select(b => b.url).FirstOrDefault();
             HomePageJson result = new HomePageJson()
             {
-                tell = phoneInfo != null ? phoneInfo.value : string.Empty,
+                tel = phoneInfo != null ? phoneInfo.pvalue : string.Empty,
                 top_images = topImages,
-                tel_image = telImage,
-                introduce_image = introduceImage,
+                tel_image = telImage ?? string.Empty,
+                introduce_image = introduceImage ?? string.Empty,
                 courses = courses,
             };
             return result;

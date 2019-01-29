@@ -60,7 +60,7 @@ namespace API.Controllers
             if (string.IsNullOrWhiteSpace(data.username) || string.IsNullOrWhiteSpace(data.phone)
                 || string.IsNullOrWhiteSpace(data.CaptionPhone))
             {
-                result = new ResponseResult(-1, " 参数不全");
+                result = new ResponseResult(1, " 参数不全", null);
             }
             else
             {
@@ -69,21 +69,29 @@ namespace API.Controllers
 
                 if (serverCount > 0)
                 {   //已存在
-                    result = new ResponseResult(-1, "该账号已存在");
+                    result = new ResponseResult(2, "该账号已存在", null);
                 }
                 else
                 {
-                    //验证教练手机号
-                    if (CoachDAL.IsCaptionPhoneExist(data.CaptionPhone))
+                    bool isPhoneExist = DBData.GetInstance(DBTable.coach).GetCount($"phone='{data.phone}'") > 0;
+                    if (isPhoneExist)
                     {
-                        int insertCount = DBData.GetInstance(DBTable.coach).Add(data);
-                        int code = insertCount > 0 ? 0 : -1;
-                        string msg = insertCount > 0 ? "ok" : "fail";
-                        result = new ResponseResult(code, msg);
+                        result = new ResponseResult(3, "手机号已注册", null);
                     }
                     else
                     {
-                        result = new ResponseResult(-1, "教练队长手机号不正确");
+                        //验证教练手机号
+                        if (CoachDAL.IsCaptionPhoneExist(data.CaptionPhone))
+                        {
+                            int insertCount = DBData.GetInstance(DBTable.coach).Add(data);
+                            int code = insertCount > 0 ? 0 : 4;
+                            string msg = insertCount > 0 ? "注册成功" : "注册失败";
+                            result = new ResponseResult(code, msg, insertCount > 0);
+                        }
+                        else
+                        {
+                            result = new ResponseResult(5, "教练队长手机号不正确", null);
+                        }
                     }
                 }
             }

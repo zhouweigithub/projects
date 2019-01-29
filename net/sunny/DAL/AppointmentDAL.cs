@@ -13,16 +13,33 @@ namespace Sunny.DAL
     public class AppointmentDAL
     {
         private static readonly string getAppointmentInfoSql = @"
-SELECT a.id courseid,b.name course_name,b.main_img,a.hour,a.over_hour,a.max_count,c.name venue_name,d.name campus_name,
-IF(a.hour=a.over_hour,'已学完',IF(ISNULL(e.course_id) OR ISNULL(f.student_id),'可预约',IF(e.state=0,'预约中','已预约')))state
+SELECT a.id courseid,b.name course_name,b.main_img,a.hour,a.over_hour,a.max_count,c.name venue_name,
+d.name campus_name,g.name coach_name,g.phone coach_phone,e.start_time,e.end_time,
+IF(a.hour=a.over_hour,'已学完',IF(ISNULL(e.product_id) OR ISNULL(f.student_id),'可预约',IF(e.state=0,'预约中','已预约')))state
 FROM course a
 INNER JOIN product b ON a.product_id=b.id
 INNER JOIN venue c ON a.venue_id=c.id
 INNER JOIN campus d ON c.campus_id=d.id
-LEFT JOIN class e ON e.start_time>NOW() AND e.course_id=a.id
+LEFT JOIN class e ON e.state=0 AND e.product_id=a.id
 LEFT JOIN class_student f ON a.student_id=f.student_id AND e.id=f.class_id
+LEFT JOIN coach g ON e.coach_id=g.id
 WHERE 1=1 {0}
 GROUP BY a.id
+";
+
+        /// <summary>
+        /// 教练相关的所有预约请求
+        /// </summary>
+        private static readonly string getBookingListOfCoach = @"
+SELECT a.id booking_id,a.start_time,a.end_time,b.over_hour+1 `hour`,b.max_count,b.over_hour,b.product_id,
+c.name product_name,c.main_img,k.name venue_name,f.coach_id,k.id venue_id FROM booking_student a
+INNER JOIN course b ON a.course_id=b.id
+INNER JOIN product c ON b.product_id=c.id
+INNER JOIN coachcaption_venue d ON b.venue_id=d.venue_id
+INNER JOIN coach_caption e ON d.coach_id=e.caption_id AND b.venue_id=d.venue_id
+INNER JOIN venue k ON b.venue_id=k.id
+LEFT JOIN booking_coach_queue f ON b.id=f.course_id AND f.end_time>NOW()
+WHERE a.start_time>NOW() AND a.state=0 AND e.coach_id='{0}' AND (ISNULL(f.coach_id) OR f.coach_id=e.coach_id) 
 ";
 
         /// <summary>
@@ -174,6 +191,32 @@ GROUP BY g.id
             return new List<Coach>();
         }
 
+        /// <summary>
+        /// 获取教练可接单的预约信息
+        /// </summary>
+        /// <param name="coachId">教练id</param>
+        /// <returns></returns>
+        public static List<ClassBookingOfCoachJson> GetBookingListOfCoach(int coachId)
+        {
+            try
+            {
+                using (DBHelper dbhelper = new DBHelper())
+                {
+                    DataTable dt = dbhelper.ExecuteDataTableParams(string.Format(getBookingListOfCoach, coachId));
+
+                    if (dt != null && dt.Rows.Count > 0)
+                    {
+                        return dt.ToList<ClassBookingOfCoachJson>();
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                Util.Log.LogUtil.Write("GetBookingListOfCoach 出错：" + ex, Util.Log.LogType.Error);
+            }
+
+            return new List<ClassBookingOfCoachJson>();
+        }
 
 
     }

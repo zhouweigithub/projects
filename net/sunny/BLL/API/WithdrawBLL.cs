@@ -21,6 +21,9 @@ namespace Sunny.BLL.API
         {
             try
             {
+                if (money == 0)
+                    return false;
+
                 decimal balance = 0;
                 if (user_type == UserType.Student)
                 {

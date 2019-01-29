@@ -24,9 +24,13 @@ namespace Sunny.Model.Custom
         /// </summary>
         public string comment { get; set; }
         /// <summary>
-        /// 评论图片或视频地址，多个以逗号分隔
+        /// 评论图片地址，多个以逗号分隔
         /// </summary>
-        public string urls { get; set; }
+        public string images { get; set; }
+        /// <summary>
+        /// 评论视频地址，多个以逗号分隔
+        /// </summary>
+        public string videos { get; set; }
         /// <summary>
         /// 上课时间
         /// </summary>

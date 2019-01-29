@@ -12,7 +12,7 @@ namespace Sunny.Model.Response
     /// </summary>
     public class HomePageJson
     {
-        public string tell { get; set; }
+        public string tel { get; set; }
         public string tel_image { get; set; }
         public List<BannerJson> top_images { get; set; }
         public string introduce_image { get; set; }

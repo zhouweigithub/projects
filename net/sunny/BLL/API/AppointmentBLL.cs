@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Sunny.DAL;
 using Sunny.Model;
+using Sunny.Model.Custom;
 
 namespace Sunny.BLL.API
 {
@@ -54,8 +55,6 @@ namespace Sunny.BLL.API
             }
             return false;
         }
-
-
 
         /// <summary>
         /// 教练接收预约
@@ -111,6 +110,43 @@ namespace Sunny.BLL.API
                 }
             }
 
+        }
+
+        /// <summary>
+        /// 获取教练可接单的预约请求
+        /// </summary>
+        /// <param name="coachId"></param>
+        /// <returns></returns>
+        public static List<ClassBookingOfCoachJson> GetAppointmentOfCoach(int coachId)
+        {
+            //所有相关的预约信息
+            List<ClassBookingOfCoachJson> source = AppointmentDAL.GetBookingListOfCoach(coachId);
+            //已预约好的时间点
+            List<CustBookingFullTimes> fullTimes = ClassDAL.GetBookingFullTimesListOfCoach(coachId);
+            //人数未预约满的课程
+            List<CustBookingNotFullTimesInfo> notFullInfos = ClassDAL.GetBookingNotFullTimesListOfCoach(coachId);
+
+            //排除已约满的时间点
+            foreach (CustBookingFullTimes item in fullTimes)
+            {
+                source = source.Except(source.Where(a => a.start_time < item.end_time && a.end_time > item.start_time)).ToList();
+            }
+
+            //未约满的只能约相同的项目
+            foreach (CustBookingNotFullTimesInfo item in notFullInfos)
+            {
+                //时间以及课程内容都相同的请求
+                var sameCourseInfo = source.Where(a => a.product_id == item.product_id && a.venue_id == item.venue_id
+                    && a.hour == item.hour && a.start_time == item.start_time && a.end_time == item.end_time);
+
+                //排除时间点交叉的请求
+                source = source.Except(source.Where(a => a.start_time < item.end_time && a.end_time > item.start_time)).ToList();
+
+                //补充时间及课程内容相同的请求
+                source.AddRange(sameCourseInfo);
+            }
+
+            return source;
         }
     }
 }

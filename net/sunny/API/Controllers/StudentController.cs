@@ -59,7 +59,7 @@ namespace API.Controllers
             if (string.IsNullOrWhiteSpace(data.username) || string.IsNullOrWhiteSpace(data.phone)
                 || string.IsNullOrWhiteSpace(data.Invitationcode))
             {
-                result = new ResponseResult(-1, " 参数不全");
+                result = new ResponseResult(1, " 参数不全", null);
             }
             else
             {
@@ -68,29 +68,37 @@ namespace API.Controllers
 
                 if (serverCount > 0)
                 {   //已存在
-                    result = new ResponseResult(-1, "该账号已存在");
+                    result = new ResponseResult(2, "该账号已存在", null);
                 }
                 else
                 {
-                    bool isInvitationCodeExist = DBData.GetInstance(DBTable.student).GetCount($"phone='{data.Invitationcode}'") > 0;
-                    if (isInvitationCodeExist)
+                    bool isPhoneExist = DBData.GetInstance(DBTable.student).GetCount($"phone='{data.phone}'") > 0;
+                    if (isPhoneExist)
                     {
-                        //string smsServerCode = CommonBLL.GetSmsVerificationCodeFromCache(Sunny.Common.SmsVerificationCodeTypeEnum.StudentRegister, data.phone);
-                        //if (smsServerCode == data.SmsVerificationCode)
-                        //{
-                        bool isAddOk = StudentDAL.AddStudent(data);
-                        int code = isAddOk ? 0 : -1;
-                        string msg = isAddOk ? "ok" : "fail";
-                        result = new ResponseResult(code, msg);
-                        //}
-                        //else
-                        //{
-                        //    result = new ResponseResult(-1, "短信验证码不正确");
-                        //}
+                        result = new ResponseResult(3, "手机号已注册", null);
                     }
                     else
                     {
-                        result = new ResponseResult(-1, "邀请码不正确");
+                        bool isInvitationCodeExist = DBData.GetInstance(DBTable.student).GetCount($"phone='{data.Invitationcode}'") > 0;
+                        if (isInvitationCodeExist)
+                        {
+                            //string smsServerCode = CommonBLL.GetSmsVerificationCodeFromCache(Sunny.Common.SmsVerificationCodeTypeEnum.StudentRegister, data.phone);
+                            //if (smsServerCode == data.SmsVerificationCode)
+                            //{
+                            bool isAddOk = StudentDAL.AddStudent(data);
+                            int code = isAddOk ? 0 : 4;
+                            string msg = isAddOk ? "注册成功" : "注册失败";
+                            result = new ResponseResult(code, msg, isAddOk);
+                            //}
+                            //else
+                            //{
+                            //    result = new ResponseResult(-1, "短信验证码不正确");
+                            //}
+                        }
+                        else
+                        {
+                            result = new ResponseResult(5, "邀请码不正确", null);
+                        }
                     }
                 }
             }

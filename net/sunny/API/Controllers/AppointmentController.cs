@@ -14,6 +14,7 @@ namespace API.Controllers
 {
     public class AppointmentController : ApiController
     {
+        //学生预约信息
         [HttpGet]
         [Route("api/appointment/get")]
         public IHttpActionResult Get(string token)
@@ -33,6 +34,7 @@ namespace API.Controllers
             return Json(result);
         }
 
+        //学生预约信息
         [HttpGet]
         [Route("api/appointment/get")]
         public IHttpActionResult Get(string token, int productId)
@@ -52,11 +54,7 @@ namespace API.Controllers
             return Json(result);
         }
 
-        /// <summary>
-        /// 获取时间还没到的上课时间点
-        /// </summary>
-        /// <param name="studentId"></param>
-        /// <returns></returns>
+        //时间还没到的上课时间点
         [HttpGet]
         [Route("api/appointment/GetStudentBookedTimes")]
         public IHttpActionResult GetStudentBookedTimes(string token)
@@ -77,11 +75,7 @@ namespace API.Controllers
             return Json(result);
         }
 
-        /// <summary>
-        /// 获取时间还没到的上课时间点
-        /// </summary>
-        /// <param name="studentId"></param>
-        /// <returns></returns>
+        //时间还没到的上课时间点
         [HttpGet]
         [Route("api/appointment/GetCoachBookedClass")]
         public IHttpActionResult GetCoachBookedClass(string token)
@@ -110,12 +104,12 @@ namespace API.Controllers
             try
             {
                 int coach_id = DBData.GetInstance(DBTable.coach).GetEntity<Coach>($"username='{token}'").id;
-                List<ClassBookingOfCoachJson> classList = ClassDAL.GetBookingListOfCoach(coach_id);
+                List<ClassBookingOfCoachJson> classList = AppointmentBLL.GetAppointmentOfCoach(coach_id);
                 result = new ResponseResult(0, "ok", classList);
             }
             catch (Exception e)
             {
-                Util.Log.LogUtil.Write($"api/appointment/GetCoachBookedClass 出错 token {token}  \r\n {e}", Util.Log.LogType.Error);
+                Util.Log.LogUtil.Write($"api/appointment/GetByCoach 出错 token {token}  \r\n {e}", Util.Log.LogType.Error);
                 result = new ResponseResult(-1, "服务内部错误", null);
             }
             return Json(result);

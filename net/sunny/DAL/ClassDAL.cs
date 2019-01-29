@@ -1,6 +1,7 @@
 ﻿using MySql.Data.MySqlClient;
 using Sunny.Model;
 using Sunny.Model.Custom;
+using Sunny.Model.Response;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -19,28 +20,40 @@ namespace Sunny.DAL
         /// <summary>
         /// 获取教练看到的上课信息
         /// </summary>
-        private static readonly string getClassListOfCoachSql = @"SELECT a.*,b.name courseName,b.summary,COUNT(1)studentCount FROM class a
+        private static readonly string getClassListOfCoachSql = @"
+SELECT a.*,b.name course_name,b.main_img,b.summary,e.name venue_name,f.name campus_name,d.student_count FROM class a
 INNER JOIN product b ON a.product_id=b.id
-INNER JOIN class_student d ON a.id=d.class_id
-WHERE a.coach_id='{0}' and a.state='{1}'";
+INNER JOIN (
+	SELECT class_id,COUNT(1)student_count FROM class_student GROUP BY class_id
+) d ON a.id=d.class_id
+INNER JOIN venue e ON a.venue_id=e.id
+INNER JOIN campus f ON e.campus_id=f.id
+WHERE a.coach_id='{0}'
+";
 
-        private static readonly string getClassListOfStudentSql = @"SELECT a.*,b.name courseName,b.summary,c.name coachName,d.studentCount FROM class a
+        private static readonly string getClassListOfStudentSql = @"
+SELECT a.*,b.name course_name,b.main_img,b.summary,c.name coach_name,e.name venue_name,f.name campus_name,d.student_count FROM class a
 INNER JOIN product b ON a.product_id=b.id
 INNER JOIN coach c ON a.coach_id=c.id
 INNER JOIN (
-	SELECT class_id,COUNT(1)studentCount FROM class_student WHERE student_id='{0}' and state='{1}' GROUP BY class_id
-) d ON a.id=d.class_id";
+	SELECT class_id,COUNT(1)student_count FROM class_student WHERE student_id='{0}' GROUP BY class_id
+) d ON a.id=d.class_id
+INNER JOIN venue e ON a.venue_id=e.id
+INNER JOIN campus f ON e.campus_id=f.id
+";
 
         /// <summary>
         /// 获取上课后教练的评论
         /// </summary>
-        private static readonly string getClassCommentListSql = @"SELECT b.name,b.headimg,c.comment,GROUP_CONCAT(d.url)urls,a.crtime FROM class a
+        private static readonly string getClassCommentListSql = @"
+SELECT b.name,b.headimg,c.comment,d.images,d.videos,a.crtime FROM class a
 INNER JOIN coach b ON a.coach_id=b.id
 INNER JOIN class_comment c ON a.id=c.class_id
-INNER JOIN class_comment_url d ON a.id=d.class_id
+INNER JOIN (
+	SELECT class_id,GROUP_CONCAT(IF(TYPE=0,url,NULL))images,GROUP_CONCAT(IF(TYPE=1,url,NULL))videos FROM class_comment_url GROUP BY class_id
+) d ON a.id=d.class_id
 WHERE 1=1 {0}
-GROUP BY a.id desc
-ORDER BY a.crtime DESC
+ORDER BY a.id DESC
 limit {1}
 ";
         private static readonly string insertClassSql = @"INSERT IGNORE INTO class (product_id,coach_id,venue_id,hour,max_count,start_time,end_time,state,rate)
@@ -48,35 +61,24 @@ VALUES(@product_id,@coach_id,@venue_id,@hour,@max_count,@start_time,@end_time,0,
         private static readonly string insertClassStudent = "INSERT INTO class_student (class_id,student_id,state) VALUES('{0}','{1}','0') ;";
         private static readonly string getClassIdOfCoachTime = "SELECT id FROM class WHERE coach_id={0} AND start_time='{1}'";
 
-        /// <summary>
-        /// 获取教练可接单的预约信息
-        /// </summary>
-        private static readonly string getBookingListOfCoach = @"
-SELECT a.id booking_id,a.start_time,a.end_time,b.over_hour+1 `hour`,b.max_count,b.over_hour,b.product_id,
-c.name product_name,c.main_img,k.name venue_name FROM booking_student a
-INNER JOIN course b ON a.course_id=b.id
-INNER JOIN product c ON b.product_id=c.id
-INNER JOIN coachcaption_venue d ON b.venue_id=d.venue_id
-INNER JOIN coach_caption e ON d.coach_id=e.caption_id AND b.venue_id=d.venue_id
-INNER JOIN venue k ON b.venue_id=k.id
-LEFT JOIN booking_coach_queue f ON a.id=f.booking_student_id AND f.end_time>NOW()
-INNER JOIN (
-	-- 获取上课时间未到，并且上课学员已预约满的时间段
-	SELECT start_time,end_time,max_count FROM class p
-	INNER JOIN class_student q ON p.id=q.class_id
-	WHERE coach_id='{0}' AND start_time>NOW() 
-	GROUP BY p.id HAVING max_count=COUNT(1)
-)g ON NOT(a.start_time>=g.end_time OR a.end_time<=g.start_time) -- 排除时间交叉同时已预约完成的时间段
-INNER JOIN (
-	-- 获取上课时间未到，并且上课学员未预约满的数据
-	SELECT p.venue_id,p.product_id,p.hour,p.start_time,p.end_time,p.max_count FROM class p
-	INNER JOIN class_student q ON p.id=q.class_id
-	WHERE coach_id='{0}' AND start_time>NOW() 
-	GROUP BY p.id HAVING max_count>COUNT(1)
-)h ON a.start_time=h.start_time AND a.end_time=h.end_time 
-    AND NOT(b.venue_id=h.venue_id AND b.product_id=h.product_id AND b.over_hour+1=h.hour) -- 排除时间段相同，但内容不同的项
 
-WHERE a.start_time>NOW() AND a.state=0 AND e.coach_id='{0}' AND (ISNULL(f.coach_id) OR f.coach_id=e.coach_id)
+        /// <summary>
+        /// 已预约满的时间段
+        /// </summary>
+        private static readonly string getBookingFullTimesListOfCoach = @"
+SELECT start_time,end_time,max_count FROM class p
+INNER JOIN class_student q ON p.id=q.class_id
+WHERE coach_id='{0}' AND start_time>NOW() 
+GROUP BY p.id HAVING max_count=COUNT(1)
+";
+        /// <summary>
+        /// 没预约满的信息
+        /// </summary>
+        private static readonly string getBookingNotFullTimesListOfCoach = @"
+SELECT p.venue_id,p.product_id,p.hour,p.start_time,p.end_time,p.max_count FROM class p
+INNER JOIN class_student q ON p.id=q.class_id
+WHERE coach_id='{0}' AND start_time>NOW() 
+GROUP BY p.id HAVING max_count>COUNT(1)
 ";
 
         /// <summary>
@@ -118,17 +120,17 @@ WHERE g.id='{0}' ORDER BY a.crtime DESC";
         /// <param name="coachId">教练id</param>
         /// <param name="state">课程状态</param>
         /// <returns></returns>
-        public static List<Class> GetClassByCoachId(int coachId, short state)
+        public static List<ClassCoachJson> GetClassByCoachId(int coachId)
         {
             try
             {
                 using (DBHelper dbhelper = new DBHelper())
                 {
-                    DataTable dt = dbhelper.ExecuteDataTable(string.Format(getClassListOfCoachSql, coachId, state));
+                    DataTable dt = dbhelper.ExecuteDataTable(string.Format(getClassListOfCoachSql, coachId));
 
                     if (dt != null && dt.Rows.Count > 0)
                     {
-                        return dt.ToList<Class>();
+                        return dt.ToList<ClassCoachJson>();
                     }
                 }
             }
@@ -137,7 +139,7 @@ WHERE g.id='{0}' ORDER BY a.crtime DESC";
                 Util.Log.LogUtil.Write("GetClassByCoachId 出错：" + ex, Util.Log.LogType.Error);
             }
 
-            return new List<Class>();
+            return new List<ClassCoachJson>();
         }
 
         /// <summary>
@@ -146,17 +148,17 @@ WHERE g.id='{0}' ORDER BY a.crtime DESC";
         /// <param name="studentId">学员id</param>
         /// <param name="state">课程状态</param>
         /// <returns></returns>
-        public static List<Class> GetClassByStudentId(int studentId, short state)
+        public static List<ClassStudentJson> GetClassByStudentId(int studentId)
         {
             try
             {
                 using (DBHelper dbhelper = new DBHelper())
                 {
-                    DataTable dt = dbhelper.ExecuteDataTable(string.Format(getClassListOfStudentSql, studentId, state));
+                    DataTable dt = dbhelper.ExecuteDataTable(string.Format(getClassListOfStudentSql, studentId));
 
                     if (dt != null && dt.Rows.Count > 0)
                     {
-                        return dt.ToList<Class>();
+                        return dt.ToList<ClassStudentJson>();
                     }
                 }
             }
@@ -165,16 +167,16 @@ WHERE g.id='{0}' ORDER BY a.crtime DESC";
                 Util.Log.LogUtil.Write("GetClassByStudentId 出错：" + ex, Util.Log.LogType.Error);
             }
 
-            return new List<Class>();
+            return new List<ClassStudentJson>();
         }
 
         /// <summary>
         /// 获取某次上课后教练给的评论
         /// </summary>
         /// <param name="classId">上课id</param>
-        /// <param name="courseId">课程id</param>
+        /// <param name="productId">课程id</param>
         /// <returns></returns>
-        public static List<ClassCommentJson> GetClassCommentList(int classId, int courseId, int limitCount)
+        public static List<ClassCommentJson> GetClassCommentList(int classId, int productId, int limitCount)
         {
             try
             {
@@ -183,16 +185,16 @@ WHERE g.id='{0}' ORDER BY a.crtime DESC";
                 {
                     where += " and a.id = @classId";
                 }
-                if (courseId != 0)
+                if (productId != 0)
                 {
-                    where += " and a.product_id = @courseId";
+                    where += " and a.product_id = @productId";
                 }
 
                 using (DBHelper dbhelper = new DBHelper())
                 {
                     MySqlParameter[] commandParameters = new MySqlParameter[] {
                         new MySqlParameter("@classId", classId),
-                        new MySqlParameter("@courseId", courseId),
+                        new MySqlParameter("@productId", productId),
                     };
 
                     DataTable dt = dbhelper.ExecuteDataTableParams(string.Format(getClassCommentListSql, where, limitCount), commandParameters);
@@ -251,32 +253,6 @@ WHERE g.id='{0}' ORDER BY a.crtime DESC";
             return false;
         }
 
-        /// <summary>
-        /// 获取教练可接单的预约信息
-        /// </summary>
-        /// <param name="coachId">教练id</param>
-        /// <returns></returns>
-        public static List<ClassBookingOfCoachJson> GetBookingListOfCoach(int coachId)
-        {
-            try
-            {
-                using (DBHelper dbhelper = new DBHelper())
-                {
-                    DataTable dt = dbhelper.ExecuteDataTableParams(string.Format(getBookingListOfCoach, coachId));
-
-                    if (dt != null && dt.Rows.Count > 0)
-                    {
-                        return dt.ToList<ClassBookingOfCoachJson>();
-                    }
-                }
-            }
-            catch (Exception ex)
-            {
-                Util.Log.LogUtil.Write("GetBookingListOfCoach 出错：" + ex, Util.Log.LogType.Error);
-            }
-
-            return new List<ClassBookingOfCoachJson>();
-        }
 
         /// <summary>
         /// 查询上次上课教练id
@@ -354,6 +330,61 @@ WHERE g.id='{0}' ORDER BY a.crtime DESC";
 
             return new List<CoachClassHistoryJson>();
         }
+
+        /// <summary>
+        /// 已预约满的时点点
+        /// </summary>
+        /// <param name="coachid">教练id</param>
+        /// <returns></returns>
+        public static List<CustBookingFullTimes> GetBookingFullTimesListOfCoach(int coachid)
+        {
+            try
+            {
+                using (DBHelper dbhelper = new DBHelper())
+                {
+                    DataTable dt = dbhelper.ExecuteDataTable(string.Format(getBookingFullTimesListOfCoach, coachid));
+
+                    if (dt != null && dt.Rows.Count > 0)
+                    {
+                        return dt.ToList<CustBookingFullTimes>().Distinct().ToList();
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                Util.Log.LogUtil.Write("GetBookingFullTimesListOfCoach 出错：" + ex, Util.Log.LogType.Error);
+            }
+
+            return new List<CustBookingFullTimes>();
+        }
+
+        /// <summary>
+        /// 未预约满的信息
+        /// </summary>
+        /// <param name="coachid">教练id</param>
+        /// <returns></returns>
+        public static List<CustBookingNotFullTimesInfo> GetBookingNotFullTimesListOfCoach(int coachid)
+        {
+            try
+            {
+                using (DBHelper dbhelper = new DBHelper())
+                {
+                    DataTable dt = dbhelper.ExecuteDataTable(string.Format(getBookingNotFullTimesListOfCoach, coachid));
+
+                    if (dt != null && dt.Rows.Count > 0)
+                    {
+                        return dt.ToList<CustBookingNotFullTimesInfo>();
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                Util.Log.LogUtil.Write("GetBookingNotFullTimesListOfCoach 出错：" + ex, Util.Log.LogType.Error);
+            }
+
+            return new List<CustBookingNotFullTimesInfo>();
+        }
+
 
     }
 }

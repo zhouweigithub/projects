@@ -16,12 +16,12 @@ namespace Sunny.Model
         /// 关键字
         /// </summary>
         [TableField]
-        public string key { get; set; }
+        public string pkey { get; set; }
         /// <summary>
         /// 值
         /// </summary>
         [TableField]
-        public string value { get; set; }
+        public string pvalue { get; set; }
         /// <summary>
         /// 更新时间
         /// </summary>

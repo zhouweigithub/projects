@@ -46,6 +46,6 @@ namespace Sunny.Model.Custom
         /// <summary>
         /// 状态
         /// </summary>
-        public short state { get; set; }
+        public string state { get; set; }
     }
 }
