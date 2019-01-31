@@ -27,7 +27,7 @@ CREATE TABLE `banner` (
 
 /*Data for the table `banner` */
 
-insert  into `banner`(`id`,`url`,`type`,`state`,`crtime`) values (1,'http://img5.duitang.com/uploads/item/201411/07/20141107164412_v284V.jpeg',0,0,'2019-01-14 14:36:04'),(2,'http://www.pptbz.com/pptpic/UploadFiles_6909/201211/2012111719294197.jpg',0,0,'2019-01-14 14:40:43'),(3,'http://www.pptbz.com/pptpic/UploadFiles_6909/201203/2012031220134655.jpg',1,0,'2019-01-14 14:41:00'),(4,'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1547547403763&di=bfada9702b66aee4a608627298966b5e&imgtype=0&src=http%3A%2F%2Fpic5.photophoto.cn%2F20071006%2F0034034447148990_b.jpg',1,0,'2019-01-15 15:28:58'),(5,'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1547547403762&di=0b6df39c11ab9c379bc4e0d4476ba08e&imgtype=0&src=http%3A%2F%2Fpic1.win4000.com%2Fwallpaper%2F6%2F59a3d9026f621.jpg',1,0,'2019-01-15 15:29:07'),(6,'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1547547403761&di=64a2bc902a59a3574fe72c0fed1c6a40&imgtype=0&src=http%3A%2F%2Fpic1.win4000.com%2Fwallpaper%2F0%2F587c7e37e50ab.jpg',2,0,'2019-01-15 15:29:15'),(7,'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1547547403760&di=d28935b1b05dceee698e1e741da5e4b7&imgtype=0&src=http%3A%2F%2Fimg17.3lian.com%2Fd%2Ffile%2F201702%2F16%2Fe177fd9962cb2dc0a4e2222338ad04fd.jpg',3,0,'2019-01-15 15:29:23'),(8,'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1547547403760&di=b2aad45496ad9a613a36076c4f655b59&imgtype=0&src=http%3A%2F%2Fpic40.nipic.com%2F20140329%2F8952533_184915360000_2.jpg',3,0,'2019-01-15 15:29:31'),(9,'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1547547403759&di=e4d5547b7904d86ad1e9ac65ee3cb069&imgtype=0&src=http%3A%2F%2Fpic1.win4000.com%2Fwallpaper%2F2017-12-08%2F5a2a02df312c7.jpg',3,0,'2019-01-15 15:29:42'),(10,'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1547547403755&di=de1a5ed672343ca0e701d90081ec7555&imgtype=0&src=http%3A%2F%2Fpic1.win4000.com%2Fwallpaper%2Fa%2F5513a40021e54.jpg',3,0,'2019-01-15 15:29:43');
+insert  into `banner`(`id`,`url`,`type`,`state`,`crtime`) values (1,'https://img10.360buyimg.com/n1/s450x450_jfs/t18448/200/2532654839/268503/b46a717e/5afe4d0cN10f96d55.jpg',0,0,'2019-01-14 14:36:04'),(2,'http://www.pptbz.com/pptpic/UploadFiles_6909/201211/2012111719294197.jpg',0,0,'2019-01-14 14:40:43'),(3,'http://www.pptbz.com/pptpic/UploadFiles_6909/201203/2012031220134655.jpg',1,0,'2019-01-14 14:41:00'),(4,'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1547547403763&di=bfada9702b66aee4a608627298966b5e&imgtype=0&src=http%3A%2F%2Fpic5.photophoto.cn%2F20071006%2F0034034447148990_b.jpg',1,0,'2019-01-15 15:28:58'),(5,'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1547547403762&di=0b6df39c11ab9c379bc4e0d4476ba08e&imgtype=0&src=http%3A%2F%2Fpic1.win4000.com%2Fwallpaper%2F6%2F59a3d9026f621.jpg',1,0,'2019-01-15 15:29:07'),(6,'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1547547403761&di=64a2bc902a59a3574fe72c0fed1c6a40&imgtype=0&src=http%3A%2F%2Fpic1.win4000.com%2Fwallpaper%2F0%2F587c7e37e50ab.jpg',2,0,'2019-01-15 15:29:15'),(7,'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1547547403760&di=d28935b1b05dceee698e1e741da5e4b7&imgtype=0&src=http%3A%2F%2Fimg17.3lian.com%2Fd%2Ffile%2F201702%2F16%2Fe177fd9962cb2dc0a4e2222338ad04fd.jpg',3,0,'2019-01-15 15:29:23'),(8,'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1547547403760&di=b2aad45496ad9a613a36076c4f655b59&imgtype=0&src=http%3A%2F%2Fpic40.nipic.com%2F20140329%2F8952533_184915360000_2.jpg',3,0,'2019-01-15 15:29:31'),(9,'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1547547403759&di=e4d5547b7904d86ad1e9ac65ee3cb069&imgtype=0&src=http%3A%2F%2Fpic1.win4000.com%2Fwallpaper%2F2017-12-08%2F5a2a02df312c7.jpg',3,0,'2019-01-15 15:29:42'),(10,'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1547547403755&di=de1a5ed672343ca0e701d90081ec7555&imgtype=0&src=http%3A%2F%2Fpic1.win4000.com%2Fwallpaper%2Fa%2F5513a40021e54.jpg',3,0,'2019-01-15 15:29:43');
 
 /*Table structure for table `booking_coach_queue` */
 
@@ -54,11 +54,11 @@ CREATE TABLE `booking_student` (
   `state` tinyint(4) DEFAULT '0' COMMENT '状态0正常 1无效',
   `crtime` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 COMMENT='用户下的预订信息';
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8 COMMENT='用户下的预订信息';
 
 /*Data for the table `booking_student` */
 
-insert  into `booking_student`(`id`,`course_id`,`start_time`,`end_time`,`state`,`crtime`) values (1,1,'2019-01-19 18:59:38','2019-01-19 18:59:38',0,'2019-01-11 19:01:05');
+insert  into `booking_student`(`id`,`course_id`,`start_time`,`end_time`,`state`,`crtime`) values (1,1,'2019-01-28 18:59:38','2019-01-29 18:59:38',0,'2019-01-11 19:01:05'),(2,0,'0001-01-01 00:00:00','0001-01-01 00:00:00',0,'2019-01-29 20:17:19'),(3,3,'2019-02-02 16:00:00','2019-02-02 17:00:00',0,'2019-01-29 20:24:03'),(4,3,'2019-02-02 16:00:00','2019-02-02 17:00:00',0,'2019-01-29 20:25:06'),(5,3,'2019-02-02 15:00:00','2019-02-02 16:00:00',0,'2019-01-29 20:43:41'),(6,2,'2019-02-02 14:00:00','2019-02-02 15:00:00',0,'2019-01-29 21:32:36'),(7,5,'2019-02-01 14:00:00','2019-02-01 15:00:00',1,'2019-01-30 10:53:26');
 
 /*Table structure for table `campus` */
 
@@ -66,7 +66,7 @@ DROP TABLE IF EXISTS `campus`;
 
 CREATE TABLE `campus` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `name` varchar(20) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '区域名称',
+  `name` varchar(20) NOT NULL COMMENT '区域名称',
   `state` tinyint(4) DEFAULT '0' COMMENT '0正常 1禁用',
   `crtime` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`)
@@ -87,9 +87,11 @@ CREATE TABLE `cashback_history` (
   `money` decimal(10,2) NOT NULL DEFAULT '0.00' COMMENT '返现金额',
   `crtime` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '返现时间',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='学员邀请返现记录';
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8 COMMENT='学员邀请返现记录';
 
 /*Data for the table `cashback_history` */
+
+insert  into `cashback_history`(`id`,`student_id`,`from_student_id`,`money`,`crtime`) values (1,12,1,'10.00','2019-01-25 21:10:23'),(2,12,2,'5.00','2019-01-25 21:10:35'),(3,13,1,'8.00','2019-01-30 13:57:16');
 
 /*Table structure for table `category` */
 
@@ -127,11 +129,11 @@ CREATE TABLE `class` (
   `crtime` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
   PRIMARY KEY (`id`),
   UNIQUE KEY `IX_UNIQUE` (`coach_id`,`start_time`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8 COMMENT='预约成功后的上课信息';
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8 COMMENT='预约成功后的上课信息';
 
 /*Data for the table `class` */
 
-insert  into `class`(`id`,`product_id`,`coach_id`,`venue_id`,`hour`,`max_count`,`start_time`,`end_time`,`state`,`rate`,`crtime`) values (1,1,1,1,5,2,'2019-02-12 11:00:00','2019-01-12 11:23:39',0,0,'2019-01-08 11:23:43'),(2,1,1,1,4,1,'2019-01-13 16:28:35','2019-01-13 16:28:42',0,0,'2019-01-11 16:28:45'),(3,1,1,1,6,1,'2019-01-19 18:59:38','2019-01-19 19:31:23',0,0,'2019-01-11 19:30:59');
+insert  into `class`(`id`,`product_id`,`coach_id`,`venue_id`,`hour`,`max_count`,`start_time`,`end_time`,`state`,`rate`,`crtime`) values (1,1,1,1,5,2,'2019-02-12 11:00:00','2019-01-12 11:23:39',0,0,'2019-01-08 11:23:43'),(2,1,1,1,4,1,'2019-01-13 16:28:35','2019-01-13 16:28:42',0,0,'2019-01-11 16:28:45'),(3,1,1,1,6,1,'2019-01-19 18:59:38','2019-01-19 19:31:23',0,0,'2019-01-11 19:30:59'),(4,2,1,2,2,1,'2019-01-31 11:04:13','2019-01-31 11:04:16',0,0,'2019-01-30 11:04:20');
 
 /*Table structure for table `class_comment` */
 
@@ -140,7 +142,7 @@ DROP TABLE IF EXISTS `class_comment`;
 CREATE TABLE `class_comment` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `class_id` int(11) NOT NULL COMMENT '上课id',
-  `comment` varchar(500) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '教练评论的文字内容',
+  `comment` varchar(500) NOT NULL COMMENT '教练评论的文字内容',
   `crtime` timestamp NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 COMMENT='课程结束后教练评论的文字内容';
@@ -156,15 +158,15 @@ DROP TABLE IF EXISTS `class_comment_url`;
 CREATE TABLE `class_comment_url` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `class_id` int(11) NOT NULL COMMENT '上课id',
-  `url` varchar(500) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '教练上传的图片或视频地址',
+  `url` varchar(500) NOT NULL COMMENT '教练上传的图片或视频地址',
   `type` tinyint(4) DEFAULT '0' COMMENT '类型0图片 1视频',
   `crtime` timestamp NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8 COMMENT='课程结束后教练上传的图片或视频信息';
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8 COMMENT='课程结束后教练上传的图片或视频信息';
 
 /*Data for the table `class_comment_url` */
 
-insert  into `class_comment_url`(`id`,`class_id`,`url`,`type`,`crtime`) values (1,1,'http://pic-bucket.ws.126.net/photo/0005/2019-01-07/E4ULVC640B4C0005NOS.jpg',0,'2019-01-08 11:26:00'),(2,1,'http://h.hiphotos.baidu.com/image/h%3D300/sign=f2db86688ccb39dbdec06156e01709a7/2f738bd4b31c87018e9450642a7f9e2f0708ff16.jpg',1,'2019-01-08 14:20:15');
+insert  into `class_comment_url`(`id`,`class_id`,`url`,`type`,`crtime`) values (1,1,'http://pic-bucket.ws.126.net/photo/0005/2019-01-07/E4ULVC640B4C0005NOS.jpg',0,'2019-01-08 11:26:00'),(2,1,'http://h.hiphotos.baidu.com/image/h%3D300/sign=f2db86688ccb39dbdec06156e01709a7/2f738bd4b31c87018e9450642a7f9e2f0708ff16.jpg',0,'2019-01-08 14:20:15'),(3,1,'https://sunny.ullfly.com/video/a_yHP6ky9a9UTf1548249633_10s.mp4',1,'2019-01-27 10:15:15'),(4,1,'https://sunny.ullfly.com/video/8ab9480b7e864bb088bc9bf23b4bc61d_34.mp4',1,'2019-01-27 10:15:50');
 
 /*Table structure for table `class_student` */
 
@@ -182,7 +184,7 @@ CREATE TABLE `class_student` (
 
 /*Data for the table `class_student` */
 
-insert  into `class_student`(`class_id`,`student_id`,`state`,`marking`,`comment`,`crtime`) values (1,1,0,-1,NULL,'2019-01-11 16:59:28'),(1,2,0,-1,NULL,'2019-01-11 17:11:27'),(1,3,0,-1,NULL,'2019-01-11 17:13:54'),(2,4,0,-1,NULL,'2019-01-11 17:38:53'),(3,5,0,-1,NULL,'2019-01-11 19:31:41');
+insert  into `class_student`(`class_id`,`student_id`,`state`,`marking`,`comment`,`crtime`) values (1,2,0,2,'fff','2019-01-11 17:11:27'),(1,3,0,-1,NULL,'2019-01-11 17:13:54'),(1,12,0,1,'eeee','2019-01-11 16:59:28'),(2,12,0,4,'rrr','2019-01-11 17:38:53'),(3,12,0,-1,NULL,'2019-01-11 19:31:41'),(4,13,0,-1,NULL,'2019-01-30 11:05:02');
 
 /*Table structure for table `coach` */
 
@@ -190,14 +192,14 @@ DROP TABLE IF EXISTS `coach`;
 
 CREATE TABLE `coach` (
   `id` int(11) NOT NULL AUTO_INCREMENT COMMENT '自增',
-  `username` varchar(20) NOT NULL COMMENT '用户名',
-  `password` varchar(64) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL COMMENT '密码',
+  `username` varchar(64) NOT NULL COMMENT '用户名',
+  `password` varchar(64) DEFAULT NULL COMMENT '密码',
   `name` varchar(20) DEFAULT NULL COMMENT '姓名',
   `sex` tinyint(4) DEFAULT '0' COMMENT '性别0男 1女',
-  `phone` varchar(11) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '电话号码',
+  `phone` varchar(11) NOT NULL COMMENT '电话号码',
   `type` tinyint(4) DEFAULT '0' COMMENT '类型0游泳1画画2弹琴3...',
   `level` tinyint(4) DEFAULT '0' COMMENT '教练评级',
-  `headimg` varchar(500) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL COMMENT '头像图片地址',
+  `headimg` varchar(500) DEFAULT NULL COMMENT '头像图片地址',
   `cash` int(11) NOT NULL DEFAULT '0' COMMENT '账户余额',
   `state` tinyint(4) NOT NULL DEFAULT '0' COMMENT '0正常 1受限',
   `crtime` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
@@ -238,9 +240,11 @@ CREATE TABLE `coach_img` (
   `state` tinyint(4) NOT NULL DEFAULT '0' COMMENT '状态0正常1禁用',
   `crtime` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='教练上传的自身相关证件照片';
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8 COMMENT='教练上传的自身相关证件照片';
 
 /*Data for the table `coach_img` */
+
+insert  into `coach_img`(`id`,`coach_id`,`url`,`comment`,`type`,`state`,`crtime`) values (1,1,'http://pic1.nipic.com/2008-11-20/20081120145730349_2.jpg','rrr',0,0,'2019-01-25 21:09:33'),(2,1,'http://pic1.nipic.com/2008-11-20/20081120145730349_2.jpg','rrr',1,0,'2019-01-25 21:09:53'),(3,1,'http://pic1.nipic.com/2008-11-20/20081120145730349_2.jpg','rrr',2,0,'2019-01-25 21:09:58');
 
 /*Table structure for table `coachcaption_venue` */
 
@@ -257,30 +261,13 @@ CREATE TABLE `coachcaption_venue` (
 
 insert  into `coachcaption_venue`(`coach_id`,`venue_id`,`crtime`) values (2,1,'2019-01-11 16:17:05'),(4,2,'2019-01-14 14:44:04');
 
-/*Table structure for table `coruse_price` */
-
-DROP TABLE IF EXISTS `coruse_price`;
-
-CREATE TABLE `coruse_price` (
-  `product_id` int(11) NOT NULL COMMENT '课程商品id',
-  `venud_id` int(11) NOT NULL COMMENT '场馆id',
-  `type_id` int(11) NOT NULL COMMENT '上课人数类型course_type.id',
-  `price` decimal(10,0) NOT NULL DEFAULT '0' COMMENT '价格',
-  `crtime` timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
-  PRIMARY KEY (`product_id`,`venud_id`,`type_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='课程商品的价格';
-
-/*Data for the table `coruse_price` */
-
-insert  into `coruse_price`(`product_id`,`venud_id`,`type_id`,`price`,`crtime`) values (1,1,1,'600','2019-01-25 20:44:46'),(1,2,1,'2','2019-01-25 17:00:01');
-
 /*Table structure for table `coupon` */
 
 DROP TABLE IF EXISTS `coupon`;
 
 CREATE TABLE `coupon` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `name` varchar(64) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '优惠券名称',
+  `name` varchar(64) NOT NULL COMMENT '优惠券名称',
   `money` int(11) NOT NULL DEFAULT '0' COMMENT '金额',
   `category_id` int(11) NOT NULL DEFAULT '0' COMMENT '商品分类限定 0为不限定',
   `multiple` tinyint(4) DEFAULT '0' COMMENT '是否可以叠加使用0可以 1不可以',
@@ -293,7 +280,7 @@ CREATE TABLE `coupon` (
 
 /*Data for the table `coupon` */
 
-insert  into `coupon`(`id`,`name`,`money`,`category_id`,`multiple`,`start_time`,`end_time`,`state`,`crtime`) values (1,'50元优惠券',50,1,0,'2019-01-01 17:21:20','2019-01-30 17:21:27',0,'2019-01-08 17:21:30'),(2,'100元优惠券',100,2,0,'2019-01-01 17:21:20','2019-01-07 17:21:27',0,'2019-01-08 17:21:42'),(3,'500元优惠券',500,1,0,'2019-01-15 14:45:51','2019-01-18 14:45:56',0,'2019-01-14 14:45:47');
+insert  into `coupon`(`id`,`name`,`money`,`category_id`,`multiple`,`start_time`,`end_time`,`state`,`crtime`) values (1,'50元优惠券',50,1,0,'2019-01-01 17:21:20','2019-02-07 17:21:27',0,'2019-01-08 17:21:30'),(2,'100元优惠券',100,2,0,'2019-01-01 17:21:20','2019-02-09 17:21:27',0,'2019-01-08 17:21:42'),(3,'500元优惠券',500,1,0,'2019-01-15 14:45:51','2019-01-18 14:45:56',0,'2019-01-14 14:45:47');
 
 /*Table structure for table `coupon_history` */
 
@@ -306,9 +293,11 @@ CREATE TABLE `coupon_history` (
   `count` int(11) NOT NULL DEFAULT '1' COMMENT '数量',
   `crtime` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '获得时间',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='优惠券获得历史记录';
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8 COMMENT='优惠券获得历史记录';
 
 /*Data for the table `coupon_history` */
+
+insert  into `coupon_history`(`id`,`student_id`,`coupon_id`,`count`,`crtime`) values (1,12,1,1,'2019-01-25 21:07:58'),(2,12,2,2,'2019-01-25 21:08:04'),(3,12,1,1,'2019-01-25 21:08:09'),(4,12,2,1,'2019-01-25 21:08:12'),(5,1,1,1,'2019-01-25 21:08:15');
 
 /*Table structure for table `course` */
 
@@ -324,13 +313,29 @@ CREATE TABLE `course` (
   `hour` int(11) DEFAULT '0' COMMENT '总学时',
   `over_hour` int(11) DEFAULT '0' COMMENT '已完成学时',
   `crtime` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
-  PRIMARY KEY (`id`),
-  UNIQUE KEY `IX_STUDENTID_PRODUCTID` (`student_id`,`product_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8 COMMENT='购买成功的课程表';
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8 COMMENT='购买成功的课程表';
 
 /*Data for the table `course` */
 
-insert  into `course`(`id`,`student_id`,`product_id`,`venue_id`,`order_id`,`max_count`,`hour`,`over_hour`,`crtime`) values (1,1,1,1,'ddd',0,0,0,'2019-01-11 17:44:49'),(2,2,1,1,'dd',0,0,0,'2019-01-11 17:48:06'),(3,3,1,2,'gg',0,0,0,'2019-01-11 17:48:23');
+insert  into `course`(`id`,`student_id`,`product_id`,`venue_id`,`order_id`,`max_count`,`hour`,`over_hour`,`crtime`) values (1,12,1,1,'ddd',1,10,1,'2019-01-11 17:44:49'),(2,12,4,1,'dd',0,2,0,'2019-01-11 17:48:06'),(3,12,2,2,'gg',2,5,2,'2019-01-11 17:48:23'),(4,12,3,1,'eee',3,3,3,'2019-01-27 10:19:14'),(5,13,2,2,'www',1,2,1,'2019-01-30 10:52:38');
+
+/*Table structure for table `course_price` */
+
+DROP TABLE IF EXISTS `course_price`;
+
+CREATE TABLE `course_price` (
+  `product_id` int(11) NOT NULL COMMENT '课程商品id',
+  `venue_id` int(11) NOT NULL COMMENT '场馆id',
+  `type_id` int(11) NOT NULL COMMENT '上课人数类型course_type.id',
+  `price` decimal(10,0) NOT NULL DEFAULT '0' COMMENT '价格',
+  `crtime` timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
+  PRIMARY KEY (`product_id`,`venue_id`,`type_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='课程商品的价格';
+
+/*Data for the table `course_price` */
+
+insert  into `course_price`(`product_id`,`venue_id`,`type_id`,`price`,`crtime`) values (1,1,1,'600','2019-01-25 20:44:46'),(1,2,1,'200','2019-01-26 22:14:18');
 
 /*Table structure for table `course_type` */
 
@@ -355,7 +360,7 @@ DROP TABLE IF EXISTS `deliver`;
 
 CREATE TABLE `deliver` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `name` varchar(10) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
+  `name` varchar(10) NOT NULL,
   `state` tinyint(4) DEFAULT '0' COMMENT '0正常 1禁用',
   `crtime` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`)
@@ -396,7 +401,7 @@ CREATE TABLE `hot_course` (
 
 /*Data for the table `hot_course` */
 
-insert  into `hot_course`(`product_id`,`type`,`sort_order`) values (1,0,1),(1,1,2),(2,0,2),(2,1,1),(4,0,3);
+insert  into `hot_course`(`product_id`,`type`,`sort_order`) values (1,0,1),(1,1,2),(2,0,2),(2,1,1),(4,0,3),(5,0,0),(6,1,0);
 
 /*Table structure for table `hours` */
 
@@ -426,7 +431,7 @@ CREATE TABLE `invitation` (
 
 /*Data for the table `invitation` */
 
-insert  into `invitation`(`student_id`,`from_student_id`,`state`,`crtime`) values (2,1,0,'2019-01-16 15:53:10'),(3,2,0,'2019-01-16 15:53:07'),(4,3,0,'2019-01-16 15:53:01');
+insert  into `invitation`(`student_id`,`from_student_id`,`state`,`crtime`) values (12,1,0,'2019-01-26 14:32:03'),(13,12,0,'2019-01-30 10:49:05');
 
 /*Table structure for table `order` */
 
@@ -444,13 +449,15 @@ CREATE TABLE `order` (
   `message` varchar(200) DEFAULT NULL COMMENT '买家留言',
   `deliver_id` varchar(10) DEFAULT NULL COMMENT '配送方式',
   `freight` decimal(10,2) DEFAULT '0.00' COMMENT '运费',
-  `state` tinyint(4) DEFAULT '0' COMMENT '状态0未支付1已支付2已发货3已收货4已评价',
+  `state` tinyint(4) DEFAULT '0' COMMENT '状态0未支付1已支付2已发货3已收货4已评价5已取消',
   `crdate` date DEFAULT NULL COMMENT '日期',
   `crtime` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '时间',
   PRIMARY KEY (`order_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='购物订单信息';
 
 /*Data for the table `order` */
+
+insert  into `order`(`order_id`,`userid`,`money`,`discount_money`,`coupon_money`,`receiver`,`phone`,`address`,`message`,`deliver_id`,`freight`,`state`,`crdate`,`crtime`) values ('aaa',12,'50.00','10.00','5.00','Mr杨','13254689954','杭州西湖中心','呵呵','1','0.00',0,'2019-01-25','2019-01-25 21:04:34'),('bbb',12,'50.00','10.00','5.00','Mr杨','13254689954','杭州西湖中心','呵呵','1','0.00',1,'2019-01-25','2019-01-25 21:04:34'),('ccc',12,'50.00','10.00','5.00','Mr杨','13254689954','杭州西湖中心','呵呵','2','0.00',2,'2019-01-25','2019-01-25 21:04:34'),('ddd',12,'50.00','10.00','5.00','Mr杨','13254689954','杭州西湖中心','呵呵','2','0.00',3,'2019-01-25','2019-01-25 21:04:34'),('eee',12,'50.00','10.00','5.00','Mr杨','13254689954','杭州西湖中心','呵呵','2','0.00',4,'2019-01-25','2019-01-25 21:04:34'),('fff',12,'50.00','10.00','5.00','Mr杨','13254689954','杭州西湖中心','呵呵','2','0.00',5,'2019-01-25','2019-01-25 21:04:34'),('vvv',13,'50.00','10.00','5.00','Mr杨','13254689954','杭州西湖中心','呵呵','2','0.00',3,'2019-01-25','2019-01-25 21:04:34');
 
 /*Table structure for table `order_coupon` */
 
@@ -467,6 +474,8 @@ CREATE TABLE `order_coupon` (
 
 /*Data for the table `order_coupon` */
 
+insert  into `order_coupon`(`order_id`,`coupon_id`,`name`,`count`,`money`) values ('aaa',1,'优惠券1',1,'0.00'),('vvv',2,'优惠券1',1,'0.00');
+
 /*Table structure for table `order_discount` */
 
 DROP TABLE IF EXISTS `order_discount`;
@@ -481,6 +490,8 @@ CREATE TABLE `order_discount` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='订单折扣信息';
 
 /*Data for the table `order_discount` */
+
+insert  into `order_discount`(`order_id`,`product_id`,`discount_id`,`name`,`money`) values ('aaa',1,1,'开业大促销','20.00'),('vvv',1,1,'开业大促销','30.00');
 
 /*Table structure for table `order_product` */
 
@@ -502,6 +513,8 @@ CREATE TABLE `order_product` (
 
 /*Data for the table `order_product` */
 
+insert  into `order_product`(`order_id`,`product_id`,`product_name`,`plan_code`,`count`,`price`,`orig_price`,`total_amount`,`discount_amount`,`venueid`) values ('aaa',1,'就是这个商品这个商品','ddd',1,'50.00','60.00','50.00','10.00',1),('bbb',1,'就是这个商品这个商品','ddd',1,'50.00','60.00','50.00','10.00',1),('ccc',1,'就是这个商品这个商品','ddd',1,'50.00','60.00','50.00','10.00',1),('ddd',1,'就是这个商品这个商品','ddd',1,'50.00','60.00','50.00','10.00',1),('eee',1,'就是这个商品这个商品','ddd',1,'50.00','60.00','50.00','10.00',1),('fff',1,'就是这个商品这个商品','ddd',1,'50.00','60.00','50.00','10.00',1),('vvv',1,'就是这个商品这个商品','ddd',1,'50.00','60.00','50.00','10.00',1);
+
 /*Table structure for table `order_product_specification_detail` */
 
 DROP TABLE IF EXISTS `order_product_specification_detail`;
@@ -516,6 +529,8 @@ CREATE TABLE `order_product_specification_detail` (
 
 /*Data for the table `order_product_specification_detail` */
 
+insert  into `order_product_specification_detail`(`order_id`,`product_id`,`plan_code`,`price`) values ('aaa',1,'ddd','50.00');
+
 /*Table structure for table `pay_record` */
 
 DROP TABLE IF EXISTS `pay_record`;
@@ -524,16 +539,18 @@ CREATE TABLE `pay_record` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `user_id` int(11) NOT NULL COMMENT '用户id',
   `user_type` tinyint(4) DEFAULT '0' COMMENT '0学员1教练',
-  `order_id` varchar(64) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL COMMENT '购物订单号',
+  `order_id` varchar(64) DEFAULT NULL COMMENT '购物订单号',
   `money` decimal(10,2) NOT NULL DEFAULT '0.00' COMMENT '金额(正值为收入，负值为支出)',
   `type` tinyint(4) DEFAULT '0' COMMENT '类型0购买商品1返现2提现3上课结算收入4充值',
   `comment` varchar(100) NOT NULL COMMENT '备注',
   `balance` decimal(10,0) DEFAULT '0' COMMENT '余额',
   `crtime` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='用户资金变动记录';
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8 COMMENT='用户资金变动记录';
 
 /*Data for the table `pay_record` */
+
+insert  into `pay_record`(`id`,`user_id`,`user_type`,`order_id`,`money`,`type`,`comment`,`balance`,`crtime`) values (1,12,0,'aaa','23.00',1,'fff','20','2019-01-26 22:17:58'),(2,12,0,'aaa','45.00',3,'ee','55','2019-01-26 22:18:31'),(3,13,0,'vvv','-98.00',0,'交保护费','24','2019-01-30 13:58:29'),(4,13,0,NULL,'33.00',0,'fff','1','2019-01-30 13:58:41');
 
 /*Table structure for table `product` */
 
@@ -550,15 +567,15 @@ CREATE TABLE `product` (
   `stock` int(11) DEFAULT '9999' COMMENT '库存数量',
   `min_buy_count` int(4) DEFAULT '1' COMMENT '单次最少购买量',
   `max_buy_count` int(4) DEFAULT '9999' COMMENT '单次最大购买量',
-  `main_img` varchar(100) DEFAULT NULL COMMENT '主图',
+  `main_img` varchar(500) DEFAULT NULL COMMENT '主图',
   `state` tinyint(4) DEFAULT '0' COMMENT '状态0正常 1禁用',
   `crtime` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8 COMMENT='商品信息';
+) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8 COMMENT='商品信息';
 
 /*Data for the table `product` */
 
-insert  into `product`(`id`,`name`,`code`,`category_id`,`summary`,`detail_id`,`sales`,`stock`,`min_buy_count`,`max_buy_count`,`main_img`,`state`,`crtime`) values (1,'富贵鸟棉衣男外套2018冬季新款棉服男士修身韩版连帽','ZYY',5,'哈哈，就是随便游啦',1,0,9999,1,9999,'http://img.zcool.cn/community/01b82e56655b2532f8754573e34730.jpg@1280w_1l_2o_100sh.jpg',0,'2019-01-07 15:56:00'),(2,'七匹狼夹克男秋冬加厚加绒保暖外套男士立领休闲青中年','yy',6,'就是低头游啦',2,0,9999,1,9999,'http://p.ananas.chaoxing.com/star3/origin/2069697acd73f47b875d392d7c7be876.jpg',0,'2019-01-08 10:35:14'),(3,'臻杰龙牛仔外套男装夹克修身短外套秋冬季加绒加厚休闲男生','SMJC',6,'素描基础知识',3,0,9999,1,9999,'http://pic17.nipic.com/20111127/8831577_105726414163_2.jpg',0,'2019-01-14 14:50:35'),(4,'蛙泳基础蛙泳基础蛙泳基础','WY',1,'蛙泳基础知识',1,0,9999,1,9999,'http://pic17.nipic.com/20111127/8831577_105726414163_2.jpg',0,'2019-01-14 15:13:58'),(5,'蝶泳基础蝶泳基础蝶泳基础','DY',2,'蝶泳基础知识',2,0,9999,1,9999,'http://pic17.nipic.com/20111127/8831577_105726414163_2.jpg',0,'2019-01-14 15:14:09'),(6,'潜水基础潜水基础潜水基础','QS',1,'潜水基础知识',3,0,9999,1,9999,'http://pic17.nipic.com/20111127/8831577_105726414163_2.jpg',0,'2019-01-14 15:14:58'),(7,'狗刨基础狗刨基础狗刨基础','GP',1,'狗刨基础知识',1,0,9999,1,9999,'http://pic17.nipic.com/20111127/8831577_105726414163_2.jpg',0,'2019-01-14 15:15:34');
+insert  into `product`(`id`,`name`,`code`,`category_id`,`summary`,`detail_id`,`sales`,`stock`,`min_buy_count`,`max_buy_count`,`main_img`,`state`,`crtime`) values (1,'富贵鸟棉衣男外套2018冬季新款棉服男士修身韩版连帽','ZYY',1,'哈哈，就是随便游啦',1,22,9999,1,9999,'http://img.zcool.cn/community/01b82e56655b2532f8754573e34730.jpg@1280w_1l_2o_100sh.jpg',0,'2019-01-07 15:56:00'),(2,'七匹狼夹克男秋冬加厚加绒保暖外套男士立领休闲青中年','yy',1,'就是低头游啦',2,33,9999,1,9999,'http://p.ananas.chaoxing.com/star3/origin/2069697acd73f47b875d392d7c7be876.jpg',0,'2019-01-08 10:35:14'),(3,'臻杰龙牛仔外套男装夹克修身短外套秋冬季加绒加厚休闲男生','SMJC',1,'素描基础知识',3,11,9999,1,9999,'http://pic17.nipic.com/20111127/8831577_105726414163_2.jpg',0,'2019-01-14 14:50:35'),(4,'蛙泳基础蛙泳基础蛙泳基础','WY',1,'蛙泳基础知识',1,34,9999,1,9999,'http://pic17.nipic.com/20111127/8831577_105726414163_2.jpg',0,'2019-01-14 15:13:58'),(5,'蝶泳基础蝶泳基础蝶泳基础','DY',1,'蝶泳基础知识',2,56,9999,1,9999,'http://pic17.nipic.com/20111127/8831577_105726414163_2.jpg',0,'2019-01-14 15:14:09'),(6,'潜水基础潜水基础潜水基础','QS',1,'潜水基础知识',3,78,9999,1,9999,'http://pic17.nipic.com/20111127/8831577_105726414163_2.jpg',0,'2019-01-14 15:14:58'),(7,'狗刨基础狗刨基础狗刨基础','GP',1,'狗刨基础知识',1,99,9999,1,9999,'http://pic17.nipic.com/20111127/8831577_105726414163_2.jpg',0,'2019-01-14 15:15:34'),(8,'英特尔（Intel） i7 8700K 酷睿六核 盒装CPU处理器','ff',5,'xxx',3,13,9999,1,9999,'https://img10.360buyimg.com/n1/s450x450_jfs/t18448/200/2532654839/268503/b46a717e/5afe4d0cN10f96d55.jpg',0,'2019-01-26 22:02:49'),(9,'金士顿(Kingston)HyperX Fury系列 雷电 480G SATA3 RGB SSD固态硬盘','yp',6,'ffff',2,1,9999,1,9999,'https://img10.360buyimg.com/n1/s450x450_jfs/t18448/200/2532654839/268503/b46a717e/5afe4d0cN10f96d55.jpg',0,'2019-01-26 22:04:52');
 
 /*Table structure for table `product_detail` */
 
@@ -566,13 +583,13 @@ DROP TABLE IF EXISTS `product_detail`;
 
 CREATE TABLE `product_detail` (
   `product_id` int(11) NOT NULL,
-  `detail` mediumtext CHARACTER SET utf8 COLLATE utf8_general_ci COMMENT '商品详情',
+  `detail` mediumtext COMMENT '商品详情',
   PRIMARY KEY (`product_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='商品详细描述';
 
 /*Data for the table `product_detail` */
 
-insert  into `product_detail`(`product_id`,`detail`) values (1,'http://pic15.nipic.com/20110715/7935001_120846634125_2.jpg'),(2,'http://pic21.nipic.com/20120519/5454342_154115399000_2.jpg'),(3,'http://pic22.nipic.com/20120625/8534374_064230576000_2.jpg');
+insert  into `product_detail`(`product_id`,`detail`) values (1,'http://pic15.nipic.com/20110715/7935001_120846634125_2.jpg,http://pic21.nipic.com/20120519/5454342_154115399000_2.jpg,http://pic15.nipic.com/20110715/7935001_120846634125_2.jpg,http://pic21.nipic.com/20120519/5454342_154115399000_2.jpg'),(2,'http://pic15.nipic.com/20110715/7935001_120846634125_2.jpg,http://pic21.nipic.com/20120519/5454342_154115399000_2.jpg'),(3,'http://pic15.nipic.com/20110715/7935001_120846634125_2.jpg,http://pic21.nipic.com/20120519/5454342_154115399000_2.jpg,http://pic15.nipic.com/20110715/7935001_120846634125_2.jpg,http://pic21.nipic.com/20120519/5454342_154115399000_2.jpg');
 
 /*Table structure for table `product_discount` */
 
@@ -600,14 +617,14 @@ DROP TABLE IF EXISTS `product_headimg`;
 CREATE TABLE `product_headimg` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `product_id` int(11) NOT NULL COMMENT '商品id',
-  `headimg_url` varchar(500) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '头部图片地址',
+  `headimg_url` varchar(500) NOT NULL COMMENT '头部图片地址',
   `crtime` timestamp NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8 COMMENT='商品的头部图片';
+) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8 COMMENT='商品的头部图片';
 
 /*Data for the table `product_headimg` */
 
-insert  into `product_headimg`(`id`,`product_id`,`headimg_url`,`crtime`) values (1,1,'http://h.hiphotos.baidu.com/image/h%3D300/sign=f52899ade6c4b7452b94b116fffd1e78/58ee3d6d55fbb2fbbc6b4796424a20a44723dcf6.jpg','2019-01-08 14:42:22'),(2,2,'http://pic26.nipic.com/20121221/2531170_194321033000_2.jpg','2019-01-14 14:52:53'),(3,3,'http://pic1.nipic.com/2008-11-20/20081120145730349_2.jpg','2019-01-14 14:53:07');
+insert  into `product_headimg`(`id`,`product_id`,`headimg_url`,`crtime`) values (1,1,'http://h.hiphotos.baidu.com/image/h%3D300/sign=f52899ade6c4b7452b94b116fffd1e78/58ee3d6d55fbb2fbbc6b4796424a20a44723dcf6.jpg','2019-01-08 14:42:22'),(2,2,'http://pic26.nipic.com/20121221/2531170_194321033000_2.jpg','2019-01-14 14:52:53'),(3,3,'http://pic1.nipic.com/2008-11-20/20081120145730349_2.jpg','2019-01-14 14:53:07'),(4,4,'https://ss2.bdstatic.com/70cFvnSh_Q1YnxGkpoWK1HF6hhy/it/u=3123422028,2515050930&fm=26&gp=0.jpg','2019-01-14 14:53:07'),(5,5,'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1548565794695&di=e170d741ffc3f73ca8fa71070ef79432&imgtype=0&src=http%3A%2F%2Fimgsrc.baidu.com%2Fimgad%2Fpic%2Fitem%2F0df3d7ca7bcb0a469e7772006063f6246b60afb6.jpg','2019-01-14 14:53:07'),(6,6,'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1548565794693&di=3a9691566a544ed16b90e79c661cbd2b&imgtype=0&src=http%3A%2F%2Fm.360buyimg.com%2Fn12%2Fg7%2FM03%2F05%2F1B%2FrBEHZlBP8WIIAAAAAAEFJmHCCA0AABJGQNnfG8AAQU-762.jpg%2521q70.jpg','2019-01-14 14:53:07'),(7,7,'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1548565794689&di=ac8e7f8ab00c58ef9b808a8b260a9934&imgtype=0&src=http%3A%2F%2Fm.360buyimg.com%2Fmobilecms%2Fs750x750_jfs%2Ft14485%2F256%2F2200825182%2F308601%2Fd4915bf4%2F5a7bba24N31ac5449.jpg%2521q80.jpg','2019-01-14 14:53:07'),(8,8,'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1548565854974&di=8a0c81f6cacff117722233d4a5a254b9&imgtype=0&src=http%3A%2F%2Fimg10.360buyimg.com%2Fn0%2Fjfs%2Ft682%2F191%2F384961768%2F357836%2Fb3eceef0%2F54634052Nb580c3e5.jpg','2019-01-14 14:53:07'),(9,9,'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1548565854971&di=6546513e51add20d725f1a40f673e7d5&imgtype=0&src=http%3A%2F%2Fimg003.hc360.cn%2Fm2%2FM07%2F98%2F04%2FwKhQcVQ2sSqEBRH-AAAAAGd_wj0485.jpg','2019-01-14 14:53:07');
 
 /*Table structure for table `product_specification_detail` */
 
@@ -675,20 +692,22 @@ CREATE TABLE `settlement` (
 
 /*Data for the table `settlement` */
 
+insert  into `settlement`(`class_id`,`total_money`,`coach_money`,`platform_money`,`rate`,`crtime`) values (1,'500.00','40.00','10.00',0.8,'2019-01-25 21:07:10');
+
 /*Table structure for table `site_info` */
 
 DROP TABLE IF EXISTS `site_info`;
 
 CREATE TABLE `site_info` (
-  `key` varchar(50) NOT NULL COMMENT '关键字',
-  `value` varchar(500) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '值',
+  `pkey` varchar(50) NOT NULL COMMENT '关键字',
+  `pvalue` varchar(500) NOT NULL COMMENT '值',
   `uptime` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
-  PRIMARY KEY (`key`)
+  PRIMARY KEY (`pkey`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='站点基本信息';
 
 /*Data for the table `site_info` */
 
-insert  into `site_info`(`key`,`value`,`uptime`) values ('客服电话','4008221542','2019-01-19 11:17:39'),('用户注册返现金额','20','2019-01-19 11:17:39'),('站点名称','sunny baby','2019-01-19 11:17:39'),('邀请返现金额','30','2019-01-19 11:17:39');
+insert  into `site_info`(`pkey`,`pvalue`,`uptime`) values ('客服电话','4008221542','2019-01-19 11:17:39'),('用户注册返现金额','20','2019-01-19 11:17:39'),('站点名称','sunny baby','2019-01-19 11:17:39'),('邀请返现金额','30','2019-01-19 11:17:39');
 
 /*Table structure for table `specification` */
 
@@ -732,24 +751,24 @@ DROP TABLE IF EXISTS `student`;
 
 CREATE TABLE `student` (
   `id` int(11) NOT NULL AUTO_INCREMENT COMMENT '自增',
-  `username` varchar(20) NOT NULL COMMENT '用户名',
-  `password` varchar(64) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL COMMENT '密码',
+  `username` varchar(64) NOT NULL COMMENT '用户名',
+  `password` varchar(64) DEFAULT NULL COMMENT '密码',
   `name` varchar(20) DEFAULT NULL COMMENT '姓名',
   `sex` tinyint(4) DEFAULT '0' COMMENT '性别0男 1女',
-  `phone` varchar(11) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '电话号码',
+  `phone` varchar(11) NOT NULL COMMENT '电话号码',
   `birthday` date DEFAULT NULL COMMENT '生日',
-  `headimg` varchar(500) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL COMMENT '头像图片地址',
+  `headimg` varchar(500) DEFAULT NULL COMMENT '头像图片地址',
   `cash` decimal(10,2) NOT NULL DEFAULT '0.00' COMMENT '账户余额',
   `state` tinyint(4) NOT NULL DEFAULT '0' COMMENT '0正常 1受限',
   `crtime` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
   PRIMARY KEY (`id`),
   UNIQUE KEY `IX_USERNAME` (`username`),
   UNIQUE KEY `IX_PHONE` (`phone`)
-) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=utf8 COMMENT='注册用户信息表';
+) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=utf8 COMMENT='注册用户信息表';
 
 /*Data for the table `student` */
 
-insert  into `student`(`id`,`username`,`password`,`name`,`sex`,`phone`,`birthday`,`headimg`,`cash`,`state`,`crtime`) values (1,'xyz','e10adc3949ba59abbe56e057f20f883e','陈乔朋',0,'15271459965','2019-06-27','http://img3.redocn.com/tupian/20150318/shengdanquanbiankuangsucai_4020876.jpg','112.00',0,'2019-01-14 14:58:12'),(2,'space','54ea1cafa9e86fe45877ef16e38a8774','庄仕华',0,'17033215468','2019-01-01','http://img1.imgtn.bdimg.com/it/u=93745383,492158812&fm=26&gp=0.jpg','0.00',0,'2019-01-14 15:00:26');
+insert  into `student`(`id`,`username`,`password`,`name`,`sex`,`phone`,`birthday`,`headimg`,`cash`,`state`,`crtime`) values (1,'xyz','e10adc3949ba59abbe56e057f20f883e','陈乔朋',0,'15271459965','2019-06-27','http://img3.redocn.com/tupian/20150318/shengdanquanbiankuangsucai_4020876.jpg','112.00',0,'2019-01-14 14:58:12'),(2,'space','54ea1cafa9e86fe45877ef16e38a8774','庄仕华',0,'17033215468','2019-01-01','http://img1.imgtn.bdimg.com/it/u=93745383,492158812&fm=26&gp=0.jpg','0.00',0,'2019-01-14 15:00:26'),(12,'oqol35CUc3zO2cPEmXmDnC5YNL1k','','Tina',0,'18601647920','0001-01-01',NULL,'1655.00',0,'2019-01-26 14:32:03'),(13,'oqol35CYq6duEqrtKSg__mHWl0X8','','李雷',0,'13281250775','0001-01-01',NULL,'2044.00',0,'2019-01-30 10:49:05');
 
 /*Table structure for table `student_coupon` */
 
@@ -767,7 +786,7 @@ CREATE TABLE `student_coupon` (
 
 /*Data for the table `student_coupon` */
 
-insert  into `student_coupon`(`student_id`,`coupon_id`,`count`,`state`,`crtime`) values (1,1,1,0,'2019-01-08 17:22:05');
+insert  into `student_coupon`(`student_id`,`coupon_id`,`count`,`state`,`crtime`) values (1,1,10,0,'2019-01-08 17:22:05'),(1,2,1,0,'2019-01-28 13:57:26'),(12,3,5,0,'2019-01-25 21:07:41'),(13,1,3,0,'2019-01-30 11:21:59'),(13,2,1,1,'2019-01-30 11:22:05'),(13,3,8,0,'2019-01-30 11:23:00');
 
 /*Table structure for table `venue` */
 
@@ -783,11 +802,28 @@ CREATE TABLE `venue` (
   `state` tinyint(4) NOT NULL DEFAULT '0' COMMENT '状态 0正常 1受限',
   `crtime` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8 COMMENT='场馆信息';
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8 COMMENT='场馆信息';
 
 /*Data for the table `venue` */
 
-insert  into `venue`(`id`,`name`,`code`,`campus_id`,`address`,`summary`,`state`,`crtime`) values (1,'世纪城洗浴中心','SJC',1,'世纪城南路999号','免费',0,'2019-01-08 11:24:15'),(2,'清华园大澡堂','QYH',2,'清华大学第三食堂旁','1块钱个小时',0,'2019-01-14 14:44:34');
+insert  into `venue`(`id`,`name`,`code`,`campus_id`,`address`,`summary`,`state`,`crtime`) values (1,'世纪城洗浴中心','SJC',1,'世纪城南路999号','免费',0,'2019-01-08 11:24:15'),(2,'清华园大澡堂','QYH',2,'清华大学第三食堂旁','1块钱个小时',0,'2019-01-14 14:44:34'),(3,'龙帅养生馆','ls',3,'asdfadfadsf','dddd',0,'2019-01-26 22:09:54'),(4,'adsadadsf','ss',1,'sss','fff',0,'2019-01-26 22:10:03'),(5,'tttttt','rr',2,'dddd','ffff',0,'2019-01-26 22:10:11'),(6,'wwww','ddd',3,'fff','gg',0,'2019-01-26 22:10:19'),(7,'eee','ff',1,'fff','gg',0,'2019-01-26 22:10:27');
+
+/*Table structure for table `withdrawal` */
+
+DROP TABLE IF EXISTS `withdrawal`;
+
+CREATE TABLE `withdrawal` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `coach_id` int(11) NOT NULL COMMENT '教练id',
+  `money` decimal(10,2) NOT NULL DEFAULT '0.00' COMMENT '提现金额',
+  `state` tinyint(4) NOT NULL DEFAULT '0' COMMENT '状态0成功 1失败',
+  `crtime` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 COMMENT='提现记录';
+
+/*Data for the table `withdrawal` */
+
+insert  into `withdrawal`(`id`,`coach_id`,`money`,`state`,`crtime`) values (1,1,'3.00',0,'2019-01-26 22:20:32');
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
 /*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;

@@ -16,9 +16,9 @@ namespace Sunny.DAL
         /// </summary>
         /// <param name="orderRequest"></param>
         /// <returns></returns>
-        public static int CreateOrder(OrderRequest orderRequest)
+        public static bool CreateOrder(OrderRequest orderRequest, out string msg)
         {
-            if (CheckOrderRequest(orderRequest, out decimal dissMoney, out decimal couponMoney))
+            if (CheckOrderRequest(orderRequest, out decimal dissMoney, out decimal couponMoney, out msg))
             {
                 ReceiverInfo receiver = DBData.GetInstance(DBTable.receiver_info).GetEntityByKey<ReceiverInfo>(orderRequest.receiverid);
                 Student user = DBData.GetInstance(DBTable.student).GetEntity<Student>($"username='{orderRequest.user_name}'");
@@ -46,11 +46,11 @@ namespace Sunny.DAL
                     SaveOrderExtraInfo(orderRequest, orderId, user.id);
                 }
 
-                return insertCount;
+                return insertCount > 0;
             }
             else
             {
-                return -1;
+                return false;
             }
         }
 
@@ -116,38 +116,125 @@ namespace Sunny.DAL
         /// 检测数据是否正确
         /// </summary>
         /// <param name="orderRequest"></param>
+        /// <param name="dissMoney"></param>
+        /// <param name="couponMoney"></param>
+        /// <param name="msg">返回的错误信息</param>
         /// <returns></returns>
-        private static bool CheckOrderRequest(OrderRequest orderRequest, out decimal dissMoney, out decimal couponMoney)
+        private static bool CheckOrderRequest(OrderRequest orderRequest, out decimal dissMoney, out decimal couponMoney, out string msg)
         {
+            msg = string.Empty;
             dissMoney = 0;
             couponMoney = 0;
-            return CheckProductPrice(orderRequest.products, out dissMoney) && CheckCoupons(orderRequest, out couponMoney);
+            if (!CheckProductInfo(orderRequest.products) || !CheckProductPrice(orderRequest.products, out dissMoney))
+            {
+                msg = "商品信息已发生变化，请重新下单";
+                return false;
+            }
+
+            bool isOk = CheckCoupons(orderRequest, out couponMoney);
+            if (!isOk)
+                msg = "优惠券异常";
+
+            return isOk;
         }
 
         /// <summary>
-        /// 检测优惠券数据是否正确
+        /// 检测订单商品分类与服务器商品分类是否一致
+        /// </summary>
+        /// <param name="products"></param>
+        /// <returns></returns>
+        private static bool CheckProductInfo(List<ProductRequest> products)
+        {
+            try
+            {
+                string productIds = string.Join(",", products.Select(a => a.prouduct_id));
+                IList<Product> serverList = DBData.GetInstance(DBTable.product).GetList<Product>($"id in({productIds})");
+                foreach (ProductRequest item in products)
+                {   //检测前端传入的商品分类与服务端的商品分类是否一致
+                    if (serverList.First(a => a.id == item.prouduct_id).category_id != item.category_id)
+                    {
+                        return false;
+                    }
+                }
+
+                return true;
+            }
+            catch (Exception e)
+            {
+                Util.Log.LogUtil.Write($"CheckProductInfo 检测订单商品信息时出错：{e}", Util.Log.LogType.Error);
+                return false;
+            }
+        }
+
+        /// <summary>
+        /// 检测优惠券数据是否合法
         /// </summary>
         /// <param name="orderRequest"></param>
+        /// <param name="money"></param>
         /// <returns></returns>
         private static bool CheckCoupons(OrderRequest orderRequest, out decimal money)
         {
             money = 0;
             try
             {
-                string productIds = string.Join(",", orderRequest.products.Select(a => a.prouduct_id));
-                string couponIds = string.Join(",", orderRequest.coupons.Select(a => a.id));
                 Student user = DBData.GetInstance(DBTable.student).GetEntity<Student>($"username='{orderRequest.user_name}'");
-                List<CustCoupon> serverCoupons = StudentCouponDAL.GetStudentCouponList(user.id, couponIds, productIds);
-
-                foreach (TmpCoupon item in orderRequest.coupons)
+                if (orderRequest.coupons.Length == 0)
                 {
-                    var tmpServer = serverCoupons.FirstOrDefault(a => a.id == item.id);
-                    if (tmpServer == null || tmpServer.count < item.count || tmpServer.count <= 0)
+                    return true;
+                }
+                else if (orderRequest.coupons.Length == 1)
+                {   //仅有一张优惠券
+                    var couponId = orderRequest.coupons.First().id.ToString();
+                    if (orderRequest.products.Count == 1)
+                    {   //一个商品
+                        var product = orderRequest.products.First();
+                        List<CustCoupon> serverCoupons = StudentCouponDAL.GetStudentCouponList(user.id, couponId, product.prouduct_id.ToString());
+                        if (serverCoupons.Count == 1)
+                        {
+                            //money = Math.Min(serverCoupons[0].money, product.price);
+                            money = product.price * product.count >= serverCoupons[0].money ? serverCoupons[0].money : 0;
+                            return true;
+                        }
                         return false;
+                    }
+                    else
+                    {   //多个商品
+                        string productIds = string.Join(",", orderRequest.products.Select(a => a.prouduct_id));
+                        List<CustCoupon> serverCoupons = StudentCouponDAL.GetStudentCouponList(user.id, couponId, productIds);
+                        //serverCoupons = serverCoupons.Where(a => a.multiple == 0).ToList(); //过滤可一次使用多张的会更券，暂不考虑此情况，默认一次只能使用一张
+                        if (serverCoupons.Count == 1)
+                        {
+                            var products = orderRequest.products.Where(a => a.category_id == serverCoupons[0].category_id);
+                            //money = Math.Min(serverCoupons[0].money, products.Sum(a => a.price * a.count));
+                            decimal totlalMoney = products.Sum(a => a.price * a.count);     //商品总金额
+                            money = totlalMoney >= serverCoupons[0].money ? serverCoupons[0].money : 0;
+                            return true;
+                        }
+                        return false;
+                    }
+                }
+                else
+                {   //有多张优惠券
+                    string coupons = string.Join(",", orderRequest.coupons.Select(a => a.id));
+                    if (orderRequest.products.Count == 1)
+                    {   //一个商品
+                        var product = orderRequest.products.First();
+                        List<CustCoupon> serverCoupons = StudentCouponDAL.GetStudentCouponList(user.id, coupons, product.prouduct_id.ToString());
+                        if (serverCoupons.Count == orderRequest.coupons.Length)
+                        {
+                            //money = Math.Min(serverCoupons.Sum(a => a.money),);
+                            decimal totalCouponsMoney = serverCoupons.Sum(a => a.money);    //多张优惠券的金额
+                            money = product.price * product.count >= totalCouponsMoney ? totalCouponsMoney : 0;
+                            return true;
+                        }
+                        return false;
+                    }
+                    else
+                    {   //多个商品todo:
+                        return false;
+                    }
                 }
 
-                money = serverCoupons.Sum(a => a.money * a.count);
-                return true;
             }
             catch (Exception e)
             {
@@ -155,6 +242,7 @@ namespace Sunny.DAL
                 return false;
             }
         }
+
 
         /// <summary>
         /// 创建订单相关的优惠券信息
@@ -320,7 +408,8 @@ namespace Sunny.DAL
                     if (category.type == 0)
                     {
                         Hours hour = DBData.GetInstance(DBTable.hours).GetEntityByKey<Hours>(item.prouduct_id);
-
+                        IList<CourseType> courseTypes = DBData.GetInstance(DBTable.course_type).GetList<CourseType>();
+                        int maxCount = courseTypes.First(a => a.id == item.type_id).max_people;
                         //存储订单中各商品的规格信息
                         DBData.GetInstance(DBTable.course).Add(new Course()
                         {
@@ -328,7 +417,7 @@ namespace Sunny.DAL
                             student_id = userid,
                             venue_id = item.venue_id,
                             order_id = orderId,
-                            max_count = item.type_id,
+                            max_count = maxCount,
                             hour = hour.hour,
                             over_hour = 0,
                         });
@@ -379,6 +468,7 @@ namespace Sunny.DAL
                         count = product.count,
                         total_amount = product.total_amount,
                         campus = product.campus_name,
+                        main_img = product.main_img,
                         venue_name = product.venue_name,
                         specifications = specification != null ? specification.specifications : "",
                     });

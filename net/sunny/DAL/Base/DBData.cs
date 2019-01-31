@@ -77,7 +77,7 @@ namespace Sunny.DAL
             InstanceList.Add("site_info", new BaseQuery("site_info", "pkey", "pkey", false));
             InstanceList.Add("hot_course", new BaseQuery("hot_course", "product_id", "product_id", false));
             InstanceList.Add("coach_img", new BaseQuery("coach_img", "id", "id", false));
-            InstanceList.Add("coruse_price", new BaseQuery("coruse_price", "", "", false));
+            InstanceList.Add("course_price", new BaseQuery("course_price", "", "", false));
             InstanceList.Add("invitation", new BaseQuery("invitation", "student_id", "student_id", false));
         }
 

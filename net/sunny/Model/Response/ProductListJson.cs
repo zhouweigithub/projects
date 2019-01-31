@@ -20,6 +20,10 @@ namespace Sunny.Model.Custom
         /// </summary>
         public string name { get; set; }
         /// <summary>
+        /// 分类id
+        /// </summary>
+        public int category_id { get; set; }
+        /// <summary>
         /// 主图
         /// </summary>
         public string main_img { get; set; }

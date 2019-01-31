@@ -19,7 +19,8 @@ namespace Sunny.DAL
         /// 获取商品信息
         /// </summary>
         private static readonly string getProductListSql = @"
-SELECT a.id product_id,a.name,a.main_img,(IFNULL(c.min_price,0)-IFNULL(d.dismoney,0))min_price,(IFNULL(c.max_price,0)-IFNULL(d.dismoney,0))max_price,IFNULL(d.dismoney,0)dismoney FROM product a
+SELECT a.id product_id,a.name,a.main_img,(IFNULL(c.min_price,0)-IFNULL(d.dismoney,0))min_price,a.category_id,
+(IFNULL(c.max_price,0)-IFNULL(d.dismoney,0))max_price,IFNULL(d.dismoney,0)dismoney FROM product a
 INNER JOIN category b ON a.category_id=b.id
 LEFT JOIN(
 	SELECT m.product_id,IFNULL(MIN(n.price),0)min_price,IFNULL(MAX(n.price),0)max_price FROM product_specification_detail m
@@ -44,7 +45,8 @@ WHERE b.type=1 {0}
         /// 单个商品信息
         /// </summary>
         private static readonly string getProductDetailSql = @"
-SELECT a.id product_id,a.name,a.main_img,(IFNULL(c.min_price,0)-IFNULL(d.dismoney,0))min_price,(IFNULL(c.max_price,0)-IFNULL(d.dismoney,0))max_price,IFNULL(d.dismoney,0)dismoney,e.heading_urls,f.detail FROM product a
+SELECT a.id product_id,a.name,a.main_img,(IFNULL(c.min_price,0)-IFNULL(d.dismoney,0))min_price,a.category_id,
+(IFNULL(c.max_price,0)-IFNULL(d.dismoney,0))max_price,IFNULL(d.dismoney,0)dismoney,e.heading_urls,f.detail FROM product a
 INNER JOIN category b ON a.category_id=b.id
 LEFT JOIN(
 	SELECT m.product_id,IFNULL(MIN(n.price),0)min_price,IFNULL(MAX(n.price),0)max_price FROM product_specification_detail m

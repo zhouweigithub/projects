@@ -47,5 +47,13 @@ namespace Sunny.Model.Custom
         /// 状态
         /// </summary>
         public string state { get; set; }
+        /// <summary>
+        /// 教练名字
+        /// </summary>
+        public string coach_name { get; set; }
+        /// <summary>
+        /// 教练电话
+        /// </summary>
+        public string coach_phone { get; set; }
     }
 }

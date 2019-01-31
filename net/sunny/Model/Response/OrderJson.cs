@@ -53,6 +53,7 @@ namespace Sunny.Model.Custom
         public string specifications { get; set; }
         public string venue_name { get; set; }
         public string campus { get; set; }
+        public string main_img { get; set; }
     }
 
 

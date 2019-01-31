@@ -42,9 +42,13 @@ namespace Sunny.Model.Request
         public List<ProductRequest> products { get; set; }
 
     }
+
     public class TmpCoupon
     {
         public int id;
+        /// <summary>
+        /// 数量（目前仅能使用1张）
+        /// </summary>
         public int count;
     }
 

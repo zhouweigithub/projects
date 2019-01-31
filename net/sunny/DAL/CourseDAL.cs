@@ -22,7 +22,7 @@ namespace Sunny.DAL
 SELECT a.id product_id,a.name,a.main_img,b.id category_id,b.name category_name,(IFNULL(c.min_price,0)-IFNULL(d.dismoney,0))min_price,(IFNULL(c.max_price,0)-IFNULL(d.dismoney,0))max_price,IFNULL(d.dismoney,0)dismoney FROM product a
 INNER JOIN category b ON a.category_id=b.id
 LEFT JOIN (
-	SELECT product_id,MAX(price)max_price,MIN(price)min_price FROM coruse_price GROUP BY product_id
+	SELECT product_id,MAX(price)max_price,MIN(price)min_price FROM course_price GROUP BY product_id
 )c ON a.id=c.product_id
 LEFT JOIN (
 	SELECT product_id,SUM(n.money) dismoney FROM product_discount m 
@@ -45,7 +45,7 @@ WHERE a.state=0 AND b.state=0 AND b.type=0 {0}
 SELECT a.id product_id,a.name,a.main_img,b.id category_id,b.name category_name,(IFNULL(c.min_price,0)-IFNULL(d.dismoney,0))min_price,(IFNULL(c.max_price,0)-IFNULL(d.dismoney,0))max_price,IFNULL(d.dismoney,0)dismoney,GROUP_CONCAT(e.heading_urls)heading_urls,f.detail FROM product a
 INNER JOIN category b ON a.category_id=b.id
 LEFT JOIN (
-	SELECT product_id,MAX(price)max_price,MIN(price)min_price FROM coruse_price GROUP BY product_id
+	SELECT product_id,MAX(price)max_price,MIN(price)min_price FROM course_price GROUP BY product_id
 )c ON a.id=c.product_id
 LEFT JOIN (
 	SELECT product_id,SUM(n.money) dismoney FROM product_discount m 
@@ -66,7 +66,7 @@ WHERE a.state=0 AND b.state=0 AND b.type=0 AND a.id='{0}'
         private static readonly string getCoursePriceSql = @"
 SELECT a.id product_id,a.name,(IFNULL(b.price,0)-IFNULL(c.dismoney,0))price,IFNULL(c.dismoney,0)discount_money,c.discount_id,discount_name FROM product a
 LEFT JOIN (
-	SELECT product_id,price FROM coruse_price WHERE product_id={0} AND venud_id={1} AND type_id={2}
+	SELECT product_id,price FROM course_price WHERE product_id={0} AND venud_id={1} AND type_id={2}
 )b ON a.id=b.product_id
 LEFT JOIN (
 	SELECT m.product_id,n.money dismoney,n.id discount_id,n.name discount_name FROM product_discount m 
@@ -84,7 +84,7 @@ SELECT a.product_id,b.name,b.main_img,(IFNULL(d.min_price,0)-IFNULL(e.dismoney,0
 INNER JOIN product b ON a.product_id=b.id
 INNER JOIN category c ON b.category_id=c.id
 LEFT JOIN (
-	SELECT product_id,MAX(price)max_price,MIN(price)min_price FROM coruse_price GROUP BY product_id
+	SELECT product_id,MAX(price)max_price,MIN(price)min_price FROM course_price GROUP BY product_id
 )d ON a.product_id=d.product_id
 LEFT JOIN (
 	SELECT product_id,SUM(n.money) dismoney FROM product_discount m 

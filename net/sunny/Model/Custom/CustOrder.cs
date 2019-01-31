@@ -22,6 +22,7 @@ namespace Sunny.Model.Custom
         public decimal total_amount { get; set; }
         public string campus_name { get; set; }
         public string venue_name { get; set; }
+        public string main_img { get; set; }
     }
 
     public class CustOrderProductSpecification

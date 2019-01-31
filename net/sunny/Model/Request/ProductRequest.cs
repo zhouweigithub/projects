@@ -8,7 +8,17 @@ namespace Sunny.Model.Request
 {
     public class ProductRequest
     {
+        /// <summary>
+        /// 商品id
+        /// </summary>
         public int prouduct_id { get; set; }
+        /// <summary>
+        /// 商品分类id
+        /// </summary>
+        public int category_id { get; set; }
+        /// <summary>
+        /// 数量
+        /// </summary>
         public int count { get; set; }
         /// <summary>
         /// 规格编号
@@ -31,4 +41,17 @@ namespace Sunny.Model.Request
         /// </summary>
         public int venue_id { get; set; }
     }
+
+    public class TmpProduct
+    {
+        /// <summary>
+        /// 商品id
+        /// </summary>
+        public int product_id { get; set; }
+        /// <summary>
+        /// 单价*数量
+        /// </summary>
+        public decimal total_money { get; set; }
+    }
+
 }

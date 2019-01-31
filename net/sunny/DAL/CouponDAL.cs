@@ -31,9 +31,8 @@ WHERE b.state=0 AND c.type=0 AND a.student_id='{0}'
         private static readonly string getCouponDefaultOfStudentSql = @"
 SELECT b.id,1 count,b.name,b.money,b.start_time,b.end_time FROM student_coupon a
 INNER JOIN coupon b ON a.coupon_id=b.id
-WHERE a.state=0 a.count>0 AND b.category_id='{0}' AND a.student_id='{1}'
+WHERE a.state=0 AND a.count>0 AND b.state=0 AND b.start_time<NOW() AND b.end_time >NOW() AND b.category_id='{0}' AND a.student_id='{1}'
 ORDER BY b.money DESC
-LIMIT 1
 ";
 
         private static readonly string addOrUpdateCouponCountSql = @"
@@ -71,19 +70,19 @@ UPDATE student_coupon SET `count`=`count`+{0} WHERE student_id='{1}' AND coupon_
         /// 获取当前订单可用的默认优惠券
         /// </summary>
         /// <param name="studentId"></param>
-        /// <param name="categoryId"></param>
+        /// <param name="productId"></param>
         /// <returns></returns>
-        public static CouponListJson GetCouponDefaultOfStudent(int studentId, int categoryId)
+        public static List<CouponListJson> GetCouponDefaultOfStudent(int studentId, int productId)
         {
             try
             {
                 using (DBHelper dbhelper = new DBHelper())
                 {
-                    DataTable dt = dbhelper.ExecuteDataTable(string.Format(getCouponDefaultOfStudentSql, categoryId, studentId));
+                    DataTable dt = dbhelper.ExecuteDataTable(string.Format(getCouponDefaultOfStudentSql, productId, studentId));
 
                     if (dt != null && dt.Rows.Count > 0)
                     {
-                        return dt.ToList<CouponListJson>().First();
+                        return dt.ToList<CouponListJson>();
                     }
                 }
             }
@@ -92,7 +91,7 @@ UPDATE student_coupon SET `count`=`count`+{0} WHERE student_id='{1}' AND coupon_
                 Util.Log.LogUtil.Write("GetCouponDefaultOfStudent 出错：" + ex, Util.Log.LogType.Error);
             }
 
-            return null;
+            return new List<CouponListJson>();
         }
 
         /// <summary>

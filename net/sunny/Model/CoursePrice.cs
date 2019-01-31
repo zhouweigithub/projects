@@ -10,28 +10,28 @@ namespace Sunny.Model
     /// <summary>
     /// 课程商品的价格
     /// </summary>
-    public class CorusePrice
+    public class CoursePrice
     {
         /// <summary>
         /// 课程商品id
         /// </summary>
         [TableField]
-        public string product_id { get; set; }
+        public int product_id { get; set; }
         /// <summary>
         /// 场馆id
         /// </summary>
         [TableField]
-        public short venud_id { get; set; }
+        public int venue_id { get; set; }
         /// <summary>
         /// 上课人数类型course_type.id
         /// </summary>
         [TableField]
-        public short type_id { get; set; }
+        public int type_id { get; set; }
         /// <summary>
         /// 价格
         /// </summary>
         [TableField]
-        public short price { get; set; }
+        public decimal price { get; set; }
         /// <summary>
         /// 更新时间
         /// </summary>

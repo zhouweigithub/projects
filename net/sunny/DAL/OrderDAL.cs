@@ -15,11 +15,12 @@ namespace Sunny.DAL
         /// </summary>
         private static readonly string getOrderProductList = @"
 SELECT a.order_id,a.money,a.state,a.coupon_money,a.discount_money,a.crtime,b.product_id,b.product_name,b.count,
-b.price,b.orig_price,b.total_amount,c.name venue_name,d.name campus_name FROM `order` a
+b.price,b.orig_price,b.total_amount,c.name venue_name,d.name campus_name,e.main_img FROM `order` a
 INNER JOIN order_product b ON a.order_id=b.order_id
 LEFT JOIN venue c ON b.venueid=c.id
 LEFT JOIN campus d ON c.campus_id=d.id
-WHERE a.userid='{0}' and a.state='{1}'
+LEFT JOIN product e ON b.product_id=e.id
+WHERE a.userid='{0}'  {1}
 ";
         /// <summary>
         /// 取订单中商品的规格信息
@@ -54,9 +55,15 @@ INSERT INTO pay_record(order_id,money) VALUES('{0}','{1}');";
         {
             try
             {
+                string where = string.Empty;
+                if (state != 999)
+                {
+                    where += $" and a.state='{state}'";
+                }
                 using (DBHelper dbhelper = new DBHelper())
                 {
-                    DataTable dt = dbhelper.ExecuteDataTable(string.Format(getOrderProductList, userid, state));
+
+                    DataTable dt = dbhelper.ExecuteDataTable(string.Format(getOrderProductList, userid, where));
 
                     if (dt != null && dt.Rows.Count > 0)
                     {

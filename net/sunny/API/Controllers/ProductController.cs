@@ -78,5 +78,24 @@ namespace API.Controllers
             return Json(result);
         }
 
+        //[HttpGet]
+        //[Route("api/product/coursespecification")]
+        //public IHttpActionResult GetCourseSpecification(int id)
+        //{
+        //    ResponseResult result = null;
+        //    try
+        //    {
+        //        CourseSpecificationJson category = ProductExtroBLL.GetCourseSpecification(id);
+        //        result = new ResponseResult(0, "ok", category);
+        //    }
+        //    catch (Exception e)
+        //    {
+        //        Util.Log.LogUtil.Write($"api/product/GetCourseSpecification 出错 id {id} \r\n {e}", Util.Log.LogType.Error);
+        //        result = new ResponseResult(-1, "服务内部错误", null);
+        //    }
+        //    return Json(result);
+        //}
+
+
     }
 }

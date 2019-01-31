@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Sunny.Model.Response;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -20,6 +21,14 @@ namespace Sunny.Model.Custom
         /// </summary>
         public string name { get; set; }
         /// <summary>
+        /// 分类id
+        /// </summary>
+        public int category_id { get; set; }
+        /// <summary>
+        /// 是否是课程
+        /// </summary>
+        public bool iscourse { get { return true; } }
+        /// <summary>
         /// 最低价
         /// </summary>
         public decimal min_price { get; set; }
@@ -39,6 +48,10 @@ namespace Sunny.Model.Custom
         /// 商品详情
         /// </summary>
         public string detail { get; set; }
+        /// <summary>
+        /// 课程的规格信息
+        /// </summary>
+        public CourseSpecificationJson specification { get; set; }
         /// <summary>
         /// 课程的评论
         /// </summary>

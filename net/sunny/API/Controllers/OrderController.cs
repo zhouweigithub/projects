@@ -40,8 +40,10 @@ namespace API.Controllers
             ResponseResult result = null;
             try
             {
-                int count = OrderBLL.CreateOrder(request);
-                result = new ResponseResult(0, "ok", count > 0);
+                bool isOk = OrderBLL.CreateOrder(request, out string msg);
+                string message = isOk ? "ok" : msg;
+                int code = isOk ? 0 : -1;
+                result = new ResponseResult(code, message, isOk);
             }
             catch (Exception e)
             {
@@ -59,7 +61,7 @@ namespace API.Controllers
             try
             {
                 int student_id = DBData.GetInstance(DBTable.student).GetEntity<Student>($"username='{token}'").id;
-                List<OrderJson> list = OrderBLL.GetOrderInfo(student_id,state);
+                List<OrderJson> list = OrderBLL.GetOrderInfo(student_id, state);
                 result = new ResponseResult(0, "ok", list);
             }
             catch (Exception e)

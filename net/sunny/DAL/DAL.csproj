@@ -91,6 +91,7 @@
     <Compile Include="Function\DataTableExTen.cs" />
     <Compile Include="InvitationDAL.cs" />
     <Compile Include="OrderDAL.cs" />
+    <Compile Include="ProductExtroDAL.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Base\MySql.cs" />
     <Compile Include="DiscountDAL.cs" />

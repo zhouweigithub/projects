@@ -27,8 +27,8 @@ namespace Sunny.BLL.API
             //课程评论信息
             if (courseInfo != null)
             {
-                List<ClassCommentJson> comments = ClassDAL.GetClassCommentList(0, productId, 10);
-                courseInfo.commentslist = comments;
+                courseInfo.specification = ProductExtroBLL.GetCourseSpecification(productId);
+                courseInfo.commentslist = ClassDAL.GetClassCommentList(0, productId, 10);
             }
             return courseInfo;
         }

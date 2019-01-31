@@ -20,6 +20,14 @@ namespace Sunny.Model.Custom
         /// </summary>
         public string name { get; set; }
         /// <summary>
+        /// 分类id
+        /// </summary>
+        public int category_id { get; set; }
+        /// <summary>
+        /// 是否是课程
+        /// </summary>
+        public bool iscourse { get { return false; } }
+        /// <summary>
         /// 最低价
         /// </summary>
         public decimal min_price { get; set; }
