@@ -63,7 +63,7 @@ namespace Sunny.API.Controllers
                         {
                             string name = item.Headers.ContentDisposition.FileName.Replace("\"", "");
                             string newFileName = DateTime.Now.ToString("yyyyMMddHHmmssffff")
-                                + Function.GetRangeNumber(4, RangeType.Number)
+                                + Function.GetRangeCharaters(4, RangeType.Number)
                                 + Path.GetExtension(name);
 
                             File.Move(item.LocalFileName, Path.Combine(rootPath, newFileName));

@@ -19,6 +19,9 @@ namespace Sunny.DAL
         /// <returns></returns>
         public static Order CreateOrder(OrderRequest orderRequest, out string msg)
         {
+            string json = Util.Json.JsonUtil.Serialize(orderRequest);
+            Util.Log.LogUtil.Write(json, Util.Log.LogType.Debug);
+
             if (CheckOrderRequest(orderRequest, out decimal dissMoney, out decimal couponMoney, out msg))
             {
                 ReceiverInfo receiver = DBData.GetInstance(DBTable.receiver_info).GetEntityByKey<ReceiverInfo>(orderRequest.receiverid);
@@ -26,9 +29,9 @@ namespace Sunny.DAL
                 string orderId = CreateOrderId(user.id);
                 Order order = new Order()
                 {
-                    address = receiver.address,
-                    phone = receiver.phone,
-                    receiver = receiver.name,
+                    address = receiver?.address,
+                    phone = receiver?.phone,
+                    receiver = receiver?.name,
                     crdate = DateTime.Today,
                     crtime = DateTime.Now,
                     deliver_id = orderRequest.deliverid,
@@ -46,9 +49,14 @@ namespace Sunny.DAL
                 if (insertCount > 0)
                 {   //存储订单相关信息
                     SaveOrderExtraInfo(orderRequest, orderId, user.id);
+                    return order;
+                }
+                else
+                {
+                    msg = "保存订单失败";
+                    return null;
                 }
 
-                return order;
             }
             else
             {
@@ -110,7 +118,7 @@ namespace Sunny.DAL
         private static string CreateOrderId(int userid)
         {
             return string.Format("{0}_{1}", "1" + userid.ToString().PadLeft(6, '0'),
-                DateTime.Now.ToString("yyyyMMddHHmmssffff") + Common.Function.GetRangeNumber(4, Common.RangeType.Number)
+                DateTime.Now.ToString("yyyyMMddHHmmssffff") + Common.Function.GetRangeCharaters(4, Common.RangeType.Number)
             );
         }
 
@@ -149,11 +157,11 @@ namespace Sunny.DAL
         {
             try
             {
-                string productIds = string.Join(",", products.Select(a => a.prouduct_id));
+                string productIds = string.Join(",", products.Select(a => a.product_id));
                 IList<Product> serverList = DBData.GetInstance(DBTable.product).GetList<Product>($"id in({productIds})");
                 foreach (ProductRequest item in products)
                 {   //检测前端传入的商品分类与服务端的商品分类是否一致
-                    if (serverList.First(a => a.id == item.prouduct_id).category_id != item.category_id)
+                    if (serverList.First(a => a.id == item.product_id).category_id != item.category_id)
                     {
                         return false;
                     }
@@ -180,7 +188,7 @@ namespace Sunny.DAL
             try
             {
                 Student user = DBData.GetInstance(DBTable.student).GetEntity<Student>($"username='{orderRequest.user_name}'");
-                if (orderRequest.coupons.Length == 0)
+                if (orderRequest.coupons == null || orderRequest.coupons.Length == 0)
                 {
                     return true;
                 }
@@ -190,7 +198,7 @@ namespace Sunny.DAL
                     if (orderRequest.products.Count == 1)
                     {   //一个商品
                         var product = orderRequest.products.First();
-                        List<CustCoupon> serverCoupons = StudentCouponDAL.GetStudentCouponList(user.id, couponId, product.prouduct_id.ToString());
+                        List<CustCoupon> serverCoupons = StudentCouponDAL.GetStudentCouponList(user.id, couponId, product.product_id.ToString());
                         if (serverCoupons.Count == 1)
                         {
                             //money = Math.Min(serverCoupons[0].money, product.price);
@@ -201,7 +209,7 @@ namespace Sunny.DAL
                     }
                     else
                     {   //多个商品
-                        string productIds = string.Join(",", orderRequest.products.Select(a => a.prouduct_id));
+                        string productIds = string.Join(",", orderRequest.products.Select(a => a.product_id));
                         List<CustCoupon> serverCoupons = StudentCouponDAL.GetStudentCouponList(user.id, couponId, productIds);
                         //serverCoupons = serverCoupons.Where(a => a.multiple == 0).ToList(); //过滤可一次使用多张的会更券，暂不考虑此情况，默认一次只能使用一张
                         if (serverCoupons.Count == 1)
@@ -221,7 +229,7 @@ namespace Sunny.DAL
                     if (orderRequest.products.Count == 1)
                     {   //一个商品
                         var product = orderRequest.products.First();
-                        List<CustCoupon> serverCoupons = StudentCouponDAL.GetStudentCouponList(user.id, coupons, product.prouduct_id.ToString());
+                        List<CustCoupon> serverCoupons = StudentCouponDAL.GetStudentCouponList(user.id, coupons, product.product_id.ToString());
                         if (serverCoupons.Count == orderRequest.coupons.Length)
                         {
                             //money = Math.Min(serverCoupons.Sum(a => a.money),);
@@ -253,7 +261,10 @@ namespace Sunny.DAL
         /// <param name="orderId"></param>
         private static void CreateOrderCoupons(OrderRequest orderRequest, string orderId, int userid)
         {
-            string productIds = string.Join(",", orderRequest.products.Select(a => a.prouduct_id));
+            if (orderRequest.coupons == null || orderRequest.coupons.Length == 0)
+                return;
+
+            string productIds = string.Join(",", orderRequest.products.Select(a => a.product_id));
             string couponIds = string.Join(",", orderRequest.coupons.Select(a => a.id));
             Student user = DBData.GetInstance(DBTable.student).GetEntity<Student>($"username='{orderRequest.user_name}'");
             List<CustCoupon> coupons = StudentCouponDAL.GetStudentCouponList(user.id, couponIds, productIds);
@@ -306,6 +317,7 @@ namespace Sunny.DAL
                 catch (Exception e)
                 {
                     Util.Log.LogUtil.Write("CheckProductPrice 检测订单商品的价格是否正确时出错：" + e, Util.Log.LogType.Error);
+                    return false;
                 }
             }
             return true;
@@ -327,14 +339,17 @@ namespace Sunny.DAL
                 try
                 {
                     CustProductPriceInfoJson info = GetPriceInfo(item);
-                    DBData.GetInstance(DBTable.order_coupon).Add(new OrderDiscount()
+                    if (info != null && info.discount_id > 0)
                     {
-                        order_id = orderId,
-                        discount_id = info.discount_id,
-                        product_id = info.product_id,
-                        name = info.discount_name,
-                        money = info.discount_money,
-                    });
+                        DBData.GetInstance(DBTable.order_discount).Add(new OrderDiscount()
+                        {
+                            order_id = orderId,
+                            discount_id = info.discount_id,
+                            product_id = info.product_id,
+                            name = info.discount_name,
+                            money = info.discount_money,
+                        });
+                    }
                 }
                 catch (Exception e)
                 {
@@ -359,18 +374,18 @@ namespace Sunny.DAL
             {
                 try
                 {
-                    Product product = DBData.GetInstance(DBTable.product).GetEntityByKey<Product>(item.prouduct_id);
-                    CustDisscount discount = DiscountDAL.GetDisscountByProductId(item.prouduct_id);
+                    Product product = DBData.GetInstance(DBTable.product).GetEntityByKey<Product>(item.product_id);
+                    CustDisscount discount = DiscountDAL.GetDisscountByProductId(item.product_id);
                     //存储订单中的商品信息
-                    DBData.GetInstance(DBTable.order_coupon).Add(new OrderProduct()
+                    DBData.GetInstance(DBTable.order_product).Add(new OrderProduct()
                     {
                         order_id = orderId,
-                        product_id = item.prouduct_id,
+                        product_id = item.product_id,
                         product_name = product.name,
                         count = item.count,
                         price = item.price,
                         orig_price = item.plan_price,
-                        discount_amount = discount.money * item.count,
+                        discount_amount = discount == null ? 0 : discount.money * item.count,
                         total_amount = item.price * item.count,
                         venueid = item.venue_id,
                     });
@@ -378,7 +393,7 @@ namespace Sunny.DAL
                     DBData.GetInstance(DBTable.order_product_specification_detail).Add(new OrderProductSpecificationDetail()
                     {
                         order_id = orderId,
-                        product_id = item.prouduct_id,
+                        product_id = item.product_id,
                         plan_code = item.plan_code,
                         price = item.price,
                     });
@@ -406,16 +421,16 @@ namespace Sunny.DAL
             {
                 try
                 {
-                    Category category = CategoryDAL.GetCategoryByProductId(item.prouduct_id);
+                    Category category = CategoryDAL.GetCategoryByProductId(item.product_id);
                     if (category.type == 0)
                     {
-                        Hours hour = DBData.GetInstance(DBTable.hours).GetEntityByKey<Hours>(item.prouduct_id);
+                        Hours hour = DBData.GetInstance(DBTable.hours).GetEntityByKey<Hours>(item.product_id);
                         IList<CourseType> courseTypes = DBData.GetInstance(DBTable.course_type).GetList<CourseType>();
                         int maxCount = courseTypes.First(a => a.id == item.type_id).max_people;
                         //存储订单中各商品的规格信息
                         DBData.GetInstance(DBTable.course).Add(new Course()
                         {
-                            product_id = item.prouduct_id,
+                            product_id = item.product_id,
                             student_id = userid,
                             venue_id = item.venue_id,
                             order_id = orderId,
@@ -502,14 +517,14 @@ namespace Sunny.DAL
         private static CustProductPriceInfoJson GetPriceInfo(ProductRequest productRequest)
         {
             CustProductPriceInfoJson result = null;
-            Category category = CategoryDAL.GetCategoryByProductId(productRequest.prouduct_id);
+            Category category = CategoryDAL.GetCategoryByProductId(productRequest.product_id);
             if (category.type == 0)
             {
-                result = CourseDAL.GetCoursePriceInfo(productRequest.prouduct_id, productRequest.venue_id, productRequest.type_id);
+                result = CourseDAL.GetCoursePriceInfo(productRequest.product_id, productRequest.venue_id, productRequest.type_id);
             }
             else
             {
-                result = ProductDAL.GetProductPriceInfo(productRequest.prouduct_id, productRequest.plan_code);
+                result = ProductDAL.GetProductPriceInfo(productRequest.product_id, productRequest.plan_code);
             }
 
             return result;

@@ -52,7 +52,7 @@ namespace Sunny.BLL.Page
                 return string.Empty;
 
             string key = Enum.GetName(typeof(SmsVerificationCodeTypeEnum), type) + "_" + phone;
-            string verificationCode = Function.GetRangeNumber(4, RangeType.Number);
+            string verificationCode = Function.GetRangeCharaters(4, RangeType.Number);
             MemoryCacheManager.Set(key, verificationCode, 5);
             return verificationCode;
         }

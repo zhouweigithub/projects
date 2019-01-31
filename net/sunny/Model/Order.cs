@@ -20,6 +20,7 @@ namespace Sunny.Model
         /// <summary>
         /// 用户id
         /// </summary>
+        [TableField]
         public int userid { get; set; }
         /// <summary>
         /// 实际支付金额

@@ -7,12 +7,12 @@ namespace Sunny.Common
     public class Function
     {
         /// <summary>
-        /// 生成随机字符（字母为大写）
+        /// 生成随机字符串（字母为大写）
         /// </summary>
         /// <param name="length"></param>
         /// <param name="type"></param>
         /// <returns></returns>
-        public static string GetRangeNumber(int length, RangeType type)
+        public static string GetRangeCharaters(int length, RangeType type)
         {
             string source = string.Empty;
             switch (type)

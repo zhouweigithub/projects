@@ -52,7 +52,7 @@ namespace Sunny.DAL
             InstanceList.Add("class_comment_url", new BaseQuery("class_comment_url", "", "", false));
             InstanceList.Add("deliver", new BaseQuery("deliver", "id", "id", false));
             InstanceList.Add("discount", new BaseQuery("discount", "id", "id", false));
-            InstanceList.Add("order", new BaseQuery("order", "order_id", "order_id", false));
+            InstanceList.Add("order", new BaseQuery("`order`", "order_id", "order_id", false));
             InstanceList.Add("order_coupon", new BaseQuery("order_coupon", "", "", false));
             InstanceList.Add("order_product", new BaseQuery("order_product", "", "", false));
             InstanceList.Add("order_product_specification_detail", new BaseQuery("order_product_specification_detail", "", "", false));
@@ -79,6 +79,9 @@ namespace Sunny.DAL
             InstanceList.Add("coach_img", new BaseQuery("coach_img", "id", "id", false));
             InstanceList.Add("course_price", new BaseQuery("course_price", "", "", false));
             InstanceList.Add("invitation", new BaseQuery("invitation", "student_id", "student_id", false));
+            InstanceList.Add("order_discount", new BaseQuery("order_discount", "", "", false));
+
+            
         }
 
         /// <summary>

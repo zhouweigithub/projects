@@ -80,7 +80,7 @@ namespace Sunny.BLL.API
             {
                 string body = "sunnybaby-购物";
                 string device_info = "phone";
-                string randStr = Function.GetRangeNumber(10, RangeType.NumberAndLetter);
+                string randStr = Function.GetRangeCharaters(10, RangeType.NumberAndLetter);
                 string spbill_create_ip = WebHelper.GetClientIP();
 
                 CustOrderProduct order = orders[0];
@@ -123,7 +123,7 @@ namespace Sunny.BLL.API
 
         public static WXPayCloseOrderResult CloseOrder(string orderId)
         {
-            string randStr = Function.GetRangeNumber(10, RangeType.NumberAndLetter);
+            string randStr = Function.GetRangeCharaters(10, RangeType.NumberAndLetter);
 
             WXPayCloseOrderParameter para = new WXPayCloseOrderParameter()
             {
@@ -157,7 +157,7 @@ namespace Sunny.BLL.API
 
         public static WXPayRefundResult RefundOrder(string orderId)
         {
-            string randStr = Function.GetRangeNumber(10, RangeType.NumberAndLetter);
+            string randStr = Function.GetRangeCharaters(10, RangeType.NumberAndLetter);
 
             WXPayRefundParameter para = new WXPayRefundParameter()
             {

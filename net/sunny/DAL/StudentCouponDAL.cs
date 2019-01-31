@@ -37,6 +37,9 @@ WHERE a.state=0 AND b.state=0 AND b.start_time<NOW() AND b.end_time>NOW() AND a.
         /// <returns></returns>
         public static List<CustCoupon> GetStudentCouponList(int studentId, string studentCouponIds, string productIds)
         {
+            if (string.IsNullOrWhiteSpace(studentCouponIds))
+                return new List<CustCoupon>();
+
             try
             {
                 using (DBHelper dbhelper = new DBHelper())

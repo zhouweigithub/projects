@@ -11,7 +11,7 @@ namespace Sunny.Model.Request
         /// <summary>
         /// 商品id
         /// </summary>
-        public int prouduct_id { get; set; }
+        public int product_id { get; set; }
         /// <summary>
         /// 商品分类id
         /// </summary>

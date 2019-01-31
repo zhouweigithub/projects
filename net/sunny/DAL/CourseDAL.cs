@@ -66,7 +66,7 @@ WHERE a.state=0 AND b.state=0 AND b.type=0 AND a.id='{0}'
         private static readonly string getCoursePriceSql = @"
 SELECT a.id product_id,a.name,(IFNULL(b.price,0)-IFNULL(c.dismoney,0))price,IFNULL(c.dismoney,0)discount_money,c.discount_id,discount_name FROM product a
 LEFT JOIN (
-	SELECT product_id,price FROM course_price WHERE product_id={0} AND venud_id={1} AND type_id={2}
+	SELECT product_id,price FROM course_price WHERE product_id={0} AND venue_id={1} AND type_id={2}
 )b ON a.id=b.product_id
 LEFT JOIN (
 	SELECT m.product_id,n.money dismoney,n.id discount_id,n.name discount_name FROM product_discount m 
