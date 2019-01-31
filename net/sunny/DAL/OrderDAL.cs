@@ -20,7 +20,7 @@ INNER JOIN order_product b ON a.order_id=b.order_id
 LEFT JOIN venue c ON b.venueid=c.id
 LEFT JOIN campus d ON c.campus_id=d.id
 LEFT JOIN product e ON b.product_id=e.id
-WHERE a.userid='{0}'  {1}
+WHERE 1=1 {0}
 ";
         /// <summary>
         /// 取订单中商品的规格信息
@@ -46,24 +46,38 @@ INSERT INTO pay_record(order_id,money) VALUES('{0}','{1}');";
 
 
         /// <summary>
-        /// 取订单和商品信息
+        /// 取订单和商品信息，有订单号就按订单号查询 ，没有再按其他两个条件查询
         /// </summary>
         /// <param name="userid">用户id</param>
-        /// <param name="state">状态0未支付1已支付2已发货3已收货4已评价</param>
+        /// <param name="state">状态0未支付1已支付2已发货3已收货4已评价999所有订单</param>
         /// <returns></returns>
-        public static List<CustOrderProduct> GetOrderProductList(int userid, int state)
+        public static List<CustOrderProduct> GetOrderProductList(int userid, int state, string orderId)
         {
             try
             {
+                //有订单号就按订单号查询 ，没有再按其他两个条件查询
+
                 string where = string.Empty;
-                if (state != 999)
+
+                if (!string.IsNullOrWhiteSpace(orderId))
                 {
-                    where += $" and a.state='{state}'";
+                    where += $" and a.order_id='{orderId}'";
                 }
+                else
+                {
+                    if (userid != 0)
+                    {
+                        where += $" and a.userid='{userid}'";
+                    }
+                    if (state != 999)
+                    {
+                        where += $" and a.state='{state}'";
+                    }
+                }
+
                 using (DBHelper dbhelper = new DBHelper())
                 {
-
-                    DataTable dt = dbhelper.ExecuteDataTable(string.Format(getOrderProductList, userid, where));
+                    DataTable dt = dbhelper.ExecuteDataTable(string.Format(getOrderProductList, where));
 
                     if (dt != null && dt.Rows.Count > 0)
                     {

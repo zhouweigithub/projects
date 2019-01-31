@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Web;
 
 namespace Sunny.DAL
 {
@@ -16,14 +17,14 @@ namespace Sunny.DAL
         /// </summary>
         /// <param name="orderRequest"></param>
         /// <returns></returns>
-        public static bool CreateOrder(OrderRequest orderRequest, out string msg)
+        public static Order CreateOrder(OrderRequest orderRequest, out string msg)
         {
             if (CheckOrderRequest(orderRequest, out decimal dissMoney, out decimal couponMoney, out msg))
             {
                 ReceiverInfo receiver = DBData.GetInstance(DBTable.receiver_info).GetEntityByKey<ReceiverInfo>(orderRequest.receiverid);
                 Student user = DBData.GetInstance(DBTable.student).GetEntity<Student>($"username='{orderRequest.user_name}'");
                 string orderId = CreateOrderId(user.id);
-                int insertCount = DBData.GetInstance(DBTable.order).Add(new Order()
+                Order order = new Order()
                 {
                     address = receiver.address,
                     phone = receiver.phone,
@@ -39,18 +40,19 @@ namespace Sunny.DAL
                     discount_money = dissMoney,
                     coupon_money = couponMoney,
                     order_id = orderId,
-                });
+                };
+                int insertCount = DBData.GetInstance(DBTable.order).Add(order);
 
                 if (insertCount > 0)
                 {   //存储订单相关信息
                     SaveOrderExtraInfo(orderRequest, orderId, user.id);
                 }
 
-                return insertCount > 0;
+                return order;
             }
             else
             {
-                return false;
+                return null;
             }
         }
 
@@ -434,7 +436,7 @@ namespace Sunny.DAL
         public static List<OrderJson> GetOrderInfo(int userid, int state)
         {
             List<OrderJson> result = new List<OrderJson>();
-            List<CustOrderProduct> orderProductList = OrderDAL.GetOrderProductList(userid, state);
+            List<CustOrderProduct> orderProductList = OrderDAL.GetOrderProductList(userid, state, string.Empty);
             string[] orderIds = orderProductList.Select(a => a.order_id).Distinct().ToArray();
             List<CustOrderProductSpecification> specificationList = OrderDAL.GetOrderProductSpecificationList(orderIds);
             List<CustOrderCoupon> couponList = OrderDAL.GetOrderCouponList(orderIds);

@@ -28,6 +28,10 @@ namespace Sunny.Model.Custom
         /// </summary>
         public bool iscourse { get { return false; } }
         /// <summary>
+        /// 主图 
+        /// </summary>
+        public string main_img { get; set; }
+        /// <summary>
         /// 最低价
         /// </summary>
         public decimal min_price { get; set; }

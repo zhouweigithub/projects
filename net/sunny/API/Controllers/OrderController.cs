@@ -1,7 +1,9 @@
-﻿using Sunny.DAL;
+﻿using Sunny.BLL.API;
+using Sunny.DAL;
 using Sunny.Model;
 using Sunny.Model.Custom;
 using Sunny.Model.Request;
+using Sunny.Model.WXPay;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -40,10 +42,16 @@ namespace API.Controllers
             ResponseResult result = null;
             try
             {
-                bool isOk = OrderBLL.CreateOrder(request, out string msg);
-                string message = isOk ? "ok" : msg;
-                int code = isOk ? 0 : -1;
-                result = new ResponseResult(code, message, isOk);
+                Order order = OrderBLL.CreateOrder(request, out string msg);
+                if (order != null)
+                {
+                    WXPayToClientPara para = WeiXinPayBLL.SendPreOrder(order.order_id, request.user_name);
+                    result = new ResponseResult(0, "ok", para);
+                }
+                else
+                {
+                    result = new ResponseResult(-1, msg, null);
+                }
             }
             catch (Exception e)
             {

@@ -45,6 +45,15 @@ namespace Sunny.Common
         /// 小程序密钥
         /// </summary>
         public static readonly string MiniSecret;
+        /// <summary>
+        /// 商户号
+        /// </summary>
+        public static readonly string MchId;
+        /// <summary>
+        /// 商户平台的密钥
+        /// </summary>
+        public static readonly string MchSecret;
+
 
         static WebConfigData()
         {
@@ -58,6 +67,8 @@ namespace Sunny.Common
                 IgnoreSmsCodeIp = Config.GetConfigToString("IgnoreSmsCodeIp");
                 MiniAppid = Config.GetConfigToString("MiniAppid");
                 MiniSecret = Config.GetConfigToString("MiniSecret");
+                MchId = Config.GetConfigToString("MchId");
+                MchSecret = Config.GetConfigToString("MchSecret");
             }
             catch (Exception e)
             {

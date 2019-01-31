@@ -136,6 +136,15 @@
     <Compile Include="Common\TableFieldAttribute.cs" />
     <Compile Include="Common\DataValueModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="WXPay\WXPayRequestParameter.cs" />
+    <Compile Include="WXPay\WXPayRequestResult.cs" />
+    <Compile Include="WXPay\WXPayCloseOrderParameter.cs" />
+    <Compile Include="WXPay\WXPayCloseOrderResult.cs" />
+    <Compile Include="WXPay\WXPayRefundParameter.cs" />
+    <Compile Include="WXPay\WXPayRefundResult.cs" />
+    <Compile Include="WXPay\WXPayNotifyParameter.cs" />
+    <Compile Include="WXPay\WXPayRefundNotifyParameter.cs" />
+    <Compile Include="WXPay\WXPayToClientPara.cs" />
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
