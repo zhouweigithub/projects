@@ -22,7 +22,7 @@ namespace API.Controllers
             ResponseResult result = null;
             try
             {
-                Student obj = DBData.GetInstance(DBTable.student).GetEntity<Student>($"username='{token}'");
+                Student obj = GeneralBLL.GetStudentByUserName(token);
                 //result.password = string.Empty;
                 result = new ResponseResult(0, "ok", obj);
             }
@@ -115,7 +115,7 @@ namespace API.Controllers
             ResponseResult result = null;
             try
             {
-                int student_id = DBData.GetInstance(DBTable.student).GetEntity<Student>($"username='{token}'").id;
+                int student_id = GeneralBLL.GetStudentByUserName(token).id;
                 CashbackHistoryJson data = CashbackHistoryBLL.GetCashbackData(student_id);
                 result = new ResponseResult(0, "ok", data);
             }

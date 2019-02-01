@@ -23,7 +23,7 @@ namespace API.Controllers
             ResponseResult result = null;
             try
             {
-                int student_id = DBData.GetInstance(DBTable.student).GetEntity<Student>($"username='{token}'").id;
+                int student_id = GeneralBLL.GetStudentByUserName(token).id;
                 int count = DBData.GetInstance(DBTable.course).GetCount($"student_id='{student_id}' and product_id='{productId}'");
                 result = new ResponseResult(0, "ok", count > 0);
             }
@@ -42,9 +42,10 @@ namespace API.Controllers
             ResponseResult result = null;
             try
             {
+                //创建订单信息
                 Order order = OrderBLL.CreateOrder(request, out string msg);
                 if (order != null)
-                {
+                {   //获取微信支付参数
                     WXPayToClientPara para = WeiXinPayBLL.SendPreOrder(order.order_id, request.user_name);
                     result = new ResponseResult(0, "ok", para);
                 }
@@ -68,7 +69,7 @@ namespace API.Controllers
             ResponseResult result = null;
             try
             {
-                int student_id = DBData.GetInstance(DBTable.student).GetEntity<Student>($"username='{token}'").id;
+                int student_id = GeneralBLL.GetStudentByUserName(token).id;
                 List<OrderJson> list = OrderBLL.GetOrderInfo(student_id, state);
                 result = new ResponseResult(0, "ok", list);
             }

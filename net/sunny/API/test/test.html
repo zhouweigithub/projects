@@ -4,15 +4,13 @@
     $(function () {
 
         var obj = {
-            courseId: 1,
-            startTime: new Date("2019-01-02"),
-            endTime: new Date("2019-01-02"),
+            classId: 1,
         };
 
         $.ajax({
             type: "post",
             //url: "https://sunny.ullfly.com/api/appointment/SendBooking",
-            url:"http://localhost:52737/api/appointment/SendBooking",
+            url: "http://localhost:52737/api/class/CoachCompleteClass",
             data: obj,
             dataType: "json",
             success: function (data) {

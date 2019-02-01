@@ -33,12 +33,13 @@ GROUP BY a.id
         /// </summary>
         private static readonly string getBookingListOfCoach = @"
 SELECT a.id booking_id,a.start_time,a.end_time,b.over_hour+1 `hour`,b.max_count,b.over_hour,b.product_id,
-c.name product_name,c.main_img,k.name venue_name,f.coach_id,k.id venue_id FROM booking_student a
+c.name product_name,c.main_img,k.name venue_name,f.coach_id,k.id venue_id,g.name student_name,g.phone student_phone FROM booking_student a
 INNER JOIN course b ON a.course_id=b.id
 INNER JOIN product c ON b.product_id=c.id
 INNER JOIN coachcaption_venue d ON b.venue_id=d.venue_id
 INNER JOIN coach_caption e ON d.coach_id=e.caption_id AND b.venue_id=d.venue_id
 INNER JOIN venue k ON b.venue_id=k.id
+INNER JOIN student g ON b.student_id=g.id
 LEFT JOIN booking_coach_queue f ON b.id=f.course_id AND f.end_time>NOW()
 WHERE a.start_time>NOW() AND a.state=0 AND e.coach_id='{0}' AND (ISNULL(f.coach_id) OR f.coach_id=e.coach_id) 
 ";

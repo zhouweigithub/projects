@@ -21,6 +21,7 @@ namespace Sunny.Model
         /// <summary>
         /// 收货人姓名
         /// </summary>
+        [TableField]
         public string name { get; set; }
         /// <summary>
         /// 收货电话

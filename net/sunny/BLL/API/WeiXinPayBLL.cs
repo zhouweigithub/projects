@@ -84,6 +84,12 @@ namespace Sunny.BLL.API
                 string spbill_create_ip = WebHelper.GetClientIP();
 
                 CustOrderProduct order = orders[0];
+                if (order.state != 0)
+                {
+                    Util.Log.LogUtil.Write($"WeiXinPayBLL.CreatePreOrderPara 当前订单状态为 {order.state} 不需要非支付：orderid: {orderId} ", Util.Log.LogType.Warn);
+                    return null;
+                }
+
                 WXPayRequestParameter para = new WXPayRequestParameter()
                 {
                     appid = WebConfigData.MiniAppid,

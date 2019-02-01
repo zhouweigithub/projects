@@ -64,6 +64,7 @@
     <Compile Include="Custom\CustProductPriceInfoJson.cs" />
     <Compile Include="HotCourse.cs" />
     <Compile Include="Request\AddStudentCommentRequest.cs" />
+    <Compile Include="Request\CoachCompleteClassRequest.cs" />
     <Compile Include="Request\WithdrawRequest.cs" />
     <Compile Include="Request\CoachAddClassCommentRequest.cs" />
     <Compile Include="Request\UpdateOrderStateRequest.cs" />
@@ -74,6 +75,7 @@
     <Compile Include="Response\ClassCoachJson.cs" />
     <Compile Include="Response\ClassStudentJson.cs" />
     <Compile Include="Response\CoachAppointedClassJson.cs" />
+    <Compile Include="Response\CoachClassStudentJson.cs" />
     <Compile Include="Response\CourseSpecificationJson.cs" />
     <Compile Include="Response\ProductInfoJson.cs" />
     <Compile Include="Response\HomePageJson.cs" />

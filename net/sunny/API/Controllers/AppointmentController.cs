@@ -23,7 +23,7 @@ namespace API.Controllers
             ResponseResult result = null;
             try
             {
-                int student_id = DBData.GetInstance(DBTable.student).GetEntity<Student>($"username='{token}'").id;
+                int student_id = GeneralBLL.GetStudentByUserName(token).id;
                 List<AppointmentCourseListJson> list = AppointmentDAL.GetCourseInfoList(student_id, 0);
                 result = new ResponseResult(0, "ok", list);
             }
@@ -43,7 +43,7 @@ namespace API.Controllers
             ResponseResult result = null;
             try
             {
-                int student_id = DBData.GetInstance(DBTable.student).GetEntity<Student>($"username='{token}'").id;
+                int student_id = GeneralBLL.GetStudentByUserName(token).id;
                 List<AppointmentCourseListJson> list = AppointmentDAL.GetCourseInfoList(student_id, productId);
                 result = new ResponseResult(0, "ok", list);
             }
@@ -63,7 +63,7 @@ namespace API.Controllers
             ResponseResult result = null;
             try
             {
-                int student_id = DBData.GetInstance(DBTable.student).GetEntity<Student>($"username='{token}'").id;
+                int student_id = GeneralBLL.GetStudentByUserName(token).id;
                 List<Class> datas = AppointmentDAL.GetStudentAppointmentedInfo(student_id);
                 var times = datas.Select(a => a.start_time).ToArray();
                 result = new ResponseResult(0, "ok", times);
@@ -84,7 +84,7 @@ namespace API.Controllers
             ResponseResult result = null;
             try
             {
-                int student_id = DBData.GetInstance(DBTable.student).GetEntity<Student>($"username='{token}'").id;
+                int student_id = GeneralBLL.GetStudentByUserName(token).id;
                 List<CoachAppointedClassJson> datas = AppointmentDAL.GetCoachAppointmentedClassInfo(student_id);
                 result = new ResponseResult(0, "ok", datas);
             }
@@ -104,7 +104,7 @@ namespace API.Controllers
             ResponseResult result = null;
             try
             {
-                int coach_id = DBData.GetInstance(DBTable.coach).GetEntity<Coach>($"username='{token}'").id;
+                int coach_id = GeneralBLL.GetCoachByUserName(token).id;
                 List<ClassBookingOfCoachJson> classList = AppointmentBLL.GetAppointmentOfCoach(coach_id);
                 result = new ResponseResult(0, "ok", classList);
             }
@@ -143,7 +143,7 @@ namespace API.Controllers
             ResponseResult result = null;
             try
             {
-                int coach_id = DBData.GetInstance(DBTable.coach).GetEntity<Coach>($"username='{request.token}'").id;
+                int coach_id = GeneralBLL.GetCoachByUserName(request.token).id;
                 bool isOk = AppointmentBLL.ReceiveAppointment(request.bookingId, coach_id, request.startTime, request.endTime, out string msg);
                 result = new ResponseResult(0, "ok", isOk);
             }

@@ -44,7 +44,7 @@ namespace API.Controllers
             ResponseResult result = null;
             try
             {
-                int student_id = DBData.GetInstance(DBTable.student).GetEntity<Student>($"username='{token}'").id;
+                int student_id = GeneralBLL.GetStudentByUserName(token).id;
                 List<ClassStudentJson> list = ClassDAL.GetClassByStudentId(student_id);
                 result = new ResponseResult(0, "ok", list);
             }
@@ -63,8 +63,13 @@ namespace API.Controllers
             ResponseResult result = null;
             try
             {
-                int coach_id = DBData.GetInstance(DBTable.coach).GetEntity<Coach>($"username='{token}'").id;
+                int coach_id = GeneralBLL.GetCoachByUserName(token).id;
                 List<ClassCoachJson> list = ClassDAL.GetClassByCoachId(coach_id);
+                List<CoachClassStudentJson> students = ClassDAL.GetStudentInfoByCoachId(coach_id);
+                foreach (ClassCoachJson item in list)
+                {
+                    item.students.AddRange(students.Where(a => a.class_id == item.id));
+                }
                 result = new ResponseResult(0, "ok", list);
             }
             catch (Exception e)
@@ -82,7 +87,7 @@ namespace API.Controllers
             ResponseResult result = null;
             try
             {
-                int student_id = DBData.GetInstance(DBTable.student).GetEntity<Student>($"username='{token}'").id;
+                int student_id = GeneralBLL.GetStudentByUserName(token).id;
                 List<StudentClassHistoryJson> list = ClassDAL.GetStudentClassHistoryList(student_id);
                 result = new ResponseResult(0, "ok", list);
             }
@@ -101,7 +106,7 @@ namespace API.Controllers
             ResponseResult result = null;
             try
             {
-                int coach_id = DBData.GetInstance(DBTable.coach).GetEntity<Coach>($"username='{token}'").id;
+                int coach_id = GeneralBLL.GetCoachByUserName(token).id;
                 List<CoachClassHistoryJson> list = ClassDAL.GetCoachClassHistoryList(coach_id);
                 result = new ResponseResult(0, "ok", list);
             }
@@ -115,17 +120,17 @@ namespace API.Controllers
 
         [HttpPost]
         [Route("api/class/CoachCompleteClass")]
-        public IHttpActionResult CoachCompleteClass(int classId)
+        public IHttpActionResult CoachCompleteClass(CoachCompleteClassRequest model)
         {
             ResponseResult result = null;
             try
             {
-                bool list = ClassBLL.CoachCompleteClass(classId);
+                bool list = ClassBLL.CoachCompleteClass(model.classId);
                 result = new ResponseResult(0, "ok", list);
             }
             catch (Exception e)
             {
-                Util.Log.LogUtil.Write($"api/class/CoachCompleteClass 出错 classId {classId} \r\n {e}", Util.Log.LogType.Error);
+                Util.Log.LogUtil.Write($"api/class/CoachCompleteClass 出错 classId {model.classId} \r\n {e}", Util.Log.LogType.Error);
                 result = new ResponseResult(-1, "服务内部错误", null);
             }
             return Json(result);

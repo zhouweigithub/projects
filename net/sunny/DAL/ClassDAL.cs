@@ -115,6 +115,16 @@ WHERE g.id='{0}' ORDER BY a.crtime DESC";
         private static readonly string getPreCoachOfCourseSql = "SELECT a.coach_id FROM class a INNER JOIN class_student b ON a.id=b.class_id WHERE a.product_id='{0}' ORDER BY a.crtime DESC LIMIT 1;";
 
         /// <summary>
+        /// 获取上课的学生信息
+        /// </summary>
+        private static readonly string getStudentInfoByCoachIdSql = @"SELECT b.*,a.class_id FROM class_student a 
+INNER JOIN student b ON a.student_id=b.id 
+INNER JOIN class c ON a.class_id=c.id
+WHERE c.id='{0}'
+";
+
+
+        /// <summary>
         /// 根据教练id获取课程列表
         /// </summary>
         /// <param name="coachId">教练id</param>
@@ -384,6 +394,34 @@ WHERE g.id='{0}' ORDER BY a.crtime DESC";
 
             return new List<CustBookingNotFullTimesInfo>();
         }
+
+        /// <summary>
+        /// 获取上课的学生信息
+        /// </summary>
+        /// <param name="coachId"></param>
+        /// <returns></returns>
+        public static List<CoachClassStudentJson> GetStudentInfoByCoachId(int coachId)
+        {
+            try
+            {
+                using (DBHelper dbhelper = new DBHelper())
+                {
+                    DataTable dt = dbhelper.ExecuteDataTable(string.Format(getStudentInfoByCoachIdSql, coachId));
+
+                    if (dt != null && dt.Rows.Count > 0)
+                    {
+                        return dt.ToList<CoachClassStudentJson>();
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                Util.Log.LogUtil.Write("GetStudentInfoByCoachId 出错：" + ex, Util.Log.LogType.Error);
+            }
+
+            return new List<CoachClassStudentJson>();
+        }
+
 
 
     }

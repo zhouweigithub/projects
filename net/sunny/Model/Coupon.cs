@@ -26,10 +26,12 @@ namespace Sunny.Model
         /// <summary>
         /// 商品分类限定
         /// </summary>
+        [TableField]
         public int category_id { get; set; }
         /// <summary>
         /// 一次能否使用多张(0可以 1不可以)
         /// </summary>
+        [TableField]
         public short multiple { get; set; }
         /// <summary>
         /// 开始时间
