@@ -204,5 +204,9 @@ namespace Sunny.DAL
         /// 邀请关系
         /// </summary>
         public static readonly string invitation = "invitation";
+        /// <summary>
+        /// 微信支付回调
+        /// </summary>
+        public static readonly string order_callback_pay = "order_callback_pay";
     }
 }

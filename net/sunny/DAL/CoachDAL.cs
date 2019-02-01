@@ -75,6 +75,9 @@ VALUES(@username,'',@name,@sex,@phone,@type,0,@headimg,0,0);";
         /// <returns></returns>
         public static bool AddCoach(CoachRequest model, Coach caption)
         {
+            if (model == null || caption == null)
+                return false;
+
             try
             {
                 MySqlParameter[] paras = new MySqlParameter[]{

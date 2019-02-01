@@ -6,7 +6,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
+using System.Text;
+using System.Web;
 using System.Web.Http;
+using Sunny.Common;
 
 namespace Sunny.API.Controllers
 {
@@ -31,5 +34,28 @@ namespace Sunny.API.Controllers
 
             return Json(result);
         }
+
+        [HttpPost]
+        [Route("api/wxpay/paynotify")]
+        public IHttpActionResult PayNotify(HttpContext context)
+        {
+            ResponseResult result = null;
+            try
+            {
+                WXPayResultBackToWX para = WeiXinPayBLL.PayNotify(context);
+                string xml = XmlHelper.XmlSerialize(para, Encoding.UTF8);
+                xml = xml.Replace("<WXPayResultBackToWX>", "<xml>").Replace("</WXPayResultBackToWX>", "</xml>");
+                Util.Log.LogUtil.Write($"支付回调返回结果：{xml}", Util.Log.LogType.Debug);
+                context.Response.Write(xml);
+            }
+            catch (Exception e)
+            {
+                Util.Log.LogUtil.Write($"api/wxpay/paynotify 出错 \r\n {e}", Util.Log.LogType.Error);
+                result = new ResponseResult(-1, "服务内部错误", null);
+            }
+
+            return Json(result);
+        }
+
     }
 }

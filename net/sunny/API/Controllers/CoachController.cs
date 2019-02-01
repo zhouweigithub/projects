@@ -8,6 +8,7 @@ using Sunny.BLL.API;
 using Sunny.Common;
 using Sunny.DAL;
 using Sunny.Model;
+using Sunny.Model.Request;
 
 namespace API.Controllers
 {
@@ -83,7 +84,7 @@ namespace API.Controllers
                         //验证教练手机号
                         if (CoachDAL.IsCaptionPhoneExist(data.CaptionPhone))
                         {
-                            Coach caption = DBData.GetInstance(DBTable.coach).GetEntity<Coach>("phone='data.CaptionPhone'");
+                            Coach caption = DBData.GetInstance(DBTable.coach).GetEntity<Coach>($"phone='{data.CaptionPhone}'");
                             bool isOk = CoachDAL.AddCoach(data, caption);
                             int code = isOk ? 0 : 4;
                             string msg = isOk ? "注册成功" : "注册失败";
@@ -114,6 +115,32 @@ namespace API.Controllers
             catch (Exception e)
             {
                 Util.Log.LogUtil.Write($"api/coach/GetImages 出错 token {token} \r\n {e}", Util.Log.LogType.Error);
+                result = new ResponseResult(-1, "服务内部错误", null);
+            }
+            return Json(result);
+        }
+
+        [HttpPost]
+        [Route("api/coach/addimage")]
+        public IHttpActionResult AddImages(CoachImageRequest model)
+        {
+            ResponseResult result = null;
+            try
+            {
+                Coach coach = GeneralBLL.GetCoachByUserName(model.token);
+                int count = DBData.GetInstance(DBTable.coach_img).Add(new CoachImg()
+                {
+                    coach_id = coach.id,
+                    comment = model.comment,
+                    type = model.type,
+                    url = model.url,
+                    state = 0,
+                });
+                result = new ResponseResult(0, "ok", count > 0);
+            }
+            catch (Exception e)
+            {
+                Util.Log.LogUtil.Write($"api/coach/addimage 出错 token {model.token} \r\n {e}", Util.Log.LogType.Error);
                 result = new ResponseResult(-1, "服务内部错误", null);
             }
             return Json(result);

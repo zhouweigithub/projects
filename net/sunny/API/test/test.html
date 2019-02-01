@@ -1,24 +1,56 @@
+<html>
+<head>
+</head>
+<body>
+    <input type="file" id="file" />
+</body>
+</html>
+
 <script src="1.11.3-jquery.min.js"></script>
 
 <script>
-    $(function () {
 
-        var obj = {
-            classId: 1,
-        };
+    var obj = {
+        CaptionPhone: "13425645987",
+        username: "ddd",
+        phone: "135487985487"
+    };
+
+
+    function sub() {
+        var formData = new FormData();
+        formData.append("file", document.getElementById("file").files[0]);
 
         $.ajax({
-            type: "post",
-            //url: "https://sunny.ullfly.com/api/appointment/SendBooking",
-            url: "http://localhost:52737/api/class/CoachCompleteClass",
-            data: obj,
-            dataType: "json",
+            url: "/api/coach/create",
+            type: "POST",
+            data: formData,
+            contentType: false,
+            processData: false,
             success: function (data) {
                 console.log(data);
             },
-            error: function (XMLHttpRequest, textStatus, errorThrown) {
-                console.log(errorThrown);
+            error: function (data) {
+                console.log(data);
             }
         });
+    }
+
+
+
+    $.ajax({
+        type: "post",
+        //url: "https://sunny.ullfly.com/api/appointment/SendBooking",
+        url: "http://localhost:52737/api/coach/create",
+        data: obj,
+        dataType: "json",
+        success: function (data) {
+            console.log(data);
+        },
+        error: function (XMLHttpRequest, textStatus, errorThrown) {
+            console.log(errorThrown);
+        }
     });
+
+
 </script>

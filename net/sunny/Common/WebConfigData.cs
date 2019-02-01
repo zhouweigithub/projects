@@ -53,6 +53,10 @@ namespace Sunny.Common
         /// 商户平台的密钥
         /// </summary>
         public static readonly string MchSecret;
+        /// <summary>
+        /// 微信支付回调地址
+        /// </summary>
+        public static readonly string PayNotifyUrl;
 
 
         static WebConfigData()
@@ -69,6 +73,7 @@ namespace Sunny.Common
                 MiniSecret = Config.GetConfigToString("MiniSecret");
                 MchId = Config.GetConfigToString("MchId");
                 MchSecret = Config.GetConfigToString("MchSecret");
+                PayNotifyUrl = Config.GetConfigToString("PayNotifyUrl");
             }
             catch (Exception e)
             {

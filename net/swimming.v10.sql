@@ -206,11 +206,11 @@ CREATE TABLE `coach` (
   PRIMARY KEY (`id`),
   UNIQUE KEY `IX_USERNAME` (`username`),
   UNIQUE KEY `IX_PHONE` (`phone`)
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8 COMMENT='注册教练信息表';
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8 COMMENT='注册教练信息表';
 
 /*Data for the table `coach` */
 
-insert  into `coach`(`id`,`username`,`password`,`name`,`sex`,`phone`,`type`,`level`,`headimg`,`cash`,`state`,`crtime`) values (1,'xxx','fff','李咏',0,'13425645987',0,0,'http://cms-bucket.nosdn.127.net/2355aab3ab86470593a7fe33239a09cb20170105080207.jpg','0.00',0,'2019-01-08 11:23:10'),(2,'ttt','ss','李白',1,'3456798765',0,0,'http://cms-bucket.nosdn.127.net/2355aab3ab86470593a7fe33239a09cb20170105080207.jpg','0.00',0,'2019-01-11 16:16:47'),(3,'eee','ggg','陆游',0,'33333333333',0,0,'http://cms-bucket.nosdn.127.net/2355aab3ab86470593a7fe33239a09cb20170105080207.jpg','0.00',0,'2019-01-11 16:17:45'),(4,'77','88','陈坤',0,'13266945548',0,0,'http://cms-bucket.nosdn.127.net/2355aab3ab86470593a7fe33239a09cb20170105080207.jpg','0.00',0,'2019-01-11 16:30:57'),(5,'oqol35CUc3zO2cPEmXmDnC5YNL1k_0',NULL,NULL,0,'13800000000',0,0,NULL,'0.00',0,'2019-02-01 10:31:06');
+insert  into `coach`(`id`,`username`,`password`,`name`,`sex`,`phone`,`type`,`level`,`headimg`,`cash`,`state`,`crtime`) values (1,'xxx','fff','李咏',0,'13425645987',0,0,'http://cms-bucket.nosdn.127.net/2355aab3ab86470593a7fe33239a09cb20170105080207.jpg','0.00',0,'2019-01-08 11:23:10'),(2,'ttt','ss','李白',1,'3456798765',0,0,'http://cms-bucket.nosdn.127.net/2355aab3ab86470593a7fe33239a09cb20170105080207.jpg','0.00',0,'2019-01-11 16:16:47'),(3,'eee','ggg','陆游',0,'33333333333',0,0,'http://cms-bucket.nosdn.127.net/2355aab3ab86470593a7fe33239a09cb20170105080207.jpg','0.00',0,'2019-01-11 16:17:45'),(4,'77','88','陈坤',0,'13266945548',0,0,'http://cms-bucket.nosdn.127.net/2355aab3ab86470593a7fe33239a09cb20170105080207.jpg','0.00',0,'2019-01-11 16:30:57'),(5,'oqol35CUc3zO2cPEmXmDnC5YNL1k_0',NULL,NULL,0,'13800000000',0,0,NULL,'0.00',0,'2019-02-01 10:31:06'),(6,'ddd','',NULL,0,'13548798487',0,0,NULL,'0.00',0,'2019-02-01 22:00:11');
 
 /*Table structure for table `coach_caption` */
 
