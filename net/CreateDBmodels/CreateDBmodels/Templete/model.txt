@@ -1,0 +1,16 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+
+namespace #namespace#
+{
+    /// <summary>
+    /// #tablecomment#
+    /// </summary>
+    public class #tablename#
+    {
+#columeitems#
+
+    }
+}
