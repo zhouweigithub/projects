@@ -1,0 +1,62 @@
+﻿.weekendcolclass, .weekendcolclass:hover {
+    background-color: #d1d5da !important;
+    color: #3a3838 !important;
+}
+
+.error {
+    color: red;
+}
+
+.orderbytableclass {
+    color: #e2caf1;
+    cursor: pointer;
+}
+
+    .orderbytableclass .glyphicon-chevron-up, .orderbytableclass .glyphicon-chevron-down {
+        left: 5px;
+    }
+
+.navbar-default {
+    background-image: linear-gradient(to bottom,#f8f8f8,#f8f8f8 100%);
+}
+
+.well {
+    background: #e9e9e9;
+    border: none;
+}
+
+/*.bg-primary {
+            color: #1f2d3d;
+            background-color: #eef1f6;
+        }*/
+.nav > li > a:focus, .nav > li > a:hover {
+    text-decoration: none;
+    background-color: #92b3d0;
+}
+
+.nav .open > a, .nav .open > a:focus, .nav .open > a:hover {
+    background-color: #92b3d0;
+    border-color: #337ab7;
+}
+
+#leftmenbox {
+    height: 100vh;
+    overflow-y: scroll;
+    padding-bottom: 100px;
+}
+
+    #leftmenbox::-webkit-scrollbar {
+        display: none
+    }
+
+.totaldata td {
+    font-weight: bold;
+}
+
+.width150px {
+    width: 150px;
+    display:inline-block;
+}
+.dropdown-menu {
+    z-index: 1031;
+}

@@ -1,0 +1,136 @@
+﻿@using Spetmall.Admin.Mvc.Html
+@{
+    var currentNav = Spetmall.Admin.Common.Menu.MenuProvider.GetMenuFromCurrentLoginUser();
+}
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta charset="utf-8" />
+    <title>@ViewBag.Title - 摩奇卡卡官网管理系统</title>
+    <link href="~/favicon.ico" rel="shortcut icon" type="image/x-icon" />
+    <meta name="viewport" content="width=device-width" />
+
+    <link href="~/Content/bootstrap/css/bootstrap.min.css?ver=@HttpContext.Current.Application["ver"]" rel="stylesheet" />
+    <link href="~/Content/bootstrap/css/bootstrap-theme.min.css?ver=@HttpContext.Current.Application["ver"]" rel="stylesheet" />
+    <script src="~/Scripts/1.11.3-jquery.min.js?ver=@HttpContext.Current.Application["ver"]"></script>
+    <script src="~/Content/bootstrap/js/bootstrap.min.js?ver=@HttpContext.Current.Application["ver"]"></script>
+    <script src="~/Scripts/jquery.unobtrusive-ajax.min.js?ver=@HttpContext.Current.Application["ver"]"></script>
+
+    <link href="~/Content/AdminTemplate/css/sb-admin-2.min.css?ver=@HttpContext.Current.Application["ver"]" rel=" stylesheet">
+    <link href="~/Content/AdminTemplate/css/font-awesome.min.css?ver=@HttpContext.Current.Application["ver"]" rel="stylesheet">
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+    <script src="~/Content/AdminTemplate/js/metisMenu.min.js?ver=@HttpContext.Current.Application["ver"]"></script>
+    <script src="~/Content/AdminTemplate/js/sb-admin-2.min.js?ver=@HttpContext.Current.Application["ver"]"></script>
+    <script src="~/Content/AdminTemplate/js/jquery.freezeheader.js?ver=@HttpContext.Current.Application["ver"]"></script>
+    <link href="~/Content/CSS/_Layout.css?ver=@HttpContext.Current.Application["ver"]" rel="stylesheet" />
+    <script src="~/Scripts/Shared/_Layout.js?ver=@HttpContext.Current.Application["ver"]"></script>
+</head>
+<body>
+    <div id="wrapper">
+        <!-- Navigation -->
+        <nav class="navbar navbar-default navbar-static-top" role="navigation" style="margin-bottom: 0;position:fixed;width:100%;background: #337ab7;">
+            <div class="navbar-header" style="width:400px;line-height:50px;">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <img src="~/Content/images/logo_blue.png" style="height:40px; margin-left:20px;" /><span style="margin-left:10px;font-size:16px; font-weight:bold;color:#f9f9f9">摩奇卡卡官网后台管理系统</span>
+                <span class="glyphicon glyphicon-fullscreen" style="color:#f9f076;margin-left:10px; cursor:pointer;" title="全屏切换" id="fullscreen"></span>
+            </div>
+            <!-- /.navbar-header -->
+            <ul class="nav navbar-top-links navbar-right">
+                @Html.Partial("_LoginPartial")
+            </ul>
+            <!-- /.navbar-top-links -->
+            <div class="navbar-default sidebar" role="navigation" id="leftmenbox" style="display: @(Request.Cookies["isfullscreen"]!=null && Request.Cookies["isfullscreen"].Value=="1"?"none":"block");">
+                <div class="sidebar-nav" style="border-right: 1px solid #e7e7e7;">
+                    <ul class=" nav" id="side-menu">
+                        @foreach (var tempmenu in currentNav)
+                        {
+                            if (tempmenu.MenuItemList.Count > 0)
+                            {
+                                <li>
+                                    <a href="#"><i class="fa fa-table fa-fw"></i> @tempmenu.text<span class="fa arrow"></span></a>
+                                    <ul class="nav nav-second-level">
+                                        @foreach (var templistmenu in tempmenu.MenuItemList)
+                                        {
+                                            <li>
+                                                <a href="@("/"+templistmenu.Controller+"/"+templistmenu.Action)">@templistmenu.Text</a>
+                                            </li>
+                                        }
+
+                                    </ul>
+                                    <!-- /.nav-second-level -->
+                                </li>
+                            }
+                            else
+                            {
+                                <li>
+                                    <a href="javascript:void(0)"><i class="fa table fa-fw"></i>@tempmenu.text</a>
+                                </li>
+                            }
+                        }
+                    </ul>
+                </div>
+
+                <!-- /.sidebar-collapse -->
+            </div>
+            <!-- /.navbar-static-side -->
+        </nav>
+        <div id="page-wrapper"  style="margin: @(Request.Cookies["isfullscreen"]==null || Request.Cookies["isfullscreen"].Value=="0"? "0 0 0 250px" : "0");">
+            @*<div class="row">
+                    <div class="col-lg-12">
+                        <h1 class="page-header">Dashboard</h1>
+                    </div>
+                </div>*@
+
+            @RenderSection("featured", required: false)
+            <section class="" style="padding-top:50px;">
+                @*@RenderBody()*@
+                <div id="body" style="">
+                    @RenderSection("featured", required: false)
+                    <section class="" style="padding:20px 0;min-height:800px;">
+                        @RenderBody()
+                    </section>
+                </div>
+            </section>
+        </div>
+        <!-- /#page-wrapper -->
+    </div>
+
+    <footer class="navbar-fixed-bottom">
+        <div data-role="footer" style="background-color: #272727; color: #ADADAD;padding-top:10px; ">
+            <div style="text-align: center;padding:10px;font-size:11px;">
+                成都摩奇卡卡科技有限责任公司 &nbsp;
+                版权所有 Copyright &copy 2010-2012 All rights reserved&nbsp;
+                蜀ICP备12006569号-1&nbsp;
+                <a>川网文（2016） 1986-064 号</a>
+            </div>
+        </div>
+    </footer>
+
+    <!-- 模态框（Modal）页面弹出框 -->
+    <div class="modal fade " role="dialog" id="dialog" aria-labelledby="myModalLabel" aria-hidden="true" data-backdrop="static">
+
+    </div>
+    <!-- 模态框（Modal） 消息弹出框 -->
+    <div class="modal fade" id="myalert" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog">
+            <div style="width:200px;">
+                @*class="modal-content"*@
+                <div class="modal-body" id="dialogmsg">
+
+                </div>
+            </div>
+        </div>
+    </div>
+    @RenderSection("scripts", required: false)
+    @RenderSection("scripts", required: false)
+</body>
+</html>

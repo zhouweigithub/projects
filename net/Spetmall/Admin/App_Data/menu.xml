@@ -1,0 +1,8 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<MenuModel>
+  <MenuGroup ID="20" text="系统管理">
+    <MenuItem ID="2001" Text="角色管理" Controller="Role" Action="Index"></MenuItem>
+    <MenuItem ID="2002" Text="用户管理" Controller="LoginUser" Action="LoginUserIndex"></MenuItem>
+    <MenuItem ID="2011" Text="系统日志" Controller="ServerLog" Action="LogList"></MenuItem>
+  </MenuGroup> 
+</MenuModel>
