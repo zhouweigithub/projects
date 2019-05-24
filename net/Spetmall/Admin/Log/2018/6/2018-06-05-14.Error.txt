@@ -1,5 +1,0 @@
-#2018-06-05 14:34:02 GetFileList读取日志文件列表失败：type=CurrentWeb  
- System.IO.FileNotFoundException: Unable to find the specified file.
-   at Moqikaka.Tmp.Common.FileHelper.GetFileNames(String directoryPath, String searchPattern, Boolean isSearchChild) in E:\SVN\SDKProject\Moqikaka.Tmp\Common\FileHelper.cs:line 257
-   at Moqikaka.Tmp.BLL.Page.ServerLog.ServerLogBLL.GetFileList(LogType type) in E:\SVN\SDKProject\Moqikaka.Tmp\BLL\Page\ServerLog\ServerLogBLL.cs:line 29
----------------------------------------------------------------------

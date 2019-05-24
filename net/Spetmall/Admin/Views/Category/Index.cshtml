@@ -1,0 +1,114 @@
+﻿@{
+    ViewBag.Title = "Index";
+}
+
+<div class="common-app-tabs">
+    <div class="common-app-name">分类管理</div>
+    <div class="app-tab">
+        <ul>
+            <li class="active"><a href="#">分类列表</a></li>
+            <li><a href="jajavascript:void(0);" yun_type="dialog" dialog_title="添加分类" uri="/store_class/add.html" dialog_width="80%">添加分类</a></li>
+        </ul>
+    </div>
+</div>
+
+<!--订单详情-->
+<div class="order-details">
+    <table class="edtitable tablelist ">
+        <thead>
+            <tr>
+                <th width="100">排序</th>
+                <th width=""><a href="javascript:void(0);" id="batch_tree_button" class="tree_opens">全部折叠</a> / 分类名称</th>
+                <th width="10%">是否使用</th>
+                <th width="10%">管理操作</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr class="goods-class-list top-level-tree emptypadding  " floor="0">
+
+                <td class="rigth-border-none td-padding"><input name="sort" type="text" class="  goodsclassdfinput storeclassattr text editattribute" url="/store_class/editAttr.html" autocomplete="off" value="0" data-id="323" style="width:70px;" /></td>
+                <td class="tree">
+                    <div class="goodsclassnavs">
+                        <div class="goodsclassnav ">
+
+                            <em class="statusend"><i></i></em>
+                            <div class="goodsclasstxt">
+                                <div class="imgs"><a href="/content/static/images/d05.png" target="_blank"><img src="/content/static/images/d05.png" /></a></div>
+                                <input name="title" type="text" class="text goodsclassdfinput storeclassattr editattribute" autocomplete="off" data-value="我的分类" url="/store_class/editAttr.html" data-id="323" value="我的分类" />
+                                <a href="javascript:void(0);" yun_type="dialog" dialog_title="添加优惠卡" uri="/store_class/add/parentid/323.html" dialog_width="80%" class="dssc-btn">新增下级</a>
+                            </div>
+                        </div>
+                    </div>
+
+                </td>
+                <td><span class="switch-on switch-attribute" style="zoom:0.7" name="status" data-id="323" url="/store_class/editAttr.html" data-value="1"></span></td>
+                <td><a href="javascript:void(0);" yun_type="dialog" dialog_title="添加优惠卡" uri="/store_class/edit/id/323.html" dialog_width="80%">修改</a> |  <a href="javascript:yunmall_confirm_dialog('你确定要删除此条分类吗?','/store_class/delete/id/323.html','reload')">删除</a></td>
+            </tr>
+        </tbody>
+    </table>
+    <div class="pages"></div>
+</div>
+<script language="javascript">
+    $(function () {
+        var tablelisttrlist = $(".tablelist tr.goods-class-list"), nodedatasize = $(".tablelist tr").size();
+        tablelisttrlist.bind('click', function (event) {
+            var _index = $(this).index(),
+                _this = $(this),
+                _tmpnodedatasize = nodedatasize,
+                _floor = parseInt(_this.attr('floor'));
+
+            var _emobj = _this.find("i");
+
+            if (event.target == _emobj[0]) {
+                var _treestatus;
+
+                if (_this.is('.treeopen')) {
+                    _treestatus = true;
+                    _this.removeClass('treeopen').addClass('tree-close');
+                } else {
+                    _treestatus = false;
+                    _this.removeClass('tree-close').addClass('treeopen');
+                }
+
+                while (_tmpnodedatasize--) {
+                    _index++;
+                    var _dom = tablelisttrlist.eq(_index), _domfloor = parseInt(_dom.attr('floor'));
+                    if (_domfloor <= _floor) {
+                        break;
+                    } else {
+                        if (_treestatus) {
+                            _dom.hide();
+                        } else if (_floor + 1 == _domfloor) {
+                            _dom.show();
+                        }
+                    }
+
+                }
+            }
+
+
+        });
+
+
+        $("#batch_tree_button").bind('click', function () {
+            if ($(this).is(".tree_opens")) {
+
+                $(this).removeClass('tree_opens').html('全部展开');
+                tablelisttrlist.hide().filter(".top-level-tree").show();
+                tablelisttrlist.filter('.morenode').removeClass('treeopen').addClass('tree-close');
+
+            } else {
+
+                $(this).addClass('tree_opens').html('全部折叠');
+                tablelisttrlist.show();
+                tablelisttrlist.filter('.morenode').removeClass('tree-close').addClass('treeopen');
+            }
+
+            //tablelisttrlist.filter(':gt(0)').hide();
+        });
+
+        /*new UpdateAttribute('.storeclassattr',"/seller/store_class/editAttr.html");*/
+
+
+    });
+</script>

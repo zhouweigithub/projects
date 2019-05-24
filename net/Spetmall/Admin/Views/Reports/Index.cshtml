@@ -1,0 +1,74 @@
+﻿@{
+    ViewBag.Title = "Index";
+}
+
+<div class="fenlei2 fenlei6">
+    <ul class="clear">
+        <li class="active"><a href="/reports/index.html">基本交易报表</a></li>
+        <li><a href="/reports/profit.html">毛利分析</a></li>
+        <li><a href="/reports/salesperformance.html">销售业绩报表</a></li>
+        <li><a href="/reports/goodsSalesVolume.html">商品销量报表</a></li>
+        <li><a href="/reports/classCount.html">分类统计</a></li>
+        <li><a href="/reports/memberregistrationcount.html">会员报表</a></li>
+    </ul>
+</div>
+<div class="search_time_map">
+    <form action="?" method="get">
+        <div class="search_field"><input name="start_time" readonly="readonly" class="yunmalldate" value="2019-04-23" type="text" /></div>
+        <div class="search_split"> 到 </div>
+        <div class="search_field"><input name="end_time" readonly="readonly" class="yunmalldate" value="2019-05-23" type="text" /></div>
+
+        <div class="search_button"><input value="搜 索" type="submit" /></div>
+    </form>
+</div>
+
+<div class="tablebox padt">
+
+    <table class="table01" width="100%" border="0" cellspacing="0" cellpadding="0">
+        <tbody>
+            <tr>
+                <th style="width:20%">时间</th>
+                <th>交易流水金额</th>
+                <th>成交总数量</th>
+            </tr>
+            <tr>
+                <td>当天</td>
+                <td>0.00元</td>
+                <td>0</td>
+            </tr>
+
+            <tr>
+                <td>昨天</td>
+                <td>0.00元</td>
+                <td>0</td>
+
+            </tr>
+            <tr>
+                <td>近7天</td>
+                <td>200.00元</td>
+                <td>1</td>
+
+            </tr>
+            <tr>
+                <td>本月</td>
+                <td>200.00元</td>
+                <td>1</td>
+
+            </tr>
+            <tr>
+                <td>今年</td>
+                <td>200.00元</td>
+                <td>1</td>
+
+            </tr>
+            <tr>
+                <td>2019-04-23 到 2019-05-23 </td>
+                <td>200.00元</td>
+                <td>1</td>
+
+            </tr>
+
+
+        </tbody>
+    </table>
+</div>

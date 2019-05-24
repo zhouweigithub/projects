@@ -1,0 +1,72 @@
+﻿@{
+    ViewBag.Title = "Index";
+}
+
+<div class="searchbar">
+    <div style=" padding-right:430px;">
+        <form action="" method="get">
+            <div class="search">
+                <input type="text" name="username" value="" placeholder="请输入手机号或姓名">
+                <a href="javascript:;" id="yunmall_goods_search">查询</a>
+            </div>
+        </form>
+    </div>
+    <div class="rightbtn">
+        <a href="javascript:;" yun_type="dialog" dialog_title="添加优惠卡" uri="/Railcard/add.html" dialog_width="80%" class="barbtn01" id="open" style="font-size:24px;">添加优惠卡</a>
+        <a href="?order=total_balance&time=1558614027" class="barbtn02 ">按总金额</a>
+        <a href="?order=surplus&time=1558614027" class="barbtn02 ">按剩余次数</a>
+    </div>
+</div>
+
+<div class="tablebox padt">
+
+    <table class="table01" width="100%" border="0" cellspacing="0" cellpadding="0">
+        <tbody>
+            <tr>
+                <th>卡号</th>
+                <th>姓名</th>
+                <th>手机</th>
+                <th>总金额</th>
+                <th>总次数</th>
+                <th>剩余次数</th>
+                <th>使用时间范围</th>
+                <th>办卡时间</th>
+                <th>查看消费记录</th>
+
+            </tr>
+            <tr>
+                <td>764235249688</td>
+                <td>周围</td>
+                <td>17665173762</td>
+                <td>5000.00</td>
+                <td>4</td>
+                <td>4</td>
+                <td>2019-05-15 到 2019-05-29 </td>
+                <td>2019-05-18 18:04:54</td>
+                <td><a href="javascript:;" yun_type="dialog" dialog_title="使用优惠卡" uri="/Railcard/edit/id/66.html" dialog_width="60%" dialog_height="50%" id="open">使用优惠卡</a>  |  <a href="/Railcard/log/id/66.html">查看记录</a> | <a href="javascript:void(0);" onclick="yunmall_confirm_dialog('您确定要删除这条记录吗?','/Railcard/delete.html?id=66','reload')">删除</a> </td>
+            </tr>
+            <tr>
+                <td>485451383866</td>
+                <td>ww</td>
+                <td>17665173762</td>
+                <td>100.00</td>
+                <td>4</td>
+                <td>3</td>
+                <td>2019-05-15 到 2019-05-30 </td>
+                <td>2019-05-18 18:04:35</td>
+                <td><a href="javascript:;" yun_type="dialog" dialog_title="使用优惠卡" uri="/Railcard/edit/id/65.html" dialog_width="60%" dialog_height="50%" id="open">使用优惠卡</a>  |  <a href="/Railcard/log/id/65.html">查看记录</a> | <a href="javascript:void(0);" onclick="yunmall_confirm_dialog('您确定要删除这条记录吗?','/Railcard/delete.html?id=65','reload')">删除</a> </td>
+            </tr>
+
+        </tbody>
+    </table>
+
+
+</div>
+</div>
+<script language="javascript">
+$(function(){
+	$("#yunmall_goods_search").bind('click',function(){
+		$(this).closest("form").submit();
+	});
+});
+</script>

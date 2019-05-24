@@ -221,10 +221,19 @@
     <Compile Include="Content\ueditor\net\App_Code\NotSupportedHandler.cs" />
     <Compile Include="Content\ueditor\net\App_Code\PathFormater.cs" />
     <Compile Include="Content\ueditor\net\App_Code\UploadHandler.cs" />
+    <Compile Include="Controllers\ActivityController.cs" />
+    <Compile Include="Controllers\CategoryController.cs" />
+    <Compile Include="Controllers\MainController.cs" />
+    <Compile Include="Controllers\MemberController.cs" />
+    <Compile Include="Controllers\ProductController.cs" />
+    <Compile Include="Controllers\RailcardController.cs" />
+    <Compile Include="Controllers\ReceiptController.cs" />
+    <Compile Include="Controllers\ReportsController.cs" />
     <Compile Include="Controllers\ServerLogController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\LoginUserController.cs" />
     <Compile Include="Controllers\RoleController.cs" />
+    <Compile Include="Controllers\TransactionController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -600,6 +609,7 @@
     <Content Include="Content\colorpicker\img\saturation.png" />
     <Content Include="Content\colorpicker\js\bootstrap-colorpicker.js" />
     <Content Include="Content\CSS\_Layout.css" />
+    <Content Include="Images\bg2.jpg" />
     <Content Include="Content\images\logo.png" />
     <Content Include="Content\images\logo_blue.png" />
     <Content Include="Content\images\pic_login.jpg" />
@@ -615,6 +625,53 @@
     <Content Include="Content\jquery.pagination-1.2.7\jquery.pagination-1.2.7.js" />
     <Content Include="Content\jquery.z-pager\jquery.z-pager.css" />
     <Content Include="Content\jquery.z-pager\jquery.z-pager.js" />
+    <Content Include="Content\static\css\common.css" />
+    <Content Include="Content\static\css\ui-dialog.css" />
+    <Content Include="Content\static\extend\honeySwitch\honeySwitch.css" />
+    <Content Include="Content\static\extend\honeySwitch\honeySwitch.js" />
+    <Content Include="Content\static\extend\laydate\theme\default\laydate.css" />
+    <Content Include="Content\static\extend\laydate\laydate.js" />
+    <Content Include="Content\static\images\ft_01.png" />
+    <Content Include="Content\static\images\ft_02.png" />
+    <Content Include="Content\static\images\ft_03.png" />
+    <Content Include="Content\static\images\head_01.png" />
+    <Content Include="Content\static\images\head_02.png" />
+    <Content Include="Content\static\images\head_03.png" />
+    <Content Include="Content\static\images\head_04.png" />
+    <Content Include="Content\static\images\head_05.png" />
+    <Content Include="Content\static\images\head_06.png" />
+    <Content Include="Content\static\images\ind01.png" />
+    <Content Include="Content\static\images\ind02.png" />
+    <Content Include="Content\static\images\ind03.png" />
+    <Content Include="Content\static\images\ind04.png" />
+    <Content Include="Content\static\images\ind05.png" />
+    <Content Include="Content\static\images\ind06.png" />
+    <Content Include="Content\static\images\ind07.png" />
+    <Content Include="Content\static\images\ind08.png" />
+    <Content Include="Content\static\images\ind09.png" />
+    <Content Include="Content\static\images\loading.gif" />
+    <Content Include="Content\static\images\menubtn.png" />
+    <Content Include="Content\static\images\mico1.png" />
+    <Content Include="Content\static\images\mico2.png" />
+    <Content Include="Content\static\images\mico3.png" />
+    <Content Include="Content\static\images\mico4.png" />
+    <Content Include="Content\static\images\mico5.png" />
+    <Content Include="Content\static\images\mico6.png" />
+    <Content Include="Content\static\images\mico7.png" />
+    <Content Include="Content\static\images\mico8.png" />
+    <Content Include="Content\static\images\mico9.png" />
+    <Content Include="Content\static\images\notlogin.png" />
+    <Content Include="Content\static\images\quit.png" />
+    <Content Include="Content\static\images\search.png" />
+    <Content Include="Content\static\images\txm.png" />
+    <Content Include="Content\static\js\artDialog.source.js" />
+    <Content Include="Content\static\js\common.js" />
+    <Content Include="Content\static\js\iframe.js" />
+    <Content Include="Content\static\js\iframeTools.source.js" />
+    <Content Include="Content\static\js\jquery-1.12.2.min.js" />
+    <Content Include="Content\static\js\md5.js" />
+    <Content Include="Content\static\js\receipt.js" />
+    <Content Include="Content\static\js\service-common.js" />
     <Content Include="Content\summernote-0.8.1-dist\dist\lang\summernote-ar-AR.js" />
     <Content Include="Content\summernote-0.8.1-dist\dist\lang\summernote-bg-BG.js" />
     <Content Include="Content\summernote-0.8.1-dist\dist\lang\summernote-ca-ES.js" />
@@ -1071,6 +1128,7 @@
     <None Include="Scripts\jquery-1.8.2.intellisense.js" />
     <Content Include="Images\Delete.jpg" />
     <Content Include="Images\Edit.png" />
+    <Content Include="Images\tx.jpg" />
     <Content Include="Scripts\1.11.3-jquery.min.js" />
     <Content Include="Scripts\bootstrap-wysiwyg.js" />
     <Content Include="Scripts\common.js" />
@@ -1121,6 +1179,16 @@
     <Content Include="Views\LoginUser\ChangePassword.cshtml" />
     <Content Include="Views\ServerLog\LogList.cshtml" />
     <Content Include="Views\ServerLog\LogView.cshtml" />
+    <Content Include="Views\Shared\_Layout2.cshtml" />
+    <Content Include="Views\Member\Index.cshtml" />
+    <Content Include="Views\Main\Index.cshtml" />
+    <Content Include="Views\Product\Index.cshtml" />
+    <Content Include="Views\Receipt\Index.cshtml" />
+    <Content Include="Views\Reports\Index.cshtml" />
+    <Content Include="Views\Transaction\Index.cshtml" />
+    <Content Include="Views\Railcard\Index.cshtml" />
+    <Content Include="Views\Activity\Index.cshtml" />
+    <Content Include="Views\Category\Index.cshtml" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>

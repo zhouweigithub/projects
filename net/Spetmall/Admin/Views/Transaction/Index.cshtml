@@ -1,0 +1,83 @@
+﻿@{
+    ViewBag.Title = "Index";
+}
+
+<div class="searchbar">
+    <form action="?" method="get">
+        <div style=" padding-right:660px;">
+            <div class="search">
+                <input type="text" name="keyword" autocomplete="off" value="" placeholder="请输入订单号码">
+            </div>
+        </div>
+        <div class="rightbtn">
+
+            <div class="time">
+                <input type="text" name="start_time" readonly="readonly" value="" autocomplete="off" placeholder="开始时间" class="test1 yunmalldate">
+                <span>至</span>
+                <input type="text" name="start_stop" readonly="readonly" value="" autocomplete="off" placeholder="结束时间" class="test2 yunmalldate">
+            </div>
+            <a href="javascript:;" class="barbtn01" id="yunmall_goods_search">查询</a>
+        </div>
+    </form>
+</div>
+
+<div class="tablebox padt">
+    <div class="fenlei2">
+        <ul class="clear">
+            <li><a href="?time=1">今天</a></li>
+            <li><a href="?time=2">近二天</a></li>
+            <li><a href="?time=7">近一周</a></li>
+            <li><a href="?time=30">近一月</a></li>
+            <li><a href="?time=365">近一年</a></li>
+        </ul>
+    </div>
+    <table class="table01" width="100%" border="0" cellspacing="0" cellpadding="0">
+        <tbody>
+            <tr>
+                <th>交易订单号</th>
+                <th>商品金额(元)</th>
+                <th>实际交易总金额(元)</th>
+                <th>优惠(元)</th>
+                <th>调价(元)</th>
+                <th>交易日期</th>
+                <th>交易时间</th>
+                <th>支付方式</th>
+                <th>用户</th>
+                <th>操作</th>
+
+            </tr>
+            <tr>
+                <td>19051617150756211489</td>
+                <td>200.00</td>
+                <td>200.00</td>
+                <td>0.00</td>
+                <td>0.00</td>
+                <td>2019-05-16</td>
+                <td>17:15:07</td>
+                <td>微信</td>
+
+                <td>散客</td>
+                <td><a href="/Transaction/info/id/299.html">查看</a></td>
+            </tr>
+
+        </tbody>
+    </table>
+
+    <div class="pagin"></div>
+</div>
+
+
+<script language="javascript">
+    $(function () {
+        $("#yunmall_goods_search").bind('click', function () {
+            $(this).closest("form").submit();
+        });
+    });
+</script>
+
+
+<script src="static/extend/laydate/laydate.js"></script> <!-- 改成你的路径 -->
+<script>
+    lay('#version').html('-v' + laydate.v);
+
+</script>

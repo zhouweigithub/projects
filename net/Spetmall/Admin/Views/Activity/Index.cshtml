@@ -1,0 +1,87 @@
+﻿@{
+    ViewBag.Title = "Index";
+}
+
+<div class="tablebox padt">
+    <div class="fenlei2">
+        <ul class="nav nav-tabs clear" role="tablist">
+            <li role="presentation" class="active"><a href="/Activity/index.html" aria-controls="home" role="tab" data-toggle="tab">商品折扣</a></li>
+            <li role="presentation"><a href="/Activity/subtractfromfull.html" aria-controls="profile" role="tab" data-toggle="tab">买就减/送</a></li>
+            <!--  <li><a href="#">+ 添加活动</a></li>-->
+        </ul>
+
+    </div>
+    <div>
+        <!-- Tab panes -->
+        <div class="tab-content">
+            <div role="tabpanel" class="tab-pane active" id="home">
+                <div class="huodog padtb">
+                    <div class="padtb">
+                        <a href="/Activity/discountadd.html" class="btn btn-primary" id="open">添加商品折扣活动</a>
+
+
+                    </div>
+                    <div>
+                        <table class="edtitable">
+
+                            <tbody>
+                                <tr>
+
+                                    <th width="5%">ID</th>
+                                    <th>标题</th>
+                                    <th width="10%">活动类型</th>
+                                    <th width="15%">开始时间</th>
+                                    <th width="15%">结速时间</th>
+
+
+                                    <th width="10%">发布时间</th>
+                                    <th width="10%">管理操作</th>
+                                </tr>
+
+                                <tr>
+
+                                    <td>93</td>
+                                    <td>狗粮可好吃了</td>
+                                    <td>
+                                        店铺<br>
+
+                                    </td>
+                                    <td>2019-05-22 00:00:00</td>
+                                    <td>2019-05-25 00:00:00</td>
+
+
+                                    <td>2019-05-22 19:28:24</td>
+                                    <td><a href="/Activity/index_edit/id/93.html">修改</a> |  <a href="javascript:yunmall_confirm_dialog('确定删除吗？','/Activity/index_delete/id/93.html','reload')">删除</a></td>
+
+
+                                </tr>
+
+
+                            </tbody>
+                        </table>
+                    </div>
+                    <!--
+                     <ul class="clear">
+                                     <li  ><a href="/Activity/discountedit/id/93.html">
+                            <table width="100%" border="0" cellspacing="0" cellpadding="0">
+                                <tr>
+                                  <td width="78"><img src="/static/images/hd01.png"></td>
+                                  <td>
+                                    <span>狗粮可好吃了</span>
+                                    <span>2019-05-22 00:00:00 到 2019-05-25 00:00:00 </span>
+                                  </td>
+                                </tr>
+                            </table>
+                            </a>
+                         </li>
+
+                    </ul>
+                    -->
+                </div>
+                <div class="pagin"></div>
+
+            </div>
+
+        </div>
+    </div>
+</div>
