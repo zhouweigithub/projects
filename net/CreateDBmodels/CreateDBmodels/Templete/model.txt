@@ -2,8 +2,9 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using Spetmall.Model.Common;
 
-namespace #namespace#
+namespace Spetmall.Model
 {
     /// <summary>
     /// #tablecomment#

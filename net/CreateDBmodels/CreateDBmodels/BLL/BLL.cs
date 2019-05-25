@@ -11,11 +11,11 @@ namespace CreateDBmodels.BLL
 {
     public class BLL
     {
-        private static readonly string nameSpace = Common.Config.GetConfigToString("NameSpace");
         private static readonly string columnTempleteString = @"
         /// <summary>
         /// {0}
         /// </summary>
+        [TableField]
         public {1} {2} {{ get; set; }}";
 
         public static void CreateTableModelFiles()
@@ -46,7 +46,7 @@ namespace CreateDBmodels.BLL
                     {
                         sb.AppendFormat(columnTempleteString, column.COLUMN_COMMENT, GetDataType(column.DATA_TYPE), column.COLUMN_NAME);
                     }
-                    string content = templete.Replace("#tablecomment#", $"{tableInfo?.TABLE_COMMENT}({tableInfo?.TABLE_TYPE})").Replace("#namespace#", nameSpace).Replace("#tablename#", tableName).Replace("#columeitems#", sb.ToString());
+                    string content = templete.Replace("#tablecomment#", $"{tableInfo?.TABLE_COMMENT}({tableInfo?.TABLE_TYPE})").Replace("#tablename#", tableName).Replace("#columeitems#", sb.ToString());
 
                     string folderPath = AppDomain.CurrentDomain.BaseDirectory + "Results";
                     if (!Directory.Exists(folderPath))
