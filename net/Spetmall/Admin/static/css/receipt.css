@@ -1,0 +1,109 @@
+/*收银确认*/
+.receiptconfirm{ position:absolute; left:0px; top:0px; right:0px; bottom:0px;}
+.re_left{ overflow:hidden;  width:100%;}
+.re_left .h_title{ background:#E4E4E4; height:30px; line-height:30px; padding-left:10px;}
+.rc_goods_list img.gd{ width:50px; height:50px;}
+.rc_goods_list .rcimgs{position:absolute;left:0px; top:0px; width:50px; height:50px; }
+.rc_goods_list .rctitle{  position:relative; padding-left:60px; overflow:hidden; font-size:12px; color:#3c3c3c; min-height:70px;}
+.rc_goods_list .rc_guige{ padding-top:5px;}
+.rc_goods_list .rc_guige span{ display:block; color:#ccc;}
+.re_left .buy-td {
+	width:100%;
+    display: inline-block;
+    height: 34px;
+    line-height: 34px;
+    text-align: center;
+    border-bottom: 3px solid #b2d1ff;
+    font-size: 12px;
+    margin-left: 1px;
+    vertical-align: bottom;
+}
+.rc_goods_list{ border:0px; padding:0px;}
+.rc_goods_list th{ padding-bottom:20px;}
+.rc_goods_list tr.split td{ padding:0px; padding-bottom:0px;border-bottom: 1px solid #dfdfdf;}
+.rc_goods_list tr.stop td{ padding-top:20px;}
+
+
+.rc_goods_list .rc_htitle{ width:40%;}
+.rc_goods_list .rc_price{ width:15%;}
+.rc_goods_list .rc_number{ width:25%;}
+.rc_goods_list .rc_youhui{ width:20%;}
+.rc_goods_list .rc_count{ }
+
+.rc_goods_list .price-now{    color: #3c3c3c; font-size:12px; font-family: Verdana,Tahoma,arial; text-align:center; display:block;}
+.rc_goods_list .simple-price{ font-weight: 700; color: #f40; padding-right: 10px; text-align:right; display:block;}
+.rc_goods_list .noyouhui{ text-align:center; width:100%;}
+.rc_goods_list .item-amount{width:77px}
+.rc_goods_list .item-amount{height:25px;overflow:hidden;position:relative;z-index:1}
+.rc_goods_list .item-amount a,.rc_goods_list .text-amount{float:left}
+.rc_goods_list .text-amount{width:39px;height:15px;line-height:15px;border:1px solid #aaa;color:#343434;text-align:center;padding:4px 0;background-color:#fff;background-position:-75px -375px;position:absolute;z-index:2;left:18px;top:0}
+.rc_goods_list .item-amount a{display:block;height:23px;width:17px;border:1px solid #e5e5e5;background:#f0f0f0;text-align:center;line-height:23px;color:#444;position:absolute;top:0}
+.rc_goods_list .item-amount .minus,.rc_goods_list .item-amount .no-minus{border-right-color:transparent;left:0}
+.rc_goods_list .item-amount .plus{border-left-color:transparent;right:0}
+.rc_goods_list .item-amount .minus:hover,.rc_goods_list .item-amount .plus:hover{color:#f50;z-index:3;border-color:#f60}
+.rc_goods_list .item-amount a:hover{text-decoration:none}
+.rc_goods_list .item-amount .no-minus{color:#e5e5e5}
+.rc_goods_list .item-amount .no-minus:hover{cursor:default;border-color:#e5e5e5;border-right-color:#aaa;color:#e5e5e5}
+
+.rc_goods_list .goodsyouhui{ overflow:hidden; background:#FFF; padding-bottom:10px;}
+.rc_goods_list .goodsyouhui .youuhi1{ padding-bottom:10px;}
+.rc_goods_list .goodsyouhui h3{ font-size:12px;}
+.rc_goods_list .goodsyouhui .youhuixiangqing{ padding:3px 0px; padding-left:10px; font-size:12px; color:#3c3c3c}
+.rc_goods_list .goodsyouhui .youhuixiangqing span{ float:right;    font-weight: 700;color: #f40;padding-right: 10px;text-align: right;display: block; } 
+.rc_goods_list .goodsyouhui .zhenpin ul li{ padding:3px 0px;font-size:12px;}
+.rc_goods_list .goodsyouhui .zhenpin ul li a{ color:#3c3c3c; font-size:12px;}
+.iframe_rc_left{ width:50%; position:absolute; left:0px; right:0px; bottom:0px; top:0px;   overflow:hidden;}
+.re_left .rc_store{ overflow:hidden; background:#f2f7ff;}
+.re_left .rc_store h3{ font-size:14px; padding:4px 0px 10px 4px; }
+.re_left .rc_store .manjiushong{ padding-left:20px;}
+.re_left .rc_store ul li{ padding:3px 0px;font-size:12px;}
+.re_left .rc_store ul li a{ color:#3c3c3c; font-size:12px;}
+.re_left .rc_store .youhui { padding-left:20px; padding-bottom:5px;}
+.re_left .rc_store .youhui span{ float:right;font-weight: 700;
+    color: #f40;
+    padding-right: 10px;
+    text-align: right;
+    display: block;}
+	
+	
+.re_left  .cla-conf-btn{
+    width: 245px;
+    color: #ff5e41;
+    text-align: center;
+    background-color: #fff;
+    cursor: pointer;
+    padding: 10px 0;
+    border: 1px solid #ff5e41;
+    border-radius: 4px;
+    font-size: 12px;
+    margin: 30px auto;
+    display: block;
+}
+.rc_right{ width:50%;  position:absolute; left:50%; overflow:auto; right:0px; bottom:0px; top:0px;  background:#F5F5F5;}
+.rc_right .h_title{ background:#E4E4E4; height:30px; line-height:30px; padding-left:10px;}
+.receipt-order-list{ overflow:hidden;}
+.receipt-order-list .receipt-order-item{ overflow:hidden; clear:both; padding:12px 0px;}
+
+.receipt-order-item .item-name{ width:20%; float:left; color:#333; font-size:13px; text-align:right; padding-top:10px;}
+.receipt-order-item .item-name span{ padding-right:10px; display:block; line-height:20px;}
+.receipt-order-item .item-val{ width:80%;float:left; font-size:12px;}
+.receipt-order-item .buttons{ overflow:hidden;}
+.receipt-order-item .buttons span{ width:50%; display:block; float:left;}
+.receipt-order-item .buttons span input{ margin:0px 20%; display:block; width:60%;}
+
+.receipt-order-item .item-val span.sel{ display:block; float:left; padding-right:10px; padding-bottom:10px;}
+
+.receipt-order-item .item-val span.active a{ background:#F00;}
+.receipt-order-item .huiyuan{ display:block; overflow:hidden; clear:both; padding:20px; border:1px solid #ccc; margin:10px 0px; margin-right:10px; background:#FFF; }
+.receipt-order-item .huiyuan .sel_huiyuan a{ border:1px solid #ffcc00; background:#F00; color:#FFF; border-radius:20px; padding:10px 20px; display:block; margin:0px 30%; text-align:center;}
+.receipt-order-item .huiyuaninfo{ overflow:hidden; padding-top:10px; position:relative;} 
+.receipt-order-item .himgs{ width:50px; height:50px;float:left;}
+.receipt-order-item .himgs img{ width:100%; height:100%}
+.receipt-order-item .userinfo{ float:left; padding-left:20px; color:#999;}
+.receipt-order-item .userinfo p{ display:block; margin:0px; padding:0px; color:#999;}
+.receipt-order-item .userinfo p span{ display:block; float:left;height:25px; line-height:25px; padding:0px 10px;}
+.receipt-order-item .userinfo  p font{font-weight: 700;color: #f40;}
+.receipt-order-item .price{font-weight: 700;color: #f40;}	
+.receipt-order-item .userinfo p em{ display:block; float:left; border-left:1px solid #CCC; height:14px; margin-top:4px;}
+.receipt-order-item .sel_user{ position:absolute; right:10px; top:10px;}
+.receipt-order-item .sel_user a{ display:block; float:right; border:1px solid #F00; background:#FFCC00; padding:3px 10px; text-align:center; border-radius:20px;}

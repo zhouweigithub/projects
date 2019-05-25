@@ -103,7 +103,7 @@ var ReceiptCommon = function(){
 		receiptcommon  = this.getReceiptcommon();
 		//receiptcommon = parent.receiptcommon;
 		receiptcommon.OpenDialog =  new  yunmallOpenDialog();
-		receiptcommon.OpenDialog.open( {uri:"/Receipt/userpaginate.html?callback="+_callback+"&_t="+ new Date().getTime(), title:"选择会员" , width:500 , height:400 });
+        receiptcommon.OpenDialog.open({ uri:"SelectUser?callback="+_callback+"&_t="+ new Date().getTime(), title:"选择会员" , width:500 , height:400 });
 	};
 	
 	
@@ -387,7 +387,7 @@ var ReceiptCommon = function(){
 		    _uid = $("input[name=memberuid]").val();
 		}  
 		var _shoppinggoods =  encodeURIComponent(  JSON.stringify( that.ShoppingGoods ));
-		that.dialogdom = art.dialog.open("/Receipt/receiptconfirm.html?shoppinggoods="+_shoppinggoods+"&uid="+ _uid , {
+        that.dialogdom = art.dialog.open("Confirm?shoppinggoods="+_shoppinggoods+"&uid="+ _uid , {
 				title: '收银中的商品',
 				width:'100%',
 				lock: true,

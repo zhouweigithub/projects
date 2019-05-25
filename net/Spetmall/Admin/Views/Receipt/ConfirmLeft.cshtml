@@ -1,0 +1,125 @@
+﻿@{
+    ViewBag.Title = "ConfirmLeft";
+    Layout = null;
+}
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>订单详情</title>
+    <link rel="stylesheet" type="text/css" href="/static/css/receipt.css?t=1558755351">
+    <style>
+        body {
+            font-size: 14px;
+            padding: 0;
+            letter-spacing: 1px;
+            margin: 0;
+            font-family: "微软雅黑";
+        }
+
+        html, body {
+            margin: 0px;
+            padding: 0px;
+        }
+
+        h1, h2, h3, h4, h5, h6 {
+            font-weight: normal
+        }
+
+        li {
+            list-style-type: none;
+        }
+
+        a {
+            text-decoration: none
+        }
+
+        em {
+            font-style: normal
+        }
+    </style>
+    <script type="text/javascript" src="/static/js/jquery-1.12.2.min.js"></script>
+</head>
+
+<body>
+    <div class="re_left">
+        <div class="h_title">商品详情</div>
+        <table width="100%" border="0" class="rc_goods_list">
+            <tr>
+                <th class="rc_htitle"><div class="buy-td">商品名称</div></th>
+                <th class="rc_price"><div class="buy-td">单价</div></th>
+                <th class="rc_number"><div class="buy-td">数量</div></th>
+
+                <th class="rc_count"><div class="buy-td">小计</div></th>
+
+            </tr>
+
+            <tr>
+                <td>
+                    <div class="rctitle">
+                        <div class="rcimgs"><img src="" onerror="this.src='/static/images/cpin.png';" class="gd" /></div>
+                        狗粮
+                    </div>
+                </td>
+
+                <td>
+                    <span class="price-now">200.00</span>
+                </td>
+
+                <td align="center">
+                    2
+                    <!--<div class="td-inner">
+                         <div class="amount-wrapper amount-has-error">
+                           <div class="item-amount "><a class="J_Minus no-minus" href="/user/Shoppingcart/update/number/-1/id/464.html" data-jkey="J_Minus">-</a>
+                             <input type="text" value="2" class="text text-amount J_ItemAmount" data-max="10" data-now="2" autocomplete="off">
+                             <a class="J_Plus plus" href="/user/Shoppingcart/update/number/1/id/464.html" data-jkey="J_Plus">+</a></div>
+                           <div class="amount-msg J_AmountMsg"><em class="s-danger-text">限购10件</em></div>
+                         </div>
+                    </div>-->
+                </td>
+
+                <td><span class="simple-price">400.00</span></td>
+
+            </tr>
+
+
+            <tr class="split">
+                <td colspan="4">
+
+                    <div class="goodsyouhui">
+                    </div>
+
+                </td>
+
+            </tr>
+
+        </table>
+
+
+        <div class="rc_button">
+            <a class="cla-conf-btn continue-add-goods ">
+                继续添加商品
+            </a>
+        </div>
+    </div>
+
+
+    <script language="javascript">
+        $(function () {
+            $('.continue-add-goods').click(function () {
+                parent.receiptcommon.close();
+            });
+
+            $('.continue-add-goods').click(function () {
+                window.top.receiptcommon.close();
+            });
+
+            window.top.receiptcommon.setReceiptdata({ "goods_category": 1, "buy_number_total": 2, "originaltotalprice": 40000, "activitytotalprice": 40000, "totalprice": 40000, "sellerid": "489", "cost_price_total": 20000, "discount_total_price": 0, "receiptgoodsdata": { "8053": { "store_class1": "", "store_class2": "", "store_class3": "", "class1": "1", "class2": "5", "class3": "0", "title": "\u72d7\u7cae", "mapthumimg": "", "myprice": "20000", "price": "10000", "storage": "9", "alarm": "1", "id": "8053", "sellerid": "489", "is_discount": "1", "number": "2", "goods_total_price": 40000, "goods_activity_total_price": 40000, "discount_goods_total_price": 0, "activitytotalprice": 40000 } } });
+        });
+
+    </script>
+
+</body>
+</html>

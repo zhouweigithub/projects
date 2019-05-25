@@ -1,0 +1,44 @@
+﻿@{
+    ViewBag.Title = "Edit";
+    Layout = null;
+}
+
+
+<!doctype html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>创建分类 - 圣宠智慧云商-链接宠物店与猫狗粮食用品的服务商城！</title>
+    <link rel="stylesheet" type="text/css" href="/static/css/common.css?t=1558752911">
+    <link rel="stylesheet" type="text/css" href="/static/css/ui-dialog.css">
+    <link rel="stylesheet" type="text/css" href="/static/css/buttons.css">
+    <link rel="stylesheet" href="/static/extend/honeySwitch/lib/honeySwitch.css">
+
+    <script type="text/javascript" src="/static/js/jquery-1.12.2.min.js"></script>
+    <script src="/static/extend/honeySwitch/lib/honeySwitch.js"></script>
+    <script src="/static/extend/laydate/laydate.js"></script>
+    <script src="/static/js/artDialog.source.js"></script>
+    <script src="/static/js/iframeTools.source.js"></script>
+    <script src="/static/js/iframe.js"></script>
+    <script src="/static/js/common.js?_t=1558752911"></script>
+
+</head>
+
+<body class="iframebody">
+
+
+    <form class="" action="?">
+        <input name="id" type="hidden" value="" />
+        <input name="parentid" type="hidden" value="" />
+        <ul class="formlist">
+            <li><label class="lbt"><em>(*)</em>分类分称：</label><div><input class="form-control" name="title" type="text" value="" placeholder="请输入分类名称"> </div></li>
+            <li><label class="lbt"><em>(*)</em>是否启用：</label><div> <span class="switch-on" name="status" data-value=""></span></div></li>
+            <li><label class="lbt">外部连接：</label><div><input class="form-control" name="href" value="" type="text" placeholder=""> </div></li>
+            <li><label class="lbt">描述：</label><div><textarea name="description" class="form-textarea h60 w400"></textarea> </div></li>
+        </ul>
+        <div class="padt" style="text-align: center"><span id="open" class="btn btnyes yunmall_button">保存</span></div>
+
+    </form>
+
+</body>
+</html>

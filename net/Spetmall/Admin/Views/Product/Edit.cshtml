@@ -1,0 +1,373 @@
+﻿@model Spetmall.Model.product
+@{
+    ViewBag.Title = "Edit";
+    Layout = null;
+}
+
+
+<!doctype html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>圣宠</title>
+    <link rel="stylesheet" type="text/css" href="/static/css/common.css">
+    <link rel="stylesheet" type="text/css" href="/static/css/ui-dialog.css">
+    <script type="text/javascript" src="/static/js/jquery-1.12.2.min.js"></script>
+    <script src="/static/js/artDialog.source.js"></script>
+    <script src="/static/js/iframeTools.source.js"></script>
+    <script src="/static/js/service-common.js"></script>
+    <script src="/static/js/iframe.js"></script>
+    <script src="/static/js/common.js?_t=1558751006"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/css/select2.min.css" rel="stylesheet" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/js/select2.min.js"></script>
+
+</head>
+<body class="iframebody">
+    <form class="" action="?">
+        @Html.HiddenFor(m => m.id)
+        <div class="form-options">
+            <ul class="formlist">
+                <li>
+                    <label class="lbt">缩略图：</label> <div>
+                        <span class="yun_upload_images" style="padding-top:0px; padding-bottom:20px">
+                            @Html.HiddenFor(m => m.thumbnail, new { @class = "dfinput  thumb_f64165672ceb97dc00593b60f0c14cc9" })
+                            @*<input name="mapthumimg" type="hidden" class="dfinput  thumb_f64165672ceb97dc00593b60f0c14cc9" value="" />*@
+                            <a href="javascript:;" class="yunmall_upload_img2" yun_attachment=".thumb_f64165672ceb97dc00593b60f0c14cc9" onclick="document.getElementById('imgFile').click();" cropping="[156,156]">
+                                <input type="file" id="imgFile" name="imgFile" style="display:inline;width:500px;" accept="image/*" />
+                                <img src="/static/images/upload-pic.png" id="pimg" width="120" class="thumb_f64165672ceb97dc00593b60f0c14cc9" onerror="this.src='/static/images/upload-pic.png';" />
+                            </a>
+                        </span>
+                    </div>
+                </li>
+
+                <li>
+                    <label class="lbt"><em>(*)</em>商品名称：</label><div>
+                        @Html.TextBoxFor(m => m.name, new { @class = "form-control", placeholder = "请输入商品名称" })
+                        @*<input class="form-control" name="title" value="" type="text" placeholder="请输入商品名称">*@
+                    </div>
+                </li>
+                <li>
+                    <label class="lbt"><em>(*)</em>条码：</label><div>
+                        <table width="100%" border="0" cellspacing="0" cellpadding="0">
+                            <tr>
+                                <td>
+                                    <div style=" overflow:hidden; position:relative;">
+                                        <div style="position:absolute; right:11px; top:0px; width:25px; height:36px; background:url(/static/images/tiaoma.png) no-repeat right center; background-size:auto 90% ;"></div>
+                                        @Html.TextBoxFor(m => m.barcode, new { @class = "form-control", placeholder = "请输入条形码" })
+                                        @*<input class="form-control" name="barcode" value="" type="text" placeholder="请输入条形码">*@
+                                    </div>
+                                </td>
+                                <td width="10"></td>
+                                <td width="50" style=" padding-right:10px;"><a href="javascript:;" class="btn btn-primary btn-block barcode-select">查询</a></td>
+                                <td width="50"><a href="javascript:;" class="btn btn-primary btn-block bar_code_generation">生成</a></td>
+                            </tr>
+                        </table>
+                    </div>
+                </li>
+
+                <li>
+                    <label class="lbt"><em></em>分类：</label>
+                    <div class="form-option-list">
+                        <!--<span class="store_class_btns">
+                         <a href="javascript:;" id="store_class_btn" class="dssc-btn">新增分类</a>
+                        </span>-->
+                        <div class="store_class_list">
+
+                            <select name="category" class="sys-common-select store_class_select " style="display:none;">
+                                <option value="0">请选择分类</option>
+                                <option value="1">狗狗商品</option>
+                                <option value="5">&nbsp;&nbsp;&nbsp;宠物狗粮</option>
+                                <option value="6">&nbsp;&nbsp;&nbsp;狗罐头/妙鲜包</option>
+                                <option value="7">&nbsp;&nbsp;&nbsp;狗狗零食</option>
+                                <option value="8">&nbsp;&nbsp;&nbsp;狗狗保健品</option>
+                                <option value="9">&nbsp;&nbsp;&nbsp;狗狗医疗</option>
+                                <option value="16">&nbsp;&nbsp;&nbsp;狗狗沐浴露</option>
+                                <option value="33">&nbsp;&nbsp;&nbsp;狗狗日用品</option>
+                                <option value="34">&nbsp;&nbsp;&nbsp;狗狗美容</option>
+                                <option value="35">&nbsp;&nbsp;&nbsp;狗狗玩具</option>
+                                <option value="36">&nbsp;&nbsp;&nbsp;狗狗衣服/狗窝</option>
+                                <option value="37">&nbsp;&nbsp;&nbsp;出行装备</option>
+                                <option value="4">猫猫商品</option>
+                                <option value="82">&nbsp;&nbsp;&nbsp;宠物猫粮</option>
+                                <option value="83">&nbsp;&nbsp;&nbsp;猫罐头/妙鲜包</option>
+                                <option value="84">&nbsp;&nbsp;&nbsp;猫猫零食</option>
+                                <option value="109">&nbsp;&nbsp;&nbsp;猫猫保健</option>
+                                <option value="110">&nbsp;&nbsp;&nbsp;猫猫医疗</option>
+                                <option value="113">&nbsp;&nbsp;&nbsp;猫猫香波</option>
+                                <option value="114">&nbsp;&nbsp;&nbsp;猫猫日用品</option>
+                                <option value="115">&nbsp;&nbsp;&nbsp;猫猫玩具</option>
+                                <option value="119">&nbsp;&nbsp;&nbsp;猫衣服/猫窝</option>
+                                <option value="121">&nbsp;&nbsp;&nbsp;美容器材</option>
+                                <option value="2">宠物服务</option>
+                                <option value="85">&nbsp;&nbsp;&nbsp;宠物洗澡</option>
+                                <option value="86">&nbsp;&nbsp;&nbsp;宠物美容</option>
+                                <option value="87">&nbsp;&nbsp;&nbsp;宠物寄养</option>
+                                <option value="88">&nbsp;&nbsp;&nbsp;宠物SPA药浴</option>
+                                <option value="89">&nbsp;&nbsp;&nbsp;宠物安全检疫</option>
+                                <option value="90">&nbsp;&nbsp;&nbsp;宠物训导</option>
+                                <option value="91">&nbsp;&nbsp;&nbsp;宠物摄影</option>
+                                <option value="3">活体销售</option>
+                                <option value="122">&nbsp;&nbsp;&nbsp;小型犬</option>
+                                <option value="124">&nbsp;&nbsp;&nbsp;中型犬</option>
+                                <option value="126">&nbsp;&nbsp;&nbsp;大型犬</option>
+                                <option value="127">&nbsp;&nbsp;&nbsp;猫咪</option>
+                                <option value="279">&nbsp;&nbsp;&nbsp;异宠</option>
+                                <option value="284">其它</option>
+                                <option value="285">&nbsp;&nbsp;&nbsp;收银硬件</option>
+                            </select>
+                            <select name="store_class[]" id="goodsclassid" class="sys-common-select store_class_select  mySelect">
+                                <option value="0">请选择分类</option>
+                                <option value="1">狗狗商品</option>
+                                <option value="5">&nbsp;&nbsp;&nbsp;宠物狗粮</option>
+                                <option value="6">&nbsp;&nbsp;&nbsp;狗罐头/妙鲜包</option>
+                                <option value="7">&nbsp;&nbsp;&nbsp;狗狗零食</option>
+                                <option value="8">&nbsp;&nbsp;&nbsp;狗狗保健品</option>
+                                <option value="9">&nbsp;&nbsp;&nbsp;狗狗医疗</option>
+                                <option value="16">&nbsp;&nbsp;&nbsp;狗狗沐浴露</option>
+                                <option value="33">&nbsp;&nbsp;&nbsp;狗狗日用品</option>
+                                <option value="34">&nbsp;&nbsp;&nbsp;狗狗美容</option>
+                                <option value="35">&nbsp;&nbsp;&nbsp;狗狗玩具</option>
+                                <option value="36">&nbsp;&nbsp;&nbsp;狗狗衣服/狗窝</option>
+                                <option value="37">&nbsp;&nbsp;&nbsp;出行装备</option>
+                                <option value="4">猫猫商品</option>
+                                <option value="82">&nbsp;&nbsp;&nbsp;宠物猫粮</option>
+                                <option value="83">&nbsp;&nbsp;&nbsp;猫罐头/妙鲜包</option>
+                                <option value="84">&nbsp;&nbsp;&nbsp;猫猫零食</option>
+                                <option value="109">&nbsp;&nbsp;&nbsp;猫猫保健</option>
+                                <option value="110">&nbsp;&nbsp;&nbsp;猫猫医疗</option>
+                                <option value="113">&nbsp;&nbsp;&nbsp;猫猫香波</option>
+                                <option value="114">&nbsp;&nbsp;&nbsp;猫猫日用品</option>
+                                <option value="115">&nbsp;&nbsp;&nbsp;猫猫玩具</option>
+                                <option value="119">&nbsp;&nbsp;&nbsp;猫衣服/猫窝</option>
+                                <option value="121">&nbsp;&nbsp;&nbsp;美容器材</option>
+                                <option value="2">宠物服务</option>
+                                <option value="85">&nbsp;&nbsp;&nbsp;宠物洗澡</option>
+                                <option value="86">&nbsp;&nbsp;&nbsp;宠物美容</option>
+                                <option value="87">&nbsp;&nbsp;&nbsp;宠物寄养</option>
+                                <option value="88">&nbsp;&nbsp;&nbsp;宠物SPA药浴</option>
+                                <option value="89">&nbsp;&nbsp;&nbsp;宠物安全检疫</option>
+                                <option value="90">&nbsp;&nbsp;&nbsp;宠物训导</option>
+                                <option value="91">&nbsp;&nbsp;&nbsp;宠物摄影</option>
+                                <option value="3">活体销售</option>
+                                <option value="122">&nbsp;&nbsp;&nbsp;小型犬</option>
+                                <option value="124">&nbsp;&nbsp;&nbsp;中型犬</option>
+                                <option value="126">&nbsp;&nbsp;&nbsp;大型犬</option>
+                                <option value="127">&nbsp;&nbsp;&nbsp;猫咪</option>
+                                <option value="279">&nbsp;&nbsp;&nbsp;异宠</option>
+                                <option value="284">其它</option>
+                                <option value="285">&nbsp;&nbsp;&nbsp;收银硬件</option>
+                            </select>
+                        </div>
+
+                    </div>
+                </li>
+                <li>
+                    <label class="lbt"><em>(*)</em>库存：</label><div>
+                        @Html.TextBoxFor(m => m.store, new { @class = "form-control", onkeyup = "this.value=this.value.replace(/\\D/g,'')", onafterpaste = "this.value=this.value.replace(/\\D/g,'')", placeholder = "请输入库存" })
+                        @*<input name="storage" onkeyup="this.value=this.value.replace(/\D/g,'')" onafterpaste="this.value=this.value.replace(/\D/g,'')" value="" class="form-control" type="text" placeholder="请输入库存">*@
+                    </div>
+                </li>
+                <li>
+                    <label class="lbt"><em>(*)</em>预警值：</label><div>
+                        @Html.TextBoxFor(m => m.warn, new { @class = "form-control", onkeyup = "this.value=this.value.replace(/\\D/g,'')", onafterpaste = "this.value=this.value.replace(/\\D/g,'')", placeholder = "请输入库存" })
+                        @*<input name="alarm" onkeyup="this.value=this.value.replace(/\D/g,'')" onafterpaste="this.value=this.value.replace(/\D/g,'')" value="" class="form-control" type="text" placeholder="请输入库存">*@
+                    </div>
+                </li>
+                <li>
+                    <label class="lbt"><em>(*)</em>成本价：</label><div>
+                        @Html.TextBoxFor(m => m.cost, new { @class = "form-control", placeholder = "请输入成本价格" })
+                        @*<input name="price" value="" class="form-control" type="text" placeholder="请输入成本价格">*@
+                    </div>
+                </li>
+                <li>
+                    <label class="lbt"><em>(*)</em>价格：</label><div>
+                        @Html.TextBoxFor(m => m.price, new { @class = "form-control", placeholder = "请输入价格" })
+                        @*<input name="myprice" value="" class="form-control" type="text" placeholder="请输入价格">*@
+                    </div>
+                </li>
+                <li>
+                    <label class="lbt"><em>(*)</em>会员折扣：</label><div>
+                        <cite>
+                            <label>
+                                <input name="ismemberdiscount" type="radio" checked="checked" value="1" />启用&nbsp;&nbsp;&nbsp;
+                            </label>
+                            <label>
+                                <input name="is_discount" type="radio" value="2" />不启用
+                            </label>
+                        </cite>
+                    </div>
+                </li>
+            </ul>
+        </div>
+        <div class="padt" style="text-align: center"><span id="open" class="btn btnyes yunmall_button">保 存</span></div>
+
+    </form>
+    <script language="javascript">
+
+        $(function () {
+            $('.bar_code_generation').bind('click', function () {
+
+                $("input[name=barcode]").val(6 + "" + (Math.round(Math.random() * 1000000000000)));
+            });
+        });
+
+
+
+        (function () {
+            /*新增加分类*/
+            $("#store_class_btn").bind('click', function () {
+
+                var _select_element = $(this).closest('li').find('.sys-common-select:first').clone();
+                _select_element.attr('name', 'store_class[]');
+                $(".store_class_list").append(_select_element);
+                _select_element.select2({
+                    width: 156,
+                    placeholder: '请选择',
+                    allowClear: true
+                });
+
+                _select_element.bind('change', function (e) {
+                    e.preventDefault();
+                    store_class_validate($(this));
+                });
+            });
+
+
+
+            $('.barcode-select').bind('click', function () {
+                getScanninggungoodsinfo($.trim($("input[name=barcode]").val()));
+            });
+
+
+
+
+            function store_class_validate(_that) {
+                var _selectd_val = _that.val();
+                if (_selectd_val != '0' && $(".store_class_select option:selected[value=" + _selectd_val + "]").size() > 1) {
+                    _that.select2("val", "0");
+                    alert("此分类已经选择");
+                    return false;
+                }
+            }
+
+
+            CheckScanningGun();
+            //扫码抢
+            function CheckScanningGun() {
+                var _Element = $("input[name=barcode]"), _start_microtime = 0, _keyupNumber = 0, Timeout = null, keyword_content = $.trim(_Element.val());
+                _Element.bind('keyup', function () {
+                    _keyupNumber += 0;
+
+                    if (Timeout) window.clearTimeout(Timeout);
+                    Timeout = setTimeout(function () {
+                        _keyupNumber = 0;
+                        _start_microtime = 0;
+                        keyword_content = $.trim(_Element.val());
+
+                    }, 50)
+                });
+
+                _Element.bind('keypress', function () {
+                    if (_start_microtime <= 0) {
+                        start_microtime = new Date().getTime();
+                    }
+
+                });
+
+                $(document).keyup(function (event) {
+
+                    if (event.keyCode == 13) {
+                        var _keyword_val = $.trim(_Element.val());
+
+                        var reg = new RegExp("^" + keyword_content);
+                        _keyword_val = _keyword_val.replace(reg, '');
+                        console.log("_keyword_val", _keyword_val);
+                        if (/^[\d]{8,}$/.test(_keyword_val) && (new Date().getTime() - start_microtime) < 50) {
+                            _Element.val(_keyword_val);
+                            getScanninggungoodsinfo(_keyword_val);
+                        }
+
+                    }
+                });
+
+
+
+            }
+
+            function getScanninggungoodsinfo(_val) {
+                $.get('/Goods/scanninggungoodsinfo.html', { barcode: _val }, function (_Result) {
+                    setFormVsl(_Result);
+                }, 'json');
+            }
+
+            function setFormVsl(_Result) {
+
+                if (_Result['status']) {
+                    $("form input").each(function (index, element) {
+                        var _name = $(this).attr('name');
+                        if (typeof _Result.data[_name] != 'undefined') {
+                            $(this).val(_Result.data[_name]);
+                        }
+                    });
+
+                    //$("select.store_class_select").find("option[text='pxx']").attr("selected",true);
+
+                    $("#goodsclassid").val(_Result.data.goodsclass2).select2();
+
+                    $(".yun_upload_images img").attr('src', _Result.data['mapthumimg'] + "?t=" + new Date().getTime());
+                }
+
+            }
+
+        })();
+
+
+        $(function () {
+
+            //上传图片
+
+            $("#imgFile").change(function () {
+
+                if (document.getElementById("imgFile").files.length == 0) {
+                    return;
+                }
+
+                //$("#imgWait").show();
+                var formData = new FormData();
+                formData.append("myfile", document.getElementById("imgFile").files[0]);
+                $.ajax({
+                    url: "/Upload/Upload",
+                    type: "POST",
+                    data: formData,
+                    /**
+                    *必须false才会自动加上正确的Content-Type
+                    */
+                    contentType: false,
+                    /**
+                    * 必须false才会避开jQuery对 formdata 的默认处理
+                    * XMLHttpRequest会对 formdata 进行正确的处理
+                    */
+                    processData: false,
+                    success: function (data) {
+                        if (data.code == 0) {
+                            document.getElementById("pimg").src = data.imgurl;
+                            document.getElementById("thumbnail").value = data.imgurl;
+                            //alert("上传成功！");
+                        }
+                        else if (data.msg != "") {
+                            alert(data.msg);
+                        }
+                        //$("#imgWait").hide();
+                    },
+                    error: function () {
+                        alert("上传失败！");
+                        //$("#imgWait").hide();
+                    }
+                });
+            });
+        });
+
+    </script>
+
+</body>
+</html>

@@ -1,0 +1,283 @@
+﻿@{
+    ViewBag.Title = "Edit";
+    Layout = null;
+}
+
+
+<!doctype html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>圣宠</title>
+    <link rel="stylesheet" type="text/css" href="/static/css/common.css?_t=1558752858">
+    <link rel="stylesheet" type="text/css" href="/static/css/ui-dialog.css?_t=1558752858">
+    <link rel="stylesheet" href="/content/static/extend/honeySwitch/lib/honeySwitch.css">
+    <script type="text/javascript" src="/static/js/jquery-1.12.2.min.js"></script>
+    <script src="/static/js/artDialog.source.js"></script>
+    <script src="/static/js/iframeTools.source.js"></script>
+    <script src="/static/extend/laydate/laydate.js"></script>
+    <script src="/static/js/iframe.js"></script>
+    <script src="/static/js/service-common.js?_t=1558752858"></script>
+    <script src="/static/js/common.js?_t=1558752858"></script>
+    <script src="/static/extend/honeySwitch/lib/honeySwitch.js"></script>
+    <script src="/static/js/md5.js"></script>
+
+
+    <script src="/static/js/widget.js"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/css/select2.min.css" rel="stylesheet" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/js/select2.min.js"></script>
+
+</head>
+
+
+</head>
+<body class="activity-discountadd mainbody">
+    <div class="head clear">
+        <div class="menubtn system-nav-menu">
+            <img src="/static/images/menubtn.png">
+
+        </div>
+        <div class="logo"><img src="/static/images/head_01.png"></div>
+        <div class="system-header-right">
+            <div class="pull-left headnav">
+                <div class="app-info" title="退出"><a href="javascript:void(0);" onclick="yunmall_confirm_dialog('您确定要退出系统吗?','/Members/quit.html','reload');"><img src="/static/images/quit.png"></a></div>
+                <div class="app-info" title="收银"><a href="/Receipt/index.html"><img src="/static/images/head_02.png"></a></div>
+                <div class="app-info" title="消息"><em class="message_number" style="display:none;">0</em><a href="/Seller_Message/index.html"><img src="/static/images/head_03.png"></a></div>
+                <div class="app-info" title="锁屏"><a href="javascript:;" onclick="syslock.lock();"><img src="/static/images/head_04.png"></a></div>
+                <div class="app-info" title="店铺信息"><a href="/Store/index.html"><img src="/static/images/head_05.png"></a></div>
+                <div class="app-info info-info2"><div class="info-img" title="您当前的系统时间"><img src="/static/images/head_06.png"></div><em id="yunmall_sys_time">2019/05/25 10:54:18</em></div>
+
+                <!--<a href="#"><img src="/images/head_03.png"></a>
+                <a href="#"><img src="/images/head_04.png"></a>
+                <a href="#"><img src="/images/head_05.png">章子怡</a>
+                <a href="#"><img src="/images/head_06.png">2018-02-02 12:10:34</a>-->
+            </div>
+        </div>
+    </div>
+    <div class="menu system-nav-menu-list">
+        <a href="/"><img src="/static/images/mico1.png">主界面</a>
+        <a href="/goods/index.html"><img src="/static/images/mico1.png">商品管理</a>
+        <a href="/Receipt/index.html"><img src="/static/images/mico2.png">收银</a>
+        <a href="http://www.spetmall.com//seller/goods/purchase.html"><img src="/static/images/mico3.png">采购</a>
+        <a href="/reports/index.html"><img src="/static/images/mico4.png">报表</a>
+        <a href="/Transaction/index.html"><img src="/static/images/mico5.png">交易明细</a>
+        <a href="/Member/index.html"><img src="/static/images/mico6.png">会员管理</a>
+        <!--<a href="/Yuangong/index.html"><img src="/static/images/mico7.png">店员管理</a>-->
+        <a href="/Railcard/index.html"><img src="/static/images/mico8.png">优惠卡</a>
+        <a href="/Activity/index.html"><img src="/static/images/mico9.png">活动管理</a>
+        <a href="/store_class/index.html"><img src="/static/images/mico9.png">分类管理</a>
+    </div>
+    <script type="text/javascript">
+$(function(){
+	var _system_nav_menu;
+	$(".system-nav-menu").add($(".system-nav-menu-list")).mouseover(function(){
+		 _system_nav_menu &&  window.clearInterval(_system_nav_menu);
+	     $(".system-nav-menu-list").show();
+		 $('.menubtn').addClass('menubtn_active');
+	});
+
+	$(".system-nav-menu").add($(".system-nav-menu-list")).mouseout(function(){
+		 _system_nav_menu = setTimeout(function(){
+			 	 $(".system-nav-menu-list").hide();
+				 $('.menubtn').removeClass('menubtn_active');
+		 },40);
+	});
+});
+$(function(){
+	setInterval(function(){
+		var myDate = new Date();
+		var date = myDate.toLocaleDateString();
+		var hours = myDate.getHours();
+		var minutes = myDate.getMinutes();
+		var seconds = myDate.getSeconds();
+		$("#yunmall_sys_time").html(date+" "+hours+":"+minutes+":"+seconds); //将值赋给div
+	},1000); //每隔一秒运行一次
+});
+    </script>
+
+
+    <div class="common-app-tabs">
+        <div class="common-app-name">限时折扣管理</div>
+        <div class="app-tab">
+            <ul>
+                <li><a href="/Activity/index.html">限时折扣列表</a></li>
+                <li class="active"><a href="#">添加限时折扣</a></li>
+
+            </ul>
+        </div>
+    </div>
+
+    <div class="form-goods-step">
+        <form action="?" id="subtractfromfullForm" method="post">
+            <input name="id" type="hidden" value="" />
+            <div class="form-goods">
+                <table width="100%" border="1">
+                    <tr class="title">
+                        <td colspan="2">购物券信息</td>
+                    </tr>
+
+
+
+
+                    <tr>
+                        <td class="name"><i>*</i> 名称：</td>
+                        <td>
+                            <input name="title" type="text" class="text w400 " value="">
+                            <p class="hint">购物券名称长度至少3个字符，最长50个汉字</p>
+                        </td>
+                    </tr>
+
+
+                    <tr>
+                        <td class="name">类型：</td>
+                        <td>
+
+                            <select name="type" class="mySelect">
+                                <option value="1">店铺</option>
+                                <option value="2">指定分类</option>
+                                <option value="3">指定商品</option>
+                            </select>
+
+                            <p class="hint">选择分类只能是指定分类下才可以使用。</p>
+                        </td>
+                    </tr>
+
+
+
+                    <tr class="goodsclasslist" style="height:33.9px;display:none">
+                        <td class="name">商品分类：</td>
+                        <td>
+                            <div id="placeofdelivery" style="width:500px;"></div>
+                            <p class="hint">选择分类只能是指定分类下才可以使用。</p>
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td class="name"></td>
+                        <td><div class="placeofdeliverymsg"></div></td>
+                    </tr>
+
+
+                    <tr class="goodsselectspecid" style="display:none">
+                        <td class="name">请选择商品：</td>
+                        <td>
+                            <div class="selectoption">
+                                <div class="option_button"><input name="formsubmits" id="specbutton" type="button" class="btn dssc-btn" value="选择商品" /></div>
+                                <div class="option_list" id="option_list_id"></div>
+                            </div>
+
+                        </td>
+                    </tr>
+
+
+                    <tr>
+                        <td class="name"></td>
+                        <td>
+                            <cite><input name="is_discount_type" type="radio" value="1" checked="checked" />不限&nbsp;&nbsp;&nbsp;&nbsp;<input name="is_discount_type" type="radio" value="2" />按件折扣&nbsp;&nbsp;&nbsp;&nbsp;<input name="is_discount_type" type="radio" value="3" />按价格折扣</cite>
+                        </td>
+                    </tr>
+
+
+                    <tr>
+                        <td class="name">创建规则</td>
+                        <td>
+                            <div class="selectoption">
+                                <div class="goodsguizhe_button"><input name="formsubmits" id="discountguizhebutton" type="button" class="btn dssc-btn" value="新建规则" /></div>
+                                <div class="goodsguizhe_list" id="goodsguizhe_list_id"></div>
+
+                            </div>
+                        </td>
+                    </tr>
+
+
+
+                    <tr>
+                        <td class="name">可同时使用：</td>
+                        <td>
+
+                            <cite><input name="and_used[]" type="checkbox" value="quan" />优惠券&nbsp;&nbsp;&nbsp;<input name="and_used[]" type="checkbox" value="man" />满就送<cite>
+                        </td>
+                    </tr>
+
+                    <!--<tr>
+                      <td class="name">订单中心存活期：</td>
+                      <td>
+                       <div class="widgettxt widgetw156">
+                         <div><input name="expiresTime" value="" type="text"/><i class="icon-fl-renminbi"></i></div>
+                       </div>
+
+
+                      </td>
+                    </tr>-->
+
+                    <tr>
+                        <td class="name">开始时间：</td>
+                        <td>
+                            <div class="widgettxt widgetw156">
+                                <div><input name="start_time" readonly="readonly" autocomplete="off" class="yunmalldate" value="" type="text" /><i class="icon-fl-renminbi"></i></div>
+                            </div>
+                            <p class="hint">价格必须是0.00~9999999之间的数字，此价格为商户对所销售的商品实际成本价格进行备注记录，非必填选项，不会在前台销售页面中显示。</p>
+
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td class="name">结速时间：</td>
+                        <td>
+                            <div class="widgettxt widgetw156">
+                                <div><input name="end_time" readonly="readonly" autocomplete="off" class="yunmalldate" value="" type="text" /><i class="icon-fl-renminbi"></i></div>
+                            </div>
+                            <p class="hint">价格必须是0.00~9999999之间的数字，此价格为商户对所销售的商品实际成本价格进行备注记录，非必填选项，不会在前台销售页面中显示。</p>
+
+                        </td>
+                    </tr>
+
+
+                </table>
+            </div>
+            <div class="formbottom">
+                <label class="submit-border">
+                    <input type="button" id="subtractfromfullsubmit" class="formsubmit" value="填写完成，保存">
+                </label>
+            </div>
+        </form>
+    </div>
+
+
+
+
+    <script language="javascript">
+
+var TYPESELECT = function(){
+	var _TYPE = $("select[name=type]"),_GOODSCLASSLIST = $(".goodsclasslist"),_GOODSSELECTSPECID=$(".goodsselectspecid");
+	_TYPE.bind('change',function(){
+	    var _VAL = $(this).val();
+		if(_VAL == 2 ){ _GOODSCLASSLIST.show(); }else{  _GOODSCLASSLIST.hide(); }
+		if(_VAL == 3 ){ _GOODSSELECTSPECID.show(); }else{  _GOODSSELECTSPECID.hide(); }
+	});
+};
+
+new TYPESELECT();
+
+
+
+	var artspecdata  =  new  ArtSpecData();
+	artspecdata.setCreate(null);
+    artspecdata.setDiscountGuizhe();
+    artspecdata.init({});
+
+
+    var Linkage = new SelectLinkage();
+    Linkage.setName(['class1','class2','class3']);
+    Linkage.setUrl('/Activity/getGoodsclasschild.html');
+    Linkage.add();
+    Linkage.add();
+    Linkage.add();
+    Linkage.init('#placeofdelivery',0);
+
+
+
+    </script>
+
+</body>
+</html>

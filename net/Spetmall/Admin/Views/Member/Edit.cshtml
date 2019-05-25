@@ -1,0 +1,250 @@
+﻿@{
+    ViewBag.Title = "Edit";
+    Layout = null;
+}
+
+
+<!doctype html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>全员管理</title>
+
+    <link rel="stylesheet" type="text/css" href="/static/css/common.css">
+    <link rel="stylesheet" type="text/css" href="/static/css/ui-dialog.css">
+    <script type="text/javascript" src="/static/js/jquery-1.12.2.min.js"></script>
+    <script src="/static/js/artDialog.source.js"></script>
+    <script src="/static/js/iframeTools.source.js"></script>
+    <script src="/static/js/iframe.js"></script>
+    <script src="/static/js/common.js?_t=1558752468"></script>
+
+</head>
+<body class="iframebody">
+    <form class=" pad15" action="?">
+        <input name="id" type="hidden" value="">
+        <input name="pet_dog_list" type="hidden" value="">
+        <input name="pet_cat_list" type="hidden" value="">
+        <input name="different_pet_list" type="hidden" value="">
+        <ul class="formlist">
+            <li><label class="lbt"><em>(*)</em>姓名：</label><div><input name="username" class="form-control" type="text" placeholder="请输入姓名" value=""> </div></li>
+            <li><label class="lbt"><em>(*)</em>手机号：</label><div><input name="phone" class="form-control" type="text" placeholder="请输入手机号码" value=""> </div></li>
+            <li><label class="lbt">邮箱：</label><div><input name="email" class="form-control" type="text" placeholder="请输入邮箱" value=""> </div></li>
+            <li><label class="lbt"><em>(*)</em>姓别：</label><div><cite><label><input name="sex" type="radio" value="1" />男&nbsp;&nbsp;&nbsp;</label><label><input name="sex" type="radio" value="2" />女</cite> </div></li>
+            <li><label class="lbt"><em></em>总金额：</label><div><input class="form-control" type="text" name="total_balance" value="0" placeholder="请输入总金额"> </div></li>
+            <li><label class="lbt"><em>(*)</em>折扣：</label><div><input class="form-control" type="text" name="discount" value="" placeholder="请输入折扣"> </div></li>
+            <li>
+                <label class="lbt"><em>(*)</em>宠物狗：</label>
+                <div class="pets_classification">
+                    <div class="pets_classification_menu">
+                        <ul>
+                            <li class="active" data-chongwutype="pet_dog_list"><a href="javascript:;">小型犬</a></li>
+                            <li data-chongwutype="pet_cat_list"><a href="javascript:;">中型犬</a></li>
+                            <li><a href="javascript:;">大型犬</a></li>
+                        </ul>
+                    </div>
+                    <div class="pets_classification_list" data-chongwutype="pet_dog_list">
+                        <ul style="display:block;">
+                            <li><a href="javascript:;" data-class="134" class="">比熊<i class="iconfont "></i></a></li>
+                            <li><a href="javascript:;" data-class="135" class="">博美<i class="iconfont "></i></a></li>
+                            <li><a href="javascript:;" data-class="137" class="">巴哥<i class="iconfont "></i></a></li>
+                            <li><a href="javascript:;" data-class="218" class="">比格犬<i class="iconfont "></i></a></li>
+                            <li><a href="javascript:;" data-class="219" class="">巴吉度<i class="iconfont "></i></a></li>
+                            <li><a href="javascript:;" data-class="220" class="">贵宾<i class="iconfont "></i></a></li>
+                            <li><a href="javascript:;" data-class="221" class="">蝴蝶犬<i class="iconfont "></i></a></li>
+                            <li><a href="javascript:;" data-class="222" class="">吉娃娃<i class="iconfont "></i></a></li>
+                            <li><a href="javascript:;" data-class="223" class="">柯基犬<i class="iconfont "></i></a></li>
+                            <li><a href="javascript:;" data-class="224" class="">马尔济斯<i class="iconfont "></i></a></li>
+                            <li><a href="javascript:;" data-class="225" class="">牛头梗<i class="iconfont "></i></a></li>
+                            <li><a href="javascript:;" data-class="226" class="">泰迪<i class="iconfont "></i></a></li>
+                            <li><a href="javascript:;" data-class="227" class="">雪纳瑞<i class="iconfont "></i></a></li>
+                            <li><a href="javascript:;" data-class="228" class="">西高地<i class="iconfont "></i></a></li>
+                            <li><a href="javascript:;" data-class="229" class="">西施犬<i class="iconfont "></i></a></li>
+                            <li><a href="javascript:;" data-class="230" class="">小鹿犬<i class="iconfont "></i></a></li>
+                            <li><a href="javascript:;" data-class="231" class="">约克夏<i class="iconfont "></i></a></li>
+
+
+                        </ul>
+
+                        <ul>
+                            <li><a href="javascript:;" data-class="232" class="">边境牧羊犬<i class="iconfont "></i></a></li>
+                            <li><a href="javascript:;" data-class="233" class="">贝灵顿梗<i class="iconfont "></i></a></li>
+                            <li><a href="javascript:;" data-class="234" class="">比特犬<i class="iconfont "></i></a></li>
+                            <li><a href="javascript:;" data-class="235" class="">柴犬<i class="iconfont "></i></a></li>
+                            <li><a href="javascript:;" data-class="236" class="">杜高<i class="iconfont "></i></a></li>
+                            <li><a href="javascript:;" data-class="237" class="">大麦町犬<i class="iconfont "></i></a></li>
+                            <li><a href="javascript:;" data-class="238" class="">法国斗牛犬<i class="iconfont "></i></a></li>
+                            <li><a href="javascript:;" data-class="239" class="">古牧<i class="iconfont "></i></a></li>
+                            <li><a href="javascript:;" data-class="240" class="">哈士奇<i class="iconfont "></i></a></li>
+                            <li><a href="javascript:;" data-class="241" class="">加纳利犬<i class="iconfont "></i></a></li>
+                            <li><a href="javascript:;" data-class="242" class="">可卡<i class="iconfont "></i></a></li>
+                            <li><a href="javascript:;" data-class="243" class="">昆明犬<i class="iconfont "></i></a></li>
+                            <li><a href="javascript:;" data-class="244" class="">库达犬<i class="iconfont "></i></a></li>
+                            <li><a href="javascript:;" data-class="245" class="">拉布拉多<i class="iconfont "></i></a></li>
+                            <li><a href="javascript:;" data-class="246" class="">腊肠犬<i class="iconfont "></i></a></li>
+                            <li><a href="javascript:;" data-class="247" class="">马犬<i class="iconfont "></i></a></li>
+                            <li><a href="javascript:;" data-class="248" class="">萨摩耶<i class="iconfont "></i></a></li>
+                            <li><a href="javascript:;" data-class="249" class="">松狮<i class="iconfont "></i></a></li>
+                            <li><a href="javascript:;" data-class="250" class="">沙皮犬<i class="iconfont "></i></a></li>
+                            <li><a href="javascript:;" data-class="251" class="">史宾格<i class="iconfont "></i></a></li>
+                            <li><a href="javascript:;" data-class="252" class="">喜乐蒂<i class="iconfont "></i></a></li>
+                            <li><a href="javascript:;" data-class="253" class="">英国斗牛犬<i class="iconfont "></i></a></li>
+                        </ul>
+
+                        <ul>
+                            <li><a href="javascript:;" data-class="254" class="">阿拉斯加<i class="iconfont "></i></a></li>
+                            <li><a href="javascript:;" data-class="255" class="">伯恩山犬<i class="iconfont "></i></a></li>
+                            <li><a href="javascript:;" data-class="256" class="">德国牧羊犬<i class="iconfont "></i></a></li>
+                            <li><a href="javascript:;" data-class="257" class="">恶霸<i class="iconfont "></i></a></li>
+                            <li><a href="javascript:;" data-class="258" class="">高加索<i class="iconfont "></i></a></li>
+                            <li><a href="javascript:;" data-class="259" class="">金毛<i class="iconfont "></i></a></li>
+                            <li><a href="javascript:;" data-class="260" class="">卡斯罗<i class="iconfont "></i></a></li>
+                            <li><a href="javascript:;" data-class="261" class="">罗威纳<i class="iconfont "></i></a></li>
+                            <li><a href="javascript:;" data-class="262" class="">拳师犬<i class="iconfont "></i></a></li>
+                            <li><a href="javascript:;" data-class="263" class="">苏格兰牧羊犬<i class="iconfont "></i></a></li>
+                            <li><a href="javascript:;" data-class="264" class="">威玛犬<i class="iconfont "></i></a></li>
+                            <li><a href="javascript:;" data-class="265" class="">藏獒<i class="iconfont "></i></a></li>
+                            <li><a href="javascript:;" data-class="266" class="">中亚牧羊犬<i class="iconfont "></i></a></li>
+                            <li><a href="javascript:;" data-class="267" class="">波音达犬<i class="iconfont "></i></a></li>
+                            <li><a href="javascript:;" data-class="268" class="">杜宾<i class="iconfont "></i></a></li>
+                            <li><a href="javascript:;" data-class="269" class="">大白熊<i class="iconfont "></i></a></li>
+                            <li><a href="javascript:;" data-class="270" class="">巨型贵宾<i class="iconfont "></i></a></li>
+                            <li><a href="javascript:;" data-class="271" class="">秋田<i class="iconfont "></i></a></li>
+                        </ul>
+                    </div>
+                </div>
+
+            </li>
+            <li>
+                <label class="lbt"><em>(*)</em>宠物猫：</label>
+                <div class="pets_classification">
+                    <div class="pets_classification_menu">
+                        <ul>
+                            <li class="active"><a href="javascript:;">全部</a></li>
+                        </ul>
+                    </div>
+                    <div class="pets_classification_list" data-chongwutype="pet_cat_list">
+                        <ul style="display:block;" data-class="">
+                            <li><a href="javascript:;" data-class="145" class="">埃及猫<i class="iconfont "></i></a></li>
+                            <li><a href="javascript:;" data-class="146" class="">阿比西尼亚猫<i class="iconfont "></i></a></li>
+                            <li><a href="javascript:;" data-class="147" class="">奥西猫<i class="iconfont "></i></a></li>
+                            <li><a href="javascript:;" data-class="148" class="">布偶猫<i class="iconfont "></i></a></li>
+                            <li><a href="javascript:;" data-class="149" class="">波斯猫<i class="iconfont "></i></a></li>
+                            <li><a href="javascript:;" data-class="150" class="">伯曼猫<i class="iconfont "></i></a></li>
+                            <li><a href="javascript:;" data-class="151" class="">波米拉猫<i class="iconfont "></i></a></li>
+                            <li><a href="javascript:;" data-class="152" class="">巴厘猫<i class="iconfont "></i></a></li>
+                            <li><a href="javascript:;" data-class="153" class="">德文卷毛猫<i class="iconfont "></i></a></li>
+                            <li><a href="javascript:;" data-class="154" class="">东方猫<i class="iconfont "></i></a></li>
+                            <li><a href="javascript:;" data-class="156" class="">东奇尼猫<i class="iconfont "></i></a></li>
+                            <li><a href="javascript:;" data-class="158" class="">俄罗斯蓝猫<i class="iconfont "></i></a></li>
+                            <li><a href="javascript:;" data-class="160" class="">哈瓦那猫<i class="iconfont "></i></a></li>
+                            <li><a href="javascript:;" data-class="162" class="">加拿大无毛猫<i class="iconfont "></i></a></li>
+                            <li><a href="javascript:;" data-class="164" class="">金吉拉<i class="iconfont "></i></a></li>
+                            <li><a href="javascript:;" data-class="167" class="">卡尔特猫<i class="iconfont "></i></a></li>
+                            <li><a href="javascript:;" data-class="168" class="">科拉特猫<i class="iconfont "></i></a></li>
+                            <li><a href="javascript:;" data-class="169" class="">柯尼斯卷毛猫<i class="iconfont "></i></a></li>
+                            <li><a href="javascript:;" data-class="170" class="">美国短毛猫<i class="iconfont "></i></a></li>
+                            <li><a href="javascript:;" data-class="171" class="">孟加拉豹猫<i class="iconfont "></i></a></li>
+                            <li><a href="javascript:;" data-class="172" class="">孟买猫<i class="iconfont "></i></a></li>
+                            <li><a href="javascript:;" data-class="173" class="">曼基康猫<i class="iconfont "></i></a></li>
+                            <li><a href="javascript:;" data-class="174" class="">缅因猫<i class="iconfont "></i></a></li>
+                            <li><a href="javascript:;" data-class="175" class="">内华达猫<i class="iconfont "></i></a></li>
+                            <li><a href="javascript:;" data-class="176" class="">欧洲缅甸猫<i class="iconfont "></i></a></li>
+                            <li><a href="javascript:;" data-class="177" class="">日本短尾猫<i class="iconfont "></i></a></li>
+                            <li><a href="javascript:;" data-class="178" class="">苏格兰折耳猫<i class="iconfont "></i></a></li>
+                            <li><a href="javascript:;" data-class="179" class="">斯芬克斯猫<i class="iconfont "></i></a></li>
+                            <li><a href="javascript:;" data-class="180" class="">山东狮子猫<i class="iconfont "></i></a></li>
+                            <li><a href="javascript:;" data-class="181" class="">沙特尔猫<i class="iconfont "></i></a></li>
+                            <li><a href="javascript:;" data-class="182" class="">塞尔凯克卷毛猫<i class="iconfont "></i></a></li>
+                            <li><a href="javascript:;" data-class="183" class="">索马里猫<i class="iconfont "></i></a></li>
+                            <li><a href="javascript:;" data-class="184" class="">土耳其梵猫<i class="iconfont "></i></a></li>
+                            <li><a href="javascript:;" data-class="185" class="">土耳其安哥拉猫<i class="iconfont "></i></a></li>
+                            <li><a href="javascript:;" data-class="186" class="">威尔士猫<i class="iconfont "></i></a></li>
+                            <li><a href="javascript:;" data-class="187" class="">暹罗猫<i class="iconfont "></i></a></li>
+                            <li><a href="javascript:;" data-class="188" class="">西伯利亚森林猫<i class="iconfont "></i></a></li>
+                            <li><a href="javascript:;" data-class="189" class="">喜马拉雅猫<i class="iconfont "></i></a></li>
+                            <li><a href="javascript:;" data-class="190" class="">新加坡猫<i class="iconfont "></i></a></li>
+                            <li><a href="javascript:;" data-class="191" class="">夏特尔猫<i class="iconfont "></i></a></li>
+                            <li><a href="javascript:;" data-class="192" class="">英国短毛猫<i class="iconfont "></i></a></li>
+                            <li><a href="javascript:;" data-class="193" class="">异国短毛猫<i class="iconfont "></i></a></li>
+                            <li><a href="javascript:;" data-class="194" class="">中国狸花猫<i class="iconfont "></i></a></li>
+                            <li><a href="javascript:;" data-class="195" class="">重点色短毛猫<i class="iconfont "></i></a></li>
+                            <li><a href="javascript:;" data-class="196" class="">中华田园猫<i class="iconfont "></i></a></li>
+                        </ul>
+
+
+                    </div>
+                </div>
+            </li>
+            <li>
+                <label class="lbt">异宠：</label>
+                <div class="pets_classification">
+                    <div class="pets_classification_menu">
+                        <ul>
+                            <li class="active"><a href="javascript:;">全部</a></li>
+
+                        </ul>
+                    </div>
+                    <div class="pets_classification_list" data-chongwutype="different_pet_list">
+                        <ul style="display:block;" data-class="">
+                            <li><a href="javascript:;" data-class="280" class="">蜥蜴<i class="iconfont "></i></a></li>
+                            <li><a href="javascript:;" data-class="281" class="">金花蛇<i class="iconfont "></i></a></li>
+                            <li><a href="javascript:;" data-class="282" class="">蚂蚁<i class="iconfont "></i></a></li>
+                            <li><a href="javascript:;" data-class="283" class="">龙猫<i class="iconfont "></i></a></li>
+                        </ul>
+
+
+                    </div>
+                </div>
+            </li>
+
+            <li><label class="lbt">说明：</label><div><input class="form-control" name="explain" value="" type="text" placeholder=""> </div></li>
+        </ul>
+        <div class="padt" style="text-align: center"><a href="javascript:;" class="btn btnyes yunmall_button">保存</a></div>
+
+    </form>
+
+    <script language="javascript">
+        $(function () {
+
+            $(".pets_classification_menu li").bind('mouseover', function () {
+                var _index = $(this).index(), _type = $(this).attr('data-chongwutype');
+                $(this).addClass('active').siblings().removeClass('active');
+                $(this).closest('.pets_classification').find('.pets_classification_list ul:eq(' + _index + ')').show().siblings().hide();
+            });
+
+            $(".pets_classification_list a").bind('click', function () {
+                //var _index = $(this).index(),_type=$(this).attr('data-chongwutype');
+                var _classIdData = [];
+                var _dom = $(this).closest('.pets_classification_list');
+                if ($(this).hasClass('active')) {
+                    $(this).removeClass('active');
+                } else {
+                    $(this).addClass('active');
+                }
+
+
+                _dom.find('a.active').each(function (index, element) {
+                    _classIdData.push($(this).attr('data-class'));
+                });
+                $("input[name=" + _dom.attr('data-chongwutype') + "]").val(_classIdData.join(","));
+            });
+
+            //$("input[name=pet_dog_list]")
+            $("input[name=pet_dog_list]").bind('click', function () {
+
+            });
+
+            $("input[name=pet_cat_list]").bind('click', function () {
+
+            });
+
+            $("input[name=different_pet_list]").bind('click', function () {
+
+            });
+        });
+    </script>
+
+
+
+</body>
+</html>

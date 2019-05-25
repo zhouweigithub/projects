@@ -1,0 +1,111 @@
+﻿@{
+    ViewBag.Title = "SelectUser";
+    Layout = null;
+}
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>选择会员</title>
+    <link href="/static/css/common.css?t=1558753902" rel="stylesheet" type="text/css" />
+    <style>
+        body {
+            min-width: 695px;
+        }
+    </style>
+    <script type="text/javascript" src="/static/js/jquery-1.12.2.min.js"></script>
+
+
+    <script type="text/javascript" src="/static/js/iframe.js?_t=1548003997.5747"></script>
+    <style>
+        body {
+            min-width: 200px;
+        }
+
+        .formsearch {
+            overflow: hidden;
+            position: relative;
+            padding-right: 120px;
+            margin-bottom: 10px;
+        }
+
+        .searchtxt {
+            width: 100%;
+        }
+
+            .searchtxt input.text {
+                width: 100%;
+            }
+
+        .formsearch .formbtn {
+            position: absolute;
+            top: 0px;
+            right: 0px;
+            width: 120px;
+            height: 34px;
+            text-align: center;
+            line-height: 34px;
+            border-radius: 3px;
+            font-size: 13px;
+            color: #fff;
+            float: left;
+            background: linear-gradient(#2fb3f1, #1991ce);
+            border: 0px;
+        }
+
+            .formsearch .formbtn:hover {
+                background: linear-gradient(#1991ce, #2fb3f1);
+            }
+    </style>
+</head>
+
+<body>
+
+    <div class="rightinfo" style="padding:0px; min-width:200px;margin:10px 10px;">
+        <form action="?" method="get">
+            <input name="callback" type="hidden" value="selectUser2" />
+            <div class="formsearch">
+                <div class="searchtxt">
+                    <input name="username" type="text" class="scinput text" placeholder="请输入用户名或者手机号" value="">
+                </div>
+                <input name="" type="submit" class="scbtn formbtn" value="查询">
+
+            </div>
+        </form>
+        <form action="?" method="post" id="SpecData" name="glform">
+            <table class="tablelist" width="100%">
+                <thead>
+                    <tr>
+                        <th>姓名</th>
+                        <th>手机</th>
+                        <th>余额</th>
+                        <th>折扣</th>
+                        <th>操作</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr if1 class="odd" {/if}>
+                <td align="center">凶狠</td>
+                <td>13378168066</td>
+                <td>10000.00</td>
+                <td>1.0</td>
+                <td><a href="javascript:;" onclick='parent.receiptcommon.selectUser2({"id":"164","status":"1","store_id":"489","username":"\u51f6\u72e0","discount":"1.0","history_total_balance":"1000000","total_balance":"1000000","integral":"0","phone":"13378168066","sex":"1","email":"825462931@qq.com","number":"0","pet_dog":null,"pet_cat":null,"pet_different":null,"explain":"","pet_cat_list":"183","pet_dog_list":"245","different_pet_list":"","add_time":"1557998486"})' data-addressid="164" class="dssc-btn">选择</a></td>
+                </tr>
+                </tbody>
+
+            </table>
+        </form>
+
+        <div class="pagin"></div>
+
+    </div>
+
+
+
+</body>
+</html>
+
+
+

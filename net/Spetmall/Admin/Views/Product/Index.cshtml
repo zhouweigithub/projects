@@ -1,6 +1,10 @@
-﻿@{
+﻿@using Spetmall.Model;
+@{
     ViewBag.Title = "Index";
 }
+<script src="~/static/js/selectpage.js"></script>
+<link href="~/static/dialog/css/dialog.css" rel="stylesheet" />
+<script src="~/static/dialog/js/dialog.min.js"></script>
 
 <div class="mianbox">
     <div class="searchbar">
@@ -12,9 +16,9 @@
 
         </div>
         <div class="rightbtn">
-            <a href="javascript:;" yun_type="dialog" dialog_title="添加商品" uri="/goods/add.html" dialog_width="80%" class="barbtn01" id="open">添加商品</a>
-            <a href="?order=buynumber&time=1558613802" class="barbtn02 ">按售量</a>
-            <a href="?order=storage&time=1558613802" class="barbtn02 ">按库存</a>
+            <a href="javascript:;" yun_type="dialog" dialog_title="添加商品" uri="edit/0" dialog_width="60%" class="barbtn01" id="open">添加商品</a>
+            <a href="?orderBy=sales" class="barbtn02 ">按售量</a>
+            <a href="?orderBy=store" class="barbtn02 ">按库存</a>
         </div>
     </div>
     <div class="padt">
@@ -160,7 +164,26 @@
 
         <div class="chanpin clear">
 
-            <ul id="goods-list"></ul>
+            <ul id="goods-list">
+                @{
+                    foreach (product item in ViewBag.datas)
+                    {
+                        <li class="">
+                            <a href="javascript:;" yun_type="dialog" dialog_title="修改商品" uri="edit/@item.id" dialog_width="60%">
+                                <img src="@item.thumbnail" onerror="this.src='/static/images/defaultgoods.jpg';" style="width:100%;height:250px;">
+                                <div class="cpnav">
+                                    <ol>@item.name</ol>
+                                    <p>单价：<strong>@item.price 元</strong></p>
+                                    <div class="clear goods_attr_info">
+                                        <span class="">库存：@item.store</span>
+                                        <span class="">销量：@item.sales</span>
+                                    </div>
+                                </div>
+                            </a>
+                        </li>
+                    }
+                }
+            </ul>
             <div class="emptydata" style="display:none;">没有数据了</div>
             <div class="emptydatasearch" style="display:none;">没有搜索到相关数据,请换一个关键词试一下</div>
         </div>
@@ -201,16 +224,16 @@
             $(".emptydata").show();
         };
 
-        selectpage.init({ url: '/goods/paginate.html', page: 1, scroll: $(window), content: $("#goods-list") });
-        selectpage.setData({});
-        selectpage.paginate();
+        //selectpage.init({ url: '/goods/paginate.html', page: 1, scroll: $(window), content: $("#goods-list") });
+        //selectpage.setData({});
+        //selectpage.paginate();
 
-        $("#yunmallgoodsclass a").bind('click', function (event) {
-            event.preventDefault();
-            selectpage.setPage(1);
-            selectpage.setData({ "class": $(this).attr('data-class') });
-            selectpage.paginate();
-        });
+        //$("#yunmallgoodsclass a").bind('click', function (event) {
+        //    event.preventDefault();
+        //    selectpage.setPage(1);
+        //    selectpage.setData({ "class": $(this).attr('data-class') });
+        //    selectpage.paginate();
+        //});
 
 
 
