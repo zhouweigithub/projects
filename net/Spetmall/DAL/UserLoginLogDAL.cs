@@ -44,7 +44,7 @@ namespace Spetmall.DAL
             }
             catch (Exception ex)
             {
-                WriteLog.Write(WriteLog.LogLevel.Error, "GetLoginDatas游戏用户登录信息出错\t" + ex.Message);
+                WriteLog.Write(WriteLog.LogLevel.Error, "GetLoginDatas游戏用户登录信息出错\r\n" + ex.Message);
             }
 
             return new List<Model.UserLoginLog>();

@@ -7,8 +7,8 @@
     <ProjectGuid>{0ED3CB0B-FF76-439B-9429-940DAC6408F2}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Moqikaka.Tmp.DAL</RootNamespace>
-    <AssemblyName>Moqikaka.Tmp.DAL</AssemblyName>
+    <RootNamespace>Spetmall.DAL</RootNamespace>
+    <AssemblyName>Spetmall.DAL</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <TargetFrameworkProfile />
@@ -74,9 +74,21 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\Lib\Util.dll</HintPath>
     </Reference>
-	</ItemGroup>
+  </ItemGroup>
   <ItemGroup>
+    <Compile Include="railcardDAL.cs" />
+    <Compile Include="discountDAL.cs" />
+    <Compile Include="fullsendDAL.cs" />
+    <Compile Include="memberDAL.cs" />
+    <Compile Include="memberPetDAL.cs" />
+    <Compile Include="rechargeDAL.cs" />
+    <Compile Include="petDAL.cs" />
+    <Compile Include="saleRuleDAL.cs" />
+    <Compile Include="userDAL.cs" />
+    <Compile Include="productDAL.cs" />
+    <Compile Include="saleProductDAL.cs" />
     <Compile Include="LoginUserDAL.cs" />
+    <Compile Include="categoryDAL.cs" />
     <Compile Include="RoleDAL.cs" />
     <Compile Include="BaseQuery.cs" />
     <Compile Include="DBHelper.cs" />

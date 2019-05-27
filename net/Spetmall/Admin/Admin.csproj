@@ -11,8 +11,8 @@
     <ProjectTypeGuids>{E3E379DF-F4C6-4180-9B81-6769533ABE47};{349c5851-65df-11da-9384-00065b846f21};{fae04ec0-301f-11d3-bf4b-00c04f79efbc}</ProjectTypeGuids>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Moqikaka.Tmp.Admin</RootNamespace>
-    <AssemblyName>Moqikaka.Tmp.Admin</AssemblyName>
+    <RootNamespace>Spetmall.Admin</RootNamespace>
+    <AssemblyName>Spetmall.Admin</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <MvcBuildViews>false</MvcBuildViews>
     <UseIISExpress>true</UseIISExpress>
@@ -60,6 +60,7 @@
       <HintPath>..\Lib\Opoi\ICSharpCode.SharpZipLib.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.CSharp" />
+    <Reference Include="MySql.Data, Version=6.4.3.0, Culture=neutral, PublicKeyToken=c5687fc88969c44d" />
     <Reference Include="NPOI">
       <HintPath>..\Lib\Opoi\NPOI.dll</HintPath>
     </Reference>
@@ -1215,6 +1216,10 @@
     <Content Include="Views\Receipt\SelectUser.cshtml" />
     <Content Include="Views\Receipt\Confirm.cshtml" />
     <Content Include="Views\Receipt\ConfirmLeft.cshtml" />
+    <Content Include="Views\Member\Recharge.cshtml" />
+    <Content Include="Views\Member\RechargeRecord.cshtml" />
+    <Content Include="Views\Railcard\Record.cshtml" />
+    <Content Include="Views\Railcard\Add.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Images\upload\" />

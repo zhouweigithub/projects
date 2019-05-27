@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Portal.Model.Common
+namespace Spetmall.Model.Common
 {
     /// <summary>
     /// 数据表字段

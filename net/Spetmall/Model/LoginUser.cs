@@ -6,7 +6,7 @@
 //日期：2017-09-18
 //修改记录：
 //***********************************************************************************
-using Portal.Model.Common;
+using Spetmall.Model.Common;
 using System;
 
 namespace Spetmall.Model

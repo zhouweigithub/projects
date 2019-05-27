@@ -1,4 +1,5 @@
-﻿@{
+﻿@using Spetmall.Model;
+@{
     ViewBag.Title = "Index";
 }
 
@@ -32,41 +33,37 @@
                 <th>使用时间范围</th>
                 <th>办卡时间</th>
                 <th>查看消费记录</th>
-
             </tr>
-            <tr>
-                <td>764235249688</td>
-                <td>周围</td>
-                <td>17665173762</td>
-                <td>5000.00</td>
-                <td>4</td>
-                <td>4</td>
-                <td>2019-05-15 到 2019-05-29 </td>
-                <td>2019-05-18 18:04:54</td>
-                <td><a href="javascript:;" yun_type="dialog" dialog_title="使用优惠卡" uri="/Railcard/edit/id/66.html" dialog_width="60%" dialog_height="50%" id="open">使用优惠卡</a>  |  <a href="/Railcard/log/id/66.html">查看记录</a> | <a href="javascript:void(0);" onclick="yunmall_confirm_dialog('您确定要删除这条记录吗?','/Railcard/delete.html?id=66','reload')">删除</a> </td>
-            </tr>
-            <tr>
-                <td>485451383866</td>
-                <td>ww</td>
-                <td>17665173762</td>
-                <td>100.00</td>
-                <td>4</td>
-                <td>3</td>
-                <td>2019-05-15 到 2019-05-30 </td>
-                <td>2019-05-18 18:04:35</td>
-                <td><a href="javascript:;" yun_type="dialog" dialog_title="使用优惠卡" uri="/Railcard/edit/id/65.html" dialog_width="60%" dialog_height="50%" id="open">使用优惠卡</a>  |  <a href="/Railcard/log/id/65.html">查看记录</a> | <a href="javascript:void(0);" onclick="yunmall_confirm_dialog('您确定要删除这条记录吗?','/Railcard/delete.html?id=65','reload')">删除</a> </td>
-            </tr>
-
+            @{
+                foreach (railcard item in ViewBag.datas as List<railcard>)
+                {
+                    <tr>
+                        <td>@item.id</td>
+                        <td>@item.name</td>
+                        <td>@item.phone</td>
+                        <td>@item.money</td>
+                        <td>@item.times</td>
+                        <td>@item.lefttimes</td>
+                        <td>@item.starttime.ToString("yyyy/MM/dd") - @item.endtime.ToString("yyyy/MM/dd")</td>
+                        <td>@item.crtime</td>
+                        <td>
+                            <a href="javascript:;" yun_type="dialog" dialog_title="使用优惠卡" uri="edit/@item.id" dialog_width="60%" dialog_height="50%" id="open">使用优惠卡</a>
+                            | <a href="Record/@item.id">查看记录</a>
+                            | <a href="javascript:void(0);" onclick="yunmall_confirm_dialog('您确定要删除这条记录吗?','delete?id=@item.id','reload')">删除</a>
+                        </td>
+                    </tr>
+                }
+            }
         </tbody>
     </table>
 
 
 </div>
-</div>
+    </div>
 <script language="javascript">
-$(function(){
-	$("#yunmall_goods_search").bind('click',function(){
-		$(this).closest("form").submit();
-	});
-});
+    $(function () {
+        $("#yunmall_goods_search").bind('click', function () {
+            $(this).closest("form").submit();
+        });
+    });
 </script>

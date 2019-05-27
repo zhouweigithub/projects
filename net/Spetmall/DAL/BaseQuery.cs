@@ -11,7 +11,7 @@ using System.Collections.Generic;
 using System.Data;
 using System.Reflection;
 using System.Text;
-using Portal.Model.Common;
+using Spetmall.Model.Common;
 using Spetmall.Common;
 using MySql.Data.MySqlClient;
 

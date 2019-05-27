@@ -7,8 +7,8 @@
     <ProjectGuid>{63807E98-4F05-4B3A-8BFD-7D75EB8A4ED0}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Moqikaka.Tmp.Model</RootNamespace>
-    <AssemblyName>Moqikaka.Tmp.Model</AssemblyName>
+    <RootNamespace>Spetmall.Model</RootNamespace>
+    <AssemblyName>Spetmall.Model</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <TargetFrameworkProfile />
@@ -50,12 +50,28 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="category.cs" />
     <Compile Include="Common\TableFieldAttribute.cs" />
+    <Compile Include="railcard.cs" />
     <Compile Include="DataValueModel.cs" />
+    <Compile Include="discount.cs" />
+    <Compile Include="fullsend.cs" />
     <Compile Include="LoginUser.cs" />
     <Compile Include="LoginUser\LoginUserModel.cs" />
+    <Compile Include="member.cs" />
+    <Compile Include="memberpet.cs" />
+    <Compile Include="order.cs" />
+    <Compile Include="orderproduct.cs" />
+    <Compile Include="Page\member_edit.cs" />
+    <Compile Include="Page\member_show.cs" />
+    <Compile Include="pet.cs" />
+    <Compile Include="product.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="recharge.cs" />
     <Compile Include="Role\RoleModel.cs" />
+    <Compile Include="saleproduct.cs" />
+    <Compile Include="salerule.cs" />
+    <Compile Include="user.cs" />
     <Compile Include="UserLoginLog.cs" />
   </ItemGroup>
   <ItemGroup />

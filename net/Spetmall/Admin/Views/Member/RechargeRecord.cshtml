@@ -1,0 +1,54 @@
+﻿@using Spetmall.Model;
+@{
+    ViewBag.Title = "充值记录";
+}
+
+
+
+<div class="common-app-tabs">
+    <div class="common-app-name">充值日志</div>
+    <div class="app-tab">
+        <ul>
+            <li><a href="/member/index">返回用户列表</a></li>
+            <li class="active"><a href="jajavascript:void(0);">充值日志详情</a></li>
+        </ul>
+    </div>
+</div>
+<div class="mianbox">
+    <div class="tablebox padt">
+        <table class="table01" width="100%" border="0" cellspacing="0" cellpadding="0">
+            <tbody>
+                <tr>
+                    <th>ID</th>
+                    <th>充什流水号</th>
+                    <th>充值时间</th>
+                    <th>充值金额</th>
+                    <th>当前余额</th>
+                    <th>描述</th>
+                </tr>
+                @{
+                    foreach (recharge item in ViewBag.rechargeList)
+                    {
+                        <tr>
+                            <td>@item.id</td>
+                            <td>@item.sno</td>
+                            <td>@item.crtime</td>
+                            <td>@item.money</td>
+                            <td>@item.balance</td>
+                            <td>@item.remark</td>
+                        </tr>
+                    }
+                }
+
+            </tbody>
+        </table>
+        <div class="pagin"></div>
+    </div>
+</div>
+<script language="javascript">
+    $(function () {
+        $("#yunmall_goods_search").bind('click', function () {
+            $(this).closest("form").submit();
+        });
+    });
+</script>

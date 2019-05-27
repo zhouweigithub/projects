@@ -1,4 +1,5 @@
-﻿@{
+﻿@using Spetmall.Model.Page;
+@{
     ViewBag.Title = "Index";
 }
 
@@ -6,16 +7,16 @@
     <div style=" padding-right:460px;">
         <form action="" method="get">
             <div class="search">
-                <input type="text" name="username" value="" placeholder="请输入手机号或姓名">
+                <input type="text" name="keyWord" value="" placeholder="请输入手机号或姓名">
                 <a href="javascript:;" id="yunmall_goods_search">查询</a>
             </div>
         </form>
     </div>
     <div class="rightbtn">
-        <a href="javascript:;" yun_type="dialog" dialog_title="添加会员" uri="edit" dialog_width="60%" dialog_height="80%" class="barbtn01" id="open">添加会员</a>
-        <a href="?order=total_balance&time=1558611583" class="barbtn02 ">按余额</a>
-        <a href="?order=integral&time=1558611583" class="barbtn02 ">按积分</a>
-        <a href="?order=history_total_balance&time=1558611583" class="barbtn02 ">按总金额</a>
+        <a href="javascript:;" yun_type="dialog" dialog_title="添加会员" uri="edit/0" dialog_width="60%" dialog_height="80%" class="barbtn01" id="open">添加会员</a>
+        <a href="?keyWord=@ViewBag.keyWord&orderBy=money" class="barbtn02 ">按余额</a>
+        @*<a href="?orderBy=integral" class="barbtn02 ">按积分</a>*@
+        <a href="?keyWord=@ViewBag.keyWord&orderBy=recharge" class="barbtn02 ">按总金额</a>
     </div>
 </div>
 
@@ -32,24 +33,31 @@
                 <th>折扣</th>
                 <th>消费次数</th>
                 <th>喜爱宠物</th>
-                <th>积分</th>
+                @*<th>积分</th>*@
                 <th>详情</th>
             </tr>
             <tr>
-                <td>164</td>
-                <td>13378168066</td>
-                <td>凶狠</td>
-                <td>2019-05-16 17:21:26</td>
-                <td>￥10000.00 </td>
-                <td>￥10000.00</td>
-                <td>1.0折</td>
-                <td>0次</td>
-                <td style="max-width:20%;">
-                    <span class="tags">索马里猫</span>
-                    <span class="tags">拉布拉多</span>
-                </td>
-                <td>0</td>
-                <td style="max-width:100px;"><a href="javascript:;" yun_type="dialog" dialog_title="充值" uri="/member/edit/id/164.html" dialog_width="80%" dialog_height="80%">修改</a> |<a href="javascript:;" yun_type="dialog" dialog_title="充值" uri="/Member/member_delta/id/164.html" dialog_width="40%" dialog_height="40%">充值</a> | <a href="/transaction/index/uid/164.html">交易记录</a>  |  <a href="/Member/log/id/164.html">充值日志</a></td>
+                @{
+                    foreach (member_show item in ViewBag.datas)
+                    {
+                        <td>@item.id</td>
+                        <td>@item.phone</td>
+                        <td>@item.name</td>
+                        <td>@item.crtime</td>
+                        <td>@item.money</td>
+                        <td>@item.money</td>
+                        <td>@item.discount 折</td>
+                        <td>@item.order_count 次</td>
+                        <td style="max-width:20%;">@Html.Raw(item.petsHtml)</td>
+                        @*<td>0</td>*@
+                        <td style="max-width:100px;">
+                            <a href="javascript:;" yun_type="dialog" dialog_title="修改" uri="edit/@item.id" dialog_width="80%" dialog_height="80%">修改</a>
+                            | <a href="javascript:;" yun_type="dialog" dialog_title="充值" uri="Recharge?memberid=@item.id" dialog_width="40%" dialog_height="40%">充值</a>
+                            | <a href="RechargeRecord?memberid=@item.id">交易记录</a>
+                            | <a href="RechargeRecord?memberid=@item.id">充值日志</a>
+                        </td>
+                    }
+                }
             </tr>
         </tbody>
     </table>
