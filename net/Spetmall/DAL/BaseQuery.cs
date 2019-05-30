@@ -95,7 +95,7 @@ namespace Spetmall.DAL
             StringBuilder sb = new StringBuilder();
             MySqlParameter[] commandParameters = new MySqlParameter[fieldList.Count];
             sb.Append("INSERT INTO " + TableName + TableNameSuffix + " (");
-            sb.Append(string.Join(",", fieldList.ToArray()) + " ) VALUES (");
+            sb.Append("`" + string.Join("`,`", fieldList.ToArray()) + "` ) VALUES (");
             for (int i = 0; i < fieldList.Count; i++)
             {
                 sb.AppendFormat("@{0},", fieldList[i]);
@@ -255,7 +255,7 @@ namespace Spetmall.DAL
             sb.Append("UPDATE " + TableName + TableNameSuffix + " SET ");
             for (int i = 0; i < fieldList.Count; i++)
             {
-                sb.AppendFormat("{0}=@{0},", fieldList[i]);
+                sb.AppendFormat("`{0}`=@{0},", fieldList[i]);
                 commandParameters[i] = new MySqlParameter("@" + fieldList[i], valueList[i]);
             }
             sb.Length--;
@@ -462,7 +462,7 @@ namespace Spetmall.DAL
         /// <returns></returns>
         public int GetMaxID()
         {
-            string sql = "SELECT MAX(" + KeyField + ") FROM " + TableName + TableNameSuffix;
+            string sql = "SELECT MAX(`" + KeyField + "`) FROM " + TableName + TableNameSuffix;
 
             try
             {
@@ -816,7 +816,7 @@ namespace Spetmall.DAL
         /// <returns></returns>
         public DataRow GetRowByKey(object keyValue)
         {
-            string sql = "SELECT * FROM " + TableName + TableNameSuffix + " WHERE " + KeyField + "=@" + KeyField;
+            string sql = "SELECT * FROM " + TableName + TableNameSuffix + " WHERE `" + KeyField + "`=@" + KeyField;
             try
             {
                 MySqlParameter[] commandParameters = new MySqlParameter[] {
@@ -965,7 +965,7 @@ namespace Spetmall.DAL
         {
             try
             {
-                string sql = "SELECT COUNT(*) FROM " + TableName + TableNameSuffix + " WHERE " + KeyField + "<>@" + KeyField + " AND " + fieldName + "=@" + fieldName;
+                string sql = "SELECT COUNT(*) FROM " + TableName + TableNameSuffix + " WHERE `" + KeyField + "`<>@" + KeyField + " AND `" + fieldName + "`=@" + fieldName;
 
                 using (DBHelper dbHelper = new DBHelper())
                 {

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using Spetmall.BLL.Page;
 using Spetmall.DAL;
 using Spetmall.Model;
 
@@ -39,7 +40,7 @@ namespace Moqikaka.Tmp.Admin.Controllers
             {
                 errMsg = e.Message;
             }
-            return Content(GetReturnJson(status, errMsg));
+            return Content(CommonBLL.GetReturnJson(status, errMsg));
         }
 
         public ActionResult Edit(int id)
@@ -83,7 +84,7 @@ namespace Moqikaka.Tmp.Admin.Controllers
             {
                 errMsg = e.Message;
             }
-            return Content(GetReturnJson(status, errMsg));
+            return Content(CommonBLL.GetReturnJson(status, errMsg));
         }
 
         public ActionResult Record(int id, string keyWord)
@@ -114,22 +115,6 @@ namespace Moqikaka.Tmp.Admin.Controllers
             }, JsonRequestBehavior.AllowGet);
         }
 
-        private string GetReturnJson(bool isOk, string errMsg)
-        {
-            var obj = new
-            {
-                status = isOk,
-                code = 1,
-                msg = "操作" + (isOk ? "成功" : "失败：" + errMsg),
-                redirects = string.Empty,
-            };
-
-            string result = "<html><body><script>parent.yunmallIframe.Callback("
-                + Util.Json.JsonUtil.Serialize(obj)
-                + ");</script></body></html>";
-
-            return result;
-        }
 
     }
 }

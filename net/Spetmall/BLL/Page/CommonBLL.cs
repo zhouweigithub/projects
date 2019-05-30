@@ -45,7 +45,24 @@ namespace Spetmall.BLL.Page
             dateStyle.DataFormat = dataformat.GetFormat(dateFormatString);
             return dateStyle;
         }
-        
+
+        public static string GetReturnJson(bool isOk, string errMsg)
+        {
+            var obj = new
+            {
+                status = isOk,
+                code = 1,
+                msg = "操作" + (isOk ? "成功" : "失败：" + errMsg),
+                redirects = string.Empty,
+            };
+
+            string result = "<html><body><script>parent.yunmallIframe.Callback("
+                + Util.Json.JsonUtil.Serialize(obj)
+                + ");</script></body></html>";
+
+            return result;
+        }
+
 
     }
 

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using Spetmall.BLL.Page;
 using Spetmall.DAL;
 using Spetmall.Model;
 using Spetmall.Model.Page;
@@ -83,7 +84,7 @@ namespace Moqikaka.Tmp.Admin.Controllers
             {
                 errMsg = e.Message;
             }
-            return Content(GetReturnJson(status, errMsg));
+            return Content(CommonBLL.GetReturnJson(status, errMsg));
         }
 
         public ActionResult Recharge(int memberid)
@@ -127,7 +128,7 @@ namespace Moqikaka.Tmp.Admin.Controllers
                     Util.Log.LogUtil.Write($"充值失败：memberid {memberid} money {money} remark {remark} \r\n" + e, Util.Log.LogType.Error);
                 }
             }
-            return Content(GetReturnJson(status, errMsg));
+            return Content(CommonBLL.GetReturnJson(status, errMsg));
         }
 
         //充值记录
@@ -143,22 +144,6 @@ namespace Moqikaka.Tmp.Admin.Controllers
         }
 
 
-        private string GetReturnJson(bool isOk, string errMsg)
-        {
-            var obj = new
-            {
-                status = isOk,
-                code = 1,
-                msg = "操作" + (isOk ? "成功" : "失败：" + errMsg),
-                redirects = string.Empty,
-            };
-
-            string result = "<html><body><script>parent.yunmallIframe.Callback("
-                + Util.Json.JsonUtil.Serialize(obj)
-                + ");</script></body></html>";
-
-            return result;
-        }
 
         /// <summary>
         /// 生成充值的流水号

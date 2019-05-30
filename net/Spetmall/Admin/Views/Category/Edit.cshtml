@@ -1,4 +1,5 @@
-﻿@{
+﻿@model Spetmall.Model.category
+@{
     ViewBag.Title = "Edit";
     Layout = null;
 }
@@ -26,15 +27,34 @@
 
 <body class="iframebody">
 
-
-    <form class="" action="?">
-        <input name="id" type="hidden" value="" />
-        <input name="parentid" type="hidden" value="" />
+    <form class="" action="edit">
+        <input name="id" type="hidden" value="@Model.id" />
+        <input name="pid" type="hidden" value="@Model.pid" />
         <ul class="formlist">
-            <li><label class="lbt"><em>(*)</em>分类分称：</label><div><input class="form-control" name="title" type="text" value="" placeholder="请输入分类名称"> </div></li>
-            <li><label class="lbt"><em>(*)</em>是否启用：</label><div> <span class="switch-on" name="status" data-value=""></span></div></li>
-            <li><label class="lbt">外部连接：</label><div><input class="form-control" name="href" value="" type="text" placeholder=""> </div></li>
-            <li><label class="lbt">描述：</label><div><textarea name="description" class="form-textarea h60 w400"></textarea> </div></li>
+            <li>
+                <label class="lbt"><em>(*)</em>分类分称：</label><div>
+                    @Html.TextBoxFor(m => m.name, new { @class = "form-control", placeholder = "请输入名称" })
+                </div>
+            </li>
+            <li>
+                <label class="lbt"><em>(*)</em>是否启用：</label><div>
+                    <span class="switch-on" name="state" data-value="@Model.state" style="border-color: rgb(100, 189, 99); box-shadow: rgb(100, 189, 99) 0px 0px 0px 16px inset; background-color: rgb(100, 189, 99);">
+                        <span class="slider">
+                            <input name="state" type="hidden" value="@Model.state">
+                        </span>
+                    </span>
+                </div>
+            </li>
+            <li>
+                <label class="lbt">外部连接：</label><div>
+                    @Html.TextBoxFor(m => m.url, new { @class = "form-control", placeholder = "请输入外部连接" })
+                </div>
+            </li>
+            <li>
+                <label class="lbt">描述：</label><div>
+                    @Html.TextAreaFor(m => m.remark, new { @class = "form-control", placeholder = "请输入描述" })
+                </div>
+            </li>
         </ul>
         <div class="padt" style="text-align: center"><span id="open" class="btn btnyes yunmall_button">保存</span></div>
 

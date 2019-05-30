@@ -1,4 +1,5 @@
-﻿@{
+﻿@using Spetmall.Model;
+@{
     ViewBag.Title = "Index";
 }
 
@@ -7,7 +8,7 @@
     <div class="app-tab">
         <ul>
             <li class="active"><a href="#">分类列表</a></li>
-            <li><a href="jajavascript:void(0);" yun_type="dialog" dialog_title="添加分类" uri="edit" dialog_width="60%">添加分类</a></li>
+            <li><a href="jajavascript:void(0);" yun_type="dialog" dialog_title="添加分类" uri="Add?pid=0" dialog_width="60%">添加分类</a></li>
         </ul>
     </div>
 </div>
@@ -24,25 +25,40 @@
             </tr>
         </thead>
         <tbody>
-            <tr class="goods-class-list top-level-tree emptypadding  " floor="0">
-
-                <td class="rigth-border-none td-padding"><input name="sort" type="text" class="  goodsclassdfinput storeclassattr text editattribute" url="/store_class/editAttr.html" autocomplete="off" value="0" data-id="323" style="width:70px;" /></td>
-                <td class="tree">
-                    <div class="goodsclassnavs">
-                        <div class="goodsclassnav ">
-                            <em class="statusend"><i></i></em>
-                            <div class="goodsclasstxt">
-                                <div class="imgs"><a href="/content/static/images/d05.png" target="_blank"><img src="/content/static/images/d05.png" /></a></div>
-                                <input name="title" type="text" class="text goodsclassdfinput storeclassattr editattribute" autocomplete="off" data-value="我的分类" url="/store_class/editAttr.html" data-id="323" value="我的分类" />
-                                <a href="javascript:void(0);" yun_type="dialog" dialog_title="添加优惠卡" uri="/store_class/add/parentid/323.html" dialog_width="80%" class="dssc-btn">新增下级</a>
+            @{
+                foreach (category item in ViewBag.datas as List<category>)
+                {
+                    <tr class="goods-class-list emptypadding treeopen morenode @(item.floor==0?"top-level-tree ":"")" floor="@item.floor">
+                        <td class="rigth-border-none td-padding">
+                            <input name="index" type="text" class="  goodsclassdfinput storeclassattr text editattribute" url="EditField" autocomplete="off" value="@item.index" data-id="@item.id" style="width:70px;" />
+                        </td>
+                        <td class="tree">
+                            <div class="goodsclassnavs">
+                                <div class="goodsclassnav ">
+                                    @{
+                                        for (int i = 0; i < item.floor; i++)
+                                        {
+                                            <span class="tree treenone" data-tmp="[]" dataid="0"></span>
+                                        }
+                                    }
+                                    <em class="tree-end"><i></i></em>
+                                    <div class="goodsclasstxt">
+                                        <div class="imgs"><a href="javascript:;"><img src="/content/static/images/d05.png" /></a></div>
+                                        <span style="width:150px;display:inline-block;text-align:left;">@item.name</span>
+                                        @*<input name="name" type="text" class="text goodsclassdfinput storeclassattr editattribute" autocomplete="off" data-value="@item.name" url="EditField" data-id="@item.id" value="@item.name" />*@
+                                        <a href="javascript:void(0);" yun_type="dialog" dialog_title="添加分类" uri="Add?pid=@item.id" dialog_width="80%" class="dssc-btn">新增下级</a>
+                                    </div>
+                                </div>
                             </div>
-                        </div>
-                    </div>
-
-                </td>
-                <td><span class="switch-on switch-attribute" style="zoom:0.7" name="status" data-id="323" url="/store_class/editAttr.html" data-value="1"></span></td>
-                <td><a href="javascript:void(0);" yun_type="dialog" dialog_title="添加优惠卡" uri="/store_class/edit/id/323.html" dialog_width="80%">修改</a> |  <a href="javascript:yunmall_confirm_dialog('你确定要删除此条分类吗?','/store_class/delete/id/323.html','reload')">删除</a></td>
-            </tr>
+                        </td>
+                        <td><span class="switch-on switch-attribute" style="zoom:0.7" name="state" data-id="@item.id" url="EditField" data-value="@item.state"></span></td>
+                        <td>
+                            <a href="javascript:void(0);" yun_type="dialog" dialog_title="添加分类" uri="edit/@item.id" dialog_width="80%">修改</a>
+                            | <a href="javascript:yunmall_confirm_dialog('你确定要删除此条分类吗?','delete/@item.id','reload')">删除</a>
+                        </td>
+                    </tr>
+                }
+            }
         </tbody>
     </table>
     <div class="pages"></div>

@@ -27,9 +27,33 @@ namespace Spetmall.Model
         [TableField]
         public int pid { get; set; }
         /// <summary>
+        /// 外部链接
+        /// </summary>
+        [TableField]
+        public string url { get; set; }
+        /// <summary>
+        /// 状态
+        /// </summary>
+        [TableField]
+        public short state { get; set; }
+        /// <summary>
+        /// 顺序
+        /// </summary>
+        [TableField]
+        public int index { get; set; }
+        /// <summary>
+        /// 备注
+        /// </summary>
+        [TableField]
+        public string remark { get; set; }
+        /// <summary>
         /// 
         /// </summary>
         public DateTime crtime { get; set; }
+        /// <summary>
+        /// 层级，顶层为0
+        /// </summary>
+        public int floor { get; set; }
 
     }
 }
