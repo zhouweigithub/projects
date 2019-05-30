@@ -633,6 +633,7 @@
     <Content Include="static\images\goodsclass\icon4.png" />
     <Content Include="static\images\goodsclass\icon6.png" />
     <Content Include="static\images\goodsclass\icon7.png" />
+    <Content Include="static\images\goodsclass\icon8.png" />
     <Content Include="static\images\goodsclass\verticalline.png" />
     <Content Include="static\images\head_01.png" />
     <Content Include="static\images\head_02.png" />
