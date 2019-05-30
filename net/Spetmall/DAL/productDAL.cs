@@ -31,7 +31,7 @@ namespace Spetmall.DAL
             return Instance;
         }
 
-        public List<product> GetProducts(string category, string keyWord, string orderBy)
+        public List<product> GetProducts(string category, string keyWord, string orderBy, int page, int pageSize)
         {
             try
             {
@@ -44,7 +44,7 @@ namespace Spetmall.DAL
 
                 using (DBHelper dbHelper = new DBHelper(WebConfigData.DataBaseType, WebConfigData.ConnString))
                 {
-                    DataTable dt = dbHelper.ExecuteDataTable(sql);
+                    DataTable dt = dbHelper.ExecuteDataTablePage(sql, pageSize, page);
                     if (dt != null && dt.Rows.Count > 0)
                         return dt.ToList<Model.product>();
                 }

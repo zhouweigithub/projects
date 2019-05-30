@@ -32,14 +32,14 @@
 
     <div class="receiptconfirm">
         <div class="iframe_rc_left receiptconfirm_auto_height">
-            <iframe src='ConfirmLeft?shoppinggoods={"8053":"2"}&uid=0' width="100%" height="100%" frameborder="0" id="external-frame"></iframe>
+            <iframe src='ConfirmLeft?products=@ViewBag.products&memberid=@(ViewBag.member != null ? ViewBag.member.id : 0)' width="100%" height="100%" frameborder="0" id="external-frame"></iframe>
         </div>
 
         <div class="rc_right receiptconfirm_auto_height">
             <form action="/Receipt/setReceiptOrder.html" method="post" id="receiptconfirm_Form">
-                <input name="uid" class="receipt_member" type="hidden" value="" />
+                <input name="uid" class="receipt_member" type="hidden" value="@(ViewBag.member != null ? ViewBag.member.id : 0)" />
                 <input name="paykey" type="hidden" value="" />
-                <input name="goodsdata" type="hidden" value='{"8053":"2"}' />
+                <input name="goodsdata" type="hidden" value='@ViewBag.products' />
                 <input name="cartdata[uid]" class="receipt_member" type="hidden" value="" />
                 <input name="cartdata[discount_type]" class="discount_type_text" type="hidden" value="" />
                 <input name="customertype" type="hidden" value="1" />
@@ -51,20 +51,26 @@
                         <div class="item-name"><span>客户类型：</span></div>
                         <div class="item-val customer-type">
 
-                            <a href="javascript:;" data-customer-type="2" class="button   button-pill button-small">会员</a>
-                            <a href="javascript:;" data-customer-type="1" class=" button  button-pill button-small button-primary ">散客</a>
+                            <a href="javascript:;" data-customer-type="2" class="button  button-pill button-small @(ViewBag.member!=null?"button-primary":"")">会员</a>
+                            <a href="javascript:;" data-customer-type="1" class="button  button-pill button-small @(ViewBag.member==null?"button-primary":"") ">散客</a>
 
 
-
-                            <div class="huiyuan" style="display:none">
-                                <div class="sel_huiyuan" style="display:block"> <a href="javascript:;">请选择会员</a></div>
-                                <div class="huiyuaninfo" style="display:none">
+                            <div class="huiyuan" style="@(ViewBag.member==null?"display:none":"")">
+                                <div class="sel_huiyuan" style="@(ViewBag.member==null?"":"display:none")"> <a href="javascript:;">请选择会员</a></div>
+                                <div class="huiyuaninfo" style="@(ViewBag.member==null?"display:none":"")">
                                     <div class="himgs">
                                         <img src="https://snailpet.com/assets/img/vip_boy.png" />
                                     </div>
                                     <div class="userinfo">
-                                        <p><span><label class="uname"></label></span><em></em><span><i></i><label class="uphone"></label></span><em></em><span>积分:<label class="uintegral"> </label></span></p>
-                                        <p><span><i></i>余额:<font>￥<label class="utotal_balance">0.00</label>元</font></span> <em></em><span>折扣:<label class="utotal_balance"></label></span> </p>
+                                        <p>
+                                            <span><label class="uname">@(ViewBag.member != null ? ViewBag.member.name : "")</label></span><em></em>
+                                            <span><i></i><label class="uphone">@(ViewBag.member != null ? ViewBag.member.phone : "")</label></span><em></em>
+                                            <span>积分:<label class="uintegral"> </label></span>
+                                        </p>
+                                        <p>
+                                            <span><i></i>余额:<font>￥<label class="utotal_balance">@(ViewBag.member != null ? ViewBag.member.money : "")</label>元</font></span> <em></em>
+                                            <span>折扣:<label class="utotal_balance">@(ViewBag.member != null ? ViewBag.member.discount : "")</label>折</span>
+                                        </p>
                                     </div>
 
                                     <div class="sel_user"><a href="javascript:;" class="select-members">修改</a></div>
@@ -90,10 +96,17 @@
                         </div>
                     </div>
 
-                    <div class="receipt-order-item enabling-membership-discounts" style="display:none;">
+                    <div class="receipt-order-item enabling-membership-discounts" style="@(ViewBag.member==null?"display:none":"")">
                         <div class="item-name">启用会员折扣：</div>
                         <div class="item-val">
-                            <cite><label><input name="discount_type" type="radio" value="1" />启用&nbsp;&nbsp;&nbsp;</label><label><input name="discount_type" type="radio" value="2" />不启用</cite>
+                            <cite>
+                                <label>
+                                    <input name="discount_type" type="radio" value="1" @(ViewBag.member == null ? "" : "checked") />启用&nbsp;&nbsp;&nbsp;
+                                </label>
+                                <label>
+                                    <input name="discount_type" type="radio" value="0" @(ViewBag.member == null ? "checked" : "") />不启用
+                                </label>
+                            </cite>
 
                         </div>
                     </div>
@@ -201,7 +214,7 @@
 
 
             },'JSON');*/
-            receiptcommon.selectDiscountType({ discount_type: strToint($(this).val()), uid: strToint($("input[name=uid]").val()) });
+            receiptcommon.selectDiscountType({ isDiscount: strToint($(this).val()), memberid: strToint($("input[name=uid]").val()) });
 
         });
 
@@ -214,12 +227,12 @@
                 $(".enabling-membership-discounts").show();
                 var _uid = strToint($("input[name=uid]").val());
                 if (_uid > 0) {
-                    receiptcommon.selectMemberType({ uid: _uid });
+                    receiptcommon.selectMemberType({ memberid: _uid });
                 }
 
 
             } else {
-                receiptcommon.selectMemberType({ uid: 0 });
+                receiptcommon.selectMemberType({ memberid: 0 });
                 $(".enabling-membership-discounts").hide();
                 //$("input.receipt_member").val(0);
                 $(".huiyuan").hide();
@@ -258,18 +271,18 @@
 
 
 
-        /*function setIframeHeight(iframe) {
-            if (iframe) {
-            var iframeWin = iframe.contentWindow || iframe.contentDocument.parentWindow;
-            if (iframeWin.document.body) {
-            iframe.height = iframeWin.document.documentElement.scrollHeight || iframeWin.document.body.scrollHeight;
-            }
-            }
-        };
+                                                            /*function setIframeHeight(iframe) {
+                                                                if (iframe) {
+                                                                var iframeWin = iframe.contentWindow || iframe.contentDocument.parentWindow;
+                                                                if (iframeWin.document.body) {
+                                                                iframe.height = iframeWin.document.documentElement.scrollHeight || iframeWin.document.body.scrollHeight;
+                                                                }
+                                                                }
+                                                            };
 
-        window.onload = function () {
-            setIframeHeight(document.getElementById('external-frame'));
-        };*/
+                                                            window.onload = function () {
+                                                                setIframeHeight(document.getElementById('external-frame'));
+                                                            };*/
     </script>
 
 </body>

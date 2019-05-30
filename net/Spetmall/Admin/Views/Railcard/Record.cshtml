@@ -1,135 +1,55 @@
-﻿@{
+﻿@using Spetmall.Model;
+@{
     ViewBag.Title = "Record";
 }
 
 
-<!doctype html>
-<html>
-<head>
-    <meta charset="UTF-8">
-    <title>圣宠</title>
-    <link rel="stylesheet" type="text/css" href="/static/css/common.css?_t=1558960656">
-    <link rel="stylesheet" type="text/css" href="/static/css/ui-dialog.css?_t=1558960656">
-    <link rel="stylesheet" href="/static/extend/honeySwitch/lib/honeySwitch.css">
-    <script type="text/javascript" src="/static/js/jquery-1.12.2.min.js"></script>
-    <script src="/static/js/artDialog.source.js"></script>
-    <script src="/static/js/iframeTools.source.js"></script>
-    <script src="/static/extend/laydate/laydate.js"></script>
-    <script src="/static/js/iframe.js"></script>
-    <script src="/static/js/service-common.js?_t=1558960656"></script>
-    <script src="/static/js/common.js?_t=1558960656"></script>
-    <script src="/static/extend/honeySwitch/lib/honeySwitch.js"></script>
-    <script src="/static/js/md5.js"></script>
-
-
-</head>
-
-
-</head>
-<body class="railcard-log mainbody">
-    <div class="head clear">
-        <div class="menubtn system-nav-menu">
-            <img src="/static/images/menubtn.png">
-
-        </div>
-        <div class="logo"><img src="/static/images/head_01.png"></div>
-        <div class="system-header-right">
-            <div class="pull-left headnav">
-                <div class="app-info" title="退出"><a href="javascript:void(0);" onclick="yunmall_confirm_dialog('您确定要退出系统吗?','/Members/quit.html','reload');"><img src="/static/images/quit.png"></a></div>
-                <div class="app-info" title="收银"><a href="/Receipt/index.html"><img src="/static/images/head_02.png"></a></div>
-                <div class="app-info" title="消息"><em class="message_number" style="display:none;">0</em><a href="/Seller_Message/index.html"><img src="/static/images/head_03.png"></a></div>
-                <div class="app-info" title="锁屏"><a href="javascript:;" onclick="syslock.lock();"><img src="/static/images/head_04.png"></a></div>
-                <div class="app-info" title="店铺信息"><a href="/Store/index.html"><img src="/static/images/head_05.png"></a></div>
-                <div class="app-info info-info2"><div class="info-img" title="您当前的系统时间"><img src="/static/images/head_06.png"></div><em id="yunmall_sys_time">2019/05/27 20:37:36</em></div>
-
-                <!--<a href="#"><img src="/images/head_03.png"></a>
-                <a href="#"><img src="/images/head_04.png"></a>
-                <a href="#"><img src="/images/head_05.png">章子怡</a>
-                <a href="#"><img src="/images/head_06.png">2018-02-02 12:10:34</a>-->
-            </div>
-        </div>
+<div class="common-app-tabs">
+    <div class="common-app-name">优惠卡管理</div>
+    <div class="app-tab">
+        <ul>
+            <li><a href="/Railcard/index">优惠卡列表</a></li>
+            <li class="active"><a href="#">优惠卡使用日志</a></li>
+        </ul>
     </div>
-    <div class="menu system-nav-menu-list">
-        <a href="/"><img src="/static/images/mico1.png">主界面</a>
-        <a href="/goods/index.html"><img src="/static/images/mico1.png">商品管理</a>
-        <a href="/Receipt/index.html"><img src="/static/images/mico2.png">收银</a>
-        <a href="http://www.spetmall.com//seller/goods/purchase.html"><img src="/static/images/mico3.png">采购</a>
-        <a href="/reports/index.html"><img src="/static/images/mico4.png">报表</a>
-        <a href="/Transaction/index.html"><img src="/static/images/mico5.png">交易明细</a>
-        <a href="/Member/index.html"><img src="/static/images/mico6.png">会员管理</a>
-        <!--<a href="/Yuangong/index.html"><img src="/static/images/mico7.png">店员管理</a>-->
-        <a href="/Railcard/index.html"><img src="/static/images/mico8.png">优惠卡</a>
-        <a href="/Activity/index.html"><img src="/static/images/mico9.png">活动管理</a>
-        <a href="/store_class/index.html"><img src="/static/images/mico9.png">分类管理</a>
-    </div>
-    <script type="text/javascript">
-$(function(){
-	var _system_nav_menu;
-	$(".system-nav-menu").add($(".system-nav-menu-list")).mouseover(function(){
-		 _system_nav_menu &&  window.clearInterval(_system_nav_menu);
-	     $(".system-nav-menu-list").show();
-		 $('.menubtn').addClass('menubtn_active');
-	});
-
-	$(".system-nav-menu").add($(".system-nav-menu-list")).mouseout(function(){
-		 _system_nav_menu = setTimeout(function(){
-			 	 $(".system-nav-menu-list").hide();
-				 $('.menubtn').removeClass('menubtn_active');
-		 },40);
-	});
-});
-$(function(){
-	setInterval(function(){
-		var myDate = new Date();
-		var date = myDate.toLocaleDateString();
-		var hours = myDate.getHours();
-		var minutes = myDate.getMinutes();
-		var seconds = myDate.getSeconds();
-		$("#yunmall_sys_time").html(date+" "+hours+":"+minutes+":"+seconds); //将值赋给div
-	},1000); //每隔一秒运行一次
-});
-    </script>
-
-    <div class="common-app-tabs">
-        <div class="common-app-name">优惠卡管理</div>
-        <div class="app-tab">
-            <ul>
-                <li><a href="/Railcard/index.html">优惠卡列表</a></li>
-                <li class="active"><a href="#">优惠卡使用日志</a></li>
-            </ul>
+</div>
+<div class="mianbox">
+    <div class="searchbar">
+        <div style=" padding-right:430px;">
+            <form action="" method="get">
+                <div class="search">
+                    <input type="text" name="keyWord" value="" placeholder="请输入手机号或姓名">
+                    <a href="javascript:;" id="yunmall_goods_search">查询</a>
+                </div>
+            </form>
         </div>
-    </div>
-    <div class="mianbox">
-        <div class="searchbar">
-            <div style=" padding-right:430px;">
-                <form action="" method="get">
-                    <div class="search">
-                        <input type="text" name="username" value="" placeholder="请输入手机号或姓名">
-                        <a href="javascript:;" id="yunmall_goods_search">查询</a>
-                    </div>
-                </form>
-            </div>
-
-        </div>
-        <div class="tablebox padt">
-
-            <table class="table01" width="100%" border="0" cellspacing="0" cellpadding="0">
-                <tbody>
-                    <tr>
-                        <th>卡号</th>
-                        <th>使用时间</th>
-                        <th>使用数量</th>
-                        <th>描述</th>
-                        <th>操作IP</th>
-                    </tr>
-
-                </tbody>
-            </table>
-        </div>
-        <div class="pagin"></div>
 
     </div>
+    <div class="tablebox padt">
 
+        <table class="table01" width="100%" border="0" cellspacing="0" cellpadding="0">
+            <tbody>
+                <tr>
+                    <th>卡号</th>
+                    <th>使用时间</th>
+                    <th>使用数量</th>
+                    <th>描述</th>
+                </tr>
+                @{
+                    foreach (railcard_record item in ViewBag.datas as List<railcard_record>)
+                    {
+                        <tr>
+                            <td>@item.id</td>
+                            <td>@item.crtime</td>
+                            <td>@item.times</td>
+                            <td>@item.remark</td>
+                        </tr>
+                    }
+                }
 
-</body>
-</html>
+            </tbody>
+        </table>
+    </div>
+    <div class="pagin"></div>
+
+</div>

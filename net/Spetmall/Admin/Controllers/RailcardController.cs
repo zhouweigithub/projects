@@ -24,19 +24,112 @@ namespace Moqikaka.Tmp.Admin.Controllers
             return View();
         }
 
-        public ActionResult Edit()
+        [HttpPost]
+        public ActionResult Add(railcard railcard)
         {
+            bool status = false;
+            string errMsg = string.Empty;
+            try
+            {
+                railcard.name = railcard.name.Trim();
+                railcard.phone = railcard.phone.Trim();
+                status = railcardDAL.GetInstance().Add(railcard) > 0;
+            }
+            catch (Exception e)
+            {
+                errMsg = e.Message;
+            }
+            return Content(GetReturnJson(status, errMsg));
+        }
+
+        public ActionResult Edit(int id)
+        {
+            ViewBag.railcardid = id;
             return View();
         }
 
-        public ActionResult Record()
+        [HttpPost]
+        public ActionResult Edit(railcard_record railcard_record)
         {
+            bool status = false;
+            string errMsg = string.Empty;
+            try
+            {
+                //更新railcard的剩余次数
+                railcard server = railcardDAL.GetInstance().GetEntityByKey<railcard>(railcard_record.railcardid);
+
+                if (server == null)
+                    errMsg = "无效优惠卡";
+                else if (railcard_record.times == 0)
+                    errMsg = "次数不能为0";
+                else if (server.lefttimes < railcard_record.times)
+                    errMsg = "次数不足";
+                else
+                {
+                    server.lefttimes = server.lefttimes - railcard_record.times;
+                    status = railcardDAL.GetInstance().UpdateByKey(server, railcard_record.railcardid) > 0;
+
+                    //添加优惠卡的使用记录
+                    railcardRecordDAL.GetInstance().Add(new railcard_record()
+                    {
+                        railcardid = railcard_record.railcardid,
+                        times = railcard_record.times,
+                        lefttimes = server.lefttimes,
+                        remark = railcard_record.remark,
+                    });
+                }
+            }
+            catch (Exception e)
+            {
+                errMsg = e.Message;
+            }
+            return Content(GetReturnJson(status, errMsg));
+        }
+
+        public ActionResult Record(int id, string keyWord)
+        {
+            List<railcard_record> datas = railcardRecordDAL.GetInstance().GetRailcardRecords(id, keyWord);
+            ViewBag.datas = datas;
             return View();
         }
 
-        public ActionResult Delete()
+        public ActionResult Delete(int id)
         {
-            return View();
+            bool status = false;
+            string errMsg = string.Empty;
+            try
+            {
+                //更新railcard的剩余次数
+                status = railcardDAL.GetInstance().DeleteByKey(id) > 0;
+            }
+            catch (Exception e)
+            {
+                errMsg = e.Message;
+            }
+
+            return Json(new
+            {
+                status,
+                msg = errMsg,
+            }, JsonRequestBehavior.AllowGet);
         }
+
+        private string GetReturnJson(bool isOk, string errMsg)
+        {
+            var obj = new
+            {
+                status = isOk,
+                code = 1,
+                msg = "操作" + (isOk ? "成功" : "失败：" + errMsg),
+                redirects = string.Empty,
+            };
+
+            string result = "<html><body><script>parent.yunmallIframe.Callback("
+                + Util.Json.JsonUtil.Serialize(obj)
+                + ");</script></body></html>";
+
+            return result;
+        }
+
     }
 }

@@ -81,6 +81,7 @@
     <Compile Include="fullsendDAL.cs" />
     <Compile Include="memberDAL.cs" />
     <Compile Include="memberPetDAL.cs" />
+    <Compile Include="railcardRecordDAL.cs" />
     <Compile Include="rechargeDAL.cs" />
     <Compile Include="petDAL.cs" />
     <Compile Include="saleRuleDAL.cs" />

@@ -624,6 +624,7 @@
     <Content Include="static\extend\laydate\theme\default\laydate.css" />
     <Content Include="static\extend\superfish\hoverIntent.js" />
     <Content Include="static\extend\superfish\superfish.js" />
+    <Content Include="static\images\cpin.png" />
     <Content Include="static\images\d05.png" />
     <Content Include="static\images\ft_01.png" />
     <Content Include="static\images\ft_02.png" />
@@ -1220,6 +1221,7 @@
     <Content Include="Views\Member\RechargeRecord.cshtml" />
     <Content Include="Views\Railcard\Record.cshtml" />
     <Content Include="Views\Railcard\Add.cshtml" />
+    <Content Include="Views\Receipt\QuDan.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Images\upload\" />

@@ -1,4 +1,5 @@
-﻿@{
+﻿@using Spetmall.Model.Page;
+@{
     ViewBag.Title = "ConfirmLeft";
     Layout = null;
 }
@@ -9,7 +10,7 @@
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <title>订单详情</title>
-    <link rel="stylesheet" type="text/css" href="/static/css/receipt.css?t=1558755351">
+    <link rel="stylesheet" type="text/css" href="/static/css/receipt.css?t=1559047645" />
     <style>
         body {
             font-size: 14px;
@@ -51,52 +52,53 @@
                 <th class="rc_htitle"><div class="buy-td">商品名称</div></th>
                 <th class="rc_price"><div class="buy-td">单价</div></th>
                 <th class="rc_number"><div class="buy-td">数量</div></th>
-
                 <th class="rc_count"><div class="buy-td">小计</div></th>
-
             </tr>
+            @{
+                foreach (var item in ViewBag.products as List<receipt_confirm_products>)
+                {
+                    <tr>
+                        <td>
+                            <div class="rctitle">
+                                <div class="rcimgs"><img src="@item.thumbnail" onerror="this.src='/static/images/cpin.png';" class="gd" /></div>
+                                @item.productName
+                            </div>
+                        </td>
+                        <td>
+                            <span class="price-now">@item.price</span>
+                        </td>
+                        <td align="center">
+                            @item.count
+                        </td>
+                        <td><span class="simple-price">@item.money</span></td>
+                    </tr>
 
-            <tr>
-                <td>
-                    <div class="rctitle">
-                        <div class="rcimgs"><img src="" onerror="this.src='/static/images/cpin.png';" class="gd" /></div>
-                        狗粮
-                    </div>
-                </td>
-
-                <td>
-                    <span class="price-now">200.00</span>
-                </td>
-
-                <td align="center">
-                    2
-                    <!--<div class="td-inner">
-                         <div class="amount-wrapper amount-has-error">
-                           <div class="item-amount "><a class="J_Minus no-minus" href="/user/Shoppingcart/update/number/-1/id/464.html" data-jkey="J_Minus">-</a>
-                             <input type="text" value="2" class="text text-amount J_ItemAmount" data-max="10" data-now="2" autocomplete="off">
-                             <a class="J_Plus plus" href="/user/Shoppingcart/update/number/1/id/464.html" data-jkey="J_Plus">+</a></div>
-                           <div class="amount-msg J_AmountMsg"><em class="s-danger-text">限购10件</em></div>
-                         </div>
-                    </div>-->
-                </td>
-
-                <td><span class="simple-price">400.00</span></td>
-
-            </tr>
-
-
-            <tr class="split">
-                <td colspan="4">
-
-                    <div class="goodsyouhui">
-                    </div>
-
-                </td>
-
-            </tr>
+                    <tr class="split">
+                        <td colspan="4">
+                            <div class="goodsyouhui">
+                                @{
+                                    if (item.isDiscounted)
+                                    {
+                                        <div class="youuhi1">
+                                            <h3>优惠</h3>
+                                            <div class="youhuixiangqing">
+                                                <span>-￥@item.discount_money</span>会员 @item.discount 折
+                                            </div>
+                                        </div>
+                                    }
+                                }
+                            </div>
+                        </td>
+                    </tr>
+                }
+            }
 
         </table>
 
+        <div class="rc_store">
+            <h3>全店满优惠</h3>
+            <div class="youhui zhekou"><span>-￥60.00元</span>满200元,8折</div>
+        </div>
 
         <div class="rc_button">
             <a class="cla-conf-btn continue-add-goods ">
@@ -116,10 +118,16 @@
                 window.top.receiptcommon.close();
             });
 
-            window.top.receiptcommon.setReceiptdata({ "goods_category": 1, "buy_number_total": 2, "originaltotalprice": 40000, "activitytotalprice": 40000, "totalprice": 40000, "sellerid": "489", "cost_price_total": 20000, "discount_total_price": 0, "receiptgoodsdata": { "8053": { "store_class1": "", "store_class2": "", "store_class3": "", "class1": "1", "class2": "5", "class3": "0", "title": "\u72d7\u7cae", "mapthumimg": "", "myprice": "20000", "price": "10000", "storage": "9", "alarm": "1", "id": "8053", "sellerid": "489", "is_discount": "1", "number": "2", "goods_total_price": 40000, "goods_activity_total_price": 40000, "discount_goods_total_price": 0, "activitytotalprice": 40000 } } });
+            @{
+                var datas = ViewBag.products as List<receipt_confirm_products>;
+                var originaltotalprice = datas.Sum(a => a.money);   //原始总金额
+                var activitytotalprice = datas.Sum(a => a.discount_money);  //折扣总金额
+            }
+            window.top.receiptcommon.setReceiptdata({ "originaltotalprice": @originaltotalprice, "discounttotalprice": @activitytotalprice });
         });
 
     </script>
 
 </body>
 </html>
+

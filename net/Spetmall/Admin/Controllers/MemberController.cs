@@ -149,7 +149,7 @@ namespace Moqikaka.Tmp.Admin.Controllers
             {
                 status = isOk,
                 code = 1,
-                msg = "操作" + (isOk ? "成功" : "失败" + errMsg),
+                msg = "操作" + (isOk ? "成功" : "失败：" + errMsg),
                 redirects = string.Empty,
             };
 

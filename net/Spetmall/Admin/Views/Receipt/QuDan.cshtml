@@ -1,0 +1,59 @@
+﻿@{
+    ViewBag.Title = "QuDan";
+    Layout = null;
+}
+
+
+<!doctype html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>圣宠收银系统 圣宠智慧云商 - 链接宠物店与猫狗粮食用品的服务商城！</title>
+    <link rel="stylesheet" type="text/css" href="/static/css/common.css?t=1559032099">
+    <link rel="stylesheet" type="text/css" href="/static/css/ui-dialog.css">
+    <link rel="stylesheet" type="text/css" href="/static/css/buttons.css">
+    <link rel="stylesheet" href="/static/extend/honeySwitch/lib/honeySwitch.css">
+
+    <script type="text/javascript" src="/static/js/jquery-1.12.2.min.js"></script>
+    <script src="/static/extend/honeySwitch/lib/honeySwitch.js"></script>
+    <script src="/static/extend/laydate/laydate.js"></script>
+    <script src="/static/js/artDialog.source.js"></script>
+    <script src="/static/js/iframeTools.source.js"></script>
+    <script src="/static/js/iframe.js"></script>
+    <script src="/static/js/common.js?_t=1559032099"></script>
+
+</head>
+
+<body class="iframebody">
+
+
+    <div class="rightinfo" style="padding:0px; min-width:200px;">
+
+        <form action="/admin/Goods_Storage/getSpecData.html" method="post" id="SpecData" name="glform">
+            <table class="tablelist" width="100%">
+                <thead>
+                    <tr>
+                        <th>类型</th>
+                        <th>姓名</th>
+                        <th>备注</th>
+                        <th>创建时间</th>
+                        <th>操作</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr if1 class="odd" {/if}>
+                <td align="center">散客</td>
+                <td></td>
+                <td></td>
+                <td>2019-05-18 17:54:41</td>
+                <td><a href="javascript:;" onclick='window.top.receiptcommon.qudan(17)' class="dssc-btn">选择</a>  <a href="javascript:;" onclick='yunmall_confirm_dialog("您确定要删除吗？","/Receipt/deleteguadan.html?postersid=17","reload")' class="dssc-btn">删除</a></td>
+                </tr>
+                </tbody>
+
+            </table>
+        </form>
+
+    </div>
+
+</body>
+</html>

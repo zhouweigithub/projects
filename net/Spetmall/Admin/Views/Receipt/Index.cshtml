@@ -21,15 +21,21 @@
         </div>
         <div class="leftbtnbox">
             <div class=" clear">
-                <a class="btnqd" href="javascript:;" yun_type="dialog" dialog_title="取单" uri="/Receipt/qudan.html" dialog_width="70%" dialog_height="70%">取&nbsp;&nbsp;单</a>
+                <a class="btnqd" href="javascript:;" yun_type="dialog" dialog_title="取单" uri="/Receipt/qudan" dialog_width="70%" dialog_height="70%">取&nbsp;&nbsp;单</a>
                 <a class="btngd" href="javascript:;" id="system-guadan">挂&nbsp;&nbsp;单</a>
             </div>
 
             <div class="user receiptmemberinfos" style="display:none;">
-                <input name="memberuid" type="hidden" value="" />
+                <input name="memberid" type="hidden" value="" />
                 <img src="/images/tx.jpg">
-                <p class="r_username"><span style="padding-right:20px;"></span> <span>余额:<i class="r_total_balance">0.00</i></span></p>
-                <p><span>积分:<i class="r_integral"></i></span><span>折扣:<i class="r_discount"></i></span></p>
+                <p class="r_username">
+                    <span style="padding-right:20px;"></span>
+                    <span>余额:<i class="r_total_balance">0.00</i></span>
+                </p>
+                <p>
+                    @*<span>积分:<i class="r_integral"></i></span>*@
+                    <span>折扣:<i class="r_discount"></i></span>
+                </p>
                 <div class="newchoice"><a href="javascript:;" class="selectmember">修改</a></div>
                 <div class="newchoice2"><a href="javascript:;" class="quitmember">退出</a></div>
             </div>
@@ -241,7 +247,7 @@
 
     $(function () {
 
-        receiptcommon.setReceipt({ "goods_category": 1, "buy_number_total": 2, "originaltotalprice": 40000, "activitytotalprice": 28000, "totalprice": 40000, "sellerid": "489", "cost_price_total": 20000, "discount_total_price": 12000, "storediscount": { "min": 40000, "discount": 7, "is_discount_type": "3", "id": "93", "and_used": null, "discount_price": 12000 }, "receiptgoodsdata": { "8053": { "store_class1": "", "store_class2": "", "store_class3": "", "class1": "1", "class2": "5", "class3": "0", "title": "\u72d7\u7cae", "mapthumimg": "", "myprice": "20000", "price": "10000", "storage": "9", "alarm": "1", "id": "8053", "sellerid": "489", "is_discount": "1", "number": "2", "goods_total_price": 40000, "goods_activity_total_price": 40000, "discount_goods_total_price": 0, "activitytotalprice": 40000 } } });
+        receiptcommon.setReceipt({ "goods_category": 0, "buy_number_total": 0, "originaltotalprice": 0, "activitytotalprice": 0, "totalprice": 0, "sellerid": "489", "cost_price_total": 0, "discount_total_price": 0, "storediscount": false, "receiptgoodsdata": [] });        receiptcommon.test = 15;
         receiptcommon.test = 15;
         receiptcommon.bind();
         receiptcommon.page();

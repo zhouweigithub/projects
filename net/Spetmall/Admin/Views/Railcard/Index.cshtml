@@ -7,15 +7,15 @@
     <div style=" padding-right:430px;">
         <form action="" method="get">
             <div class="search">
-                <input type="text" name="username" value="" placeholder="请输入手机号或姓名">
+                <input type="text" name="keyWord" value="" placeholder="请输入手机号或姓名">
                 <a href="javascript:;" id="yunmall_goods_search">查询</a>
             </div>
         </form>
     </div>
     <div class="rightbtn">
-        <a href="javascript:;" yun_type="dialog" dialog_title="添加优惠卡" uri="edit" dialog_width="80%" class="barbtn01" id="open" style="font-size:24px;">添加优惠卡</a>
-        <a href="?order=total_balance&time=1558614027" class="barbtn02 ">按总金额</a>
-        <a href="?order=surplus&time=1558614027" class="barbtn02 ">按剩余次数</a>
+        <a href="javascript:;" yun_type="dialog" dialog_title="添加优惠卡" uri="Add" dialog_width="80%" class="barbtn01" id="open" style="font-size:24px;">添加优惠卡</a>
+        <a href="?keyWord=@ViewBag.keyWord&orderBy=money" class="barbtn02 ">按总金额</a>
+        <a href="?keyWord=@ViewBag.keyWord&orderBy=lefttimes" class="barbtn02 ">按剩余次数</a>
     </div>
 </div>
 
@@ -49,7 +49,7 @@
                         <td>
                             <a href="javascript:;" yun_type="dialog" dialog_title="使用优惠卡" uri="edit/@item.id" dialog_width="60%" dialog_height="50%" id="open">使用优惠卡</a>
                             | <a href="Record/@item.id">查看记录</a>
-                            | <a href="javascript:void(0);" onclick="yunmall_confirm_dialog('您确定要删除这条记录吗?','delete?id=@item.id','reload')">删除</a>
+                            | <a href="javascript:void(0);" onclick="yunmall_confirm_dialog('您确定要删除这条记录吗?','delete/@item.id','reload')">删除</a>
                         </td>
                     </tr>
                 }
@@ -57,9 +57,8 @@
         </tbody>
     </table>
 
-
 </div>
-    </div>
+
 <script language="javascript">
     $(function () {
         $("#yunmall_goods_search").bind('click', function () {

@@ -15,7 +15,7 @@ namespace Moqikaka.Tmp.Admin.Controllers
 
         public ActionResult Index(string category, string keyWord, string orderBy)
         {
-            List<product> datas = productDAL.GetInstance().GetProducts(category, keyWord, orderBy);
+            List<product> datas = productDAL.GetInstance().GetProducts(category, keyWord, orderBy, 1, int.MaxValue);
             ViewBag.datas = datas;
             return View();
         }
@@ -64,7 +64,7 @@ namespace Moqikaka.Tmp.Admin.Controllers
             {
                 status = isOk,
                 code = 1,
-                msg = "操作" + (isOk ? "成功" : "失败" + errMsg),
+                msg = "操作" + (isOk ? "成功" : "失败：" + errMsg),
                 redirects = string.Empty,
             };
 
