@@ -1213,12 +1213,12 @@
     <Content Include="Views\Reports\Index.cshtml" />
     <Content Include="Views\Transaction\Index.cshtml" />
     <Content Include="Views\Railcard\Index.cshtml" />
-    <Content Include="Views\Activity\Index.cshtml" />
+    <Content Include="Views\Activity\DiscountIndex.cshtml" />
     <Content Include="Views\Category\Index.cshtml" />
     <Content Include="Views\Product\Edit.cshtml" />
     <Content Include="Views\Member\Edit.cshtml" />
     <Content Include="Views\Railcard\Edit.cshtml" />
-    <Content Include="Views\Activity\Edit.cshtml" />
+    <Content Include="Views\Activity\DiscountEdit.cshtml" />
     <Content Include="Views\Category\Edit.cshtml" />
     <Content Include="Views\Receipt\SelectUser.cshtml" />
     <Content Include="Views\Receipt\Confirm.cshtml" />

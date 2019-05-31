@@ -82,6 +82,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Page\DiscountBLL.cs" />
     <Compile Include="Page\ServerLog\ServerLogBLL.cs" />
     <Compile Include="Page\CommonBLL.cs">
       <SubType>Code</SubType>

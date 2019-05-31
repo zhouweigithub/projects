@@ -22,7 +22,7 @@ namespace Spetmall.Model
         [TableField]
         public string name { get; set; }
         /// <summary>
-        /// 类型 按分类、按商品
+        /// 类型 0按店铺 1按分类 2按商品
         /// </summary>
         [TableField]
         public short type { get; set; }
@@ -36,6 +36,11 @@ namespace Spetmall.Model
         /// </summary>
         [TableField]
         public DateTime endtime { get; set; }
+        /// <summary>
+        /// 状态 0关闭 1启用
+        /// </summary>
+        [TableField]
+        public short state { get; set; }
         /// <summary>
         /// 
         /// </summary>
