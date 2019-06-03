@@ -73,32 +73,60 @@
                         <td><span class="simple-price">@item.money</span></td>
                     </tr>
 
-                    <tr class="split">
-                        <td colspan="4">
-                            <div class="goodsyouhui">
-                                @{
-                                    if (item.isDiscounted)
-                                    {
-                                        <div class="youuhi1">
-                                            <h3>优惠</h3>
-                                            <div class="youhuixiangqing">
-                                                <span>-￥@item.discount_money</span>会员 @item.discount 折
-                                            </div>
+                    if (item.discount_money > 0)
+                    {
+                        <tr class="split">
+                            <td colspan="4">
+                                <div class="goodsyouhui">
+                                    <div class="youuhi1">
+                                        <h3>优惠</h3>
+                                        <div class="youhuixiangqing">
+                                            <span>-￥@item.discount_money</span>@item.discountMsg
                                         </div>
-                                    }
-                                }
-                            </div>
-                        </td>
-                    </tr>
+                                    </div>
+                                </div>
+                            </td>
+                        </tr>
+                    }
+                    if (item.fullSend_money > 0)
+                    {
+                        <tr class="split">
+                            <td colspan="4">
+                                <div class="goodsyouhui">
+                                    <div class="youuhi1">
+                                        <h3>优惠</h3>
+                                        <div class="youhuixiangqing">
+                                            <span>-￥@item.fullSend_money</span>@item.fullSendMsg
+                                        </div>
+                                    </div>
+                                </div>
+                            </td>
+                        </tr>
+                    }
+                    if (item.member_money > 0)
+                    {
+                        <tr class="split">
+                            <td colspan="4">
+                                <div class="goodsyouhui">
+                                    <div class="youuhi1">
+                                        <h3>优惠</h3>
+                                        <div class="youhuixiangqing">
+                                            <span>-￥@item.member_money</span>@item.memberMsg
+                                        </div>
+                                    </div>
+                                </div>
+                            </td>
+                        </tr>
+                    }
                 }
             }
 
         </table>
 
-        <div class="rc_store">
-            <h3>全店满优惠</h3>
-            <div class="youhui zhekou"><span>-￥60.00元</span>满200元,8折</div>
-        </div>
+        @*<div class="rc_store">
+                <h3>全店满优惠</h3>
+                <div class="youhui zhekou"><span>-￥60.00元</span>满200元,8折</div>
+            </div>*@
 
         <div class="rc_button">
             <a class="cla-conf-btn continue-add-goods ">

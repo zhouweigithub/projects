@@ -46,5 +46,14 @@ namespace Spetmall.Model
         /// </summary>
         public DateTime crtime { get; set; }
 
+        public string TypeString
+        {
+            get
+            {
+                return type == 0 ? "店铺" : type == 1 ? "指定分类" : type == 2 ? "指定商品" : "未知";
+            }
+        }
+
+
     }
 }

@@ -31,11 +31,11 @@ namespace Spetmall.DAL
             return Instance;
         }
 
-        public List<product> GetProducts(string category, string keyWord, string orderBy, int page, int pageSize)
+        public List<product> GetProducts(string productId, string category, string keyWord, string orderBy, int page, int pageSize)
         {
             try
             {
-                string where = GetWhere(category, keyWord);
+                string where = GetWhere(productId, category, keyWord);
                 string orderby = string.Empty;
                 if (!string.IsNullOrWhiteSpace(orderBy))
                     orderBy = $"order by {orderBy}";
@@ -56,9 +56,11 @@ namespace Spetmall.DAL
             return new List<product>();
         }
 
-        private string GetWhere(string category, string keyWord)
+        private string GetWhere(string productId, string category, string keyWord)
         {
             string where = string.Empty;
+            if (!string.IsNullOrWhiteSpace(productId))
+                where += $" and id={productId}";
             if (!string.IsNullOrWhiteSpace(category))
                 where += $" and category={category}";
             if (!string.IsNullOrWhiteSpace(keyWord))

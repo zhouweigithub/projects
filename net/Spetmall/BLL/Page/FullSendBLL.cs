@@ -9,13 +9,13 @@ using Spetmall.Model.Page;
 
 namespace Spetmall.BLL.Page
 {
-    public class DiscountBLL
+    public class FullSendBLL
     {
-        public static discount_edit GetEditInfo(int id)
+        public static fullsend_edit GetEditInfo(int id)
         {
             try
             {
-                discount_edit entity = discountDAL.GetInstance().GetEntityByKey<discount_edit>(id);
+                fullsend_edit entity = fullsendDAL.GetInstance().GetEntityByKey<fullsend_edit>(id);
 
                 if (entity == null)
                     return null;
@@ -33,7 +33,7 @@ namespace Spetmall.BLL.Page
             }
             catch (Exception e)
             {
-                Util.Log.LogUtil.Write("GetEditInfo 获取限时折扣活动数据出错\r\n" + e, Util.Log.LogType.Error);
+                Util.Log.LogUtil.Write("GetEditInfo 获取满就送活动数据出错\r\n" + e, Util.Log.LogType.Error);
             }
 
             return null;

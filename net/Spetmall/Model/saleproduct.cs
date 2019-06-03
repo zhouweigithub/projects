@@ -32,7 +32,7 @@ namespace Spetmall.Model
         [TableField]
         public int saleid { get; set; }
         /// <summary>
-        /// 商品id
+        /// 商品或分类 id
         /// </summary>
         [TableField]
         public int productid { get; set; }
@@ -41,5 +41,10 @@ namespace Spetmall.Model
         /// </summary>
         public DateTime crtime { get; set; }
 
+    }
+
+    public class saleproductObject : saleproduct
+    {
+        public string productName { get; set; }
     }
 }

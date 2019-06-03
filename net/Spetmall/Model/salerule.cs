@@ -30,7 +30,7 @@ namespace Spetmall.Model
         /// 起始金额或数量
         /// </summary>
         [TableField]
-        public double aim { get; set; }
+        public decimal aim { get; set; }
         /// <summary>
         /// 打几折或减多少金额
         /// </summary>

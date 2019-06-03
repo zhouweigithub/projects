@@ -545,7 +545,7 @@ var SelectLinkage = function(){
 			success:function(_data){
 				//if(callback){ that.hierarchy+=1;  callback(_data);}
 				if(_data && _data.status){
-					createSelect(_hierarchy,_data['provinces']);
+					createSelect(_hierarchy,_data['categorys']);
 				}else{
 					error_msg(_data.msg);
 					return false;						
@@ -701,7 +701,7 @@ var SelectLinkage = function(){
 			success:function(_data){
 				//if(callback){ that.hierarchy+=1;  callback(_data);}
 				if(_data && _data.status){
-					createSelect(_hierarchy,_data['provinces']);
+					createSelect(_hierarchy,_data['categorys']);
 				}else{
 					error_msg(data.msg);
 					return false;						

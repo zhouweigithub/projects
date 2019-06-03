@@ -91,5 +91,22 @@ namespace Spetmall.DAL
             }
         }
 
+        /// <summary>
+        /// 获取当前分类的父级分类id集，包含本身，从近到远排列
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="parents"></param>
+        public void GetParentIds(int id, List<int> parents)
+        {
+            parents.Add(id);
+
+            category current = GetEntityByKey<category>(id);
+            if (current != null)
+            {
+                if (current.pid == 0)
+                    return;
+                GetParentIds(current.pid, parents);
+            }
+        }
     }
 }

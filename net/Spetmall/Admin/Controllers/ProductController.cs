@@ -16,7 +16,7 @@ namespace Moqikaka.Tmp.Admin.Controllers
 
         public ActionResult Index(string category, string keyWord, string orderBy)
         {
-            List<product> datas = productDAL.GetInstance().GetProducts(category, keyWord, orderBy, 1, int.MaxValue);
+            List<product> datas = productDAL.GetInstance().GetProducts(string.Empty, category, keyWord, orderBy, 1, int.MaxValue);
             ViewBag.datas = datas;
             return View();
         }

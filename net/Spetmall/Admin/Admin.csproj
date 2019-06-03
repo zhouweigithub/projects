@@ -1228,6 +1228,9 @@
     <Content Include="Views\Railcard\Record.cshtml" />
     <Content Include="Views\Railcard\Add.cshtml" />
     <Content Include="Views\Receipt\QuDan.cshtml" />
+    <Content Include="Views\Activity\ChooseProducts.cshtml" />
+    <Content Include="Views\Activity\FullSendIndex.cshtml" />
+    <Content Include="Views\Activity\FullSendEdit.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Images\upload\" />
