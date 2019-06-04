@@ -8,7 +8,7 @@ using Spetmall.DAL;
 using Spetmall.Model;
 using Spetmall.Model.Page;
 
-namespace Moqikaka.Tmp.Admin.Controllers
+namespace Spetmall.Admin.Controllers
 {
     public class MemberController : Controller
     {

@@ -7,7 +7,7 @@ using Spetmall.BLL.Page;
 using Spetmall.DAL;
 using Spetmall.Model;
 
-namespace Moqikaka.Tmp.Admin.Controllers
+namespace Spetmall.Admin.Controllers
 {
     public class RailcardController : Controller
     {

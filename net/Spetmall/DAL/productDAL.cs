@@ -13,6 +13,7 @@ namespace Spetmall.DAL
         private static readonly productDAL Instance = new productDAL();
 
         private static readonly string getDatasSql = "SELECT * FROM product WHERE 1=1 {0} {1}";
+        private static readonly string updateStroeSalesSql = "UPDATE product SET store=store-{0},sales=sales+{0} WHERE id={1} ;";
 
         private productDAL()
         {
@@ -67,6 +68,29 @@ namespace Spetmall.DAL
                 where += $" and (name like'%{keyWord}%' or barcode like'%{keyWord}%')";
 
             return where;
+        }
+
+        /// <summary>
+        /// 更新商品的库存和销量
+        /// </summary>
+        /// <param name="productId">商品id</param>
+        /// <param name="count">数量</param>
+        /// <returns></returns>
+        public bool ReduceStoreAndSales(int productId, int count)
+        {
+            try
+            {
+                using (DBHelper dbHelper = new DBHelper(WebConfigData.DataBaseType, WebConfigData.ConnString))
+                {
+                    int successCount = dbHelper.ExecuteNonQuery(string.Format(updateStroeSalesSql, count, productId));
+                    return successCount > 0;
+                }
+            }
+            catch (Exception ex)
+            {
+                WriteLog.Write(WriteLog.LogLevel.Error, "ReduceStoreAndSales 更新商品的库存和销量出错\r\n" + ex);
+            }
+            return false;
         }
 
     }

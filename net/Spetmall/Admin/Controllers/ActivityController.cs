@@ -8,7 +8,7 @@ using Spetmall.DAL;
 using Spetmall.Model;
 using Spetmall.Model.Page;
 
-namespace Moqikaka.Tmp.Admin.Controllers
+namespace Spetmall.Admin.Controllers
 {
     public class ActivityController : Controller
     {
@@ -41,7 +41,7 @@ namespace Moqikaka.Tmp.Admin.Controllers
                 {
                     var products = discount.products.Select(a => new
                     {
-                        a.id,
+                        id = a.productid,
                         title = a.productName
                     });
                     ViewBag.products = Util.Json.JsonUtil.Serialize(products);
@@ -179,7 +179,7 @@ namespace Moqikaka.Tmp.Admin.Controllers
                 {
                     var products = fullsend.products.Select(a => new
                     {
-                        a.id,
+                        id = a.productid,
                         title = a.productName
                     });
                     ViewBag.products = Util.Json.JsonUtil.Serialize(products);

@@ -9,11 +9,11 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/js/select2.min.js"></script>
 
 <div class="common-app-tabs">
-    <div class="common-app-name">满就减/送管理</div>
+    <div class="common-app-name">满就减管理</div>
     <div class="app-tab">
         <ul>
-            <li><a href="/Activity/FullSendIndex">满就减/送列表</a></li>
-            <li class="active"><a href="#">添加满就减/送</a></li>
+            <li><a href="/Activity/FullSendIndex">满就减列表</a></li>
+            <li class="active"><a href="#">添加满就减</a></li>
         </ul>
     </div>
 </div>
@@ -21,6 +21,7 @@
 <div class="form-goods-step">
     <form action="?" id="subtractfromfullForm" method="post">
         <input name="id" type="hidden" value="@Model.id" />
+        <input name="state" type="hidden" value="@Model.state" />
         <input name="categoryOrProducts" id="categoryOrProducts" type="hidden" />
         <input name="rules" id="rules" type="hidden" />
         <div class="form-goods">

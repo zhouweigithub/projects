@@ -76,6 +76,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="orderProductDAL.cs" />
     <Compile Include="railcardDAL.cs" />
     <Compile Include="discountDAL.cs" />
     <Compile Include="fullsendDAL.cs" />
@@ -86,6 +87,7 @@
     <Compile Include="rechargeDAL.cs" />
     <Compile Include="petDAL.cs" />
     <Compile Include="saleRuleDAL.cs" />
+    <Compile Include="orderDAL.cs" />
     <Compile Include="userDAL.cs" />
     <Compile Include="productDAL.cs" />
     <Compile Include="saleProductDAL.cs" />

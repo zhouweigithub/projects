@@ -73,46 +73,25 @@
                         <td><span class="simple-price">@item.money</span></td>
                     </tr>
 
-                    if (item.discount_money > 0)
+                    if (item.discount_money > 0 || item.fullSend_money > 0 || item.member_money > 0)
                     {
                         <tr class="split">
                             <td colspan="4">
                                 <div class="goodsyouhui">
                                     <div class="youuhi1">
                                         <h3>优惠</h3>
-                                        <div class="youhuixiangqing">
-                                            <span>-￥@item.discount_money</span>@item.discountMsg
-                                        </div>
-                                    </div>
-                                </div>
-                            </td>
-                        </tr>
-                    }
-                    if (item.fullSend_money > 0)
-                    {
-                        <tr class="split">
-                            <td colspan="4">
-                                <div class="goodsyouhui">
-                                    <div class="youuhi1">
-                                        <h3>优惠</h3>
-                                        <div class="youhuixiangqing">
-                                            <span>-￥@item.fullSend_money</span>@item.fullSendMsg
-                                        </div>
-                                    </div>
-                                </div>
-                            </td>
-                        </tr>
-                    }
-                    if (item.member_money > 0)
-                    {
-                        <tr class="split">
-                            <td colspan="4">
-                                <div class="goodsyouhui">
-                                    <div class="youuhi1">
-                                        <h3>优惠</h3>
-                                        <div class="youhuixiangqing">
-                                            <span>-￥@item.member_money</span>@item.memberMsg
-                                        </div>
+                                        @if (item.discount_money > 0)
+                                        {
+                                            <div class="youhuixiangqing"><span>-￥@item.discount_money</span>@item.discountMsg</div>
+                                        }
+                                        @if (item.fullSend_money > 0)
+                                        {
+                                            <div class="youhuixiangqing"><span>-￥@item.fullSend_money</span>@item.fullSendMsg</div>
+                                        }
+                                        @if (item.member_money > 0)
+                                        {
+                                            <div class="youhuixiangqing"><span>-￥@item.member_money</span>@item.memberMsg</div>
+                                        }
                                     </div>
                                 </div>
                             </td>
@@ -149,7 +128,7 @@
             @{
                 var datas = ViewBag.products as List<receipt_confirm_products>;
                 var originaltotalprice = datas.Sum(a => a.money);   //原始总金额
-                var activitytotalprice = datas.Sum(a => a.discount_money);  //折扣总金额
+                var activitytotalprice = datas.Sum(a => a.total_sale_money);  //折扣总金额
             }
             window.top.receiptcommon.setReceiptdata({ "originaltotalprice": @originaltotalprice, "discounttotalprice": @activitytotalprice });
         });

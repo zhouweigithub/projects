@@ -128,6 +128,9 @@ var ReceiptCommon = function () {
         if (receiptcommon.Ele['discount_type']) {
             receiptcommon.Ele['discount_type'].filter("[value=1]").attr("checked", true);
         }
+        if (receiptcommon.Ele['isMemberDiscount']) {
+            receiptcommon.Ele['isMemberDiscount'].val("1");
+        }
 
 
 
@@ -192,9 +195,12 @@ var ReceiptCommon = function () {
 
     this.setReceiptdata = function (_config) {
         ///this.setReceipt( _config );
+        this.Ele['confiem_total_amount'].html(goods_price((_config['originaltotalprice'])));
         this.Ele['confiem_preferential_amount'].html(goods_price((_config['discounttotalprice'])));
-        this.Ele['confiem_total'].val(goods_price(_config['originaltotalprice']) - goods_price(_config['discounttotalprice']));
-
+        this.Ele['need_pay_amount'].html(goods_price(_config['originaltotalprice'] - _config['discounttotalprice']));
+        this.Ele['pay_amount'].val(goods_price(_config['originaltotalprice'] - _config['discounttotalprice']));
+        this.Ele['totalMoney'].val(goods_price(_config['originaltotalprice']));
+        this.Ele['totalNeedMoney'].val(goods_price(_config['originaltotalprice'] - _config['discounttotalprice']));
     }
 
     this.Receiptresult = function (_result) {
@@ -442,6 +448,7 @@ var ReceiptCommon = function () {
 
     function create_goods(_data) {
         _data['my_price'] = goods_price(_data['price']);
+        _data['mapthumimg'] = _data['thumbnail'];
 
         if (_data['store'] <= _data['warn']) {
             _data['goodswarning'] = 'style="display:block"';
@@ -496,17 +503,19 @@ var ReceiptCommon = function () {
 
         that.CartData.goodsid = _dom.attr('data-goods-id');
 
-        CalculatingCommodityPrices(that.CartData, function (_result) {
-            if (!_result['status']) {
-                yunmessage.warning(_result.msg);
-                return;
-            }
-            _dom.attr("data-activityprice", _result.goods_activity_total_price);
-            that.Ele.shoppingcartTotalprice.html((_result.activitytotalprice).toFixed(2));
-            that.Ele['youhui_total_price'].html(goods_price((_result['originaltotalprice'] - _result['activitytotalprice'])));
-            that.Ele.shoppingcartgoodsnumber.html(_result.buy_number_total);
-            updateSingleGoodsItem(_result.id, _result.number, that.CartData.operationtype);
-        });
+        updateSingleGoodsItem(that.CartData.goodsid, that.CartData.number, "edit");
+
+        //CalculatingCommodityPrices(that.CartData, function (_result) {
+        //    if (!_result['status']) {
+        //        yunmessage.warning(_result.msg);
+        //        return;
+        //    }
+        //    _dom.attr("data-activityprice", _result.goods_activity_total_price);
+        //    that.Ele.shoppingcartTotalprice.html((_result.activitytotalprice).toFixed(2));
+        //    that.Ele['youhui_total_price'].html(goods_price((_result['originaltotalprice'] - _result['activitytotalprice'])));
+        //    that.Ele.shoppingcartgoodsnumber.html(_result.buy_number_total);
+        //    updateSingleGoodsItem(_result.id, _result.number, that.CartData.operationtype);
+        //});
 
     }
 
@@ -757,7 +766,7 @@ var ReceiptCommon = function () {
 
 
     var template = function () {
-        return ['<li class="clear" data-goods-id="{#id}" data-activityprice="{#activitytotalprice}" data-storage="{#storage}" >',
+        return ['<li class="clear" data-goods-id="{#id}" data-activityprice="{#activitytotalprice}" data-storage="{#store}" >',
             '    <div class="name" title="{#name}">{#name}</div>',
             '    <div class="czbox"><input name="goodsdata[{#id}]" type="hidden" class="number" value="{#cart_number}" />',
             '        <span class="num" data-number="{#cart_number}"  data-goods-id="{#id}"  data-price="{#price}">{#cart_number}</span>',

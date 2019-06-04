@@ -15,6 +15,7 @@ namespace Spetmall.Model
         /// <summary>
         /// 订单号
         /// </summary>
+        [TableField]
         public string id { get; set; }
         /// <summary>
         /// 商品总金额
@@ -46,6 +47,16 @@ namespace Spetmall.Model
         /// </summary>
         [TableField]
         public int memberid { get; set; }
+        /// <summary>
+        /// 备注
+        /// </summary>
+        [TableField]
+        public string remark { get; set; }
+        /// <summary>
+        /// 0正常订单 1临时挂单
+        /// </summary>
+        [TableField]
+        public short state { get; set; }
         /// <summary>
         /// 
         /// </summary>

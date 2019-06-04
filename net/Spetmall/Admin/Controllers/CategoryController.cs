@@ -7,7 +7,7 @@ using Spetmall.Model;
 using Spetmall.DAL;
 using Spetmall.BLL.Page;
 
-namespace Moqikaka.Tmp.Admin.Controllers
+namespace Spetmall.Admin.Controllers
 {
     public class CategoryController : Controller
     {

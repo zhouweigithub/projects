@@ -1,4 +1,4 @@
-﻿using Moqikaka.Tmp.BLL.Page.Upload;
+﻿using Spetmall.BLL.Page.Upload;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
@@ -6,7 +6,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 
-namespace Moqikaka.Tmp.Admin.Controllers
+namespace Spetmall.Admin.Controllers
 {
     public class UploadController : Controller
     {

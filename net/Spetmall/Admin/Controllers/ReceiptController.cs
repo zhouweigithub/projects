@@ -8,7 +8,7 @@ using Spetmall.DAL;
 using Spetmall.Model;
 using Spetmall.Model.Page;
 
-namespace Moqikaka.Tmp.Admin.Controllers
+namespace Spetmall.Admin.Controllers
 {
     public class ReceiptController : Controller
     {
@@ -77,6 +77,28 @@ namespace Moqikaka.Tmp.Admin.Controllers
                 total = 1,
                 data = datas,
             }, JsonRequestBehavior.AllowGet);
+        }
+
+        [HttpPost]
+        public ActionResult CreateOrder(orderPost postData)
+        {
+            (bool isOk, string msg) = ReceiptBLL.CreateOrder(postData, 0);
+            return Content(GetReturnJson(isOk, msg));
+        }
+
+        private static string GetReturnJson(bool isOk, string msg)
+        {
+            var obj = new
+            {
+                status = isOk,
+                msg,
+            };
+
+            string result = "<html><body><script>window.top.receiptcommon.Receiptresult("
+                + Util.Json.JsonUtil.Serialize(obj)
+                + ");</script></body></html>";
+
+            return result;
         }
     }
 }

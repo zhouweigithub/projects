@@ -118,7 +118,7 @@ namespace Spetmall.BLL.Page
                     thumbnail = item.thumbnail,
                     price = item.price,
                     count = productsList[item.id],
-                    isDiscounted = isMemberDiscount == 1,
+                    isDiscounted = item.ismemberdiscount == 1 && isMemberDiscount == 1,
                     memberInfo = member,
                 };
 
@@ -255,8 +255,8 @@ namespace Spetmall.BLL.Page
                 //购买的那些正在搞这个活动的商品，排除掉已经打了限时折扣，同时，限时折扣与满就减不能同时使用的活动
                 var discountProducts = datas.Where(a => item.products.Select(b => b.productid).Contains(a.productId) && !(a.discountInfo != null && a.discountInfo.fullsend == 0));
                 salerule rule = null;
-                //按总金额折扣
-                rule = item.rules.OrderByDescending(a => a.aim).FirstOrDefault(a => a.aim <= discountProducts.Sum(b => b.money));
+                //按限时折扣后总金额折扣
+                rule = item.rules.OrderByDescending(a => a.aim).FirstOrDefault(a => a.aim <= discountProducts.Sum(b => b.money - b.discount_money));
 
                 if (rule != null)
                 {   //给各个做活动的商品添加限时活动信息
@@ -290,8 +290,8 @@ namespace Spetmall.BLL.Page
                 }
 
                 salerule rule = null;
-                //按总金额折扣
-                rule = item.rules.OrderByDescending(a => a.aim).FirstOrDefault(a => a.aim <= discountProducts.Sum(b => b.money));
+                //按限时折扣后总金额折扣
+                rule = item.rules.OrderByDescending(a => a.aim).FirstOrDefault(a => a.aim <= discountProducts.Sum(b => b.money - b.discount_money));
 
                 if (rule != null)
                 {   //给各个做活动的商品添加限时活动信息
@@ -310,8 +310,8 @@ namespace Spetmall.BLL.Page
                 //购买的那些正在搞这个活动的商品
                 var discountProducts = datas.Where(a => a.fullsendInfo == null && !(a.discountInfo != null && a.discountInfo.fullsend == 0));
                 salerule rule = null;
-                //按总金额折扣
-                rule = item.rules.OrderByDescending(a => a.aim).FirstOrDefault(a => a.aim <= discountProducts.Sum(b => b.money));
+                //按限时折扣后总金额折扣
+                rule = item.rules.OrderByDescending(a => a.aim).FirstOrDefault(a => a.aim <= discountProducts.Sum(b => b.money - b.discount_money));
 
                 if (rule != null)
                 {   //给各个做活动的商品添加限时活动信息
@@ -421,6 +421,115 @@ namespace Spetmall.BLL.Page
                 endtime = fullsend.endtime,
                 crtime = fullsend.crtime,
             };
+        }
+
+        /// <summary>
+        /// 创建订单
+        /// </summary>
+        /// <param name="memberid">会员id</param>
+        /// <param name="payType">支付方式</param>
+        /// <param name="products">商品集</param>
+        /// <param name="isMemberDiscount">是否启用会员折扣</param>
+        /// <param name="adjustMomey">调价金额</param>
+        /// <param name="remark">备注</param>
+        /// <param name="state">0正常订单 1临时挂单</param>
+        /// <returns></returns>
+        public static (bool result, string msg) CreateOrder(orderPost postData, short state)
+        {
+            bool isOk = true;
+            string msg = "收银成功";
+            string orderid = CreateNewOrderId();
+            try
+            {
+                //int.TryParse(memberid, out int member);
+                //int.TryParse(adjustMomey, out int adjustMomey2);
+                //short.TryParse(isMemberDiscount, out short isDiscount);
+                //short.TryParse(payType, out short paytype);
+                List<receipt_confirm_products> datas = GetDatas(postData.memberid, postData.products, postData.isMemberDiscount);
+
+                if (!IsOrderValid(postData, datas))
+                {
+                    return (false, "商品信息已经发生变更，请重新下单");
+                }
+
+                orderDAL.GetInstance().Add(new order()
+                {
+                    id = orderid,
+                    payType = postData.paytype,
+                    payMoney = datas.Sum(a => a.total_money),
+                    discountMoney = datas.Sum(a => a.total_sale_money),
+                    memberid = postData.memberid,
+                    productMoney = datas.Sum(a => a.money),
+                    adjustMomey = postData.totalNeedMoney - postData.totalPayMoney,
+                    state = state,
+                    remark = postData.remark,
+                });
+
+                foreach (receipt_confirm_products item in datas)
+                {
+                    orderProductDAL.GetInstance().Add(new orderproduct()
+                    {
+                        orderid = orderid,
+                        productid = item.productId,
+                        count = item.count,
+                        money = item.money,
+                        price = item.price,
+                        discountMoney = item.total_sale_money,
+                        payMoney = item.total_money,
+                    });
+                }
+
+                if (state == 0)
+                {   //正常下单完成后，需要修改商品的库存和销量
+                    foreach (receipt_confirm_products item in datas)
+                    {
+                        productDAL.GetInstance().ReduceStoreAndSales(item.productId, item.count);
+                    }
+                }
+            }
+            catch (Exception e)
+            {
+                msg = "服务异常";
+                Util.Log.LogUtil.Write($"创建订单出错：orderid: {orderid} \r\n{e}", Util.Log.LogType.Error);
+
+                //删除已创建的订单
+                ClearOrderById(orderid);
+
+                isOk = false;
+            }
+
+            return (isOk, msg);
+        }
+
+        private static string CreateNewOrderId()
+        {
+            return Common.Function.GetRangeNumber(15, Common.RangeType.Number);
+        }
+
+        /// <summary>
+        /// 删除订单及商品信息
+        /// </summary>
+        /// <param name="orderid"></param>
+        private static void ClearOrderById(string orderid)
+        {
+            try
+            {
+                orderDAL.GetInstance().DeleteByKey(orderid);
+                orderProductDAL.GetInstance().Delete($"orderid='{orderid}'");
+            }
+            catch (Exception e)
+            {
+                Util.Log.LogUtil.Write($"删除订单出错：orderid: {orderid} \r\n{e}", Util.Log.LogType.Error);
+            }
+        }
+
+        private static bool IsOrderValid(orderPost postData, List<receipt_confirm_products> serverData)
+        {
+            decimal money = serverData.Sum(a => a.money);   //原始总金额
+            decimal total_sale_money = serverData.Sum(a => a.total_sale_money); //优惠总金额
+            decimal need_pay_money = money - total_sale_money;  //应该支付的总金额
+
+            return postData.totalMoney == money && postData.totalNeedMoney == need_pay_money;
         }
     }
 }

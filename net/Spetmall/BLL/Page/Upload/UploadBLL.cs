@@ -6,7 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Moqikaka.Tmp.BLL.Page.Upload
+namespace Spetmall.BLL.Page.Upload
 {
     public class UploadBLL
     {

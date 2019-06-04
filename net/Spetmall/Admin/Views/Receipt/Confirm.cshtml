@@ -36,14 +36,14 @@
         </div>
 
         <div class="rc_right receiptconfirm_auto_height">
-            <form action="/Receipt/setReceiptOrder.html" method="post" id="receiptconfirm_Form">
-                <input name="uid" class="receipt_member" type="hidden" value="@(ViewBag.member != null ? ViewBag.member.id : 0)" />
-                <input name="paykey" type="hidden" value="" />
-                <input name="goodsdata" type="hidden" value='@ViewBag.products' />
-                <input name="cartdata[uid]" class="receipt_member" type="hidden" value="" />
-                <input name="cartdata[discount_type]" class="discount_type_text" type="hidden" value="" />
-                <input name="customertype" type="hidden" value="1" />
-                <input name="activitytotalprice" type="hidden" value="" />
+            <form action="CreateOrder" method="post" id="receiptconfirm_Form">
+                @*<input name="uid" class="receipt_member" type="hidden" value="@(ViewBag.member != null ? ViewBag.member.id : 0)" />*@
+                <input name="paytype" type="hidden" value="" />
+                <input name="products" type="hidden" value='@ViewBag.products' />
+                <input name="memberid" class="receipt_member" type="hidden" value="@(ViewBag.member != null ? ViewBag.member.id : 0)" />
+                <input name="isMemberDiscount" class="discount_type_text" type="hidden" value="@(ViewBag.member == null ? "0" : "1")" />
+                <input name="totalMoney" type="hidden" value="" />
+                <input name="totalNeedMoney" type="hidden" value="" />
 
                 <div class="h_title">订单详情</div>
                 <div class="receipt-order-list">
@@ -81,8 +81,6 @@
                     </div>
 
 
-
-
                     <div class="receipt-order-item">
                         <div class="item-name">收款：</div>
                         <div class="item-val">
@@ -112,17 +110,28 @@
                     </div>
 
                     <div class="receipt-order-item">
-                        <div class="item-name">优惠金额：</div>
-                        <div class="item-val"><span class="price ">￥<i class="confiem_preferential_amount">0.00</i>元</span> </div>
+                        <div class="item-name">总金额：</div>
+                        <div class="item-val"><span class="price ">￥<i class="confiem_total_amount">0.00</i> 元</span> </div>
                     </div>
 
                     <div class="receipt-order-item">
-                        <div class="item-name">合计：</div>
-                        <div class="item-val"><input name="goods_total" class="form-control confiem_total" value="0.00" type="text" /></div>
+                        <div class="item-name">优惠金额：</div>
+                        <div class="item-val"><span class="price ">-￥<i class="confiem_preferential_amount">0.00</i> 元</span> </div>
                     </div>
+
+                    <div class="receipt-order-item">
+                        <div class="item-name">应收：</div>
+                        <div class="item-val"><span class="price ">￥<i class="maxSize need_pay_amount">0.00</i> 元</span> </div>
+                    </div>
+
+                    <div class="receipt-order-item">
+                        <div class="item-name">实收：</div>
+                        <div class="item-val"><input name="totalPayMoney" class="form-control pay_amount" value="0.00" type="text" /> </div>
+                    </div>
+
                     <div class="receipt-order-item">
                         <div class="item-name">备注信息：</div>
-                        <div class="item-val"><textarea name="describe" class="form-textarea confiem_remarks_information" style="height:30px;" cols="" rows=""></textarea></div>
+                        <div class="item-val"><textarea name="remark" class="form-textarea confiem_remarks_information" style="height:40px;" cols="" rows=""></textarea></div>
                     </div>
 
                     <div class="receipt-order-item">
@@ -135,7 +144,6 @@
                         </div>
 
                     </div>
-
 
                 </div>
             </form>
@@ -152,10 +160,17 @@
         receiptcommon.getReceiptcommon().Ele['sel_huiyuan'] = $(".sel_huiyuan");
         receiptcommon.getReceiptcommon().Ele['receipt_member'] = $("input.receipt_member");
         receiptcommon.getReceiptcommon().Ele['discount_type'] = $("input[name=discount_type]");
+        receiptcommon.getReceiptcommon().Ele['totalMoney'] = $("input[name=totalMoney]");
+        receiptcommon.getReceiptcommon().Ele['totalNeedMoney'] = $("input[name=totalNeedMoney]");
+        receiptcommon.getReceiptcommon().Ele['isMemberDiscount'] = $("input[name=isMemberDiscount]");
+        
 
+        receiptcommon.getReceiptcommon().Ele['confiem_total_amount'] = $(".confiem_total_amount");
         receiptcommon.getReceiptcommon().Ele['confiem_preferential_amount'] = $(".confiem_preferential_amount");
-        receiptcommon.getReceiptcommon().Ele['confiem_total'] = $(".confiem_total");
         receiptcommon.getReceiptcommon().Ele['confiem_remarks_information'] = $(".confiem_remarks_information");
+        receiptcommon.getReceiptcommon().Ele['need_pay_amount'] = $(".need_pay_amount");
+        receiptcommon.getReceiptcommon().Ele['pay_amount'] = $(".pay_amount");
+
 
 
         function AndroidMsg(_result) {
@@ -170,7 +185,7 @@
         }
 
 
-        var UIDEle = $('input[name=uid]'),
+        var UIDEle = $('input[name=memberid]'),
             receiptconfirm_FormEle = $("#receiptconfirm_Form"),
             ReceiptsetOrderEle = $("#ReceiptsetOrder");
 
@@ -187,19 +202,19 @@
         });
 
         $(".payoptions").bind('click', function () {
-            var _paykey = $(this).attr('data-key');
+            var _paytype = $(this).attr('data-key');
 
-            if (_paykey == '1' && UIDEle.val() == '') {
+            if (_paytype == '1' && UIDEle.val() == '') {
                 alert('请选择会员');
                 return false;
             }
-            $("input[name=paykey]").val(_paykey);
+            $("input[name=paytype]").val(_paytype);
             $(this).addClass('button-primary').siblings().removeClass('button-primary');
         });
 
         /*挂单*/
         $("#Receiptguadan").bind('click', function () {
-            receiptconfirm_FormEle.attr('action', '/Receipt/guadan.html');
+            receiptconfirm_FormEle.attr('action', 'guadan');
             receiptcommon.guadan($(this));
         });
 
@@ -214,7 +229,7 @@
 
 
             },'JSON');*/
-            receiptcommon.selectDiscountType({ isDiscount: strToint($(this).val()), memberid: strToint($("input[name=uid]").val()) });
+            receiptcommon.selectDiscountType({ isDiscount: strToint($(this).val()), memberid: strToint($("input[name=memberid]").val()) });
 
         });
 
@@ -225,7 +240,7 @@
             if (_val == 2) {
                 $(".huiyuan").show();
                 $(".enabling-membership-discounts").show();
-                var _uid = strToint($("input[name=uid]").val());
+                var _uid = strToint($("input[name=memberid]").val());
                 if (_uid > 0) {
                     receiptcommon.selectMemberType({ memberid: _uid });
                 }
@@ -260,7 +275,7 @@
                 return false;
             }
 
-            if ($("input[name=paykey]").val() == '') {
+            if ($("input[name=paytype]").val() == '') {
                 yunmallIframe.error('亲请选择收款类型');
                 return false;
             }
@@ -271,18 +286,18 @@
 
 
 
-                                                            /*function setIframeHeight(iframe) {
-                                                                if (iframe) {
-                                                                var iframeWin = iframe.contentWindow || iframe.contentDocument.parentWindow;
-                                                                if (iframeWin.document.body) {
-                                                                iframe.height = iframeWin.document.documentElement.scrollHeight || iframeWin.document.body.scrollHeight;
-                                                                }
-                                                                }
-                                                            };
+                                                                                        /*function setIframeHeight(iframe) {
+                                                                                            if (iframe) {
+                                                                                            var iframeWin = iframe.contentWindow || iframe.contentDocument.parentWindow;
+                                                                                            if (iframeWin.document.body) {
+                                                                                            iframe.height = iframeWin.document.documentElement.scrollHeight || iframeWin.document.body.scrollHeight;
+                                                                                            }
+                                                                                            }
+                                                                                        };
 
-                                                            window.onload = function () {
-                                                                setIframeHeight(document.getElementById('external-frame'));
-                                                            };*/
+                                                                                        window.onload = function () {
+                                                                                            setIframeHeight(document.getElementById('external-frame'));
+                                                                                        };*/
     </script>
 
 </body>

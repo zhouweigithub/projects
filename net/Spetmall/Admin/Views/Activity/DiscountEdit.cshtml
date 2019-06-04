@@ -20,6 +20,7 @@
 <div class="form-goods-step">
     <form action="?" id="subtractfromfullForm" method="post">
         <input name="id" type="hidden" value="@Model.id" />
+        <input name="state" type="hidden" value="@Model.state" />
         <input name="categoryOrProducts" id="categoryOrProducts" type="hidden" />
         <input name="rules" id="rules" type="hidden" />
         <div class="form-goods">
@@ -92,7 +93,7 @@
                     <td>
                         <cite>
                             <label>
-                                <input name="coupon" type="checkbox" value="1" @(Model.coupon == 0 ? "checked" : "") />优惠券&nbsp;&nbsp;&nbsp;
+                                <input name="coupon" type="checkbox" value="1" @(Model.coupon == 1 ? "checked" : "") />优惠券&nbsp;&nbsp;&nbsp;
                             </label>
                             <label>
                                 <input name="fullsend" type="checkbox" value="1" @(Model.fullsend == 1 ? "checked" : "") />满就送

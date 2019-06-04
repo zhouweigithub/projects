@@ -76,7 +76,7 @@ namespace Spetmall.Model.Page
                 {
                     if (discountInfo.sale > 0 && discountInfo.sale < 10)
                     {
-                        return money * (1 - (decimal)discountInfo.sale / 10);
+                        return Math.Round(money * (1 - (decimal)discountInfo.sale / 10), 2);
                     }
                 }
 
@@ -110,7 +110,7 @@ namespace Spetmall.Model.Page
             {
                 if (isDiscounted && memberInfo != null && memberInfo.discount > 0 && memberInfo.discount < 10)
                 {
-                    return fullSend_money * (1 - (decimal)memberInfo.discount);
+                    return Math.Round((money - discount_money - fullSend_money) * (1 - (decimal)memberInfo.discount / 10), 2);
                 }
                 return 0;
             }
@@ -143,7 +143,7 @@ namespace Spetmall.Model.Page
                 {
                     if (discountInfo.ruleType == 0)
                     {
-                        return $"满{discountInfo.aim}件,打{discountInfo.sale}折";
+                        return $"满{(int)discountInfo.aim}件,打{discountInfo.sale}折";
                     }
                     else if (discountInfo.ruleType == 1)
                     {

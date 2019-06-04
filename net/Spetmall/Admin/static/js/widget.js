@@ -447,7 +447,7 @@ var ArtSpecData = function () {
         windowdialog = art.dialog.open("/Activity/ChooseProducts", {
             title: '请选择商品',
             width: '60%',
-            height: '60%',
+            height: '40%',
             fixed: true,
             lock: true,
             background: '#000', // 背景色

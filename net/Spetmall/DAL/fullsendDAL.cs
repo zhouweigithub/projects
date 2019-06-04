@@ -17,7 +17,7 @@ namespace Spetmall.DAL
         private static readonly string insertProductOrCategorySql = @"INSERT INTO spetmall.saleproduct (`type`,ptype,saleid,productid
 ) VALUES('{0}','{1}','{2}','{3}');";
         private static readonly string insertRuleSql = @"INSERT INTO spetmall.salerule ( saleid, aim, sale
-) VALUES('{0}','{1}','{2}','{3}');";
+) VALUES('{0}','{1}','{2}');";
         private static readonly string getLastInsertIdSql = "SELECT LAST_INSERT_ID()";
 
 
