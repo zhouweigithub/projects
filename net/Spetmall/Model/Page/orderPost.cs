@@ -13,6 +13,10 @@ namespace Spetmall.Model.Page
     public class orderPost
     {
         /// <summary>
+        /// 订单号（挂单的已经存在订单号）
+        /// </summary>
+        public string orderid { get; set; }
+        /// <summary>
         /// 会员id
         /// </summary>
         public int memberid { get; set; }

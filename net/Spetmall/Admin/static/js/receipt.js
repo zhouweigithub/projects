@@ -223,7 +223,7 @@ var ReceiptCommon = function () {
             } else if (_OS == 'pc') {
                 that.PrintSmallTicket(_result);
             }
-            art.dialog({ icon: 'succeed', lock: true, content: _result.msg, title: '消息提示', time: 1 });
+            art.dialog({ icon: 'succeed', lock: true, content: _result.msg, title: '消息提示', time: 1, cancle: function () { window.reload(); } });
         } else {
             art.dialog({ icon: 'face-sad', lock: true, content: _result.msg, title: '消息提示', time: 5 });
         }
@@ -298,8 +298,8 @@ var ReceiptCommon = function () {
     }
 
 
-    this.qudan = function (_postersid) {
-        window.location.href = "/Receipt/index.html?postersid=" + _postersid;
+    this.qudan = function (orderid) {
+        window.location.href = "/Receipt/index?orderid=" + orderid;
     }
 
     function getSystemType() {
@@ -405,8 +405,13 @@ var ReceiptCommon = function () {
     function goods_item_bind(_dom) {
         _dom.bind('click', function () {
             var _data = JSON.parse($(this).attr('data'));
-            _data['cart_number'] = 1;
-            create_item(_data, true);
+            if (_data.store > 0) {
+                _data['cart_number'] = 1;
+                create_item(_data, true);
+            }
+            else {
+                yunmallIframe.error("没有库存");
+            }
         });
     }
 
@@ -504,6 +509,9 @@ var ReceiptCommon = function () {
         that.CartData.goodsid = _dom.attr('data-goods-id');
 
         updateSingleGoodsItem(that.CartData.goodsid, that.CartData.number, "edit");
+        that.Ele.shoppingcartgoodsnumber.html(that.CartData.totalNumber);
+        that.Ele['youhui_total_price'].html("0.00");
+        that.Ele.shoppingcartTotalprice.html((that.CartData.totalPrice).toFixed(2));
 
         //CalculatingCommodityPrices(that.CartData, function (_result) {
         //    if (!_result['status']) {

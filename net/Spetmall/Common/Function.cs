@@ -58,6 +58,21 @@ namespace Spetmall.Common
             }
             return result.ToString();
         }
+
+        public static string GetRangeNumber(int length, string source)
+        {
+            if (string.IsNullOrEmpty(source))
+                return string.Empty;
+
+            StringBuilder sb = new StringBuilder();
+            for (int i = 0; i < length; i++)
+            {
+                sb.Append(source[new Random(Guid.NewGuid().GetHashCode()).Next(0, source.Length - 1)]);
+            }
+
+            return sb.ToString();
+        }
+
     }
 
 

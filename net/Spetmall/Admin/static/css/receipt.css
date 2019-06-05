@@ -49,8 +49,9 @@
 /*.rc_goods_list .goodsyouhui .youuhi1{ padding-bottom:10px;}*/
 .rc_goods_list .goodsyouhui h3{ font-size:12px;margin:3px 0px;}
 .rc_goods_list .goodsyouhui .youhuixiangqing{ padding:3px 0px; padding-left:10px; font-size:12px; color:#3c3c3c}
-.rc_goods_list .goodsyouhui .youhuixiangqing span{ float:right;    font-weight: 700;color: #f40;padding-right: 10px;text-align: right;display: block; } 
-.rc_goods_list .goodsyouhui .zhenpin ul li{ padding:3px 0px;font-size:12px;}
+.rc_goods_list .goodsyouhui .youhuixiangqing span{ float:right;    font-weight: 700;color: #f40;padding-right: 10px;text-align: right;display: block; }
+    .rc_goods_list .goodsyouhui .youhuixiangqing .green{color:green;}
+    .rc_goods_list .goodsyouhui .zhenpin ul li {padding: 3px 0px;font-size: 12px;}
 .rc_goods_list .goodsyouhui .zhenpin ul li a{ color:#3c3c3c; font-size:12px;}
 .iframe_rc_left{ width:50%; position:absolute; left:0px; right:0px; bottom:0px; top:0px;   overflow:hidden;}
 .re_left .rc_store{ overflow:hidden; background:#f2f7ff;}
@@ -104,6 +105,9 @@
 .receipt-order-item .userinfo p span{ display:block; float:left;height:25px; line-height:25px; padding:0px 10px;}
 .receipt-order-item .userinfo  p font{font-weight: 700;color: #f40;}
 .receipt-order-item .price{font-weight: 700;color: #f40;font-size:15px;}
+.receipt-order-item .green {
+    color: green;
+}
 .receipt-order-item .price .maxSize {font-weight: 700;color: #f40;font-size:30px;}	
 .receipt-order-item .userinfo p em{ display:block; float:left; border-left:1px solid #CCC; height:14px; margin-top:4px;}
 .receipt-order-item .sel_user{ position:absolute; right:10px; top:10px;}

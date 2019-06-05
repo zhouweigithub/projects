@@ -1176,6 +1176,7 @@
     <Content Include="static\images\defaultgoods.jpg" />
     <Content Include="static\images\upload-pic.png" />
     <Content Include="static\js\skins\icons\succeed.png" />
+    <Content Include="static\js\skins\icons\warning.png" />
     <Content Include="static\js\widget.js" />
     <Content Include="static\swfupload\js\upload.js" />
     <Content Include="static\swfupload\upload.css" />

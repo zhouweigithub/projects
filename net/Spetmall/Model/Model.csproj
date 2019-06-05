@@ -54,8 +54,10 @@
     <Compile Include="Common\TableFieldAttribute.cs" />
     <Compile Include="Page\fullsend_edit.cs" />
     <Compile Include="Page\discount_edit.cs" />
+    <Compile Include="Page\guadan.cs" />
     <Compile Include="Page\orderPost.cs" />
     <Compile Include="Page\receipt.cs" />
+    <Compile Include="Page\ReceiptOrderInfo.cs" />
     <Compile Include="Page\receipt_confirm_products.cs" />
     <Compile Include="railcard.cs" />
     <Compile Include="DataValueModel.cs" />

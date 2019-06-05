@@ -23,7 +23,7 @@ namespace Spetmall.Model
         [TableField]
         public int productid { get; set; }
         /// <summary>
-        /// 价格
+        /// 原始价格
         /// </summary>
         [TableField]
         public decimal price { get; set; }
@@ -47,6 +47,31 @@ namespace Spetmall.Model
         /// </summary>
         [TableField]
         public decimal payMoney { get; set; }
+        /// <summary>
+        /// 条码
+        /// </summary>
+        [TableField]
+        public string barcode { get; set; }
+        /// <summary>
+        /// 分类
+        /// </summary>
+        [TableField]
+        public int category { get; set; }
+        /// <summary>
+        /// 购买时是否启用了会员折扣
+        /// </summary>
+        [TableField]
+        public short ismemberdiscount { get; set; }
+        /// <summary>
+        /// 名称
+        /// </summary>
+        [TableField]
+        public string name { get; set; }
+        /// <summary>
+        /// 缩略图
+        /// </summary>
+        [TableField]
+        public string thumbnail { get; set; }
 
     }
 }

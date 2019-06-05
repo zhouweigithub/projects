@@ -82,15 +82,15 @@
                                         <h3>优惠</h3>
                                         @if (item.discount_money > 0)
                                         {
-                                            <div class="youhuixiangqing"><span>-￥@item.discount_money</span>@item.discountMsg</div>
+                                            <div class="youhuixiangqing"><span class="green">-￥@item.discount_money</span>@item.discountMsg</div>
                                         }
                                         @if (item.fullSend_money > 0)
                                         {
-                                            <div class="youhuixiangqing"><span>-￥@item.fullSend_money</span>@item.fullSendMsg</div>
+                                            <div class="youhuixiangqing"><span class="green">-￥@item.fullSend_money</span>@item.fullSendMsg</div>
                                         }
                                         @if (item.member_money > 0)
                                         {
-                                            <div class="youhuixiangqing"><span>-￥@item.member_money</span>@item.memberMsg</div>
+                                            <div class="youhuixiangqing"><span class="green">-￥@item.member_money</span>@item.memberMsg</div>
                                         }
                                     </div>
                                 </div>

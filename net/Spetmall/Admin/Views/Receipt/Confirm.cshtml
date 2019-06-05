@@ -38,6 +38,7 @@
         <div class="rc_right receiptconfirm_auto_height">
             <form action="CreateOrder" method="post" id="receiptconfirm_Form">
                 @*<input name="uid" class="receipt_member" type="hidden" value="@(ViewBag.member != null ? ViewBag.member.id : 0)" />*@
+                <input name="orderid" type="hidden" value="" />
                 <input name="paytype" type="hidden" value="" />
                 <input name="products" type="hidden" value='@ViewBag.products' />
                 <input name="memberid" class="receipt_member" type="hidden" value="@(ViewBag.member != null ? ViewBag.member.id : 0)" />
@@ -65,7 +66,7 @@
                                         <p>
                                             <span><label class="uname">@(ViewBag.member != null ? ViewBag.member.name : "")</label></span><em></em>
                                             <span><i></i><label class="uphone">@(ViewBag.member != null ? ViewBag.member.phone : "")</label></span><em></em>
-                                            <span>积分:<label class="uintegral"> </label></span>
+                                            @*<span>积分:<label class="uintegral"> </label></span>*@
                                         </p>
                                         <p>
                                             <span><i></i>余额:<font>￥<label class="utotal_balance">@(ViewBag.member != null ? ViewBag.member.money : "")</label>元</font></span> <em></em>
@@ -116,7 +117,7 @@
 
                     <div class="receipt-order-item">
                         <div class="item-name">优惠金额：</div>
-                        <div class="item-val"><span class="price ">-￥<i class="confiem_preferential_amount">0.00</i> 元</span> </div>
+                        <div class="item-val"><span class="price green">-￥<i class="confiem_preferential_amount ">0.00</i> 元</span> </div>
                     </div>
 
                     <div class="receipt-order-item">
@@ -163,7 +164,7 @@
         receiptcommon.getReceiptcommon().Ele['totalMoney'] = $("input[name=totalMoney]");
         receiptcommon.getReceiptcommon().Ele['totalNeedMoney'] = $("input[name=totalNeedMoney]");
         receiptcommon.getReceiptcommon().Ele['isMemberDiscount'] = $("input[name=isMemberDiscount]");
-        
+
 
         receiptcommon.getReceiptcommon().Ele['confiem_total_amount'] = $(".confiem_total_amount");
         receiptcommon.getReceiptcommon().Ele['confiem_preferential_amount'] = $(".confiem_preferential_amount");
@@ -286,18 +287,18 @@
 
 
 
-                                                                                        /*function setIframeHeight(iframe) {
-                                                                                            if (iframe) {
-                                                                                            var iframeWin = iframe.contentWindow || iframe.contentDocument.parentWindow;
-                                                                                            if (iframeWin.document.body) {
-                                                                                            iframe.height = iframeWin.document.documentElement.scrollHeight || iframeWin.document.body.scrollHeight;
-                                                                                            }
-                                                                                            }
-                                                                                        };
+                                                                                            /*function setIframeHeight(iframe) {
+                                                                                                if (iframe) {
+                                                                                                var iframeWin = iframe.contentWindow || iframe.contentDocument.parentWindow;
+                                                                                                if (iframeWin.document.body) {
+                                                                                                iframe.height = iframeWin.document.documentElement.scrollHeight || iframeWin.document.body.scrollHeight;
+                                                                                                }
+                                                                                                }
+                                                                                            };
 
-                                                                                        window.onload = function () {
-                                                                                            setIframeHeight(document.getElementById('external-frame'));
-                                                                                        };*/
+                                                                                            window.onload = function () {
+                                                                                                setIframeHeight(document.getElementById('external-frame'));
+                                                                                            };*/
     </script>
 
 </body>

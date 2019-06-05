@@ -17,6 +17,8 @@ namespace Spetmall.Admin.Controllers
         public ActionResult Index(string category, string keyWord, string orderBy)
         {
             List<product> datas = productDAL.GetInstance().GetProducts(string.Empty, category, keyWord, orderBy, 1, int.MaxValue);
+            List<category> categorys = categoryDAL.GetInstance().GetFloorDatas();
+            ViewBag.categorys = categorys;
             ViewBag.datas = datas;
             return View();
         }
@@ -32,6 +34,8 @@ namespace Spetmall.Admin.Controllers
             {   //编辑
                 product = productDAL.GetInstance().GetEntityByKey<product>(id);
             }
+
+            ViewBag.categoryItems = GetCategoryItems();
             return View(product);
         }
 
@@ -59,6 +63,24 @@ namespace Spetmall.Admin.Controllers
             return Content(CommonBLL.GetReturnJson(status, errMsg));
         }
 
-
+        public List<SelectListItem> GetCategoryItems()
+        {
+            List<SelectListItem> result = new List<SelectListItem>();
+            List<category> list = categoryDAL.GetInstance().GetFloorDatas();
+            foreach (category item in list)
+            {
+                string space = string.Empty;
+                for (int i = 0; i < item.floor; i++)
+                {
+                    space += "　　";
+                }
+                result.Add(new SelectListItem()
+                {
+                    Text = space + item.name,
+                    Value = item.id.ToString(),
+                });
+            }
+            return result;
+        }
     }
 }

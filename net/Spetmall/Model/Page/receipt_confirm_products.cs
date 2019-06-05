@@ -32,6 +32,10 @@ namespace Spetmall.Model.Page
         /// </summary>
         public double discount;
         /// <summary>
+        /// 条码
+        /// </summary>
+        public string barcode { get; set; }
+        /// <summary>
         /// 缩略图
         /// </summary>
         public string thumbnail;

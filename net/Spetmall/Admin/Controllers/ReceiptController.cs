@@ -13,8 +13,22 @@ namespace Spetmall.Admin.Controllers
     public class ReceiptController : Controller
     {
 
-        public ActionResult Index()
+        public ActionResult Index(string orderid)
         {
+            ReceiptOrderInfo data = new ReceiptOrderInfo();
+            if (!string.IsNullOrWhiteSpace(orderid))
+                data = ReceiptBLL.GetOrderInfo(orderid);
+
+            if (data.memberid != 0)
+            {
+                member member = memberDAL.GetInstance().GetEntityByKey<member>(data.memberid);
+                ViewBag.member = member;
+            }
+            ViewBag.orderJson = Util.Json.JsonUtil.Serialize(data);
+
+            List<category> categorys = categoryDAL.GetInstance().GetFloorDatas();
+            ViewBag.categorys = categorys;
+
             return View();
         }
 
@@ -54,20 +68,23 @@ namespace Spetmall.Admin.Controllers
             return View();
         }
 
+        [HttpPost]
+        public ActionResult GuaDan(orderPost postData)
+        {
+            (bool isOk, string msg) = ReceiptBLL.CreateOrder(postData, 1);
+            return Content(GetCreateOrderReturnJson(isOk, msg));
+        }
 
         public ActionResult QuDan()
         {
+            List<guadan> datas = orderDAL.GetGuadans();
+            ViewBag.datas = datas;
             return View();
         }
 
-        public ActionResult GuaDan()
+        public ActionResult QueryProduct(string category, string keyWord, int page, int pageSize)
         {
-            return View();
-        }
-
-        public ActionResult QueryProduct(string keyWord, int page, int pageSize)
-        {
-            List<product> datas = productDAL.GetInstance().GetProducts(string.Empty, string.Empty, keyWord, string.Empty, page, pageSize);
+            List<product> datas = productDAL.GetInstance().GetProducts(string.Empty, category, keyWord, string.Empty, page, pageSize);
             ViewBag.datas = datas;
             return Json(new
             {
@@ -83,10 +100,33 @@ namespace Spetmall.Admin.Controllers
         public ActionResult CreateOrder(orderPost postData)
         {
             (bool isOk, string msg) = ReceiptBLL.CreateOrder(postData, 0);
-            return Content(GetReturnJson(isOk, msg));
+            return Content(GetCreateOrderReturnJson(isOk, msg));
         }
 
-        private static string GetReturnJson(bool isOk, string msg)
+        public ActionResult DeleteOrder(string orderid)
+        {
+            bool status = true;
+            string errMsg = "删除成功";
+            try
+            {
+                status = ReceiptBLL.DeleteOrderById(orderid);
+            }
+            catch (Exception e)
+            {
+                status = false;
+                errMsg = e.Message;
+            }
+
+            return Json(new
+            {
+                status,
+                code = status ? 0 : 1,
+                msg = errMsg,
+                redirects = status ? "QuDan" : "",
+            }, JsonRequestBehavior.AllowGet);
+        }
+
+        private static string GetCreateOrderReturnJson(bool isOk, string msg)
         {
             var obj = new
             {
@@ -100,5 +140,6 @@ namespace Spetmall.Admin.Controllers
 
             return result;
         }
+
     }
 }
