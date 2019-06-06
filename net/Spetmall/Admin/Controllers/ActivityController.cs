@@ -25,9 +25,11 @@ namespace Spetmall.Admin.Controllers
             discount_edit discount = null;
             if (id == 0)
             {   //添加
-                discount = new discount_edit();
-                discount.starttime = DateTime.Now.Date;
-                discount.endtime = DateTime.Now.Date;
+                discount = new discount_edit
+                {
+                    starttime = DateTime.Now.Date,
+                    endtime = DateTime.Now.Date
+                };
             }
             else
             {   //编辑
@@ -132,8 +134,10 @@ namespace Spetmall.Admin.Controllers
             string errMsg = string.Empty;
             try
             {
-                Dictionary<string, object> dic = new Dictionary<string, object>();
-                dic.Add("state", state);
+                Dictionary<string, object> dic = new Dictionary<string, object>
+                {
+                    { "state", state }
+                };
                 status = discountDAL.GetInstance().UpdateByKey(dic, id) > 0;
             }
             catch (Exception e)
@@ -163,9 +167,11 @@ namespace Spetmall.Admin.Controllers
             fullsend_edit fullsend = null;
             if (id == 0)
             {   //添加
-                fullsend = new fullsend_edit();
-                fullsend.starttime = DateTime.Now.Date;
-                fullsend.endtime = DateTime.Now.Date;
+                fullsend = new fullsend_edit
+                {
+                    starttime = DateTime.Now.Date,
+                    endtime = DateTime.Now.Date
+                };
             }
             else
             {   //编辑
@@ -270,8 +276,10 @@ namespace Spetmall.Admin.Controllers
             string errMsg = string.Empty;
             try
             {
-                Dictionary<string, object> dic = new Dictionary<string, object>();
-                dic.Add("state", state);
+                Dictionary<string, object> dic = new Dictionary<string, object>
+                {
+                    { "state", state }
+                };
                 status = fullsendDAL.GetInstance().UpdateByKey(dic, id) > 0;
             }
             catch (Exception e)

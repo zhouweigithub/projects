@@ -1,79 +1,80 @@
 ﻿@using Spetmall.Model;
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "限时折扣";
 }
+<div class="mianbox">
+    <div class="tablebox padt">
+        <div class="fenlei2">
+            <ul class="nav nav-tabs clear" role="tablist">
+                <li role="presentation" class="active"><a href="DiscountIndex" aria-controls="home" role="tab" data-toggle="tab">限时折扣</a></li>
+                <li role="presentation"><a href="FullSendIndex" aria-controls="profile" role="tab" data-toggle="tab">买就减</a></li>
+                <!--  <li><a href="#">+ 添加活动</a></li>-->
+            </ul>
 
-<div class="tablebox padt">
-    <div class="fenlei2">
-        <ul class="nav nav-tabs clear" role="tablist">
-            <li role="presentation" class="active"><a href="DiscountIndex" aria-controls="home" role="tab" data-toggle="tab">商品折扣</a></li>
-            <li role="presentation"><a href="FullSendIndex" aria-controls="profile" role="tab" data-toggle="tab">买就减/送</a></li>
-            <!--  <li><a href="#">+ 添加活动</a></li>-->
-        </ul>
+        </div>
+        <div>
+            <!-- Tab panes -->
+            <div class="tab-content">
+                <div role="tabpanel" class="tab-pane active" id="home">
+                    <div class="huodog padtb">
+                        <div class="padtb">
+                            <a href="DiscountEdit/0" class="btn btn-primary" id="open">添加商品折扣活动</a>
+                        </div>
+                        <div>
+                            <table class="edtitable">
+                                <tbody>
+                                    <tr>
+                                        <th width="5%">ID</th>
+                                        <th>标题</th>
+                                        <th width="15%">活动类型</th>
+                                        <th width="20%">日间范围</th>
+                                        <th width="15%">发布时间</th>
+                                        <th width="15%">管理操作</th>
+                                    </tr>
 
-    </div>
-    <div>
-        <!-- Tab panes -->
-        <div class="tab-content">
-            <div role="tabpanel" class="tab-pane active" id="home">
-                <div class="huodog padtb">
-                    <div class="padtb">
-                        <a href="DiscountEdit/0" class="btn btn-primary" id="open">添加商品折扣活动</a>
-                    </div>
-                    <div>
-                        <table class="edtitable">
-                            <tbody>
-                                <tr>
-                                    <th width="5%">ID</th>
-                                    <th>标题</th>
-                                    <th width="15%">活动类型</th>
-                                    <th width="20%">日间范围</th>
-                                    <th width="15%">发布时间</th>
-                                    <th width="15%">管理操作</th>
-                                </tr>
-
-                                @{
-                                    foreach (discount item in ViewBag.datas)
-                                    {
-                                        <tr>
-                                            <td>@item.id</td>
-                                            <td>@item.name</td>
-                                            <td>@item.TypeString</td>
-                                            <td>@item.starttime.ToString("yyyy/MM/dd") - @item.endtime.ToString("yyyy/MM/dd")</td>
-                                            <td>@item.crtime.ToString("yyyy/MM/dd HH:mm:ss")</td>
-                                            <td>
-                                                <a href="DiscountEdit/@item.id">修改</a>
-                                                | <a href="javascript:yunmall_confirm_dialog('确定删除吗？','DiscountDelete/@item.id','reload')">删除</a>
-                                                | <a href="javascript:yunmall_confirm_dialog('确定@(item.state == 0 ? "启用" : "停用")吗？','UpdateDiscountState?id=@item.id&state=@(item.state==0?1:0)','reload')">@(item.state == 0 ? "启用" : "停用")</a>
-                                            </td>
-                                        </tr>
+                                    @{
+                                        foreach (discount item in ViewBag.datas)
+                                        {
+                                            <tr>
+                                                <td>@item.id</td>
+                                                <td>@item.name</td>
+                                                <td>@item.TypeString</td>
+                                                <td>@item.starttime.ToString("yyyy/MM/dd") - @item.endtime.ToString("yyyy/MM/dd")</td>
+                                                <td>@item.crtime.ToString("yyyy/MM/dd HH:mm:ss")</td>
+                                                <td>
+                                                    <a href="DiscountEdit/@item.id">修改</a>
+                                                    | <a href="javascript:yunmall_confirm_dialog('确定删除吗？','DiscountDelete/@item.id','reload')">删除</a>
+                                                    | <a href="javascript:yunmall_confirm_dialog('确定@(item.state == 0 ? "启用" : "停用")吗？','UpdateDiscountState?id=@item.id&state=@(item.state==0?1:0)','reload')">@(item.state == 0 ? "启用" : "停用")</a>
+                                                </td>
+                                            </tr>
+                                        }
                                     }
-                                }
-                            </tbody>
-                        </table>
-                    </div>
-                    <!--
-                     <ul class="clear">
-                                     <li  ><a href="/Activity/discountedit/id/93.html">
-                            <table width="100%" border="0" cellspacing="0" cellpadding="0">
-                                <tr>
-                                  <td width="78"><img src="/static/images/hd01.png"></td>
-                                  <td>
-                                    <span>狗粮可好吃了</span>
-                                    <span>2019-05-22 00:00:00 到 2019-05-25 00:00:00 </span>
-                                  </td>
-                                </tr>
+                                </tbody>
                             </table>
-                            </a>
-                         </li>
+                        </div>
+                        <!--
+                         <ul class="clear">
+                                         <li  ><a href="/Activity/discountedit/id/93.html">
+                                <table width="100%" border="0" cellspacing="0" cellpadding="0">
+                                    <tr>
+                                      <td width="78"><img src="/static/images/hd01.png"></td>
+                                      <td>
+                                        <span>狗粮可好吃了</span>
+                                        <span>2019-05-22 00:00:00 到 2019-05-25 00:00:00 </span>
+                                      </td>
+                                    </tr>
+                                </table>
+                                </a>
+                             </li>
 
-                    </ul>
-                    -->
+                        </ul>
+                        -->
+                    </div>
+                    <div class="pagin"></div>
+
                 </div>
-                <div class="pagin"></div>
 
             </div>
-
         </div>
     </div>
 </div>

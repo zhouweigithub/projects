@@ -15,9 +15,10 @@ namespace Spetmall.Admin.Controllers
         //
         // GET: /Transaction/
 
-        public ActionResult Index(string keyword, string time, string starttime, string endtime)
+        public ActionResult Index(string keyword, string starttime, string endtime, string time = "1")
         {
             IList<order_detail> datas = orderDAL.GetOrderList(keyword, time, starttime, endtime, 0);
+            ViewBag.time = time;
             ViewBag.datas = datas;
             return View();
         }

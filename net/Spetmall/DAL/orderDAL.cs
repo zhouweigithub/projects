@@ -19,7 +19,7 @@ namespace Spetmall.DAL
         private static readonly string getOrderListSql = @"
 SELECT a.*,b.name memberName,b.phone memberPhone FROM `order` a
 LEFT JOIN member b ON a.memberid=b.id
-WHERE 1=1 {0}";
+WHERE 1=1 {0} ORDER BY crtime DESC";
 
         /// <summary>
         /// 获取挂单信息

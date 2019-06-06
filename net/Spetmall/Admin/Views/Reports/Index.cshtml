@@ -1,74 +1,76 @@
-﻿@{
-    ViewBag.Title = "Index";
+﻿@using Spetmall.Model.Page;
+@{
+    ViewBag.Title = "基本交易报表";
 }
 
+<style>
+    .total {
+        font-weight: bold;
+    }
+</style>
 <div class="fenlei2 fenlei6">
     <ul class="clear">
-        <li class="active"><a href="/reports/index.html">基本交易报表</a></li>
-        <li><a href="/reports/profit.html">毛利分析</a></li>
-        <li><a href="/reports/salesperformance.html">销售业绩报表</a></li>
-        <li><a href="/reports/goodsSalesVolume.html">商品销量报表</a></li>
-        <li><a href="/reports/classCount.html">分类统计</a></li>
-        <li><a href="/reports/memberregistrationcount.html">会员报表</a></li>
+        <li class="active"><a href="index">基本交易报表</a></li>
+        <li><a href="SalePerformance">销售业绩报表</a></li>
+        <li><a href="Products">商品销量报表</a></li>
+        <li><a href="Category">分类统计</a></li>
+        <li><a href="Member">会员报表</a></li>
     </ul>
 </div>
 <div class="search_time_map">
     <form action="?" method="get">
-        <div class="search_field"><input name="start_time" readonly="readonly" class="yunmalldate" value="2019-04-23" type="text" /></div>
+        <div class="search_field">
+            @Html.TextBox("startdate", null, new { @class = "yunmalldate", autocomplete = "off" })
+        </div>
         <div class="search_split"> 到 </div>
-        <div class="search_field"><input name="end_time" readonly="readonly" class="yunmalldate" value="2019-05-23" type="text" /></div>
-
-        <div class="search_button"><input value="搜 索" type="submit" /></div>
+        <div class="search_field">
+            @Html.TextBox("enddate", null, new { @class = "yunmalldate", autocomplete = "off" })
+        </div>
+        <div class="search_button">
+            <input value="搜 索" type="submit" />
+        </div>
     </form>
 </div>
 
 <div class="tablebox padt">
-
-    <table class="table01" width="100%" border="0" cellspacing="0" cellpadding="0">
-        <tbody>
-            <tr>
-                <th style="width:20%">时间</th>
-                <th>交易流水金额</th>
-                <th>成交总数量</th>
-            </tr>
-            <tr>
-                <td>当天</td>
-                <td>0.00元</td>
-                <td>0</td>
-            </tr>
-
-            <tr>
-                <td>昨天</td>
-                <td>0.00元</td>
-                <td>0</td>
-
-            </tr>
-            <tr>
-                <td>近7天</td>
-                <td>200.00元</td>
-                <td>1</td>
-
-            </tr>
-            <tr>
-                <td>本月</td>
-                <td>200.00元</td>
-                <td>1</td>
-
-            </tr>
-            <tr>
-                <td>今年</td>
-                <td>200.00元</td>
-                <td>1</td>
-
-            </tr>
-            <tr>
-                <td>2019-04-23 到 2019-05-23 </td>
-                <td>200.00元</td>
-                <td>1</td>
-
-            </tr>
-
-
-        </tbody>
-    </table>
+    <div style=" margin-top:10px; ">
+        <table class="table01" width="100%" border="0" cellspacing="0" cellpadding="0">
+            <tbody>
+                <tr>
+                    <th style="width:20%">时间</th>
+                    <th>收银交易总金额</th>
+                    <th>成本总量</th>
+                    <th>利润总量</th>
+                    <th>收银订单总数</th>
+                </tr>
+                @{
+                    List<payInfo> datas = ViewBag.datas as List<payInfo>;
+                    foreach (payInfo item in datas)
+                    {
+                        <tr>
+                            <td>@item.crdate.ToString("yyyy-MM-dd")</td>
+                            <td>@item.payMoney</td>
+                            <td>@item.costMoney</td>
+                            <td>@item.profitMoney</td>
+                            <td>@item.payCount</td>
+                        </tr>
+                    }
+                    {
+                        if (datas.Count > 0)
+                        {
+                            <tr class="total">
+                                <td>数据汇总</td>
+                                <td>@datas.Sum(a => a.payMoney)</td>
+                                <td>@datas.Sum(a => a.costMoney)</td>
+                                <td>@datas.Sum(a => a.profitMoney)</td>
+                                <td>@datas.Sum(a => a.payCount)</td>
+                            </tr>
+                        }
+                    }
+                }
+            </tbody>
+        </table>
+        <div class="pagin"></div>
+    </div>
 </div>
+

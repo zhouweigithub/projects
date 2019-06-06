@@ -1,0 +1,59 @@
+﻿@{
+    ViewBag.Title = "商品详情";
+}
+
+<script src="/static/js/echarts.min.js"></script>
+
+<div class="fenlei2 fenlei6">
+    <ul class="clear">
+        <li><a href="index">基本交易报表</a></li>
+        <li><a href="SalePerformance">销售业绩报表</a></li>
+        <li class="active"><a href="Products">商品销量报表</a></li>
+        <li><a href="Category">分类统计</a></li>
+        <li><a href="Member">会员报表</a></li>
+    </ul>
+</div>
+<div class="search_time_map">
+    <form action="?" method="get">
+        <div class="search_field">
+            @Html.TextBox("startdate", null, new { @class = "yunmalldate" })
+        </div>
+        <div class="search_split"> 到 </div>
+        <div class="search_field">
+            @Html.TextBox("enddate", null, new { @class = "yunmalldate" })
+        </div>
+        <div class="search_button">
+            <input value="搜 索" type="submit" />
+        </div>
+    </form>
+</div>
+<div class="tablebox padt" id="container" style="height:400px; background:#FFF;">
+
+
+</div>
+
+<script language="javascript">
+    var dom = document.getElementById("container");
+    var myChart = echarts.init(dom);
+    var app = {};
+    option = null;
+    option = {
+        xAxis: {
+            type: 'category',
+            data: @Html.Raw(ViewBag.dateJson) ,
+        },
+        yAxis: {
+            type: 'value'
+        },
+        series: [{
+            data: @Html.Raw(ViewBag.valueJson) ,
+            type: 'line',
+            smooth: true
+        }]
+    };
+    ;
+    if (option && typeof option === "object") {
+        myChart.setOption(option, true);
+    }
+</script>
+

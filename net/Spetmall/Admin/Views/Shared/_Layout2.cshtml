@@ -1,4 +1,4 @@
-﻿<html>
+﻿<!doctype html>
 <head>
     <meta charset="UTF-8">
     <title>@ViewBag.Title</title>
@@ -16,7 +16,7 @@
     <script src="/static/js/md5.js"></script>
 </head>
 
-<body class="member-index mainbody">
+<body class="@ViewBag.bodyClass mainbody">
     <div class="head clear">
         <div class="menubtn system-nav-menu">
             <img src="/static/images/menubtn.png">
@@ -26,7 +26,6 @@
             <div class="pull-left headnav">
                 <div class="app-info" title="退出"><a href="javascript:void(0);" onclick="yunmall_confirm_dialog('您确定要退出系统吗?','/Members/quit.html','reload');"><img src="/static/images/quit.png"></a></div>
                 <div class="app-info" title="收银"><a href="/receipt/index"><img src="/static/images/head_02.png"></a></div>
-                <div class="app-info" title="消息"><em class="message_number" style="display:none;">0</em><a href="/Seller_Message/index.html"><img src="/static/images/head_03.png"></a></div>
                 <div class="app-info" title="锁屏"><a href="javascript:;" onclick="syslock.lock();"><img src="/static/images/head_04.png"></a></div>
                 <div class="app-info" title="店铺信息"><a href="/Store/index.html"><img src="/static/images/head_05.png"></a></div>
                 <div class="app-info info-info2"><div class="info-img" title="您当前的系统时间"><img src="/static/images/head_06.png"></div><em id="yunmall_sys_time">2019/05/23 19:39:43</em></div>
@@ -34,9 +33,7 @@
         </div>
     </div>
 
-    <div class="mianbox">
-        @RenderBody()
-    </div>
+    @RenderBody()
 
     <div class="menu system-nav-menu-list">
         <a href="/"><img src="/static/images/mico1.png">主界面</a>
@@ -44,7 +41,7 @@
         <a href="/receipt/index"><img src="/static/images/mico2.png">收银</a>
         <a href="#"><img src="/static/images/mico3.png">采购</a>
         <a href="/reports/index"><img src="/static/images/mico4.png">报表</a>
-        <a href="/transaction/index"><img src="/static/images/mico5.png">交易明细</a>
+        <a href="/transaction/index?time=1"><img src="/static/images/mico5.png">交易明细</a>
         <a href="/member/index"><img src="/static/images/mico6.png">会员管理</a>
         <!--<a href="/Yuangong/index"><img src="/static/images/mico7.png">店员管理</a>-->
         <a href="/railcard/index"><img src="/static/images/mico8.png">优惠卡</a>
@@ -81,4 +78,3 @@
     </script>
 
 </body>
-</html>

@@ -1,72 +1,74 @@
 ﻿@using Spetmall.Model.Page;
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "交易明细";
+    ViewBag.bodyClass = "transaction-index";
 }
 
-<div class="searchbar">
-    <form action="?" method="get">
-        <div style=" padding-right:660px;">
-            <div class="search">
-                @Html.TextBox("keyword", null, new { autocomplete = "off", placeholder = "请输入订单号或会员手机号" })
+<div class="mianbox">
+    <div class="searchbar">
+        <form action="?" method="get">
+            <div style=" padding-right:660px;">
+                <div class="search">
+                    @Html.TextBox("keyword", null, new { autocomplete = "off", placeholder = "请输入订单号或会员手机号" })
+                </div>
             </div>
-        </div>
-        <div class="rightbtn">
-            <div class="time">
-                @Html.TextBox("starttime", null, new { autocomplete = "off", placeholder = "开始时间", @class = "test1 yunmalldate" })
-                <span>至</span>
-                @Html.TextBox("endtime", null, new { autocomplete = "off", placeholder = "结束时间", @class = "test2 yunmalldate" })
+            <div class="rightbtn">
+                <div class="time">
+                    @Html.TextBox("starttime", null, new { autocomplete = "off", placeholder = "开始时间", @class = "test1 yunmalldate" })
+                    <span>至</span>
+                    @Html.TextBox("endtime", null, new { autocomplete = "off", placeholder = "结束时间", @class = "test2 yunmalldate" })
+                </div>
+                <a href="javascript:;" class="barbtn01" id="yunmall_goods_search">查询</a>
             </div>
-            <a href="javascript:;" class="barbtn01" id="yunmall_goods_search">查询</a>
-        </div>
-    </form>
-</div>
-
-<div class="tablebox padt">
-    <div class="fenlei2">
-        <ul class="clear">
-            <li><a href="?time=1">今天</a></li>
-            <li><a href="?time=2">近二天</a></li>
-            <li><a href="?time=7">近一周</a></li>
-            <li><a href="?time=30">近一月</a></li>
-            <li><a href="?time=365">近一年</a></li>
-        </ul>
+        </form>
     </div>
-    <table class="table01" width="100%" border="0" cellspacing="0" cellpadding="0">
-        <tbody>
-            <tr>
-                <th>交易订单号</th>
-                <th>商品金额(元)</th>
-                <th>实际交易总金额(元)</th>
-                <th>优惠(元)</th>
-                <th>调价(元)</th>
-                <th>交易时间</th>
-                <th>支付方式</th>
-                <th>用户</th>
-                <th>操作</th>
-            </tr>
-            @{
-                foreach (order_detail item in ViewBag.datas as IList<order_detail>)
-                {
-                    <tr>
-                        <td>@item.id</td>
-                        <td>@item.productMoney</td>
-                        <td>@item.payMoney</td>
-                        <td>@item.discountMoney</td>
-                        <td>@(-item.adjustMomey)</td>
-                        <td>@item.crtime.ToString("yyyy-MM-dd")</td>
-                        <td>@item.payTypeString</td>
-                        <td>@item.memberName</td>
-                        <td><a href="Detail/@item.id">查看</a></td>
-                    </tr>
+
+    <div class="tablebox padt">
+        <div class="fenlei2">
+            <ul class="clear">
+                <li><a href="?time=1" class="@(ViewBag.time=="1"?"active2":"")">今天</a></li>
+                <li><a href="?time=2" class="@(ViewBag.time=="2"?"active2":"")">近二天</a></li>
+                <li><a href="?time=7" class="@(ViewBag.time=="7"?"active2":"")">近一周</a></li>
+                <li><a href="?time=30" class="@(ViewBag.time=="30"?"active2":"")">近一月</a></li>
+                <li><a href="?time=365" class="@(ViewBag.time=="365"?"active2":"")">近一年</a></li>
+            </ul>
+        </div>
+        <table class="table01" width="100%" border="0" cellspacing="0" cellpadding="0">
+            <tbody>
+                <tr>
+                    <th>交易订单号</th>
+                    <th>商品金额(元)</th>
+                    <th>实际交易总金额(元)</th>
+                    <th>优惠(元)</th>
+                    <th>调价(元)</th>
+                    <th>交易时间</th>
+                    <th>支付方式</th>
+                    <th>用户</th>
+                    <th>操作</th>
+                </tr>
+                @{
+                    foreach (order_detail item in ViewBag.datas as IList<order_detail>)
+                    {
+                        <tr>
+                            <td>@item.id</td>
+                            <td>@item.productMoney</td>
+                            <td>@item.payMoney</td>
+                            <td>@item.discountMoney</td>
+                            <td>@(-item.adjustMomey)</td>
+                            <td>@item.crtime.ToString("yyyy-MM-dd HH:mm:ss")</td>
+                            <td>@item.payTypeString</td>
+                            <td>@item.memberName</td>
+                            <td><a href="Detail/@item.id">查看</a></td>
+                        </tr>
+                    }
                 }
-            }
 
-        </tbody>
-    </table>
+            </tbody>
+        </table>
 
-    <div class="pagin"></div>
+        <div class="pagin"></div>
+    </div>
 </div>
-
 
 <script language="javascript">
     $(function () {
@@ -77,7 +79,6 @@
 </script>
 
 
-<script src="static/extend/laydate/laydate.js"></script> <!-- 改成你的路径 -->
 <script>
     lay('#version').html('-v' + laydate.v);
 </script>

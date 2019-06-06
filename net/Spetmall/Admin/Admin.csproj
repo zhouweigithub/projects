@@ -625,6 +625,8 @@
     <Content Include="static\extend\honeySwitch\lib\honeySwitch.js" />
     <Content Include="static\extend\laydate\laydate.js" />
     <Content Include="static\extend\laydate\theme\default\laydate.css" />
+    <Content Include="static\extend\select2\select2.min.css" />
+    <Content Include="static\extend\select2\select2.min.js" />
     <Content Include="static\extend\superfish\hoverIntent.js" />
     <Content Include="static\extend\superfish\superfish.js" />
     <Content Include="static\images\cpin.png" />
@@ -670,6 +672,7 @@
     <Content Include="static\images\search.png" />
     <Content Include="static\images\tiaoma.png" />
     <Content Include="static\images\txm.png" />
+    <Content Include="static\js\echarts.min.js" />
     <Content Include="static\js\selectpage.js" />
     <Content Include="Images\bg2.jpg" />
     <Content Include="Content\images\logo.png" />
@@ -1236,6 +1239,11 @@
     <Content Include="Views\Activity\FullSendIndex.cshtml" />
     <Content Include="Views\Activity\FullSendEdit.cshtml" />
     <Content Include="Views\Transaction\Detail.cshtml" />
+    <Content Include="Views\Reports\SalePerformance.cshtml" />
+    <Content Include="Views\Reports\Products.cshtml" />
+    <Content Include="Views\Reports\ProductDetail.cshtml" />
+    <Content Include="Views\Reports\Category.cshtml" />
+    <Content Include="Views\Reports\Member.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Images\upload\" />

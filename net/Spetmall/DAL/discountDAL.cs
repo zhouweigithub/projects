@@ -12,8 +12,8 @@ namespace Spetmall.DAL
     {
         private static readonly discountDAL Instance = new discountDAL();
 
-        private static readonly string insertDiscountSql = @"INSERT INTO spetmall.discount (`name`,`type`,way,coupon,fullsend,starttime,endtime,state
-) VALUES('{0}','{1}','{2}','{3}','{4}','{5}','{6}','{7}');";
+        private static readonly string insertDiscountSql = @"INSERT INTO spetmall.discount (`name`,`type`,way,fullsend,starttime,endtime,state
+) VALUES('{0}','{1}','{2}','{3}','{4}','{5}','{6}');";
         private static readonly string insertProductOrCategorySql = @"INSERT INTO spetmall.saleproduct (`type`,ptype,saleid,productid
 ) VALUES('{0}','{1}','{2}','{3}');";
         private static readonly string insertRuleSql = @"INSERT INTO spetmall.salerule ( saleid, `type`, aim, sale
@@ -43,7 +43,7 @@ namespace Spetmall.DAL
             {
                 using (DBHelper dbHelper = new DBHelper(WebConfigData.DataBaseType, WebConfigData.ConnString))
                 {
-                    string sql = string.Format(insertDiscountSql, data.name, data.type, data.way, data.coupon, data.fullsend,
+                    string sql = string.Format(insertDiscountSql, data.name, data.type, data.way, data.fullsend,
                         data.starttime.ToString("yyyy-MM-dd"), data.endtime.ToString("yyyy-MM-dd"), data.state);
                     dbHelper.ExecuteNonQuery(sql);
 

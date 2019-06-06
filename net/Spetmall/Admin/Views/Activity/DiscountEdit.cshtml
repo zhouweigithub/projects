@@ -1,11 +1,11 @@
 ﻿@model Spetmall.Model.Page.discount_edit
 @{
-    ViewBag.Title = "Edit";
+    ViewBag.Title = "限时折扣管理";
 }
 
 <script src="/static/js/widget.js"></script>
-<link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/css/select2.min.css" rel="stylesheet" />
-<script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/js/select2.min.js"></script>
+<link href="/static/extend/select2/select2.min.css" rel="stylesheet" />
+<script src="/static/extend/select2/select2.min.js"></script>
 
 <div class="common-app-tabs">
     <div class="common-app-name">限时折扣管理</div>
@@ -92,9 +92,6 @@
                     <td class="name">可同时使用：</td>
                     <td>
                         <cite>
-                            <label>
-                                <input name="coupon" type="checkbox" value="1" @(Model.coupon == 1 ? "checked" : "") />优惠券&nbsp;&nbsp;&nbsp;
-                            </label>
                             <label>
                                 <input name="fullsend" type="checkbox" value="1" @(Model.fullsend == 1 ? "checked" : "") />满就送
                             </label>

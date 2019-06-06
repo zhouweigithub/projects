@@ -86,6 +86,7 @@
     <Compile Include="railcardRecordDAL.cs" />
     <Compile Include="rechargeDAL.cs" />
     <Compile Include="petDAL.cs" />
+    <Compile Include="reportsDAL.cs" />
     <Compile Include="saleRuleDAL.cs" />
     <Compile Include="orderDAL.cs" />
     <Compile Include="userDAL.cs" />

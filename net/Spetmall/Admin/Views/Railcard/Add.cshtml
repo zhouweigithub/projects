@@ -1,6 +1,6 @@
 ﻿@model Spetmall.Model.railcard
 @{
-    ViewBag.Title = "Add";
+    ViewBag.Title = "优惠卡管理";
     Layout = null;
 }
 
@@ -8,7 +8,7 @@
 <html>
 <head>
     <meta charset="UTF-8">
-    <title>优惠卡 - 圣宠智慧云商-链接宠物店与猫狗粮食用品的服务商城！</title>
+    <title>优惠卡管理</title>
     <link rel="stylesheet" type="text/css" href="/static/css/common.css?t=1558752788">
     <link rel="stylesheet" type="text/css" href="/static/css/ui-dialog.css">
     <link rel="stylesheet" type="text/css" href="/static/css/buttons.css">
@@ -31,43 +31,31 @@
             <li>
                 <label class="lbt"><em>(*)</em>手机号：</label><div>
                     @Html.TextBoxFor(a => a.phone, new { @class = "form-control", placeholder = "请输入手机号码" })
-                    @*<input name="phone" class="form-control" type="text" placeholder="请输入手机号码">*@
                 </div>
             </li>
             <li>
                 <label class="lbt"><em>(*)</em>姓名：</label><div>
                     @Html.TextBoxFor(a => a.name, new { @class = "form-control", placeholder = "请输入姓名" })
-                    @*<input class="form-control" type="text" name="username" value="" placeholder="请输入姓名">*@
                 </div>
             </li>
             <li>
                 <label class="lbt"><em>(*)</em>使用次数：</label><div>
                     @Html.TextBoxFor(a => a.times, new { @class = "form-control", placeholder = "请输入使用次数" })
-                    @*<input class="form-control" type="text" name="number" value="" placeholder="请输入使用次数">*@
                 </div>
             </li>
             <li>
                 <label class="lbt"><em>(*)</em>总金额：</label><div>
                     @Html.TextBoxFor(a => a.money, new { @class = "form-control", placeholder = "请输入总金额" })
-                    @*<input class="form-control" type="text" name="total_balance" value="" placeholder="请输入总金额">*@
-                </div>
-            </li>
-            <li>
-                <label class="lbt"><em>(*)</em>使用次数：</label><div>
-                    @Html.TextBoxFor(a => a.lefttimes, new { @class = "form-control", placeholder = "请输入使用次数" })
-                    @*<input class="form-control" type="text" name="number" value="" placeholder="请输入使用次数">*@
                 </div>
             </li>
             <li>
                 <label class="lbt"><em>(*)</em>开始时间：</label><div>
                     @Html.TextBoxFor(a => a.starttime, new { @class = "form-control", placeholder = "请选择开始时间" })
-                    @*<input class="form-control yunmalldate" name="start_time" value="" type="text" readonly placeholder="请选择开始时间">*@
                 </div>
             </li>
             <li>
                 <label class="lbt"><em>(*)</em>结束时间：</label><div>
                     @Html.TextBoxFor(a => a.endtime, new { @class = "form-control", placeholder = "请选择结束始时间" })
-                    @*<input class="form-control yunmalldate" name="stop_time" value="" type="text" readonly placeholder="请选择结束始时间">*@
                 </div>
             </li>
         </ul>

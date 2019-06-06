@@ -1,6 +1,7 @@
 ﻿@using Spetmall.Model;
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "商品管理";
+    ViewBag.bodyClass = "goods-index";
 }
 <script src="~/static/js/selectpage.js"></script>
 <link href="~/static/dialog/css/dialog.css" rel="stylesheet" />
@@ -56,7 +57,7 @@
                 @{
                     foreach (product item in ViewBag.datas)
                     {
-                        <li class="">
+                        <li class="@(item.store<=item.warn?"warningactive":"")">
                             <a href="javascript:;" yun_type="dialog" dialog_title="修改商品" uri="edit/@item.id" dialog_width="60%">
                                 <img src="@item.thumbnail" onerror="this.src='/static/images/defaultgoods.jpg';" style="width:100%;height:250px;">
                                 <div class="cpnav">

@@ -1,0 +1,60 @@
+﻿@model Spetmall.Model.Page.ReceiptOrderInfo
+@{
+    ViewBag.Title = "订单信息";
+}
+
+<div class="common-app-tabs">
+    <div class="common-app-name">交易明细管理</div>
+    <div class="app-tab">
+        <ul>
+            <li><a href="/transaction/index">交易明细分类列表</a></li>
+            <li class="active"><a href="jajavascript:void(0);">订单详情</a></li>
+
+        </ul>
+    </div>
+</div>
+
+<div class="transaction_info">
+    <h3>订单信息</h3>
+    <ul>
+        <li><span>交易订单号:</span><em>@Model.orderid</em></li>
+        <li><span>商品金额:</span><em>@Model.totalprice</em></li>
+        <li><span>优惠:</span><em>@Model.discount_total_price</em></li>
+        <li><span>实际交易总金额:</span><em>@Model.activitytotalprice</em></li>
+        <li><span>交易日时间:</span><em>@Model.crtime.ToString("yyyy-MM-dd HH:mm:ss")</em></li>
+        <li><span>支付方式:</span><em>@Model.paytype</em></li>
+        <li><span>用户:</span><em>@Model.memberName</em></li>
+        <li><span>备注信息:</span><em>@Model.remark</em></li>
+    </ul>
+</div>
+<div class="transactionwap">
+    <table width="100%" border="0" class="transactiontable">
+        <tr>
+            <th>商品</th>
+            <th>商品价格</th>
+            <th>商品数量</th>
+            <th>优惠</th>
+            <th>商品总价</th>
+        </tr>
+        @{
+            foreach (var item in Model.receiptgoodsdata)
+            {
+                <tr>
+                    <td>
+                        <div class="tgt">
+                            <div class="t_title">
+                                <div class="imgs"><img src="@item.Value.mapthumimg" onerror="this.src='/static/images/defaultgoods.jpg';" /></div>
+                                <div class="gd_title">@item.Value.name</div>
+                            </div>
+                        </div>
+                    </td>
+                    <td>@item.Value.price</td>
+                    <td>@item.Value.number</td>
+                    <td>@item.Value.discount_goods_total_price</td>
+                    <td>@item.Value.goods_activity_total_price</td>
+                </tr>
+            }
+        }
+    </table>
+</div>
+

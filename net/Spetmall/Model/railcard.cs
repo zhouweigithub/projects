@@ -42,11 +42,6 @@ namespace Spetmall.Model
         [TableField]
         public decimal money { get; set; }
         /// <summary>
-        /// 剩余金额
-        /// </summary>
-        [TableField]
-        public decimal leftmoney { get; set; }
-        /// <summary>
         /// 开始时间
         /// </summary>
         [TableField]

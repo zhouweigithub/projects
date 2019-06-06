@@ -32,11 +32,6 @@ namespace Spetmall.Model
         [TableField]
         public short way { get; set; }
         /// <summary>
-        /// 是否能同时使用优惠券
-        /// </summary>
-        [TableField]
-        public short coupon { get; set; }
-        /// <summary>
         /// 是否能同时使用满就减
         /// </summary>
         [TableField]

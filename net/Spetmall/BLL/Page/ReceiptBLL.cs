@@ -302,7 +302,6 @@ namespace Spetmall.BLL.Page
                 state = discount.state,
                 way = discount.way,
                 type = discount.type,
-                coupon = discount.coupon,
                 fullsend = discount.fullsend,
                 starttime = discount.starttime,
                 endtime = discount.endtime,
@@ -333,7 +332,6 @@ namespace Spetmall.BLL.Page
                 state = discount.state,
                 way = discount.way,
                 type = discount.type,
-                coupon = discount.coupon,
                 fullsend = discount.fullsend,
                 starttime = discount.starttime,
                 endtime = discount.endtime,
@@ -470,8 +468,10 @@ namespace Spetmall.BLL.Page
                     }
 
                     //更新会员余额
-                    Dictionary<string, object> fields = new Dictionary<string, object>();
-                    fields.Add("money", balance);
+                    Dictionary<string, object> fields = new Dictionary<string, object>
+                    {
+                        { "money", balance }
+                    };
                     memberDAL.GetInstance().UpdateByKey(fields, postData.memberid);
                 }
             }
