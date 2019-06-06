@@ -48,12 +48,27 @@ namespace Spetmall.Model
         [TableField]
         public decimal payMoney { get; set; }
         /// <summary>
+        /// 成本价
+        /// </summary>
+        [TableField]
+        public decimal cost { get; set; }
+        /// <summary>
+        /// 总成本
+        /// </summary>
+        [TableField]
+        public decimal costMoney { get; set; }
+        /// <summary>
+        /// 总利润
+        /// </summary>
+        [TableField]
+        public decimal profitMoney { get; set; }
+        /// <summary>
         /// 条码
         /// </summary>
         [TableField]
         public string barcode { get; set; }
         /// <summary>
-        /// 分类
+        /// 分类id
         /// </summary>
         [TableField]
         public int category { get; set; }

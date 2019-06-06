@@ -38,7 +38,7 @@
         <div class="rc_right receiptconfirm_auto_height">
             <form action="CreateOrder" method="post" id="receiptconfirm_Form">
                 @*<input name="uid" class="receipt_member" type="hidden" value="@(ViewBag.member != null ? ViewBag.member.id : 0)" />*@
-                <input name="orderid" type="hidden" value="" />
+                <input name="orderid" type="hidden" value="@ViewBag.orderid" />
                 <input name="paytype" type="hidden" value="" />
                 <input name="products" type="hidden" value='@ViewBag.products' />
                 <input name="memberid" class="receipt_member" type="hidden" value="@(ViewBag.member != null ? ViewBag.member.id : 0)" />
@@ -70,7 +70,7 @@
                                         </p>
                                         <p>
                                             <span><i></i>余额:<font>￥<label class="utotal_balance">@(ViewBag.member != null ? ViewBag.member.money : "")</label>元</font></span> <em></em>
-                                            <span>折扣:<label class="utotal_balance">@(ViewBag.member != null ? ViewBag.member.discount : "")</label>折</span>
+                                            <span>折扣:<label class="udiscount">@(ViewBag.member != null ? ViewBag.member.discount : "")</label>折</span>
                                         </p>
                                     </div>
 
@@ -85,13 +85,12 @@
                     <div class="receipt-order-item">
                         <div class="item-name">收款：</div>
                         <div class="item-val">
-                            <a href="javascript:;" class="payoptions button   button-pill button-small" data-key="1">余额支付</a></span>
-                            <a href="javascript:;" class="payoptions button   button-pill button-small" data-key="2">现金支付</a></span>
-                            <a href="javascript:;" class="payoptions button   button-pill button-small" data-key="3">微信</a></span>
-                            <a href="javascript:;" class="payoptions button   button-pill button-small" data-key="4">钱包</a></span>
-                            <a href="javascript:;" class="payoptions button   button-pill button-small" data-key="5">支付宝</a></span>
-                            <a href="javascript:;" class="payoptions button   button-pill button-small" data-key="6">刷卡支付</a></span>
-                            <a href="javascript:;" class="payoptions button   button-pill button-small" data-key="7">其它</a></span>
+                            <a href="javascript:;" class="payoptions button   button-pill button-small" data-key="1">现金支付</a>
+                            <a href="javascript:;" class="payoptions button   button-pill button-small" data-key="2">微信</a>
+                            <a href="javascript:;" class="payoptions button   button-pill button-small" data-key="3">支付宝</a>
+                            <a href="javascript:;" class="payoptions button   button-pill button-small" data-key="4">余额支付</a>
+                            <a href="javascript:;" class="payoptions button   button-pill button-small" data-key="5">刷卡支付</a>
+                            <a href="javascript:;" class="payoptions button   button-pill button-small" data-key="6">其它</a>
                         </div>
                     </div>
 
@@ -159,6 +158,7 @@
         receiptcommon.getReceiptcommon().Ele['external-frame'] = $("#external-frame");
         receiptcommon.getReceiptcommon().Ele['huiyuaninfo'] = $(".huiyuaninfo");
         receiptcommon.getReceiptcommon().Ele['sel_huiyuan'] = $(".sel_huiyuan");
+
         receiptcommon.getReceiptcommon().Ele['receipt_member'] = $("input.receipt_member");
         receiptcommon.getReceiptcommon().Ele['discount_type'] = $("input[name=discount_type]");
         receiptcommon.getReceiptcommon().Ele['totalMoney'] = $("input[name=totalMoney]");
@@ -205,12 +205,23 @@
         $(".payoptions").bind('click', function () {
             var _paytype = $(this).attr('data-key');
 
-            if (_paytype == '1' && UIDEle.val() == '') {
+            if (_paytype == '4' && (UIDEle.val() == '' || UIDEle.val() == '0')) {
                 alert('请选择会员');
                 return false;
             }
             $("input[name=paytype]").val(_paytype);
             $(this).addClass('button-primary').siblings().removeClass('button-primary');
+
+            if (_paytype == '4' && UIDEle.val() > 0) {
+                var memberBalance = goods_price(parseFloat($(".utotal_balance").text()));
+                var payMoney = goods_price(parseFloat($("input[name='totalPayMoney']").val()));
+                if (memberBalance == 0) {
+                    alert("该会员没有余额");
+                }
+                else if (memberBalance < payMoney) {
+                    alert("会员余额不足，需要额外支付 " + goods_price(payMoney - memberBalance) + " 元");
+                }
+            }
         });
 
         /*挂单*/
@@ -287,18 +298,18 @@
 
 
 
-                                                                                            /*function setIframeHeight(iframe) {
-                                                                                                if (iframe) {
-                                                                                                var iframeWin = iframe.contentWindow || iframe.contentDocument.parentWindow;
-                                                                                                if (iframeWin.document.body) {
-                                                                                                iframe.height = iframeWin.document.documentElement.scrollHeight || iframeWin.document.body.scrollHeight;
-                                                                                                }
-                                                                                                }
-                                                                                            };
+                                                                                                                                                    /*function setIframeHeight(iframe) {
+                                                                                                                                                        if (iframe) {
+                                                                                                                                                        var iframeWin = iframe.contentWindow || iframe.contentDocument.parentWindow;
+                                                                                                                                                        if (iframeWin.document.body) {
+                                                                                                                                                        iframe.height = iframeWin.document.documentElement.scrollHeight || iframeWin.document.body.scrollHeight;
+                                                                                                                                                        }
+                                                                                                                                                        }
+                                                                                                                                                    };
 
-                                                                                            window.onload = function () {
-                                                                                                setIframeHeight(document.getElementById('external-frame'));
-                                                                                            };*/
+                                                                                                                                                    window.onload = function () {
+                                                                                                                                                        setIframeHeight(document.getElementById('external-frame'));
+                                                                                                                                                    };*/
     </script>
 
 </body>

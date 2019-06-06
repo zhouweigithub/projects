@@ -24,6 +24,10 @@ namespace Spetmall.Model.Page
         /// </summary>
         public decimal price;
         /// <summary>
+        /// 成本价
+        /// </summary>
+        public decimal cost;
+        /// <summary>
         /// 分类
         /// </summary>
         public int category;
@@ -59,6 +63,16 @@ namespace Spetmall.Model.Page
         /// 满就减活动信息
         /// </summary>
         public receipt_fullsend fullsendInfo;
+        /// <summary>
+        /// 总成本
+        /// </summary>
+        public decimal cost_money
+        {
+            get
+            {
+                return cost * count;
+            }
+        }
         /// <summary>
         /// 折扣前金额
         /// </summary>
@@ -137,6 +151,16 @@ namespace Spetmall.Model.Page
             get
             {
                 return money - total_sale_money;
+            }
+        }
+        /// <summary>
+        /// 总利润
+        /// </summary>
+        public decimal profit_money
+        {
+            get
+            {
+                return total_money - cost_money;
             }
         }
         public string discountMsg

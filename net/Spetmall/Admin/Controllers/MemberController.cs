@@ -36,7 +36,7 @@ namespace Spetmall.Admin.Controllers
             }
 
             //宠物类型
-            IList<pet> petTypes = petDAL.GetInstance().GetList<pet>();
+            IList<pet> petTypes = petDAL.GetInstance().GetList<pet>("state=0");
             ViewBag.smallDogs = petTypes.Where(a => a.type == 0);
             ViewBag.midDogs = petTypes.Where(a => a.type == 1);
             ViewBag.largeDogs = petTypes.Where(a => a.type == 2);

@@ -15,9 +15,10 @@ namespace Spetmall.Admin.Controllers
 
         public ActionResult Index(string orderid)
         {
+            //orderid取单
             ReceiptOrderInfo data = new ReceiptOrderInfo();
             if (!string.IsNullOrWhiteSpace(orderid))
-                data = ReceiptBLL.GetOrderInfo(orderid);
+                data = ReceiptBLL.GetOrderInfo(orderid, 1);
 
             if (data.memberid != 0)
             {
@@ -28,7 +29,7 @@ namespace Spetmall.Admin.Controllers
 
             List<category> categorys = categoryDAL.GetInstance().GetFloorDatas();
             ViewBag.categorys = categorys;
-
+            ViewBag.orderid = orderid;
             return View();
         }
 
@@ -41,7 +42,7 @@ namespace Spetmall.Admin.Controllers
             return View();
         }
 
-        public ActionResult Confirm(int memberid, string products)
+        public ActionResult Confirm(int memberid, string products, string orderid)
         {
             Dictionary<int, int> productsList = Util.Json.JsonUtil.Deserialize<Dictionary<int, int>>(products);
             member member = null;
@@ -50,6 +51,7 @@ namespace Spetmall.Admin.Controllers
 
             ViewBag.member = member;
             ViewBag.products = products;
+            ViewBag.orderid = orderid;
 
             return View();
         }

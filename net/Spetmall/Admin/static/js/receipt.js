@@ -123,6 +123,7 @@ var ReceiptCommon = function () {
         this.Ele['huiyuaninfo'].find('.uphone').text(_config['phone']);
         this.Ele['huiyuaninfo'].find('.uintegral').text(_config['integral']);
         this.Ele['huiyuaninfo'].find('.utotal_balance').text(goods_price(_config['money']));
+        this.Ele['huiyuaninfo'].find('.udiscount').text(_config['discount']);
         this.Ele['huiyuaninfo'].find('.uaddtime').text(getLocalTime(_config['crtime']));
         this.Ele['receipt_member'].val(_config['id']);
         if (receiptcommon.Ele['discount_type']) {
@@ -223,7 +224,12 @@ var ReceiptCommon = function () {
             } else if (_OS == 'pc') {
                 that.PrintSmallTicket(_result);
             }
-            art.dialog({ icon: 'succeed', lock: true, content: _result.msg, title: '消息提示', time: 1, cancle: function () { window.reload(); } });
+            art.dialog({
+                icon: 'succeed', lock: true, content: _result.msg, title: '消息提示', time: 1,
+                cancel: function () {
+                    window.top.location.href = '/Receipt/Index';
+                }
+            });
         } else {
             art.dialog({ icon: 'face-sad', lock: true, content: _result.msg, title: '消息提示', time: 5 });
         }
@@ -392,8 +398,9 @@ var ReceiptCommon = function () {
         if ($(".receiptmemberinfos").is(":visible")) {
             _uid = $("input[name=memberid]").val();
         }
+        var orderid = $("#orderid").val();
         var _shoppinggoods = encodeURIComponent(JSON.stringify(that.ShoppingGoods));
-        that.dialogdom = art.dialog.open("Confirm?products=" + _shoppinggoods + "&memberid=" + _uid, {
+        that.dialogdom = art.dialog.open("Confirm?products=" + _shoppinggoods + "&memberid=" + _uid + "&orderid=" + orderid, {
             title: '收银中的商品',
             width: '100%',
             lock: true,

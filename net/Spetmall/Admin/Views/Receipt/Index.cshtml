@@ -4,6 +4,7 @@
 }
 <script src="/static/js/receipt.js"></script>
 
+<input type="hidden" id="orderid" value="@ViewBag.orderid" />
 <div class="autoheight clear">
     <div class=" autoleft">
         <div class="zonghe"><!--<a href="javascript:;" class="cashregistergoodsinfo">查看详情 >> </a>--><span>共<em id="shoppingcart_goods_number">0</em>件</span> </div>
@@ -32,7 +33,7 @@
                 <input name="memberid" type="hidden" value="@(member!=null?member.id.ToString():"")" />
                 <img src="/images/tx.jpg">
                 <p class="r_username">
-                    <span style="padding-right:20px;"></span>
+                    <span style="padding-right:20px;">@(member != null ? member.name : "")</span>
                     <span>余额:<i class="r_total_balance">@(member != null ? member.money.ToString() : "")</i></span>
                 </p>
                 <p>

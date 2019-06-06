@@ -1235,6 +1235,7 @@
     <Content Include="Views\Activity\ChooseProducts.cshtml" />
     <Content Include="Views\Activity\FullSendIndex.cshtml" />
     <Content Include="Views\Activity\FullSendEdit.cshtml" />
+    <Content Include="Views\Transaction\Detail.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Images\upload\" />

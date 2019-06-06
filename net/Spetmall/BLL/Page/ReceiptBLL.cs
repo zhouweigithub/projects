@@ -12,78 +12,6 @@ namespace Spetmall.BLL.Page
 {
     public class ReceiptBLL
     {
-        ///// <summary>
-        ///// 查找商品参与的限时折扣活动信息
-        ///// </summary>
-        ///// <param name="product"></param>
-        ///// <returns></returns>
-        //public static receipt_discount GetProductDiscount(product product)
-        //{
-        //    try
-        //    {
-        //        //根据商品查找折扣活动
-        //        receipt_discount discount = receiptDAL.GetDiscount(product.id, 2);
-        //        if (discount == null)
-        //        {   //根据商品分类查找折扣活动
-        //            List<int> parents = new List<int>();    //所有父级分类
-        //            categoryDAL.GetInstance().GetParentIds(product.category, parents);
-        //            foreach (int categoryId in parents)
-        //            {
-        //                receipt_discount tmp = receiptDAL.GetDiscount(categoryId, 1);
-        //                if (tmp != null)
-        //                    break;
-        //            }
-        //        }
-        //        if (discount == null)
-        //        {   //查找店铺级的折扣活动
-        //            discount = receiptDAL.GetDiscount(0, 0);
-        //        }
-
-        //        return discount;
-        //    }
-        //    catch (Exception e)
-        //    {
-        //        Util.Log.LogUtil.Write("查找商品参与的限时折扣活动信息时出错：" + e, Util.Log.LogType.Error);
-        //    }
-        //    return null;
-        //}
-
-        ///// <summary>
-        ///// 查找商品参与的满就送活动信息
-        ///// </summary>
-        ///// <param name="product"></param>
-        ///// <returns></returns>
-        //public static receipt_fullsend GetProductFullSend(product product)
-        //{
-        //    try
-        //    {
-        //        //根据商品查找满就送活动
-        //        receipt_fullsend fullsend = receiptDAL.GetFullSend(product.id, 2);
-        //        if (fullsend == null)
-        //        {   //根据商品分类查找满就送活动
-        //            List<int> parents = new List<int>();    //所有父级分类
-        //            categoryDAL.GetInstance().GetParentIds(product.category, parents);
-        //            foreach (int categoryId in parents)
-        //            {
-        //                receipt_fullsend tmp = receiptDAL.GetFullSend(categoryId, 1);
-        //                if (tmp != null)
-        //                    break;
-        //            }
-        //        }
-        //        if (fullsend == null)
-        //        {   //查找店铺级的满就送活动
-        //            fullsend = receiptDAL.GetFullSend(0, 0);
-        //        }
-
-        //        return fullsend;
-        //    }
-        //    catch (Exception e)
-        //    {
-        //        Util.Log.LogUtil.Write("查找商品参与的满就送活动信息时出错：" + e, Util.Log.LogType.Error);
-        //    }
-        //    return null;
-        //}
-
 
         /// <summary>
         /// 根据收银时提交的数据获取相关详细数据
@@ -123,6 +51,7 @@ namespace Spetmall.BLL.Page
                     isDiscounted = item.ismemberdiscount == 1 && isMemberDiscount == 1,
                     memberInfo = member,
                     barcode = item.barcode,
+                    cost = item.cost,
                 };
 
                 datas.Add(tmp);
@@ -458,6 +387,10 @@ namespace Spetmall.BLL.Page
                     adjustMomey = postData.totalNeedMoney - postData.totalPayMoney,
                     state = state,
                     remark = postData.remark,
+                    costMoney = datas.Sum(a => a.cost_money),
+                    profitMoney = datas.Sum(a => a.profit_money),
+                    crdate = DateTime.Today,
+                    crtime = DateTime.Now,
                 }) > 0;
 
                 foreach (receipt_confirm_products item in datas)
@@ -476,6 +409,9 @@ namespace Spetmall.BLL.Page
                         ismemberdiscount = item.isDiscounted ? (short)1 : (short)0,
                         name = item.productName,
                         thumbnail = item.thumbnail,
+                        cost = item.cost,
+                        costMoney = item.cost_money,
+                        profitMoney = item.profit_money,
                     }) > 0;
                 }
 
@@ -487,13 +423,18 @@ namespace Spetmall.BLL.Page
                         {
                             productDAL.GetInstance().ReduceStoreAndSales(item.productId, item.count);
                         }
-                    }
-                    else if (state == 1)
-                    {   //删除挂单的订单信息
-                        DeleteOrderById(postData.orderid);
-                    }
-                    else
-                    {
+
+                        //修改会员的余额
+                        if (postData.memberid != 0 && postData.paytype == 4)
+                        {
+                            UpdateMemberBalance(postData);
+                        }
+
+                        //删除挂单的订单信息
+                        if (!string.IsNullOrWhiteSpace(postData.orderid))
+                        {
+                            DeleteOrderById(postData.orderid);
+                        }
                     }
                 }
             }
@@ -509,6 +450,35 @@ namespace Spetmall.BLL.Page
             }
 
             return (isOk, msg);
+        }
+
+        /// <summary>
+        /// 更新会员余额
+        /// </summary>
+        /// <param name="postData"></param>
+        private static void UpdateMemberBalance(orderPost postData)
+        {
+            decimal balance = 0;
+            try
+            {
+                member currentMember = memberDAL.GetInstance().GetEntityByKey<member>(postData.memberid);
+                if (currentMember != null)
+                {
+                    if (currentMember.money >= postData.totalPayMoney)
+                    {
+                        balance = currentMember.money - postData.totalPayMoney;
+                    }
+
+                    //更新会员余额
+                    Dictionary<string, object> fields = new Dictionary<string, object>();
+                    fields.Add("money", balance);
+                    memberDAL.GetInstance().UpdateByKey(fields, postData.memberid);
+                }
+            }
+            catch (Exception e)
+            {
+                Util.Log.LogUtil.Write($"UpdateMemberBalance 更新会员余额失败 会员id:{postData.memberid} 余额:{balance} \r\n{e}", Util.Log.LogType.Error);
+            }
         }
 
         private static string CreateNewOrderId()
@@ -554,13 +524,14 @@ namespace Spetmall.BLL.Page
         /// </summary>
         /// <param name="orderid"></param>
         /// <returns></returns>
-        public static ReceiptOrderInfo GetOrderInfo(string orderid)
+        public static ReceiptOrderInfo GetOrderInfo(string orderid, short state)
         {
             try
             {
-                order order = orderDAL.GetInstance().GetEntityByKey<order>(orderid);
-                if (order != null)
+                List<order_detail> orderList = orderDAL.GetOrderList(orderid, string.Empty, string.Empty, string.Empty, state);
+                if (orderList.Count > 0)
                 {
+                    order_detail order = orderList[0];
                     ReceiptOrderInfo orderInfo = ConvertOrderToReceiptOrderInfo(order);
                     List<ReceiptOrderProductInfo> products = orderProductDAL.GetProductByOrderId(orderid);
                     orderInfo.receiptgoodsdata = ConvertProductDic(products);
@@ -576,7 +547,7 @@ namespace Spetmall.BLL.Page
             return null;
         }
 
-        private static ReceiptOrderInfo ConvertOrderToReceiptOrderInfo(order order)
+        private static ReceiptOrderInfo ConvertOrderToReceiptOrderInfo(order_detail order)
         {
             if (order == null)
                 return null;
@@ -588,14 +559,13 @@ namespace Spetmall.BLL.Page
                     activitytotalprice = order.payMoney,
                     discount_total_price = order.discountMoney,
                     memberid = order.memberid,
+                    paytype = order.payTypeString,
+                    memberName = order.memberName,
+                    remark = order.remark,
+                    crtime = order.crtime,
                 };
         }
 
-        /// <summary>
-        /// 将商品列表转换为字典格式
-        /// </summary>
-        /// <param name="products"></param>
-        /// <returns></returns>
         private static Dictionary<int, ReceiptOrderProductInfo> ConvertProductDic(List<ReceiptOrderProductInfo> products)
         {
             Dictionary<int, ReceiptOrderProductInfo> result = new Dictionary<int, ReceiptOrderProductInfo>();

@@ -25,7 +25,7 @@ namespace Spetmall.Model.Page
         /// </summary>
         public decimal discount_total_price { get; set; }
         /// <summary>
-        /// 折扣后总金额
+        /// 折扣后应付总金额
         /// </summary>
         public decimal activitytotalprice { get; set; }
         /// <summary>
@@ -36,6 +36,22 @@ namespace Spetmall.Model.Page
         /// 会员id
         /// </summary>
         public int memberid { get; set; }
+        /// <summary>
+        /// 会员姓名
+        /// </summary>
+        public string memberName { get; set; }
+        /// <summary>
+        /// 下单时间
+        /// </summary>
+        public DateTime crtime { get; set; }
+        /// <summary>
+        /// 支付方式名称
+        /// </summary>
+        public string paytype { get; set; }
+        /// <summary>
+        /// 备注
+        /// </summary>
+        public string remark { get; set; }
         /// <summary>
         /// 商品数据
         /// </summary>

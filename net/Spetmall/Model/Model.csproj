@@ -56,6 +56,7 @@
     <Compile Include="Page\discount_edit.cs" />
     <Compile Include="Page\guadan.cs" />
     <Compile Include="Page\orderPost.cs" />
+    <Compile Include="Page\order_detail.cs" />
     <Compile Include="Page\receipt.cs" />
     <Compile Include="Page\ReceiptOrderInfo.cs" />
     <Compile Include="Page\receipt_confirm_products.cs" />

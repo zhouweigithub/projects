@@ -92,6 +92,7 @@
     <Compile Include="Page\CommonBLL.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Page\TransactionBLL.cs" />
     <Compile Include="Page\Upload\UploadBLL.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

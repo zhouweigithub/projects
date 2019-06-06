@@ -33,10 +33,20 @@ namespace Spetmall.Model
         [TableField]
         public decimal discountMoney { get; set; }
         /// <summary>
-        /// 高价金额
+        /// 调价金额
         /// </summary>
         [TableField]
         public decimal adjustMomey { get; set; }
+        /// <summary>
+        /// 总成本
+        /// </summary>
+        [TableField]
+        public decimal costMoney { get; set; }
+        /// <summary>
+        /// 总利润
+        /// </summary>
+        [TableField]
+        public decimal profitMoney { get; set; }
         /// <summary>
         /// 支付方式
         /// </summary>
@@ -58,9 +68,46 @@ namespace Spetmall.Model
         [TableField]
         public short state { get; set; }
         /// <summary>
-        /// 
+        /// 创建日期
         /// </summary>
+        [TableField]
+        public DateTime crdate { get; set; }
+        /// <summary>
+        /// 创建时间
+        /// </summary>
+        [TableField]
         public DateTime crtime { get; set; }
-
+        public string payTypeString
+        {
+            get
+            {
+                string result = string.Empty;
+                switch (payType)
+                {
+                    case 1:
+                        result = "现金支付";
+                        break;
+                    case 2:
+                        result = "微信支付";
+                        break;
+                    case 3:
+                        result = "支付宝支付";
+                        break;
+                    case 4:
+                        result = "余额支付";
+                        break;
+                    case 5:
+                        result = "刷卡支付";
+                        break;
+                    case 6:
+                        result = "其他";
+                        break;
+                    default:
+                        result = "未知";
+                        break;
+                }
+                return result;
+            }
+        }
     }
 }
