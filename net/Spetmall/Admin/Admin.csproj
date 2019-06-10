@@ -629,8 +629,11 @@
     <Content Include="static\extend\select2\select2.min.js" />
     <Content Include="static\extend\superfish\hoverIntent.js" />
     <Content Include="static\extend\superfish\superfish.js" />
+    <Content Include="static\images\bg.png" />
     <Content Include="static\images\cpin.png" />
     <Content Include="static\images\d05.png" />
+    <Content Include="static\images\dog.png" />
+    <Content Include="static\images\error.png" />
     <Content Include="static\images\ft_01.png" />
     <Content Include="static\images\ft_02.png" />
     <Content Include="static\images\ft_03.png" />
@@ -671,6 +674,7 @@
     <Content Include="static\images\quit.png" />
     <Content Include="static\images\search.png" />
     <Content Include="static\images\tiaoma.png" />
+    <Content Include="static\images\titbg.png" />
     <Content Include="static\images\txm.png" />
     <Content Include="static\js\echarts.min.js" />
     <Content Include="static\js\selectpage.js" />

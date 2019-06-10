@@ -1,28 +1,35 @@
 ﻿@{
+    ViewBag.Title = "系统日志";
 }
 <style>
     .href a {
         margin: auto 5px;
     }
-</style>
-<div class="well">
-    @using (Html.BeginForm("LogList", null, FormMethod.Get, new { @class = "form-horizontal", @id = "from_add" }))
-    {
-        <div class="href">
-            @Html.ActionLink("CurrentWeb", "LogList", new { type = 1 }, new { target = "_self" })
-        </div>
+
+    .tablebox caption {
+        font-size: 20px;
+        text-align: left;
+        margin: 10px;
     }
-    <div class="table-responsive">
-        <table class="table table-bordered table-condensed table-hover">
+</style>
+
+<div class="mianbox">
+    <div class="searchbar" style="height:52px;">
+        <div class="leftbtn">
+            @Html.ActionLink("CurrentWeb", "LogList", new { type = 1 }, new { target = "_self", @class = "barbtn02" })
+        </div>
+    </div>
+
+    <div class="tablebox padt">
+        <table class="table01" width="100%" border="0" cellspacing="0" cellpadding="0">
             <caption>@ViewBag.Title</caption>
-            <thead class="bg-primary">
+            <tbody>
                 <tr>
                     <th width="300">日志名</th>
                     <th width="150">大小</th>
-                    <th>更新日间</th>
+                    <th width="300">更新日间</th>
+                    <th></th>
                 </tr>
-            </thead>
-            <tbody>
                 @{
                     List<Spetmall.BLL.Page.ServerLog.ServerLogBLL.FileData> datas = ViewBag.datas as List<Spetmall.BLL.Page.ServerLog.ServerLogBLL.FileData>;
                     if (datas != null && datas.Count > 0)
@@ -33,11 +40,13 @@
                                 <td>@Html.ActionLink(item.FileName, "LogView", new { type = ViewBag.Type, name = item.FileName }, new { target = "_blank" }) </td>
                                 <td>@item.Size KB</td>
                                 <td>@item.LastModify.ToString("yyyy-MM-dd HH:mm:ss")</td>
+                                <td></td>
                             </tr>
                         }
                     }
                 }
             </tbody>
         </table>
+        <div class="pagin"></div>
     </div>
 </div>
