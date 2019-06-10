@@ -41,6 +41,10 @@ namespace Spetmall.Model.Page
         /// </summary>
         public string memberName { get; set; }
         /// <summary>
+        /// 会员手机号
+        /// </summary>
+        public string memberPhone { get; set; }
+        /// <summary>
         /// 下单时间
         /// </summary>
         public DateTime crtime { get; set; }

@@ -8,10 +8,9 @@ using System.Web.Mvc;
 
 namespace Spetmall.Admin.Controllers
 {
+    [Common.CustomAuthorize]
     public class UploadController : Controller
     {
-        //
-        // GET: /Upload/
 
         [HttpPost]
         public ActionResult Upload(FormCollection collection)

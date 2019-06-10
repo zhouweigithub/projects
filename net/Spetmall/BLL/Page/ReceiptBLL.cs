@@ -561,6 +561,7 @@ namespace Spetmall.BLL.Page
                     memberid = order.memberid,
                     paytype = order.payTypeString,
                     memberName = order.memberName,
+                    memberPhone = order.memberPhone,
                     remark = order.remark,
                     crtime = order.crtime,
                 };

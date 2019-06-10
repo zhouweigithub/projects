@@ -42,6 +42,8 @@
                     <th>成本总量</th>
                     <th>利润总量</th>
                     <th>收银订单总数</th>
+                    <th>会员充值总金额</th>
+                    <th>新增优惠卡总金额</th>
                 </tr>
                 @{
                     List<payInfo> datas = ViewBag.datas as List<payInfo>;
@@ -53,6 +55,8 @@
                             <td>@item.costMoney</td>
                             <td>@item.profitMoney</td>
                             <td>@item.payCount</td>
+                            <td>@item.rechargeMoney</td>
+                            <td>@item.railCardMoney</td>
                         </tr>
                     }
                     {
@@ -64,6 +68,8 @@
                                 <td>@datas.Sum(a => a.costMoney)</td>
                                 <td>@datas.Sum(a => a.profitMoney)</td>
                                 <td>@datas.Sum(a => a.payCount)</td>
+                                <td>@datas.Sum(a => a.rechargeMoney)</td>
+                                <td>@datas.Sum(a => a.railCardMoney)</td>
                             </tr>
                         }
                     }

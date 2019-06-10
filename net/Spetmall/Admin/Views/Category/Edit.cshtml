@@ -22,6 +22,7 @@
     <script src="/static/js/iframeTools.source.js"></script>
     <script src="/static/js/iframe.js"></script>
     <script src="/static/js/common.js?_t=1558752911"></script>
+    <script src="/Scripts/common.js"></script>
 
 </head>
 
@@ -34,10 +35,11 @@
             <li>
                 <label class="lbt"><em>(*)</em>分类分称：</label><div>
                     @Html.TextBoxFor(m => m.name, new { @class = "form-control", placeholder = "请输入名称" })
+                    <span id="errname" class="error"></span>
                 </div>
             </li>
             <li>
-                <label class="lbt"><em>(*)</em>是否启用：</label><div>
+                <label class="lbt">是否启用：</label><div>
                     <span class="switch-on" name="state" data-value="@Model.state" style="border-color: rgb(100, 189, 99); box-shadow: rgb(100, 189, 99) 0px 0px 0px 16px inset; background-color: rgb(100, 189, 99);">
                         <span class="slider">
                             <input name="state" type="hidden" value="@Model.state">
@@ -59,6 +61,14 @@
         <div class="padt" style="text-align: center"><span id="open" class="btn btnyes yunmall_button">保存</span></div>
 
     </form>
+
+    <script>
+        function isValid() {
+            var result = true;
+            result = IsValueNotEmpty("name", "errname", "分类分称") && result;
+            return result;
+        }
+    </script>
 
 </body>
 </html>

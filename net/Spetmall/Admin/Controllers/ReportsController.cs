@@ -9,10 +9,9 @@ using System.Web.Mvc;
 
 namespace Spetmall.Admin.Controllers
 {
+    [Common.CustomAuthorize]
     public class ReportsController : Controller
     {
-        //
-        // GET: /Reports/
 
         public ActionResult Index(string startdate, string enddate)
         {

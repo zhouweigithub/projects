@@ -16,10 +16,10 @@ using System.Web.Mvc;
 
 namespace Spetmall.Admin.Common
 {
-    [AttributeUsage(AttributeTargets.All, Inherited = true)]
     /// <summary>
     /// 登录权限验证
     /// </summary>
+    [AttributeUsage(AttributeTargets.All, Inherited = true)]
     public class CustomAuthorizeAttribute : AuthorizeAttribute
     {
         private string ReturnUrl = "";
@@ -27,62 +27,23 @@ namespace Spetmall.Admin.Common
         protected override bool AuthorizeCore(HttpContextBase httpContext)
         {
             ReturnUrl = httpContext.Request.Url.PathAndQuery;
-            string action = httpContext.Request.RequestContext.RouteData.Values["action"].ToString();//当前访问的action
-            string controller = httpContext.Request.RequestContext.RouteData.Values["controller"].ToString();//当前访问的controler
+            string action = httpContext.Request.RequestContext.RouteData.Values["action"].ToString().ToLower();//当前访问的action
+            string controller = httpContext.Request.RequestContext.RouteData.Values["controller"].ToString().ToLower();//当前访问的controler
 
-            if ((new string[] { "login", "loginout" }).Contains(action.ToLower()) && controller.ToLower() == "Home")
+            if ((new string[] { "login", "loginout" }).Contains(action) && controller == "main")
             {
                 return true;
             }
-            if (HttpContext.Current.Session["LoginUserName"] == null)
+
+            if (HttpContext.Current.Session["username"] == null ||
+                (HttpContext.Current.Session["isLock"] != null && Convert.ToBoolean(HttpContext.Current.Session["isLock"]) == true
+                && controller != "main" && action != "unlock"))
             {   //没登录则跳出
                 httpContext.Response.StatusCode = 401;
+                HttpContext.Current.Session.Abandon();
                 return false;
             }
 
-            //判断菜单是否是用户拥有的菜单，否则则跳转到登录页面
-            #region 判断菜单是否是用户拥有的菜单，否则则跳转到登录页面
-
-
-            try
-            {
-                if (HttpContext.Current.Session["MenuGrouplist"] != null)
-                {
-                    List<MenuGroup> MenuGrouplist = (List<MenuGroup>)HttpContext.Current.Session["MenuGrouplist"];
-                    bool flag = false;
-                    string[] extraUsernameArray = WebConfigData.ExtraUserNames.Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries);
-                    foreach (var item in MenuGrouplist)
-                    {
-                        foreach (var kk in item.MenuItemList)
-                        {   //有main权限的也给予links的权限
-                            if (kk.Controller == controller || (kk.Controller.ToUpper() == "MAIN" && controller.ToUpper() == "LINKS"))
-                            {
-                                flag = true;
-                                break;
-                            }
-                            else if (extraUsernameArray.Contains(HttpContext.Current.Session["LoginUserName"]))
-                            {
-                                flag = true;
-                                break;
-                            }
-                        }
-                        if (flag)
-                        {
-                            break;
-                        }
-                    }
-                    if (!flag)
-                    {
-                        httpContext.Response.StatusCode = 401;
-                        return false;
-                    }
-                }
-            }
-            catch (System.Exception e)
-            {
-                Util.Log.LogUtil.Write("菜单权限判定时出错啦！" + e.ToString(), Util.Log.LogType.Error);
-            }
-            #endregion
             return true;
         }
 
@@ -95,18 +56,6 @@ namespace Spetmall.Admin.Common
         {
             if (filterContext.HttpContext.Response.StatusCode == 401)
             {
-                #region 热云跳转                
-              
-                if (!string.IsNullOrWhiteSpace(ReturnUrl))
-                {
-
-                    if (ReturnUrl.Contains("ActiveGroupInfo"))
-                    {
-                        ReturnUrl = ReturnUrl.Substring(0, ReturnUrl.LastIndexOf('/') + 1) + "Index";
-                    }
-                }
-                #endregion
-
                 filterContext.Result = new RedirectResult("/" + (string.IsNullOrWhiteSpace(ReturnUrl) ? "" : "?returnUrl=" + HttpContext.Current.Server.UrlEncode(ReturnUrl)));
             }
         }

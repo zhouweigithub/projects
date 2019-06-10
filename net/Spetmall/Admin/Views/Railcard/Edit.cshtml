@@ -21,7 +21,7 @@
     <script src="/static/js/iframeTools.source.js"></script>
     <script src="/static/js/iframe.js"></script>
     <script src="/static/js/common.js?_t=1558961822"></script>
-
+    <script src="/Scripts/common.js"></script>
 </head>
 
 <body class="iframebody">
@@ -31,23 +31,28 @@
             <ul class="formlist">
                 <li>
                     <label class="lbt"><em>(*)</em>使用次数：</label><div>
-                        @*<input name="use_number" class="form-control" type="text" placeholder="请输入冲值金额" value="1">*@
                         @Html.TextBoxFor(a => a.times, new { @class = "form-control", placeholder = "请输入使用次数" })
+                        <span id="errtimes" class="error"></span>
                     </div>
                 </li>
                 <li>
                     <label class="lbt">备注：</label><div>
-                        @*<textarea name="explain" class="form-textarea confiem_remarks_information" style="height:60px;" cols="" rows=""></textarea>*@
                         @Html.TextAreaFor(a => a.remark, 2, 2, new { @class = "form-textarea confiem_remarks_information", placeholder = "请输入备注", cols = "", rows = "" })
                     </div>
                 </li>
-
             </ul>
             <div class="padt" style="text-align: center"><a href="javascript:;" class="btn btnyes yunmall_button">保存</a></div>
-
         </form>
     </div>
+    <script>
+        function isValid() {
+            var result = true;
+            result = IsValueNotEmpty("times", "errtimes", "使用次数") && result;
+            result = result && IsValueNumber("times", "errtimes", "使用次数");
+            return result;
+        }
 
+    </script>
 </body>
 </html>
 

@@ -6,21 +6,28 @@
 <script src="~/static/js/selectpage.js"></script>
 <link href="~/static/dialog/css/dialog.css" rel="stylesheet" />
 <script src="~/static/dialog/js/dialog.min.js"></script>
-
+<style>
+    .table01 td {
+        padding: 3px;
+    }
+</style>
 <div class="mianbox">
     <div class="searchbar">
-        <div style="padding-right: 350px;">
-            <div class="search">
-                <input type="text" name="keyword" value="" placeholder="请输入商品名称或条形码">
-                <a href="javascript:;" id="yunmall_goods_search">查询</a>
-            </div>
+        <form method="get">
+            <div style="padding-right: 470px;">
+                <div class="search">
+                    @Html.TextBox("keyword", null, new { placeholder = "请输入商品名称或条形码" })
+                    <a href="javascript:;" id="yunmall_goods_search">查询</a>
+                </div>
 
-        </div>
-        <div class="rightbtn">
-            <a href="javascript:;" yun_type="dialog" dialog_title="添加商品" uri="edit/0" dialog_width="60%" class="barbtn01" id="open">添加商品</a>
-            <a href="?orderBy=sales" class="barbtn02 ">按售量</a>
-            <a href="?orderBy=store" class="barbtn02 ">按库存</a>
-        </div>
+            </div>
+            <div class="rightbtn">
+                <a href="javascript:;" yun_type="dialog" dialog_title="添加商品" uri="edit/0" dialog_width="60%" class="barbtn01" id="open">添加商品</a>
+                <a href="?orderBy=sales" class="barbtn02 @(ViewBag.orderBy == "sales" ? "active" : "")">按售量</a>
+                <a href="?orderBy=store" class="barbtn02 @(ViewBag.orderBy == " store" ? "active" : "" )">按库存</a>
+                <a id="export" href="#" class="barbtn02" target="_blank">导出Excel</a>
+            </div>
+        </form>
     </div>
     <div class="padt">
         <div class="fenlei2 yunmallsuperfish" id="yunmallgoodsclass">
@@ -53,26 +60,65 @@
 
         <div class="chanpin clear">
 
-            <ul id="goods-list">
-                @{
-                    foreach (product item in ViewBag.datas)
-                    {
-                        <li class="@(item.store<=item.warn?"warningactive":"")">
-                            <a href="javascript:;" yun_type="dialog" dialog_title="修改商品" uri="edit/@item.id" dialog_width="60%">
-                                <img src="@item.thumbnail" onerror="this.src='/static/images/defaultgoods.jpg';" style="width:100%;height:250px;">
-                                <div class="cpnav">
-                                    <ol>@item.name</ol>
-                                    <p>单价：<strong>@item.price 元</strong></p>
-                                    <div class="clear goods_attr_info">
-                                        <span class="">库存：@item.store</span>
-                                        <span class="">销量：@item.sales</span>
+            @*<ul id="goods-list">
+                    @{
+                        foreach (product item in ViewBag.datas)
+                        {
+                            <li class="@(item.store<=item.warn?"warningactive":"")">
+                                <a href="javascript:;" yun_type="dialog" dialog_title="修改商品" uri="edit/@item.id" dialog_width="60%">
+                                    <img src="@item.thumbnail" onerror="this.src='/static/images/defaultgoods.jpg';" style="width:100%;height:250px;">
+                                    <div class="cpnav">
+                                        <ol>@item.name</ol>
+                                        <p>单价：<strong>@item.price 元</strong></p>
+                                        <div class="clear goods_attr_info">
+                                            <span class="">库存：@item.store</span>
+                                            <span class="">销量：@item.sales</span>
+                                        </div>
                                     </div>
-                                </div>
-                            </a>
-                        </li>
+                                </a>
+                            </li>
+                        }
                     }
-                }
-            </ul>
+                </ul>*@
+
+            <table class="table01" width="100%" border="0" cellspacing="0" cellpadding="0">
+                <tbody>
+                    <tr>
+                        <th width="5%">ID</th>
+                        <th width="5%">缩略图</th>
+                        <th width="16%">商品名称</th>
+                        <th width="10%">条码</th>
+                        <th width="8%">分类</th>
+                        <th width="8%">成本</th>
+                        <th width="8%">卖价</th>
+                        <th width="8%">库存</th>
+                        <th width="8%">销量</th>
+                        <th width="8%">警戒值</th>
+                        <th width="8%">会员折扣</th>
+                        <th width="8%">操作</th>
+                    </tr>
+                    @{
+                        foreach (product item in ViewBag.datas)
+                        {
+                            <tr>
+                                <td>@item.id</td>
+                                <td><img src="@item.thumbnail" onerror="this.src='/static/images/defaultgoods.jpg';" style="height:50px;width:50px"></td>
+                                <td>@item.name</td>
+                                <td>@item.barcode</td>
+                                <td>@item.category</td>
+                                <td>@item.cost</td>
+                                <td>@item.price</td>
+                                <td style="@(item.store<=item.warn?"background-color:#FFCC00":"")">@item.store</td>
+                                <td>@item.sales</td>
+                                <td>@item.warn</td>
+                                <td>@(item.ismemberdiscount == 0 ? "未启用" : "启用")</td>
+                                <td><a href="javascript:;" yun_type="dialog" dialog_title="修改商品" uri="edit/@item.id" dialog_width="60%">修改</a></td>
+                            </tr>
+                        }
+                    }
+                </tbody>
+            </table>
+
             <div class="emptydata" style="display:none;">没有数据了</div>
             <div class="emptydatasearch" style="display:none;">没有搜索到相关数据,请换一个关键词试一下</div>
         </div>
@@ -126,21 +172,31 @@
 
 
 
+        //$("#yunmall_goods_search").bind('click', function (event) {
+        //    event.preventDefault();
+        //    selectpage.setPage(1);
+        //    selectpage.setData({ "keyword": $.trim($("input[name=keyword]").val()) });
+        //    selectpage.paginate();
+        //});
+
+        //$(document).keyup(function (event) {
+        //    if (event.keyCode == 13) {
+        //        selectpage.setPage(1);
+        //        selectpage.setData({ "keyword": $.trim($("input[name=keyword]").val()) });
+        //        selectpage.paginate();
+        //    }
+        //});
+
         $("#yunmall_goods_search").bind('click', function (event) {
-            event.preventDefault();
-            selectpage.setPage(1);
-            selectpage.setData({ "keyword": $.trim($("input[name=keyword]").val()) });
-            selectpage.paginate();
+            $("#yunmall_goods_search").closest("form").submit();
         });
 
-        $(document).keyup(function (event) {
-            if (event.keyCode == 13) {
-                selectpage.setPage(1);
-                selectpage.setData({ "keyword": $.trim($("input[name=keyword]").val()) });
-                selectpage.paginate();
-            }
+        $("#export").click(function () {
+            window.location.href = "export?category=" + getUrlParam("category")
+                + "&keyWord=" + encodeURI(getUrlParam("keyWord")) + "&orderBy=" + encodeURI(getUrlParam("orderBy"));
         });
-    })
+
+    });
 
 </script>
 <script type="text/javascript">
@@ -163,9 +219,9 @@
             }, 50);
         });
 
-        $(document).bind('click', function () {
-            $("input[name=title]").focus();
-        }).trigger('click');
+        //$(document).bind('click', function () {
+        //    $("input[name=title]").focus();
+        //}).trigger('click');
 
     });
 </script>

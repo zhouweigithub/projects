@@ -19,6 +19,7 @@
     <script src="/static/js/iframeTools.source.js"></script>
     <script src="/static/js/iframe.js"></script>
     <script src="/static/js/common.js?_t=1558752468"></script>
+    <script src="/Scripts/common.js"></script>
 </head>
 <body class="iframebody">
     <form class=" pad15" action="?">
@@ -32,47 +33,44 @@
             <li>
                 <label class="lbt"><em>(*)</em>姓名：</label><div>
                     @Html.TextBoxFor(a => a.name, new { @class = "form-control", placeholder = "请输入姓名" })
-                    @*<input name="username" class="form-control" type="text" placeholder="请输入姓名" value="">*@
+                    <span id="errname" class="error"></span>
                 </div>
             </li>
             <li>
                 <label class="lbt"><em>(*)</em>手机号：</label><div>
                     @Html.TextBoxFor(a => a.phone, new { @class = "form-control", placeholder = "请输入手机号码" })
-                    @*<input name="phone" class="form-control" type="text" placeholder="请输入手机号码" value="">*@
+                    <span id="errphone" class="error"></span>
                 </div>
             </li>
             <li>
                 <label class="lbt">邮箱：</label><div>
                     @Html.TextBoxFor(a => a.email, new { @class = "form-control", placeholder = "请输入邮箱" })
-                    @*<input name="email" class="form-control" type="text" placeholder="请输入邮箱" value="">*@
                 </div>
             </li>
             <li>
-                <label class="lbt"><em>(*)</em>姓别：</label><div>
+                <label class="lbt">姓别：</label><div>
                     <cite>
                         <label>
                             @Html.RadioButtonFor(a => a.sex, 0)
-                            @*<input name="sex" type="radio" value="1" />*@男&nbsp;&nbsp;&nbsp;
-                        </label><label>
-                            @Html.RadioButtonFor(a => a.sex, 1)
-                            @*<input name="sex" type="radio" value="2" />*@女
+                        </label>
+                        @Html.RadioButtonFor(a => a.sex, 1)
                     </cite>
                 </div>
             </li>
             <li>
-                <label class="lbt"><em></em>总金额：</label><div>
+                <label class="lbt"><em>(*)</em>总金额：</label><div>
                     @Html.TextBoxFor(a => a.money, new { @class = "form-control", placeholder = "请输入总金额" })
-                    @*<input class="form-control" type="text" name="total_balance" value="0" placeholder="请输入总金额">*@
+                    <span id="errmoney" class="error"></span>
                 </div>
             </li>
             <li>
-                <label class="lbt"><em>(*)</em>折扣：</label><div>
+                <label class="lbt">折扣(不打折填0)</label><div>
                     @Html.TextBoxFor(a => a.discount, new { @class = "form-control", placeholder = "请输入折扣" })
-                    @*<input class="form-control" type="text" name="discount" value="" placeholder="请输入折扣">*@
+                    <span id="errdiscount" class="error"></span>
                 </div>
             </li>
             <li>
-                <label class="lbt"><em>(*)</em>宠物狗：</label>
+                <label class="lbt">宠物狗：</label>
                 <div class="pets_classification">
                     <div class="pets_classification_menu">
                         <ul>
@@ -114,7 +112,7 @@
 
             </li>
             <li>
-                <label class="lbt"><em>(*)</em>宠物猫：</label>
+                <label class="lbt">宠物猫：</label>
                 <div class="pets_classification">
                     <div class="pets_classification_menu">
                         <ul>
@@ -161,14 +159,12 @@
                             }
                         </ul>
 
-
                     </div>
                 </div>
             </li>
             <li>
                 <label class="lbt">备注：</label><div>
                     @Html.TextBoxFor(a => a.remark, new { @class = "form-control", placeholder = "请输入备注" })
-                    @*<input class="form-control" name="explain" value="" type="text" placeholder="">*@
                 </div>
             </li>
         </ul>
@@ -226,6 +222,20 @@
             var pets3 = $("#different_pet_list").val();
             $("#pets").val(pets1 + "," + pets2 + "," + pets3);
         }
+
+        function isValid() {
+            var result = true;
+            result = IsValueNotEmpty("name", "errname", "分类分称") && result;
+            result = IsValueNotEmpty("phone", "errphone", "手机号") && result;
+            result = IsValueNotEmpty("money", "errmoney", "总金额") && result;
+            result = IsValueNotEmpty("discount", "errdiscount", "折扣") && result;
+
+            result = result && IsValueDecimal("money", "errmoney", "总金额");
+            result = result && IsValueNumber("discount", "errdiscount", "折扣");
+
+            return result;
+        }
+
     </script>
 
 

@@ -63,6 +63,28 @@ namespace Spetmall.BLL.Page
             return result;
         }
 
+        /// <summary>
+        /// 登录结果
+        /// </summary>
+        /// <param name="isOk"></param>
+        /// <param name="errMsg"></param>
+        /// <returns></returns>
+        public static string GetLoginReturnJson(bool isOk, string errMsg)
+        {
+            var obj = new
+            {
+                status = isOk,
+                code = 1,
+                msg = errMsg,
+                redirects = string.Empty,
+            };
+
+            string result = "<html><body><script>parent.yunmallIframe.Callback("
+                + Util.Json.JsonUtil.Serialize(obj)
+                + ");</script></body></html>";
+
+            return result;
+        }
 
     }
 

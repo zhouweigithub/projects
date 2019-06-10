@@ -36,6 +36,15 @@ namespace Spetmall.Model.Page
         /// 交易次数
         /// </summary>
         public int payCount { get; set; }
+        /// <summary>
+        /// 会员充值金额
+        /// </summary>
+        public decimal rechargeMoney { get; set; }
+        /// <summary>
+        /// 新增优惠卡金额
+        /// </summary>
+        public decimal railCardMoney { get; set; }
+
     }
 
     public class countPayInfo

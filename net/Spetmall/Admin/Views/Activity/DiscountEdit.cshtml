@@ -36,7 +36,7 @@
                     </td>
                 </tr>
                 <tr>
-                    <td class="name">类型：</td>
+                    <td class="name"><i>*</i>类型：</td>
                     <td>
                         <select name="type" class="mySelect" id="type">
                             <option value="0" @(Model.type == 0 ? "selected" : "")>店铺</option>
@@ -47,7 +47,7 @@
                     </td>
                 </tr>
                 <tr class="goodsclasslist" style="height:33.9px;@(Model.type==1?"":"display:none;")">
-                    <td class="name">商品分类：</td>
+                    <td class="name"><i>*</i>商品分类：</td>
                     <td>
                         <div id="placeofdelivery" style="width:500px;"></div>
                         <p class="hint">选择分类只能是指定分类下才可以使用。</p>
@@ -58,7 +58,7 @@
                     <td><div class="placeofdeliverymsg"></div></td>
                 </tr>
                 <tr class="goodsselectspecid" style="@(Model.type==2?"":"display:none;")">
-                    <td class="name">请选择商品：</td>
+                    <td class="name"><i>*</i>请选择商品：</td>
                     <td>
                         <div class="selectoption">
                             <div class="option_button"><input name="formsubmits" id="specbutton" type="button" class="btn dssc-btn" value="选择商品" /></div>
@@ -99,7 +99,7 @@
                     </td>
                 </tr>
                 <tr>
-                    <td class="name">开始时间：</td>
+                    <td class="name"><i>*</i>开始时间：</td>
                     <td>
                         <div class="widgettxt widgetw156">
                             <div><input name="starttime" autocomplete="off" class="yunmalldate" value="@Model.starttime.ToString("yyyy-MM-dd")" type="text" /><i class="icon-fl-renminbi"></i></div>
@@ -108,7 +108,7 @@
                     </td>
                 </tr>
                 <tr>
-                    <td class="name">结速时间：</td>
+                    <td class="name"><i>*</i>结速时间：</td>
                     <td>
                         <div class="widgettxt widgetw156">
                             <div><input name="endtime" autocomplete="off" class="yunmalldate" value="@Model.endtime.ToString("yyyy-MM-dd")" type="text" /><i class="icon-fl-renminbi"></i></div>
@@ -176,7 +176,11 @@
 
          Linkage.init('#placeofdelivery', 0);
 
-
+    function isValid() {
+        var result = true;
+        result = IsValueNotEmpty("name", "errname", "分类分称") && result;
+        return result;
+    }
 
 
 </script>

@@ -15,7 +15,7 @@
             </form>
         </div>
         <div class="rightbtn">
-            <a href="javascript:;" yun_type="dialog" dialog_title="添加优惠卡" uri="Add" dialog_width="80%" class="barbtn01" id="open" style="font-size:24px;">添加优惠卡</a>
+            <a href="javascript:;" yun_type="dialog" dialog_title="添加优惠卡" uri="Add" dialog_width="50%" class="barbtn01" id="open" style="font-size:24px;">添加优惠卡</a>
             <a href="?keyWord=@ViewBag.keyWord&orderBy=money" class="barbtn02 ">按总金额</a>
             <a href="?keyWord=@ViewBag.keyWord&orderBy=lefttimes" class="barbtn02 ">按剩余次数</a>
         </div>
@@ -29,11 +29,14 @@
                     <th>卡号</th>
                     <th>姓名</th>
                     <th>手机</th>
+                    <th>宠物名字</th>
+                    <th>宠物年龄</th>
                     <th>总金额</th>
                     <th>总次数</th>
                     <th>剩余次数</th>
                     <th>使用时间范围</th>
                     <th>办卡时间</th>
+                    <th>备注</th>
                     <th>查看消费记录</th>
                 </tr>
                 @{
@@ -43,11 +46,14 @@
                             <td>@item.id</td>
                             <td>@item.name</td>
                             <td>@item.phone</td>
+                            <td>@item.petname</td>
+                            <td>@item.petage</td>
                             <td>@item.money</td>
                             <td>@item.times</td>
                             <td>@item.lefttimes</td>
                             <td>@item.starttime.ToString("yyyy/MM/dd") - @item.endtime.ToString("yyyy/MM/dd")</td>
                             <td>@item.crtime</td>
+                            <td>@item.remark</td>
                             <td>
                                 <a href="javascript:;" yun_type="dialog" dialog_title="使用优惠卡" uri="edit/@item.id" dialog_width="60%" dialog_height="50%" id="open">使用优惠卡</a>
                                 | <a href="Record/@item.id">查看记录</a>

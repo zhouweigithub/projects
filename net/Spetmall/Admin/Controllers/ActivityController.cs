@@ -10,6 +10,7 @@ using Spetmall.Model.Page;
 
 namespace Spetmall.Admin.Controllers
 {
+    [Common.CustomAuthorize]
     public class ActivityController : Controller
     {
         //限时折扣

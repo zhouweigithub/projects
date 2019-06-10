@@ -9,6 +9,7 @@ using Spetmall.Model;
 
 namespace Spetmall.Admin.Controllers
 {
+    [Common.CustomAuthorize]
     public class RailcardController : Controller
     {
 
@@ -34,6 +35,8 @@ namespace Spetmall.Admin.Controllers
             {
                 railcard.name = railcard.name.Trim();
                 railcard.phone = railcard.phone.Trim();
+                railcard.petname = railcard.petname.Trim();
+                railcard.remark = railcard.remark.Trim();
                 status = railcardDAL.GetInstance().Add(railcard) > 0;
             }
             catch (Exception e)
@@ -56,7 +59,6 @@ namespace Spetmall.Admin.Controllers
             string errMsg = string.Empty;
             try
             {
-                //更新railcard的剩余次数
                 railcard server = railcardDAL.GetInstance().GetEntityByKey<railcard>(railcard_record.railcardid);
 
                 if (server == null)
@@ -65,8 +67,13 @@ namespace Spetmall.Admin.Controllers
                     errMsg = "次数不能为0";
                 else if (server.lefttimes < railcard_record.times)
                     errMsg = "次数不足";
+                else if (server.starttime > DateTime.Now)
+                    errMsg = "未到开始日期 " + server.starttime.ToString("yyyy-MM-dd");
+                else if (server.endtime < DateTime.Now)
+                    errMsg = "已过截止日期 " + server.endtime.ToString("yyyy-MM-dd");
                 else
                 {
+                    //更新railcard的剩余次数
                     server.lefttimes = server.lefttimes - railcard_record.times;
                     status = railcardDAL.GetInstance().UpdateByKey(server, railcard_record.railcardid) > 0;
 

@@ -19,11 +19,12 @@
     <ul>
         <li><span>交易订单号:</span><em>@Model.orderid</em></li>
         <li><span>商品金额:</span><em>@Model.totalprice</em></li>
-        <li><span>优惠:</span><em>@Model.discount_total_price</em></li>
-        <li><span>实际交易总金额:</span><em>@Model.activitytotalprice</em></li>
+        <li><span>优惠金额:</span><em>@Model.discount_total_price</em></li>
+        <li><span>实际支付总金额:</span><em>@Model.activitytotalprice</em></li>
         <li><span>交易日时间:</span><em>@Model.crtime.ToString("yyyy-MM-dd HH:mm:ss")</em></li>
         <li><span>支付方式:</span><em>@Model.paytype</em></li>
         <li><span>用户:</span><em>@Model.memberName</em></li>
+        <li><span>手机号:</span><em>@Model.memberPhone</em></li>
         <li><span>备注信息:</span><em>@Model.remark</em></li>
     </ul>
 </div>

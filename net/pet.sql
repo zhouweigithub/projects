@@ -26,7 +26,7 @@ CREATE TABLE `category` (
   `remark` varchar(500) DEFAULT NULL COMMENT '备注',
   `crtime` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=38 DEFAULT CHARSET=utf8 COMMENT='商品分类';
+) ENGINE=InnoDB AUTO_INCREMENT=39 DEFAULT CHARSET=utf8 COMMENT='商品分类';
 
 /*Data for the table `category` */
 
@@ -47,7 +47,7 @@ CREATE TABLE `discount` (
   `state` tinyint(4) DEFAULT '1' COMMENT '状态 0关闭 1启用',
   `crtime` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=26 DEFAULT CHARSET=utf8 COMMENT='限时折扣';
+) ENGINE=InnoDB AUTO_INCREMENT=27 DEFAULT CHARSET=utf8 COMMENT='限时折扣';
 
 /*Data for the table `discount` */
 
@@ -208,19 +208,22 @@ DROP TABLE IF EXISTS `railcard`;
 CREATE TABLE `railcard` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `phone` varchar(20) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL COMMENT '手机号',
-  `name` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL COMMENT '姓名',
+  `name` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL COMMENT '主人姓名',
+  `petname` varchar(50) DEFAULT NULL COMMENT '宠物名字',
+  `petage` tinyint(4) DEFAULT '0' COMMENT '宠物年龄（岁）',
   `times` int(11) DEFAULT '0' COMMENT '最大可使用次数',
   `lefttimes` int(11) DEFAULT '0' COMMENT '剩余使用次数',
   `money` decimal(20,2) DEFAULT '0.00' COMMENT '最大可使用金额',
   `starttime` date DEFAULT NULL COMMENT '开始时间',
   `endtime` date DEFAULT NULL COMMENT '结束时间',
+  `remark` varchar(200) DEFAULT NULL COMMENT '备注',
   `crtime` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8 COMMENT='优惠卡';
 
 /*Data for the table `railcard` */
 
-insert  into `railcard`(`id`,`phone`,`name`,`times`,`lefttimes`,`money`,`starttime`,`endtime`,`crtime`) values (3,'9','ttt',6,2,'56.00','2019-05-28','2019-06-20','2019-05-28 13:48:25');
+insert  into `railcard`(`id`,`phone`,`name`,`petname`,`petage`,`times`,`lefttimes`,`money`,`starttime`,`endtime`,`remark`,`crtime`) values (3,'9','ttt',NULL,0,6,2,'56.00','2019-05-28','2019-06-20',NULL,'2019-05-28 13:48:25');
 
 /*Table structure for table `railcard_record` */
 
@@ -320,15 +323,17 @@ DROP TABLE IF EXISTS `user`;
 CREATE TABLE `user` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `username` varchar(20) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL COMMENT '用户名',
-  `password` varchar(20) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL COMMENT '密码',
+  `password` varchar(32) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL COMMENT '密码',
   `name` varchar(20) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL COMMENT '姓名',
   `state` tinyint(4) DEFAULT NULL COMMENT '状态0正常 1受限',
   `lastlogintime` datetime DEFAULT NULL COMMENT '最后一次登录时间',
   `crtime` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='用户信息';
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 COMMENT='用户信息';
 
 /*Data for the table `user` */
+
+insert  into `user`(`id`,`username`,`password`,`name`,`state`,`lastlogintime`,`crtime`) values (1,'hello','e10adc3949ba59abbe56e057f20f883e','陈成',0,'2019-06-10 15:00:44','2019-06-10 15:01:18');
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
 /*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;

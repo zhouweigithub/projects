@@ -4,15 +4,15 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using Spetmall.BLL.Page;
+using Spetmall.Common;
 using Spetmall.DAL;
 using Spetmall.Model;
 
 namespace Spetmall.Admin.Controllers
 {
+    [Common.CustomAuthorize]
     public class ProductController : Controller
     {
-        //
-        // GET: /Product/
 
         public ActionResult Index(string category, string keyWord, string orderBy)
         {
@@ -20,6 +20,7 @@ namespace Spetmall.Admin.Controllers
             List<category> categorys = categoryDAL.GetInstance().GetFloorDatas();
             ViewBag.categorys = categorys;
             ViewBag.datas = datas;
+            ViewBag.orderBy = orderBy;
             return View();
         }
 
@@ -81,6 +82,30 @@ namespace Spetmall.Admin.Controllers
                 });
             }
             return result;
+        }
+
+        public ActionResult Export(string category, string keyWord, string orderBy)
+        {
+            try
+            {
+                string downloadFileName = string.Format("商品数据{0}.xlsx", DateTime.Now.ToString("yyyyMMddHHmmssffff"));
+                List<product> datas = productDAL.GetInstance().GetProducts(string.Empty, category, keyWord, orderBy, 1, int.MaxValue);
+
+                if (datas != null)
+                {
+                    string _strPath = System.Web.HttpContext.Current.Server.MapPath(Const.ExportPath);
+                    string savedExcelPath = ExportBLL.ExportProductToExcel(datas, _strPath);
+
+                    return File(savedExcelPath, "application/vnd.ms-excel", downloadFileName);
+                }
+
+            }
+            catch (Exception e)
+            {
+                Util.Log.LogUtil.Write("导出商品数据失败：" + e, Util.Log.LogType.Error);
+            }
+
+            return new EmptyResult();
         }
     }
 }

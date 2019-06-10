@@ -26,28 +26,29 @@
     <div class="tablebox padt">
         <div class="fenlei2">
             <ul class="clear">
-                <li><a href="?time=1" class="@(ViewBag.time=="1"?"active2":"")">今天</a></li>
-                <li><a href="?time=2" class="@(ViewBag.time=="2"?"active2":"")">近二天</a></li>
-                <li><a href="?time=7" class="@(ViewBag.time=="7"?"active2":"")">近一周</a></li>
-                <li><a href="?time=30" class="@(ViewBag.time=="30"?"active2":"")">近一月</a></li>
-                <li><a href="?time=365" class="@(ViewBag.time=="365"?"active2":"")">近一年</a></li>
+                <li><a href="?keyword=@ViewBag.keyword&starttime=@ViewBag.starttime&endtime=@ViewBag.endtime&time=1" class="@(ViewBag.time=="1"?"active2":"")">今天</a></li>
+                <li><a href="?keyword=@ViewBag.keyword&starttime=@ViewBag.starttime&endtime=@ViewBag.endtime&time=2" class="@(ViewBag.time=="2"?"active2":"")">近二天</a></li>
+                <li><a href="?keyword=@ViewBag.keyword&starttime=@ViewBag.starttime&endtime=@ViewBag.endtime&time=7" class="@(ViewBag.time=="7"?"active2":"")">近一周</a></li>
+                <li><a href="?keyword=@ViewBag.keyword&starttime=@ViewBag.starttime&endtime=@ViewBag.endtime&time=30" class="@(ViewBag.time=="30"?"active2":"")">近一月</a></li>
+                <li><a href="?keyword=@ViewBag.keyword&starttime=@ViewBag.starttime&endtime=@ViewBag.endtime&time=365" class="@(ViewBag.time=="365"?"active2":"")">近一年</a></li>
             </ul>
         </div>
         <table class="table01" width="100%" border="0" cellspacing="0" cellpadding="0">
             <tbody>
                 <tr>
                     <th>交易订单号</th>
-                    <th>商品金额(元)</th>
-                    <th>实际交易总金额(元)</th>
-                    <th>优惠(元)</th>
-                    <th>调价(元)</th>
+                    <th>商品金额</th>
+                    <th>实际支付</th>
+                    <th>优惠</th>
+                    <th>调价</th>
                     <th>交易时间</th>
                     <th>支付方式</th>
                     <th>用户</th>
                     <th>操作</th>
                 </tr>
                 @{
-                    foreach (order_detail item in ViewBag.datas as IList<order_detail>)
+                    var datas = ViewBag.datas as IList<order_detail>;
+                    foreach (order_detail item in datas)
                     {
                         <tr>
                             <td>@item.id</td>
@@ -61,6 +62,18 @@
                             <td><a href="Detail/@item.id">查看</a></td>
                         </tr>
                     }
+                    <tr style="font-weight:bold;">
+                        <td>数据汇总</td>
+                        <td>@(datas.Sum(a => a.productMoney))</td>
+                        <td>@(datas.Sum(a => a.payMoney))</td>
+                        <td>@(datas.Sum(a => a.discountMoney))</td>
+                        <td>@(datas.Sum(a => -a.adjustMomey))</td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+
                 }
 
             </tbody>

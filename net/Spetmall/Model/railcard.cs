@@ -32,6 +32,16 @@ namespace Spetmall.Model
         [TableField]
         public int times { get; set; }
         /// <summary>
+        /// 宠物名字
+        /// </summary>
+        [TableField]
+        public string petname { get; set; }
+        /// <summary>
+        /// 宠物年龄（岁）
+        /// </summary>
+        [TableField]
+        public short petage { get; set; }
+        /// <summary>
         /// 剩余使用次数
         /// </summary>
         [TableField]
@@ -51,6 +61,11 @@ namespace Spetmall.Model
         /// </summary>
         [TableField]
         public DateTime endtime { get; set; }
+        /// <summary>
+        /// 备注
+        /// </summary>
+        [TableField]
+        public string remark { get; set; }
         /// <summary>
         /// 
         /// </summary>

@@ -9,6 +9,7 @@ using Spetmall.BLL.Page;
 
 namespace Spetmall.Admin.Controllers
 {
+    [Common.CustomAuthorize]
     public class CategoryController : Controller
     {
 

@@ -15,6 +15,7 @@
     <script src="/static/js/iframeTools.source.js"></script>
     <script src="/static/js/iframe.js"></script>
     <script src="/static/js/common.js?_t=1558946765"></script>
+    <script src="/Scripts/common.js"></script>
 </head>
 <body class="iframebody">
     <div style=" padding:50px;">
@@ -22,11 +23,24 @@
             <input name="memberid" type="hidden" value="@ViewBag.MemberId">
             <ul class="formlist">
                 <li><label class="lbt"><em>(*)</em>会员姓名：</label><div><span>@ViewBag.Name</span></div></li>
-                <li><label class="lbt"><em>(*)</em>冲值金额：</label><div><input name="money" class="form-control" type="text" placeholder="请输入冲值金额" value=""> </div></li>
+                <li>
+                    <label class="lbt"><em>(*)</em>冲值金额：</label><div>
+                        <input name="money" class="form-control" type="text" placeholder="请输入冲值金额" value="">
+                        <span id="errmoney" class="error"></span>
+                    </div>
+                </li>
                 <li><label class="lbt">说明：</label><div><textarea name="remark" class="form-textarea confiem_remarks_information" style="height:60px;" cols="" rows=""></textarea></div></li>
             </ul>
             <div class="padt" style="text-align: center"><a href="javascript:;" class="btn btnyes yunmall_button">保存</a></div>
         </form>
     </div>
+    <script>
+        function isValid() {
+            var result = true;
+            result = IsValueNotEmpty("money", "errmoney", "冲值金额") && result;
+            result = result && IsValueDecimal("money", "errmoney", "冲值金额");
+            return result;
+        }
+    </script>
 </body>
 </html>

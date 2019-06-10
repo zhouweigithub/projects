@@ -1244,6 +1244,7 @@
     <Content Include="Views\Reports\ProductDetail.cshtml" />
     <Content Include="Views\Reports\Category.cshtml" />
     <Content Include="Views\Reports\Member.cshtml" />
+    <Content Include="Views\Main\Login.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Images\upload\" />

@@ -18,9 +18,21 @@ namespace Spetmall.DAL
         private static readonly string getPayInfoSql = @"
 SELECT crdate,IFNULL(SUM(payMoney),0)payMoney,IFNULL(SUM(discountMoney),0)discountMoney,
 IFNULL(SUM(adjustMomey),0)adjustMomey,IFNULL(SUM(profitMoney),0)profitMoney,
-IFNULL(SUM(costMoney),0)costMoney,COUNT(1)payCount 
-FROM `order` WHERE state=0 {0} 
-GROUP BY crdate;
+IFNULL(SUM(costMoney),0)costMoney,COUNT(1)payCount ,0 rechargeMoney,0 railCardMoney
+FROM `order` WHERE state=0 {0}
+GROUP BY crdate
+
+UNION
+
+SELECT DATE(crtime)crdate,0 payMoney,0 discountMoney,0 adjustMomey,0 profitMoney,
+0 costMoney,0 payCount,SUM(money)rechargeMoney,0 railCardMoney FROM recharge WHERE 1=1 {1}
+GROUP BY crdate
+
+UNION
+
+SELECT DATE(crtime)crdate,0 payMoney,0 discountMoney,0 adjustMomey,0 profitMoney,
+0 costMoney,0 payCount,0 rechargeMoney,SUM(money)railCardMoney FROM railcard  WHERE 1=1 {1}
+GROUP BY crdate
 ";
 
         private static readonly string getProductInfoSql = @"
@@ -42,13 +54,15 @@ WHERE b.state=0 and a.productid='{0}' {1} GROUP BY b.crdate
         {
             try
             {
-                string where = string.Empty;
+                string where1 = string.Empty;
                 if (!string.IsNullOrEmpty(startdate))
-                    where += $" and crdate>='{startdate}'";
+                    where1 += $" and crdate>='{startdate}'";
                 if (!string.IsNullOrEmpty(enddate))
-                    where += $" and crdate<='{enddate}'";
+                    where1 += $" and crdate<='{enddate}'";
 
-                string sql = string.Format(getPayInfoSql, where);
+                string where2 = where1.Replace("crdate", "crtime");
+
+                string sql = string.Format(getPayInfoSql, where1, where2);
 
                 using (DBHelper dbHelper = new DBHelper(WebConfigData.DataBaseType, WebConfigData.ConnString))
                 {

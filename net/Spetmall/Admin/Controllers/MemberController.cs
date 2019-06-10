@@ -10,10 +10,9 @@ using Spetmall.Model.Page;
 
 namespace Spetmall.Admin.Controllers
 {
+        [Common.CustomAuthorize]
     public class MemberController : Controller
     {
-        //
-        // GET: /Member/
 
         public ActionResult Index(string keyWord, string orderBy)
         {
@@ -60,6 +59,15 @@ namespace Spetmall.Admin.Controllers
                 if (member.id == 0)
                 {
                     status = memberDAL.GetInstance().Add<member>(member) > 0;
+                    //添加会员时，插入一条充值记录
+                    rechargeDAL.GetInstance().Add<recharge>(new recharge()
+                    {
+                        sno = GetSno(),
+                        memberid = member.id,
+                        money = member.money,
+                        remark = "添加会员时充值",
+                        balance = member.money,
+                    });
                 }
                 else
                 {
@@ -134,11 +142,8 @@ namespace Spetmall.Admin.Controllers
         //充值记录
         public ActionResult RechargeRecord(int memberid)
         {
-            IList<recharge> rechargeList = null;
-            if (memberid > 0)
-            {   //充值
-                rechargeList = rechargeDAL.GetInstance().GetList<recharge>();
-            }
+            string where = memberid > 0 ? $"memberid={memberid}" : "1=1";
+            IList<recharge> rechargeList = rechargeDAL.GetInstance().GetList<recharge>(where);
             ViewBag.rechargeList = rechargeList;
             return View();
         }

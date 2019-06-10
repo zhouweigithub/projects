@@ -82,7 +82,8 @@ var ReceiptCommon = function () {
 
 
         $(document).bind('click', function () {
-            that.Ele.keyword.focus();
+            if ($(".lockbackground").is(":visible") == false)
+                that.Ele.keyword.focus();
         }).trigger('click');
 
         window.onclick = function () {

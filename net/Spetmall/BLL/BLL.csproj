@@ -85,6 +85,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Page\ExportBLL.cs" />
     <Compile Include="Page\FullSendBLL.cs" />
     <Compile Include="Page\DiscountBLL.cs" />
     <Compile Include="Page\ReceiptBLL.cs" />
