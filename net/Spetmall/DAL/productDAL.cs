@@ -12,7 +12,7 @@ namespace Spetmall.DAL
     {
         private static readonly productDAL Instance = new productDAL();
 
-        private static readonly string getDatasSql = "SELECT * FROM product WHERE 1=1 {0} {1}";
+        private static readonly string getDatasSql = "SELECT a.*,b.name categoryName FROM product a INNER JOIN category b ON a.category=b.id WHERE 1=1 {0} {1}";
         private static readonly string updateStroeSalesSql = "UPDATE product SET store=store-{0},sales=sales+{0} WHERE id={1} ;";
 
         private productDAL()
@@ -32,14 +32,14 @@ namespace Spetmall.DAL
             return Instance;
         }
 
-        public List<product> GetProducts(string productId, string category, string keyWord, string orderBy, int page, int pageSize)
+        public List<product_show> GetProducts(string productId, string category, string keyWord, string orderBy, int page, int pageSize)
         {
             try
             {
                 string where = GetWhere(productId, category, keyWord);
                 string orderby = string.Empty;
                 if (!string.IsNullOrWhiteSpace(orderBy))
-                    orderBy = $"order by {orderBy}";
+                    orderBy = $"order by a.{orderBy}";
 
                 string sql = string.Format(getDatasSql, where, orderBy);
 
@@ -47,25 +47,25 @@ namespace Spetmall.DAL
                 {
                     DataTable dt = dbHelper.ExecuteDataTablePage(sql, pageSize, page);
                     if (dt != null && dt.Rows.Count > 0)
-                        return dt.ToList<Model.product>();
+                        return dt.ToList<Model.product_show>();
                 }
             }
             catch (Exception ex)
             {
                 WriteLog.Write(WriteLog.LogLevel.Error, "GetProducts 获取商品数据出错\r\n" + ex.Message);
             }
-            return new List<product>();
+            return new List<product_show>();
         }
 
         private string GetWhere(string productId, string category, string keyWord)
         {
             string where = string.Empty;
             if (!string.IsNullOrWhiteSpace(productId))
-                where += $" and id={productId}";
+                where += $" and a.id={productId}";
             if (!string.IsNullOrWhiteSpace(category))
-                where += $" and category={category}";
+                where += $" and a.category={category}";
             if (!string.IsNullOrWhiteSpace(keyWord))
-                where += $" and (name like'%{keyWord}%' or barcode like'%{keyWord}%')";
+                where += $" and (a.name like'%{keyWord}%' or a.barcode like'%{keyWord}%')";
 
             return where;
         }

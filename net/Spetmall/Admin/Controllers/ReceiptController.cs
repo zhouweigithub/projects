@@ -87,7 +87,7 @@ namespace Spetmall.Admin.Controllers
 
         public ActionResult QueryProduct(string category, string keyWord, int page, int pageSize)
         {
-            List<product> datas = productDAL.GetInstance().GetProducts(string.Empty, category, keyWord, string.Empty, page, pageSize);
+            List<product_show> datas = productDAL.GetInstance().GetProducts(string.Empty, category, keyWord, string.Empty, page, pageSize);
             ViewBag.datas = datas;
             return Json(new
             {

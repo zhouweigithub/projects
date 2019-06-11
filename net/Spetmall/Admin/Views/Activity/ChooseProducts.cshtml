@@ -69,7 +69,7 @@
                 </thead>
                 <tbody>
                     @{
-                        foreach (product item in ViewBag.datas as List<product>)
+                        foreach (product_show item in ViewBag.datas as List<product_show>)
                         {
                             <tr>
                                 <td align="center"><input name="check[]" class="glcheck" data-id="@item.id" data-thumimg="@item.thumbnail" data-title="@item.name" type="checkbox" value="@item.id" /></td>

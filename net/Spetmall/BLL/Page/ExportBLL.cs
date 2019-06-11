@@ -13,7 +13,7 @@ namespace Spetmall.BLL.Page
 {
     public class ExportBLL
     {
-        public static string ExportProductToExcel(List<product> datas, string absoluteSavePath)
+        public static string ExportProductToExcel(List<product_show> datas, string absoluteSavePath)
         {
             string result = string.Empty;
             if (datas != null)
@@ -26,7 +26,7 @@ namespace Spetmall.BLL.Page
                     //sheetMain.DisplayGridlines = false;
                     IRow rowFirst = sheetMain.CreateRow(0);
 
-                    string[] titles = new string[] { "ID", "商品名称", "条码", "分类", "成本", "卖价", "库存", "销量", "警戒值", "会员折扣" };
+                    string[] titles = new string[] { "ID", "商品名称", "条码", "分类", "成本", "卖价", "库存", "库存预警", "销量", "会员折扣" };
 
                     for (int i = 0; i < titles.Length; i++)
                     {
@@ -34,19 +34,19 @@ namespace Spetmall.BLL.Page
                     }
 
                     int rowIndex = 0;
-                    foreach (product item in datas)
+                    foreach (product_show item in datas)
                     {
                         int cellIndex = 0;
                         IRow row = sheetMain.CreateRow(++rowIndex);
                         row.CreateCell(cellIndex++).SetCellValue(item.id);
                         row.CreateCell(cellIndex++).SetCellValue(item.name);
                         row.CreateCell(cellIndex++).SetCellValue(item.barcode);
-                        row.CreateCell(cellIndex++).SetCellValue(item.category);
+                        row.CreateCell(cellIndex++).SetCellValue(item.categoryName);
                         row.CreateCell(cellIndex++).SetCellValue((double)item.cost);
                         row.CreateCell(cellIndex++).SetCellValue((double)item.price);
                         row.CreateCell(cellIndex++).SetCellValue(item.store);
-                        row.CreateCell(cellIndex++).SetCellValue(item.sales);
                         row.CreateCell(cellIndex++).SetCellValue(item.warn);
+                        row.CreateCell(cellIndex++).SetCellValue(item.sales);
                         row.CreateCell(cellIndex++).SetCellValue(item.ismemberdiscount);
                     }
 

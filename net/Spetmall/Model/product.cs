@@ -72,4 +72,9 @@ namespace Spetmall.Model
         public DateTime crtime { get; set; }
 
     }
+
+    public class product_show : product
+    {
+        public string categoryName { get; set; }
+    }
 }

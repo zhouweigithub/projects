@@ -12,6 +12,8 @@ MySQL - 8.0.11 : Database - spetmall
 /*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
 /*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
+CREATE DATABASE /*!32312 IF NOT EXISTS*/`spetmall` /*!40100 DEFAULT CHARACTER SET utf8 */;
+
 /*Table structure for table `category` */
 
 DROP TABLE IF EXISTS `category`;
@@ -47,11 +49,11 @@ CREATE TABLE `discount` (
   `state` tinyint(4) DEFAULT '1' COMMENT '状态 0关闭 1启用',
   `crtime` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=27 DEFAULT CHARSET=utf8 COMMENT='限时折扣';
+) ENGINE=InnoDB AUTO_INCREMENT=30 DEFAULT CHARSET=utf8 COMMENT='限时折扣';
 
 /*Data for the table `discount` */
 
-insert  into `discount`(`id`,`name`,`type`,`way`,`fullsend`,`starttime`,`endtime`,`state`,`crtime`) values (23,'ttt',2,0,0,'2019-06-04 00:00:00','2019-06-20 00:00:00',0,'2019-06-04 12:15:29'),(25,'ttt',0,0,0,'2019-06-04 00:00:00','2019-06-20 00:00:00',1,'2019-06-04 14:14:37');
+insert  into `discount`(`id`,`name`,`type`,`way`,`fullsend`,`starttime`,`endtime`,`state`,`crtime`) values (28,'test2',0,0,1,'2019-06-11 00:00:00','2019-06-30 00:00:00',0,'2019-06-11 17:15:44'),(29,'ttt',2,0,1,'2019-06-11 00:00:00','2019-06-17 00:00:00',0,'2019-06-11 17:16:31');
 
 /*Table structure for table `fullsend` */
 
@@ -66,11 +68,11 @@ CREATE TABLE `fullsend` (
   `state` tinyint(4) DEFAULT '1' COMMENT '状态 0关闭 1启用',
   `crtime` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8 COMMENT='满就送';
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8 COMMENT='满就送';
 
 /*Data for the table `fullsend` */
 
-insert  into `fullsend`(`id`,`name`,`type`,`starttime`,`endtime`,`state`,`crtime`) values (4,'j',2,'2019-06-03 00:00:00','2019-06-20 00:00:00',0,'2019-06-03 20:51:34');
+insert  into `fullsend`(`id`,`name`,`type`,`starttime`,`endtime`,`state`,`crtime`) values (5,'test2',0,'2019-06-11 00:00:00','2019-06-30 00:00:00',1,'2019-06-11 17:18:20'),(6,'ttt',2,'2019-06-11 00:00:00','2019-06-25 00:00:00',0,'2019-06-11 17:19:19'),(7,'test2',1,'2019-06-11 00:00:00','2019-06-11 00:00:00',0,'2019-06-11 18:41:38');
 
 /*Table structure for table `member` */
 
@@ -195,11 +197,11 @@ CREATE TABLE `product` (
   `thumbnail` varchar(500) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL COMMENT '缩略图',
   `crtime` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8 COMMENT='商品信息';
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8 COMMENT='商品信息';
 
 /*Data for the table `product` */
 
-insert  into `product`(`id`,`barcode`,`name`,`category`,`store`,`sales`,`warn`,`cost`,`price`,`ismemberdiscount`,`thumbnail`,`crtime`) values (1,'1','正品萨迪卡玫瑰5乒乓球拍玫瑰7层纯木乒乓球底板直横拍可刻字',2,-2,12,6,'1.00','2.00',1,'/images/upload/20190604022249300.jpeg','2019-05-25 14:39:19'),(2,'1','呵呵',3,12,16,8,'1.00','2.00',1,'/images/upload/20190604022306613.jpeg','2019-05-25 14:41:26'),(3,'3','泰迪专享',4,13,12,5,'1.00','4.00',1,'/images/upload/20190604022330100.jpeg','2019-05-25 16:20:49'),(4,'77','test2',4,17,3,5,'1.00','2.00',1,'/images/upload/20190604022337062.jpeg','2019-05-25 16:24:56');
+insert  into `product`(`id`,`barcode`,`name`,`category`,`store`,`sales`,`warn`,`cost`,`price`,`ismemberdiscount`,`thumbnail`,`crtime`) values (1,'1','正品萨迪卡玫瑰5乒乓球拍玫瑰7层纯木乒乓球底板直横拍可刻字',2,8,12,6,'1.00','2.00',1,'/images/upload/20190604022249300.jpeg','2019-05-25 14:39:19'),(2,'1','呵呵',2,12,0,8,'1.00','2.00',1,'/images/upload/20190604022306613.jpeg','2019-05-25 14:41:26'),(3,'3','泰迪专享',4,13,12,5,'1.00','4.00',1,'/images/upload/20190604022330100.jpeg','2019-05-25 16:20:49'),(4,'77','test2',4,17,3,5,'1.00','2.00',1,'/images/upload/20190604022337062.jpeg','2019-05-25 16:24:56'),(5,'6353541892457','我的小可爱',4,10,0,10,'3.00','4.00',1,'/images/upload/20190611044753621.jpeg','2019-06-11 16:48:22');
 
 /*Table structure for table `railcard` */
 
@@ -275,11 +277,11 @@ CREATE TABLE `saleproduct` (
   `productid` int(11) DEFAULT '0' COMMENT '商品id',
   `crtime` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=81 DEFAULT CHARSET=utf8 COMMENT='做活动的商品';
+) ENGINE=InnoDB AUTO_INCREMENT=90 DEFAULT CHARSET=utf8 COMMENT='做活动的商品';
 
 /*Data for the table `saleproduct` */
 
-insert  into `saleproduct`(`id`,`type`,`ptype`,`saleid`,`productid`,`crtime`) values (3,0,1,12,9,'2019-06-02 13:22:34'),(74,1,0,4,3,'2019-06-04 12:21:41'),(79,0,0,23,3,'2019-06-04 14:17:57'),(80,0,0,23,4,'2019-06-04 14:17:57');
+insert  into `saleproduct`(`id`,`type`,`ptype`,`saleid`,`productid`,`crtime`) values (3,0,1,12,9,'2019-06-02 13:22:34'),(84,1,0,6,2,'2019-06-11 17:19:19'),(85,1,0,6,3,'2019-06-11 17:19:19'),(86,0,0,29,1,'2019-06-11 17:31:43'),(87,0,0,29,2,'2019-06-11 17:31:43'),(89,1,1,7,2,'2019-06-11 18:42:49');
 
 /*Table structure for table `salerule` */
 
@@ -293,28 +295,11 @@ CREATE TABLE `salerule` (
   `sale` double DEFAULT '0' COMMENT '打几折或减多少金额',
   `crtime` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=79 DEFAULT CHARSET=utf8 COMMENT='活动规则';
+) ENGINE=InnoDB AUTO_INCREMENT=92 DEFAULT CHARSET=utf8 COMMENT='活动规则';
 
 /*Data for the table `salerule` */
 
-insert  into `salerule`(`id`,`saleid`,`type`,`aim`,`sale`,`crtime`) values (68,4,0,'10.00',2,'2019-06-04 12:21:41'),(69,4,0,'5.00',1,'2019-06-04 12:21:41'),(76,25,0,'1.00',6,'2019-06-04 14:14:37'),(77,23,0,'2.00',9,'2019-06-04 14:17:57'),(78,23,0,'3.00',8,'2019-06-04 14:17:57');
-
-/*Table structure for table `temp_order` */
-
-DROP TABLE IF EXISTS `temp_order`;
-
-CREATE TABLE `temp_order` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `userid` int(11) NOT NULL DEFAULT '0' COMMENT '营业员id',
-  `memberid` int(11) NOT NULL DEFAULT '0' COMMENT '会员id',
-  `paytype` tinyint(4) NOT NULL DEFAULT '0' COMMENT '支付方式',
-  `products` varchar(10000) NOT NULL COMMENT '商品',
-  `member_discount` tinyint(4) NOT NULL DEFAULT '0' COMMENT '是否启用会员折扣',
-  `crtime` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='挂单信息';
-
-/*Data for the table `temp_order` */
+insert  into `salerule`(`id`,`saleid`,`type`,`aim`,`sale`,`crtime`) values (84,5,0,'5.00',1,'2019-06-11 17:18:21'),(85,6,0,'8.00',3,'2019-06-11 17:19:19'),(86,29,0,'2.00',8,'2019-06-11 17:31:43'),(87,29,0,'3.00',7,'2019-06-11 17:31:43'),(88,28,0,'2.00',9,'2019-06-11 17:32:56'),(89,28,0,'3.00',8,'2019-06-11 17:32:56'),(91,7,0,'5.00',1,'2019-06-11 18:42:49');
 
 /*Table structure for table `user` */
 

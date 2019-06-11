@@ -5,6 +5,7 @@ using System.Linq;
 using Spetmall.Common;
 using MySql.Data.MySqlClient;
 using Spetmall.Model.Page;
+using System.Collections.Generic;
 
 namespace Spetmall.DAL
 {
@@ -12,13 +13,26 @@ namespace Spetmall.DAL
     {
         private static readonly fullsendDAL Instance = new fullsendDAL();
 
-        private static readonly string insertDiscountSql = @"INSERT INTO spetmall.fullsend (`name`,`type`,starttime,endtime,state
+        private static readonly string insertFullsendSql = @"INSERT INTO fullsend (`name`,`type`,starttime,endtime,state
 ) VALUES('{0}','{1}','{2}','{3}','{4}');";
-        private static readonly string insertProductOrCategorySql = @"INSERT INTO spetmall.saleproduct (`type`,ptype,saleid,productid
+        private static readonly string insertProductOrCategorySql = @"INSERT INTO saleproduct (`type`,ptype,saleid,productid
 ) VALUES('{0}','{1}','{2}','{3}');";
-        private static readonly string insertRuleSql = @"INSERT INTO spetmall.salerule ( saleid, aim, sale
+        private static readonly string insertRuleSql = @"INSERT INTO salerule ( saleid, aim, sale
 ) VALUES('{0}','{1}','{2}');";
         private static readonly string getLastInsertIdSql = "SELECT LAST_INSERT_ID()";
+        /// <summary>
+        /// 查询店铺级活动是否存在时间 交叉
+        /// </summary>
+        private static readonly string getIntersectDateShopSql = "SELECT MAX(endtime)endtime FROM fullsend WHERE `type`=0 AND starttime<='{0}' AND endtime>='{1}' {2}";
+        /// <summary>
+        /// 查询商品或分类活动是否存在时间交叉
+        /// </summary>
+        private static readonly string getIntersectDateNotShopSql = @"
+SELECT b.productid,MAX(a.endtime)endtime FROM fullsend a
+INNER JOIN saleproduct b ON a.id=b.saleid
+WHERE a.`type`={0} AND b.productid IN({1}) AND a.starttime<='{2}' AND a.endtime>='{3}' {4}
+GROUP BY b.productid
+";
 
 
         private fullsendDAL()
@@ -44,7 +58,7 @@ namespace Spetmall.DAL
             {
                 using (DBHelper dbHelper = new DBHelper(WebConfigData.DataBaseType, WebConfigData.ConnString))
                 {
-                    string sql = string.Format(insertDiscountSql, data.name, data.type,
+                    string sql = string.Format(insertFullsendSql, data.name, data.type,
                         data.starttime.ToString("yyyy-MM-dd"), data.endtime.ToString("yyyy-MM-dd"), data.state);
                     dbHelper.ExecuteNonQuery(sql);
 
@@ -101,6 +115,63 @@ namespace Spetmall.DAL
                 }
             }
         }
+
+        /// <summary>
+        /// 获取店铺活动时间交叉点
+        /// </summary>
+        /// <param name="startdate"></param>
+        /// <param name="enddate"></param>
+        /// <returns></returns>
+        public static string GetIntersectDateShop(string startdate, string enddate, int currentActiveid)
+        {
+            try
+            {
+                using (DBHelper dbHelper = new DBHelper(WebConfigData.DataBaseType, WebConfigData.ConnString))
+                {
+                    string where = currentActiveid > 0 ? $" AND id<>{currentActiveid}" : "";
+                    object endtime = dbHelper.ExecuteScalar(string.Format(getIntersectDateShopSql, enddate, startdate, where));
+                    if (endtime != null)
+                        return Convert.ToDateTime(endtime).ToString("yyyy-MM-dd");
+                    else
+                        return null;
+                }
+            }
+            catch (Exception ex)
+            {
+                WriteLog.Write(WriteLog.LogLevel.Error, "GetIntersectDateShop 获取店铺活动时间交叉点出错\r\n" + ex);
+            }
+            return string.Empty;
+        }
+
+        /// <summary>
+        /// 获取非店铺活动时间交叉点
+        /// </summary>
+        /// <param name="type">1按分类 2按商品</param>
+        /// <param name="productids"></param>
+        /// <param name="startdate"></param>
+        /// <param name="enddate"></param>
+        /// <returns></returns>
+        public static List<active_date> GetIntersectDateNotShop(short type, string productids, string startdate, string enddate, int currentActiveid)
+        {
+            try
+            {
+                using (DBHelper dbHelper = new DBHelper(WebConfigData.DataBaseType, WebConfigData.ConnString))
+                {
+                    string where = currentActiveid > 0 ? $" AND a.id<>{currentActiveid}" : "";
+                    DataTable dt = dbHelper.ExecuteDataTable(string.Format(getIntersectDateNotShopSql, type, productids, enddate, startdate, where));
+                    if (dt.Rows.Count > 0)
+                    {
+                        return dt.ToList<active_date>();
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                WriteLog.Write(WriteLog.LogLevel.Error, "GetIntersectDateNotShop 获取非店铺活动时间交叉点出错\r\n" + ex);
+            }
+            return new List<active_date>();
+        }
+
 
     }
 }

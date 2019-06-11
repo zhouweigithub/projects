@@ -75,6 +75,12 @@ namespace Spetmall.Admin.Controllers
             string errMsg = "操作成功";
             try
             {
+                var crossInfo = ActivityBLL.GetDisscountCrossInfo(discount);
+                if (crossInfo != null)
+                {   //如果当前选择的日期范围与已存在的同类活动日期范围存在交叉，则提示错误
+                    return Json(crossInfo, JsonRequestBehavior.AllowGet);
+                }
+
                 if (discount.id == 0)
                 {   //添加
                     discount.state = 1;
@@ -204,7 +210,6 @@ namespace Spetmall.Admin.Controllers
 
                 var rules = fullsend.rules.Select(a => new { min_price = a.aim, reduce_price = a.sale, goods = new string[] { } });
                 ViewBag.rules = Util.Json.JsonUtil.Serialize(rules);
-
             }
 
             return View(fullsend);
@@ -217,6 +222,12 @@ namespace Spetmall.Admin.Controllers
             string errMsg = "操作成功";
             try
             {
+                var crossInfo = ActivityBLL.GetFullsendCrossInfo(fullsend);
+                if (crossInfo != null)
+                {    //如果当前选择的日期范围与已存在的同类活动日期范围存在交叉，则提示错误
+                    return Json(crossInfo, JsonRequestBehavior.AllowGet);
+                }
+
                 if (fullsend.id == 0)
                 {   //添加
                     fullsend.state = 1;
@@ -300,7 +311,7 @@ namespace Spetmall.Admin.Controllers
 
         public ActionResult ChooseProducts(string productId, string keyWord)
         {
-            List<product> datas = productDAL.GetInstance().GetProducts(productId, string.Empty, keyWord, string.Empty, 1, int.MaxValue);
+            List<product_show> datas = productDAL.GetInstance().GetProducts(productId, string.Empty, keyWord, string.Empty, 1, int.MaxValue);
             ViewBag.datas = datas;
             return View();
         }

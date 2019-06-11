@@ -264,7 +264,7 @@ namespace Spetmall.BLL.Page
         public static List<receipt_discount_detail> GetAllDiscounts()
         {
             List<receipt_discount_detail> result = new List<receipt_discount_detail>();
-            IList<discount> discounts = discountDAL.GetInstance().GetList<discount>("state=1 AND starttime<NOW() AND endtime>NOW()");
+            IList<discount> discounts = discountDAL.GetInstance().GetList<discount>("state=1 AND starttime<=CURDATE() AND endtime>=CURDATE()");
             foreach (discount item in discounts)
             {
                 receipt_discount_detail detail = ConvertToDetail(item);
@@ -282,7 +282,7 @@ namespace Spetmall.BLL.Page
         public static List<receipt_fullsend_detail> GetAllFullSends()
         {
             List<receipt_fullsend_detail> result = new List<receipt_fullsend_detail>();
-            IList<fullsend> fullsends = fullsendDAL.GetInstance().GetList<fullsend>("state=1 AND starttime<NOW() AND endtime>NOW()");
+            IList<fullsend> fullsends = fullsendDAL.GetInstance().GetList<fullsend>("state=1 AND starttime<=CURDATE() AND endtime>=CURDATE()");
             foreach (fullsend item in fullsends)
             {
                 receipt_fullsend_detail detail = ConvertToDetail(item);

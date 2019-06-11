@@ -32,8 +32,8 @@
                         <span class="yun_upload_images" style="padding-top:0px; padding-bottom:20px">
                             @Html.HiddenFor(m => m.thumbnail, new { @class = "dfinput  thumb_f64165672ceb97dc00593b60f0c14cc9" })
                             <a href="javascript:;" class="yunmall_upload_img2" yun_attachment=".thumb_f64165672ceb97dc00593b60f0c14cc9" onclick="document.getElementById('imgFile').click();" cropping="[156,156]">
-                                <input type="file" id="imgFile" name="imgFile" style="display:inline;width:500px;" accept="image/*" />
-                                <img src="/static/images/upload-pic.png" id="pimg" width="120" class="thumb_f64165672ceb97dc00593b60f0c14cc9" onerror="this.src='/static/images/upload-pic.png';" />
+                                <input type="file" id="imgFile" name="imgFile" style="display:none;width:500px;" accept="image/*" />
+                                <img src="@Model.thumbnail" id="pimg" width="120" class="thumb_f64165672ceb97dc00593b60f0c14cc9" onerror="this.src='/static/images/upload-pic.png';" />
                             </a>
                         </span>
                     </div>

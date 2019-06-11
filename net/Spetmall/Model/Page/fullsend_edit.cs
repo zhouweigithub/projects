@@ -21,7 +21,7 @@ namespace Spetmall.Model.Page
     public class fullsend_post : fullsend
     {
         /// <summary>
-        /// 存储商品分类或商品
+        /// 存储商品分类或商品，逗号隔开
         /// </summary>
         public string categoryOrProducts { get; set; }
         /// <summary>

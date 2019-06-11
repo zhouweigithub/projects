@@ -16,7 +16,7 @@ namespace Spetmall.Admin.Controllers
 
         public ActionResult Index(string category, string keyWord, string orderBy)
         {
-            List<product> datas = productDAL.GetInstance().GetProducts(string.Empty, category, keyWord, orderBy, 1, int.MaxValue);
+            List<product_show> datas = productDAL.GetInstance().GetProducts(string.Empty, category, keyWord, orderBy, 1, int.MaxValue);
             List<category> categorys = categoryDAL.GetInstance().GetFloorDatas();
             ViewBag.categorys = categorys;
             ViewBag.datas = datas;
@@ -29,7 +29,10 @@ namespace Spetmall.Admin.Controllers
             product product = null;
             if (id == 0)
             {   //添加
-                product = new product();
+                product = new product()
+                {
+                    thumbnail = "/static/images/upload-pic.png",
+                };
             }
             else
             {   //编辑
@@ -64,6 +67,26 @@ namespace Spetmall.Admin.Controllers
             return Content(CommonBLL.GetReturnJson(status, errMsg));
         }
 
+        public ActionResult Delete(int id)
+        {
+            bool status = false;
+            string errMsg = string.Empty;
+            try
+            {
+                status = productDAL.GetInstance().DeleteByKey(id) > 0;
+            }
+            catch (Exception e)
+            {
+                errMsg = e.Message;
+            }
+
+            return Json(new
+            {
+                status,
+                msg = errMsg,
+            }, JsonRequestBehavior.AllowGet);
+        }
+
         public List<SelectListItem> GetCategoryItems()
         {
             List<SelectListItem> result = new List<SelectListItem>();
@@ -89,7 +112,7 @@ namespace Spetmall.Admin.Controllers
             try
             {
                 string downloadFileName = string.Format("商品数据{0}.xlsx", DateTime.Now.ToString("yyyyMMddHHmmssffff"));
-                List<product> datas = productDAL.GetInstance().GetProducts(string.Empty, category, keyWord, orderBy, 1, int.MaxValue);
+                List<product_show> datas = productDAL.GetInstance().GetProducts(string.Empty, category, keyWord, orderBy, 1, int.MaxValue);
 
                 if (datas != null)
                 {

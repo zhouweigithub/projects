@@ -12,6 +12,10 @@ namespace Spetmall.Admin.Controllers
     [Common.CustomAuthorize]
     public class MainController : Controller
     {
+        public ActionResult Index()
+        {
+            return View();
+        }
 
         public ActionResult Login()
         {

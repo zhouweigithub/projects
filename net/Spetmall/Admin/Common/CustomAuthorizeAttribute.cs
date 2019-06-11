@@ -56,7 +56,7 @@ namespace Spetmall.Admin.Common
         {
             if (filterContext.HttpContext.Response.StatusCode == 401)
             {
-                filterContext.Result = new RedirectResult("/" + (string.IsNullOrWhiteSpace(ReturnUrl) ? "" : "?returnUrl=" + HttpContext.Current.Server.UrlEncode(ReturnUrl)));
+                filterContext.Result = new RedirectResult("/main/login" + (string.IsNullOrWhiteSpace(ReturnUrl) ? "" : "?returnUrl=" + HttpContext.Current.Server.UrlEncode(ReturnUrl)));
             }
         }
     }

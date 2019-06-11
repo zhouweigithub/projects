@@ -22,7 +22,7 @@
 
             </div>
             <div class="rightbtn">
-                <a href="javascript:;" yun_type="dialog" dialog_title="添加商品" uri="edit/0" dialog_width="60%" class="barbtn01" id="open">添加商品</a>
+                <a href="javascript:;" yun_type="dialog" dialog_title="添加商品" uri="edit/0" dialog_width="60%" dialog_height="80%" class="barbtn01" id="open">添加商品</a>
                 <a href="?orderBy=sales" class="barbtn02 @(ViewBag.orderBy == "sales" ? "active" : "")">按售量</a>
                 <a href="?orderBy=store" class="barbtn02 @(ViewBag.orderBy == " store" ? "active" : "" )">按库存</a>
                 <a id="export" href="#" class="barbtn02" target="_blank">导出Excel</a>
@@ -92,27 +92,30 @@
                         <th width="8%">成本</th>
                         <th width="8%">卖价</th>
                         <th width="8%">库存</th>
+                        <th width="8%">库存预警</th>
                         <th width="8%">销量</th>
-                        <th width="8%">警戒值</th>
                         <th width="8%">会员折扣</th>
                         <th width="8%">操作</th>
                     </tr>
                     @{
-                        foreach (product item in ViewBag.datas)
+                        foreach (product_show item in ViewBag.datas)
                         {
                             <tr>
                                 <td>@item.id</td>
                                 <td><img src="@item.thumbnail" onerror="this.src='/static/images/defaultgoods.jpg';" style="height:50px;width:50px"></td>
                                 <td>@item.name</td>
                                 <td>@item.barcode</td>
-                                <td>@item.category</td>
+                                <td>@item.categoryName</td>
                                 <td>@item.cost</td>
                                 <td>@item.price</td>
                                 <td style="@(item.store<=item.warn?"background-color:#FFCC00":"")">@item.store</td>
-                                <td>@item.sales</td>
                                 <td>@item.warn</td>
+                                <td>@item.sales</td>
                                 <td>@(item.ismemberdiscount == 0 ? "未启用" : "启用")</td>
-                                <td><a href="javascript:;" yun_type="dialog" dialog_title="修改商品" uri="edit/@item.id" dialog_width="60%">修改</a></td>
+                                <td>
+                                    <a href="javascript:;" yun_type="dialog" dialog_title="修改商品" uri="edit/@item.id" dialog_width="60%" dialog_height="80%">修改</a>
+                                    | <a href="javascript:void(0);" onclick="yunmall_confirm_dialog('您确定要删除这条记录吗?','delete/@item.id','reload')">删除</a>
+                                </td>
                             </tr>
                         }
                     }
