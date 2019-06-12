@@ -8,75 +8,76 @@
         font-weight: bold;
     }
 </style>
-<div class="fenlei2 fenlei6">
-    <ul class="clear">
-        <li class="active"><a href="index">基本交易报表</a></li>
-        <li><a href="SalePerformance">销售业绩报表</a></li>
-        <li><a href="Products">商品销量报表</a></li>
-        <li><a href="Category">分类统计</a></li>
-        <li><a href="Member">会员报表</a></li>
-    </ul>
-</div>
-<div class="search_time_map">
-    <form action="?" method="get">
-        <div class="search_field">
-            @Html.TextBox("startdate", null, new { @class = "yunmalldate", autocomplete = "off" })
-        </div>
-        <div class="search_split"> 到 </div>
-        <div class="search_field">
-            @Html.TextBox("enddate", null, new { @class = "yunmalldate", autocomplete = "off" })
-        </div>
-        <div class="search_button">
-            <input value="搜 索" type="submit" />
-        </div>
-    </form>
-</div>
+<div class="mianbox">
+    <div class="fenlei2 fenlei6">
+        <ul class="clear">
+            <li class="active"><a href="index">基本交易报表</a></li>
+            <li><a href="SalePerformance">销售业绩报表</a></li>
+            <li><a href="Products">商品销量报表</a></li>
+            <li><a href="Category">分类统计</a></li>
+            <li><a href="Member">会员报表</a></li>
+        </ul>
+    </div>
+    <div class="search_time_map">
+        <form action="?" method="get">
+            <div class="search_field">
+                @Html.TextBox("startdate", null, new { @class = "yunmalldate", autocomplete = "off" })
+            </div>
+            <div class="search_split"> 到 </div>
+            <div class="search_field">
+                @Html.TextBox("enddate", null, new { @class = "yunmalldate", autocomplete = "off" })
+            </div>
+            <div class="search_button">
+                <input value="搜 索" type="submit" />
+            </div>
+        </form>
+    </div>
 
-<div class="tablebox padt">
-    <div style=" margin-top:10px; ">
-        <table class="table01" width="100%" border="0" cellspacing="0" cellpadding="0">
-            <tbody>
-                <tr>
-                    <th style="width:20%">时间</th>
-                    <th>收银交易总金额</th>
-                    <th>成本总量</th>
-                    <th>利润总量</th>
-                    <th>收银订单总数</th>
-                    <th>会员充值总金额</th>
-                    <th>新增优惠卡总金额</th>
-                </tr>
-                @{
-                    List<payInfo> datas = ViewBag.datas as List<payInfo>;
-                    foreach (payInfo item in datas)
-                    {
-                        <tr>
-                            <td>@item.crdate.ToString("yyyy-MM-dd")</td>
-                            <td>@item.payMoney</td>
-                            <td>@item.costMoney</td>
-                            <td>@item.profitMoney</td>
-                            <td>@item.payCount</td>
-                            <td>@item.rechargeMoney</td>
-                            <td>@item.railCardMoney</td>
-                        </tr>
-                    }
-                    {
-                        if (datas.Count > 0)
+    <div class="tablebox padt">
+        <div style=" margin-top:10px; ">
+            <table class="table01" width="100%" border="0" cellspacing="0" cellpadding="0">
+                <tbody>
+                    <tr>
+                        <th width="15%">日期</th>
+                        <th width="14%">收银总金额</th>
+                        <th width="14%">成本总量</th>
+                        <th width="14%">利润总量</th>
+                        <th width="14%">收银订单总数</th>
+                        <th width="14%">会员充值总金额</th>
+                        <th width="15%">新增优惠卡总金额</th>
+                    </tr>
+                    @{
+                        List<payInfo> datas = ViewBag.datas as List<payInfo>;
+                        foreach (payInfo item in datas)
                         {
-                            <tr class="total">
-                                <td>数据汇总</td>
-                                <td>@datas.Sum(a => a.payMoney)</td>
-                                <td>@datas.Sum(a => a.costMoney)</td>
-                                <td>@datas.Sum(a => a.profitMoney)</td>
-                                <td>@datas.Sum(a => a.payCount)</td>
-                                <td>@datas.Sum(a => a.rechargeMoney)</td>
-                                <td>@datas.Sum(a => a.railCardMoney)</td>
+                            <tr>
+                                <td>@item.crdate.ToString("yyyy-MM-dd")</td>
+                                <td>@item.payMoney</td>
+                                <td>@item.costMoney</td>
+                                <td>@item.profitMoney</td>
+                                <td>@item.payCount</td>
+                                <td>@item.rechargeMoney</td>
+                                <td>@item.railCardMoney</td>
                             </tr>
                         }
+                        {
+                            if (datas.Count > 0)
+                            {
+                                <tr class="total">
+                                    <td>数据汇总</td>
+                                    <td>@datas.Sum(a => a.payMoney)</td>
+                                    <td>@datas.Sum(a => a.costMoney)</td>
+                                    <td>@datas.Sum(a => a.profitMoney)</td>
+                                    <td>@datas.Sum(a => a.payCount)</td>
+                                    <td>@datas.Sum(a => a.rechargeMoney)</td>
+                                    <td>@datas.Sum(a => a.railCardMoney)</td>
+                                </tr>
+                            }
+                        }
                     }
-                }
-            </tbody>
-        </table>
-        <div class="pagin"></div>
+                </tbody>
+            </table>
+            <div class="pagin"></div>
+        </div>
     </div>
 </div>
-

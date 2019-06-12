@@ -2,7 +2,7 @@
 @{
     ViewBag.Title = "收银";
 }
-<script src="/static/js/receipt.js"></script>
+<script src="/static/js/receipt.js?v=@HttpContext.Current.Application["ver"]"></script>
 
 <input type="hidden" id="orderid" value="@ViewBag.orderid" />
 <div class="autoheight clear">

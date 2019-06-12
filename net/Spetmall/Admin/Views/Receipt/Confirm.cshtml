@@ -9,22 +9,26 @@
 <head>
     <meta charset="UTF-8">
     <title>订单确认</title>
-    <link rel="stylesheet" type="text/css" href="/static/css/common.css?t=1558754049">
-    <link rel="stylesheet" type="text/css" href="/static/css/ui-dialog.css">
-    <link rel="stylesheet" type="text/css" href="/static/css/buttons.css">
-    <link rel="stylesheet" href="/static/extend/honeySwitch/lib/honeySwitch.css">
+    <link rel="stylesheet" type="text/css" href="/static/css/common.css?v=@HttpContext.Current.Application["ver"]">
+    <link rel="stylesheet" type="text/css" href="/static/css/ui-dialog.css?v=@HttpContext.Current.Application["ver"]">
+    <link rel="stylesheet" type="text/css" href="/static/css/buttons.css?v=@HttpContext.Current.Application["ver"]">
+    <link rel="stylesheet" href="/static/extend/honeySwitch/lib/honeySwitch.css?v=@HttpContext.Current.Application["ver"]">
 
-    <script type="text/javascript" src="/static/js/jquery-1.12.2.min.js"></script>
-    <script src="/static/extend/honeySwitch/lib/honeySwitch.js"></script>
-    <script src="/static/extend/laydate/laydate.js"></script>
-    <script src="/static/js/artDialog.source.js"></script>
-    <script src="/static/js/iframeTools.source.js"></script>
-    <script src="/static/js/iframe.js"></script>
-    <script src="/static/js/common.js?_t=1558754049"></script>
+    <script type="text/javascript" src="/static/js/jquery-1.12.2.min.js?v=@HttpContext.Current.Application["ver"]"></script>
+    <script src="/static/extend/honeySwitch/lib/honeySwitch.js?v=@HttpContext.Current.Application["ver"]"></script>
+    <script src="/static/extend/laydate/laydate.js?v=@HttpContext.Current.Application["ver"]"></script>
+    <script src="/static/js/artDialog.source.js?v=@HttpContext.Current.Application["ver"]"></script>
+    <script src="/static/js/iframeTools.source.js?v=@HttpContext.Current.Application["ver"]"></script>
+    <script src="/static/js/iframe.js?v=@HttpContext.Current.Application["ver"]"></script>
+    <script src="/static/js/common.js?v=@HttpContext.Current.Application["ver"]"></script>
 
-    <link rel="stylesheet" type="text/css" href="/static/css/receipt.css?t=1558754049">
+    <link rel="stylesheet" type="text/css" href="/static/css/receipt.css?v=@HttpContext.Current.Application["ver"]">
     <script src="/static/js/receipt.js?t=1558754049"></script>
-
+    <style>
+        .mid {
+            vertical-align: -webkit-baseline-middle;
+        }
+    </style>
 </head>
 
 <body class="iframebody">
@@ -111,12 +115,12 @@
 
                     <div class="receipt-order-item">
                         <div class="item-name">总金额：</div>
-                        <div class="item-val"><span class="price ">￥<i class="confiem_total_amount">0.00</i> 元</span> </div>
+                        <div class="item-val"><span class="price mid">￥<i class="confiem_total_amount ">0.00</i> 元</span> </div>
                     </div>
 
                     <div class="receipt-order-item">
                         <div class="item-name">优惠金额：</div>
-                        <div class="item-val"><span class="price green">-￥<i class="confiem_preferential_amount ">0.00</i> 元</span> </div>
+                        <div class="item-val"><span class="price green mid">-￥<i class="confiem_preferential_amount ">0.00</i> 元</span> </div>
                     </div>
 
                     <div class="receipt-order-item">

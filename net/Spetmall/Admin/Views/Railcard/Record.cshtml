@@ -14,7 +14,7 @@
     </div>
 </div>
 <div class="mianbox">
-    <div class="searchbar">
+    @*<div class="searchbar">
         <div style=" padding-right:430px;">
             <form action="" method="get">
                 <div class="search">
@@ -23,17 +23,17 @@
                 </div>
             </form>
         </div>
+    </div>*@
 
-    </div>
     <div class="tablebox padt">
 
         <table class="table01" width="100%" border="0" cellspacing="0" cellpadding="0">
             <tbody>
                 <tr>
-                    <th>卡号</th>
-                    <th>使用时间</th>
-                    <th>使用数量</th>
-                    <th>描述</th>
+                    <th width="10%">卡号</th>
+                    <th width="20%">使用时间</th>
+                    <th width="10%">使用次数</th>
+                    <th>备注</th>
                 </tr>
                 @{
                     foreach (railcard_record item in ViewBag.datas as List<railcard_record>)
@@ -50,6 +50,7 @@
             </tbody>
         </table>
     </div>
+
     <div class="pagin"></div>
 
 </div>

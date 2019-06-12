@@ -30,9 +30,13 @@ namespace Spetmall.Model.Page
         /// </summary>
         public decimal aim { get; set; }
         /// <summary>
-        /// 折扣值
+        /// 实际立减金额
         /// </summary>
         public double sale { get; set; }
+        /// <summary>
+        /// 活动中的立减金额
+        /// </summary>
+        public double saleOrign { get; set; }
     }
 
     /// <summary>

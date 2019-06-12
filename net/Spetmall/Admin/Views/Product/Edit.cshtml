@@ -10,17 +10,17 @@
 <head>
     <meta charset="UTF-8">
     <title>商品管理</title>
-    <link rel="stylesheet" type="text/css" href="/static/css/common.css">
-    <link rel="stylesheet" type="text/css" href="/static/css/ui-dialog.css">
-    <script type="text/javascript" src="/static/js/jquery-1.12.2.min.js"></script>
-    <script src="/static/js/artDialog.source.js"></script>
-    <script src="/static/js/iframeTools.source.js"></script>
-    <script src="/static/js/service-common.js"></script>
-    <script src="/static/js/iframe.js"></script>
-    <script src="/static/js/common.js?_t=1558751006"></script>
-    <link href="/static/extend/select2/select2.min.css" rel="stylesheet" />
-    <script src="/static/extend/select2/select2.min.js"></script>
-    <script src="/Scripts/common.js"></script>
+    <link rel="stylesheet" type="text/css" href="/static/css/common.css?v=@HttpContext.Current.Application["ver"]">
+    <link rel="stylesheet" type="text/css" href="/static/css/ui-dialog.css?v=@HttpContext.Current.Application["ver"]">
+    <script type="text/javascript" src="/static/js/jquery-1.12.2.min.js?v=@HttpContext.Current.Application["ver"]"></script>
+    <script src="/static/js/artDialog.source.js?v=@HttpContext.Current.Application["ver"]"></script>
+    <script src="/static/js/iframeTools.source.js?v=@HttpContext.Current.Application["ver"]"></script>
+    <script src="/static/js/service-common.js?v=@HttpContext.Current.Application["ver"]"></script>
+    <script src="/static/js/iframe.js?v=@HttpContext.Current.Application["ver"]"></script>
+    <script src="/static/js/common.js?v=@HttpContext.Current.Application["ver"]"></script>
+    <link href="/static/extend/select2/select2.min.css?v=@HttpContext.Current.Application["ver"]" rel="stylesheet" />
+    <script src="/static/extend/select2/select2.min.js?v=@HttpContext.Current.Application["ver"]"></script>
+    <script src="/Scripts/common.js?v=@HttpContext.Current.Application["ver"]"></script>
 </head>
 <body class="iframebody">
     <form class="" action="?">
@@ -102,12 +102,17 @@
                     <label class="lbt">会员折扣：</label><div>
                         <cite>
                             <label>
-                                <input name="ismemberdiscount" type="radio" checked="checked" value="1" />启用&nbsp;&nbsp;&nbsp;
+                                <input name="ismemberdiscount" type="radio" @(Model.ismemberdiscount == 1 ? "checked=\"checked\"" : "") value="1" />启用&nbsp;&nbsp;&nbsp;
                             </label>
                             <label>
-                                <input name="is_discount" type="radio" value="2" />不启用
+                                <input name="ismemberdiscount" type="radio" @(Model.ismemberdiscount == 0 ? "checked=\"checked\"" : "") value="0" />不启用
                             </label>
                         </cite>
+                    </div>
+                </li>
+                <li>
+                    <label class="lbt"><em>(*)</em>备注：</label><div>
+                        @Html.TextBoxFor(m => m.remark, new { @class = "form-control", placeholder = "请输入备注" })
                     </div>
                 </li>
             </ul>

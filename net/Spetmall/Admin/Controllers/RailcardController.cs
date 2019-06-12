@@ -17,6 +17,7 @@ namespace Spetmall.Admin.Controllers
         {
             List<railcard> datas = railcardDAL.GetInstance().GetRailcards(keyWord, orderBy);
             ViewBag.keyWord = keyWord;
+            ViewBag.orderBy = orderBy;
             ViewBag.datas = datas;
             return View();
         }
@@ -48,6 +49,8 @@ namespace Spetmall.Admin.Controllers
 
         public ActionResult Edit(int id)
         {
+            railcard railcard = railcardDAL.GetInstance().GetEntityByKey<railcard>(id);
+            ViewBag.railcard = railcard;
             ViewBag.railcardid = id;
             return View();
         }

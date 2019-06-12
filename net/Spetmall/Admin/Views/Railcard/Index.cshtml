@@ -16,14 +16,14 @@
         </div>
         <div class="rightbtn">
             <a href="javascript:;" yun_type="dialog" dialog_title="添加优惠卡" uri="Add" dialog_width="50%" class="barbtn01" id="open" style="font-size:24px;">添加优惠卡</a>
-            <a href="?keyWord=@ViewBag.keyWord&orderBy=money" class="barbtn02 ">按总金额</a>
-            <a href="?keyWord=@ViewBag.keyWord&orderBy=lefttimes" class="barbtn02 ">按剩余次数</a>
+            <a href="?keyWord=@ViewBag.keyWord&orderBy=money" class="barbtn02 @(@ViewBag.orderBy=="money"?"active":"")">按总金额</a>
+            <a href="?keyWord=@ViewBag.keyWord&orderBy=lefttimes" class="barbtn02 @(@ViewBag.orderBy=="lefttimes"?"active":"")">按剩余次数</a>
         </div>
     </div>
 
     <div class="tablebox padt">
 
-        <table class="table01" width="100%" border="0" cellspacing="0" cellpadding="0">
+        <table class="edtitable" width="100%" border="0" cellspacing="0" cellpadding="0">
             <tbody>
                 <tr>
                     <th>卡号</th>

@@ -3,44 +3,46 @@
     ViewBag.Title = "商品销量报表";
 }
 
-<div class="fenlei2 fenlei6">
-    <ul class="clear">
-        <li><a href="index">基本交易报表</a></li>
-        <li><a href="SalePerformance">销售业绩报表</a></li>
-        <li class="active"><a href="Products">商品销量报表</a></li>
-        <li><a href="Category">分类统计</a></li>
-        <li><a href="Member">会员报表</a></li>
-    </ul>
-</div>
+<div class="mianbox">
+    <div class="fenlei2 fenlei6">
+        <ul class="clear">
+            <li><a href="index">基本交易报表</a></li>
+            <li><a href="SalePerformance">销售业绩报表</a></li>
+            <li class="active"><a href="Products">商品销量报表</a></li>
+            <li><a href="Category">分类统计</a></li>
+            <li><a href="Member">会员报表</a></li>
+        </ul>
+    </div>
 
-<div class="tablebox padt">
-    <table class="table01" width="100%" border="0" cellspacing="0" cellpadding="0">
-        <tbody>
-            <tr>
-                <th width="10%">ID</th>
-                <th width="30%">商品名称</th>
-                <th width="10%">价格</th>
-                <th width="10%">商品库存</th>
-                <th width="10%">销量</th>
-                <th width="20%">入库时间</th>
-                <th width="10%">操作</th>
-            </tr>
-            @{
-                foreach (product item in ViewBag.datas as List<product>)
-                {
-                    <tr>
-                        <td>@item.id</td>
-                        <td align="left">@item.name</td>
-                        <td>@item.price</td>
-                        <td>@item.store</td>
-                        <td>@item.sales</td>
-                        <td>@item.crtime</td>
-                        <td><a href="ProductDetail?productid=@item.id">查看销售</a></td>
-                    </tr>
+    <div class="tablebox padt">
+        <table class="table01" width="100%" border="0" cellspacing="0" cellpadding="0">
+            <tbody>
+                <tr>
+                    <th width="10%">ID</th>
+                    <th width="30%">商品名称</th>
+                    <th width="10%">价格</th>
+                    <th width="10%">商品库存</th>
+                    <th width="10%">销量</th>
+                    <th width="20%">入库时间</th>
+                    <th width="10%">操作</th>
+                </tr>
+                @{
+                    foreach (product item in ViewBag.datas as List<product>)
+                    {
+                        <tr>
+                            <td>@item.id</td>
+                            <td align="left">@item.name</td>
+                            <td>@item.price</td>
+                            <td>@item.store</td>
+                            <td>@item.sales</td>
+                            <td>@item.crtime</td>
+                            <td><a href="ProductDetail?productid=@item.id">查看销售</a></td>
+                        </tr>
+                    }
                 }
-            }
-        </tbody>
-    </table>
+            </tbody>
+        </table>
 
-    <div class="pagin"></div>
+        <div class="pagin"></div>
+    </div>
 </div>

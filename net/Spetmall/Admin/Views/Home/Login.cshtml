@@ -7,10 +7,10 @@
 <html>
 <head>
     <meta name="viewport" content="width=device-width" />
-    <script src="~/Scripts/1.11.3-jquery.min.js"></script>
-    <script src="~/Content/bootstrap/js/bootstrap.min.js"></script>
-    <link href="~/Content/bootstrap/css/bootstrap.min.css" rel="stylesheet" />
-    <script src="~/Scripts/common.js"></script>
+    <script src="~/Scripts/1.11.3-jquery.min.js?v=@HttpContext.Current.Application["ver"]"></script>
+    <script src="~/Content/bootstrap/js/bootstrap.min.js?v=@HttpContext.Current.Application["ver"]"></script>
+    <link href="~/Content/bootstrap/css/bootstrap.min.css?v=@HttpContext.Current.Application["ver"]" rel="stylesheet" />
+    <script src="~/Scripts/common.js?v=@HttpContext.Current.Application["ver"]"></script>
     <title>登录</title>
     <script type="text/javascript">
         $("#posttype").val("");

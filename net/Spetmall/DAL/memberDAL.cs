@@ -87,23 +87,20 @@ WHERE a.id='{0}'
 
         private string GetOrderBy(string orderBy)
         {
-            if (!string.IsNullOrWhiteSpace(orderBy))
+            string orderby = string.Empty;
+            switch (orderBy)
             {
-                string orderby = string.Empty;
-                switch (orderBy)
-                {
-                    case "money":
-                        orderby = "order by a.money desc";
-                        break;
-                    case "recharge":
-                        orderby = "order by b.recharge desc";
-                        break;
-                    default:
-                        break;
-                }
-                return orderby;
+                case "money":
+                    orderby = "order by a.money desc";
+                    break;
+                case "recharge":
+                    orderby = "order by b.recharge desc";
+                    break;
+                default:
+                    orderby = "order by a.id desc";
+                    break;
             }
-            return string.Empty;
+            return orderby;
         }
 
         //edit

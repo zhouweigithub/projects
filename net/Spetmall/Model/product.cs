@@ -57,7 +57,7 @@ namespace Spetmall.Model
         [TableField]
         public decimal price { get; set; }
         /// <summary>
-        /// 是否启用会员折扣
+        /// 是否启用会员折扣（0不启用 1启用）
         /// </summary>
         [TableField]
         public short ismemberdiscount { get; set; }
@@ -66,6 +66,11 @@ namespace Spetmall.Model
         /// </summary>
         [TableField]
         public string thumbnail { get; set; }
+        /// <summary>
+        /// 备注
+        /// </summary>
+        [TableField]
+        public string remark { get; set; }
         /// <summary>
         /// 
         /// </summary>

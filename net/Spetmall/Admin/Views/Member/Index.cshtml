@@ -14,26 +14,26 @@
         </div>
         <div class="rightbtn">
             <a href="javascript:;" yun_type="dialog" dialog_title="添加会员" uri="edit/0" dialog_width="60%" dialog_height="80%" class="barbtn01" id="open">添加会员</a>
-            <a href="?keyWord=@ViewBag.keyWord&orderBy=money" class="barbtn02 ">按余额</a>
+            <a href="?keyWord=@ViewBag.keyWord&orderBy=money" class="barbtn02 @(ViewBag.orderBy=="money"?"active":"")">按余额</a>
             @*<a href="?orderBy=integral" class="barbtn02 ">按积分</a>*@
-            <a href="?keyWord=@ViewBag.keyWord&orderBy=recharge" class="barbtn02 ">按总金额</a>
+            <a href="?keyWord=@ViewBag.keyWord&orderBy=recharge" class="barbtn02 @(ViewBag.orderBy=="recharge"?"active":"")">按总金额</a>
         </div>
     </div>
 
     <div class="tablebox padt">
-        <table class="table01" width="100%" border="0" cellspacing="0" cellpadding="0">
+        <table class="edtitable" width="100%" border="0" cellspacing="0" cellpadding="0">
             <tbody>
                 <tr>
                     <th width="5%">ID</th>
                     <th width="10%">手机号</th>
                     <th width="10%">姓名</th>
-                    <th width="10%">注册时间</th>
                     <th width="8%">历史总金额</th>
                     <th width="8%">余额</th>
                     <th width="8%">折扣</th>
                     <th width="8%">消费次数</th>
                     <th width="15%">喜爱宠物</th>
                     @*<th>积分</th>*@
+                    <th width="10%">注册时间</th>
                     <th width="18%">详情</th>
                 </tr>
                 @{
@@ -43,16 +43,16 @@
                             <td>@item.id</td>
                             <td>@item.phone</td>
                             <td>@item.name</td>
-                            <td>@item.crtime</td>
                             <td>@item.money</td>
                             <td>@item.money</td>
                             <td>@item.discount 折</td>
                             <td>@item.order_count 次</td>
                             <td style="max-width:20%;">@Html.Raw(item.petsHtml)</td>
                             @*<td>0</td>*@
+                            <td>@item.crtime</td>
                             <td style="max-width:100px;">
                                 <a href="javascript:;" yun_type="dialog" dialog_title="修改" uri="edit/@item.id" dialog_width="80%" dialog_height="80%">修改</a>
-                                | <a href="javascript:;" yun_type="dialog" dialog_title="充值" uri="Recharge?memberid=@item.id" dialog_width="40%" dialog_height="40%">充值</a>
+                                | <a href="javascript:;" yun_type="dialog" dialog_title="充值" uri="Recharge?memberid=@item.id" dialog_width="40%" dialog_height="45%">充值</a>
                                 | <a href="/Transaction/Index?keyword=@item.phone">交易记录</a>
                                 | <a href="RechargeRecord?memberid=@item.id">充值日志</a>
                             </td>

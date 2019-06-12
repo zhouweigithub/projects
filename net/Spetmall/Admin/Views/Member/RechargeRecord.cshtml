@@ -20,11 +20,12 @@
             <tbody>
                 <tr>
                     <th width="10%">ID</th>
-                    <th width="20%">充值流水号</th>
-                    <th width="20%">充值时间</th>
+                    <th width="18%">充值流水号</th>
+                    <th width="17%">充值时间</th>
                     <th width="10%">充值金额</th>
+                    <th width="10%">支付金额</th>
                     <th width="10%">当前余额</th>
-                    <th width="30%">描述</th>
+                    <th width="25%">描述</th>
                 </tr>
                 @{
                     foreach (recharge item in ViewBag.rechargeList)
@@ -34,6 +35,7 @@
                             <td>@item.sno</td>
                             <td>@item.crtime</td>
                             <td>@item.money</td>
+                            <td>@item.paymoney</td>
                             <td>@item.balance</td>
                             <td>@item.remark</td>
                         </tr>

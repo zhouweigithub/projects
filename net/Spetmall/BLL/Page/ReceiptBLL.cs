@@ -197,6 +197,7 @@ namespace Spetmall.BLL.Page
                         confirm_product.fullsendInfo = ConvertToDetail(item);
                         confirm_product.fullsendInfo.aim = rule.aim;
                         confirm_product.fullsendInfo.sale = rule.sale;
+                        confirm_product.fullsendInfo.saleOrign = rule.sale;
                     }
                 }
             }
@@ -232,15 +233,20 @@ namespace Spetmall.BLL.Page
                         confirm_product.fullsendInfo = ConvertToDetail(item);
                         confirm_product.fullsendInfo.aim = rule.aim;
                         confirm_product.fullsendInfo.sale = rule.sale;
+                        confirm_product.fullsendInfo.saleOrign = rule.sale;
                     }
                 }
+
+                //分组满就减中各商品减去的金额，应当按照各自的商品总金额按等比分配
+                if (rule != null)
+                    ResetSaleMoneyOfFullsendCategoryRule(discountProducts);
             }
 
             //按店铺
             foreach (receipt_fullsend_detail item in allFullSends.Where(a => a.type == 0))
             {
                 //购买的那些正在搞这个活动的商品
-                var discountProducts = datas.Where(a => a.fullsendInfo == null && !(a.discountInfo != null && a.discountInfo.fullsend == 0));
+                List<receipt_confirm_products> discountProducts = datas.Where(a => a.fullsendInfo == null && !(a.discountInfo != null && a.discountInfo.fullsend == 0)).ToList();
                 salerule rule = null;
                 //按限时折扣后总金额折扣
                 rule = item.rules.OrderByDescending(a => a.aim).FirstOrDefault(a => a.aim <= discountProducts.Sum(b => b.money - b.discount_money));
@@ -252,8 +258,13 @@ namespace Spetmall.BLL.Page
                         confirm_product.fullsendInfo = ConvertToDetail(item);
                         confirm_product.fullsendInfo.aim = rule.aim;
                         confirm_product.fullsendInfo.sale = rule.sale;
+                        confirm_product.fullsendInfo.saleOrign = rule.sale;
                     }
                 }
+
+                //分组满就减中各商品减去的金额，应当按照各自的商品总金额按等比分配
+                if (rule != null)
+                    ResetSaleMoneyOfFullsendCategoryRule(discountProducts);
             }
         }
 
@@ -581,5 +592,34 @@ namespace Spetmall.BLL.Page
             return result;
         }
 
+        /// <summary>
+        /// 对按分类进行满就减处理的商品，满就减金额按照各商品的支付金额比例分配
+        /// </summary>
+        /// <param name="discountProducts"></param>
+        private static void ResetSaleMoneyOfFullsendCategoryRule(List<receipt_confirm_products> discountProducts)
+        {
+            if (discountProducts == null || discountProducts.Count() == 0)
+                return;
+
+            //平均分配各满就减金额到各个商品中
+            decimal totalFullsendMoney = discountProducts.First().fullSend_money;   //总的立减金额
+            decimal totalBeforeFullsendMoney = discountProducts.Sum(a => a.money - a.discount_money);  //满就减之前的总金额
+
+            foreach (receipt_confirm_products item in discountProducts)
+            {   // 根据该商品的总金额占整个分类总金额的比例来分配该商品的立减金额
+                decimal beforeFullsendMoney = item.money - item.discount_money; //满就减之前的金额
+                decimal singleFullsendMoney = totalFullsendMoney * (beforeFullsendMoney / totalBeforeFullsendMoney);
+                item.fullsendInfo.sale = (double)Math.Round(singleFullsendMoney, 2);
+            }
+
+            //分配完后，如果总的分配额大于或少于应该分配的金额，则将差异部分分配到金额最大那个商品上去，最后差异应该在1元以内
+            decimal totalFullsendMoneyNow = discountProducts.Sum(a => a.fullSend_money);   //分配后总的立减金额
+            decimal diff = totalFullsendMoney - totalFullsendMoneyNow;
+            if (diff != 0)
+            {
+                receipt_confirm_products tmpProduct = discountProducts.OrderByDescending(a => a.total_money).First();
+                tmpProduct.fullsendInfo.sale += (double)diff;
+            }
+        }
     }
 }

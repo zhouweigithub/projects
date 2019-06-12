@@ -194,7 +194,7 @@ namespace Spetmall.Model.Page
             {
                 if (fullSend_money > 0)
                 {
-                    return $"满{fullsendInfo.aim}元,减{fullsendInfo.sale}元";
+                    return $"满{fullsendInfo.aim}元,减{fullsendInfo.saleOrign}元";
                 }
                 else
                 {

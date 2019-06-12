@@ -10,7 +10,7 @@ using Spetmall.Model.Page;
 
 namespace Spetmall.Admin.Controllers
 {
-        [Common.CustomAuthorize]
+    [Common.CustomAuthorize]
     public class MemberController : Controller
     {
 
@@ -18,6 +18,7 @@ namespace Spetmall.Admin.Controllers
         {
             List<member_show> datas = memberDAL.GetInstance().GetMembers(keyWord, orderBy);
             ViewBag.keyWord = keyWord;
+            ViewBag.orderBy = orderBy;
             ViewBag.datas = datas;
             return View();
         }
@@ -58,16 +59,17 @@ namespace Spetmall.Admin.Controllers
                 member.remark = member.remark.Trim();
                 if (member.id == 0)
                 {
+                    member.money = 0;
                     status = memberDAL.GetInstance().Add<member>(member) > 0;
                     //添加会员时，插入一条充值记录
-                    rechargeDAL.GetInstance().Add<recharge>(new recharge()
-                    {
-                        sno = GetSno(),
-                        memberid = member.id,
-                        money = member.money,
-                        remark = "添加会员时充值",
-                        balance = member.money,
-                    });
+                    //rechargeDAL.GetInstance().Add<recharge>(new recharge()
+                    //{
+                    //    sno = GetSno(),
+                    //    memberid = member.id,
+                    //    money = member.money,
+                    //    remark = "添加会员时充值",
+                    //    balance = member.money,
+                    //});
                 }
                 else
                 {
@@ -109,7 +111,7 @@ namespace Spetmall.Admin.Controllers
         }
 
         [HttpPost]
-        public ActionResult Recharge(int memberid, decimal money, string remark)
+        public ActionResult Recharge(int memberid, decimal money, decimal payMoney, string remark)
         {
             bool status = false;
             string errMsg = string.Empty;
@@ -118,15 +120,19 @@ namespace Spetmall.Admin.Controllers
                 try
                 {
                     member member = memberDAL.GetInstance().GetEntityByKey<member>(memberid);
-                    member.money += money;
-                    memberDAL.GetInstance().UpdateByKey(member, memberid);
-                    rechargeDAL.GetInstance().Add<recharge>(new recharge()
+                    decimal balance = member.money += money;
+                    //更新会员余额
+                    Dictionary<string, object> keyvalue = new Dictionary<string, object>() { { "money", balance } };
+                    memberDAL.GetInstance().UpdateByKey(keyvalue, memberid);
+                    //添加充值记录
+                    rechargeDAL.GetInstance().Add(new recharge()
                     {
                         sno = GetSno(),
                         memberid = memberid,
                         money = money,
+                        paymoney = payMoney,
                         remark = remark,
-                        balance = member.money,
+                        balance = balance,
                     });
                     status = true;
                 }

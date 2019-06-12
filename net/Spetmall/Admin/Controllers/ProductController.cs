@@ -31,6 +31,7 @@ namespace Spetmall.Admin.Controllers
             {   //添加
                 product = new product()
                 {
+                    ismemberdiscount = 1,
                     thumbnail = "/static/images/upload-pic.png",
                 };
             }
@@ -53,11 +54,11 @@ namespace Spetmall.Admin.Controllers
                 product.name = product.name.Trim();
                 if (product.id == 0)
                 {
-                    status = productDAL.GetInstance().Add<product>(product) > 0;
+                    status = productDAL.GetInstance().Add(product) > 0;
                 }
                 else
                 {
-                    status = productDAL.GetInstance().UpdateByKey<product>(product, product.id) > 0;
+                    status = productDAL.GetInstance().UpdateByKey(product, product.id) > 0;
                 }
             }
             catch (Exception e)
