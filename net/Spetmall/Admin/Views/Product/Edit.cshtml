@@ -63,7 +63,6 @@
                         </table>
                     </div>
                 </li>
-
                 <li>
                     <label class="lbt"><em>(*)</em>分类：</label>
                     <div class="form-option-list">
@@ -71,7 +70,18 @@
                             @Html.DropDownListFor(a => a.category, ViewBag.categoryItems as List<SelectListItem>, "请选择分类", new { @class = "sys-common-select store_class_select mySelect" })
                             <span id="errcategory" class="error"></span>
                         </div>
-
+                    </div>
+                </li>
+                <li>
+                    <label class="lbt"><em>(*)</em>价格：</label><div>
+                        @Html.TextBoxFor(m => m.price, new { @class = "form-control", placeholder = "请输入价格" })
+                        <span id="errprice" class="error"></span>
+                    </div>
+                </li>
+                <li>
+                    <label class="lbt"><em>(*)</em>成本：</label><div>
+                        @Html.TextBoxFor(m => m.cost, new { @class = "form-control", placeholder = "请输入成本" })
+                        <span id="errcost" class="error"></span>
                     </div>
                 </li>
                 <li>
@@ -81,21 +91,9 @@
                     </div>
                 </li>
                 <li>
-                    <label class="lbt"><em>(*)</em>预警值：</label><div>
+                    <label class="lbt"><em>(*)</em>库存预警：</label><div>
                         @Html.TextBoxFor(m => m.warn, new { @class = "form-control", onkeyup = "this.value=this.value.replace(/\\D/g,'')", onafterpaste = "this.value=this.value.replace(/\\D/g,'')", placeholder = "请输入库存" })
                         <span id="errwarn" class="error"></span>
-                    </div>
-                </li>
-                <li>
-                    <label class="lbt"><em>(*)</em>成本价：</label><div>
-                        @Html.TextBoxFor(m => m.cost, new { @class = "form-control", placeholder = "请输入成本价格" })
-                        <span id="errcost" class="error"></span>
-                    </div>
-                </li>
-                <li>
-                    <label class="lbt"><em>(*)</em>价格：</label><div>
-                        @Html.TextBoxFor(m => m.price, new { @class = "form-control", placeholder = "请输入价格" })
-                        <span id="errprice" class="error"></span>
                     </div>
                 </li>
                 <li>

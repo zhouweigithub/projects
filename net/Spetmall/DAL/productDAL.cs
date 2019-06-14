@@ -37,11 +37,8 @@ namespace Spetmall.DAL
             try
             {
                 string where = GetWhere(productId, category, keyWord);
-                string orderby = string.Empty;
-                if (!string.IsNullOrWhiteSpace(orderBy))
-                    orderBy = $"order by a.{orderBy}";
-
-                string sql = string.Format(getDatasSql, where, orderBy);
+                string orderByString = GetOrderBy(orderBy);
+                string sql = string.Format(getDatasSql, where, orderByString);
 
                 using (DBHelper dbHelper = new DBHelper(WebConfigData.DataBaseType, WebConfigData.ConnString))
                 {
@@ -68,6 +65,22 @@ namespace Spetmall.DAL
                 where += $" and (a.name like'%{keyWord}%' or a.barcode like'%{keyWord}%')";
 
             return where;
+        }
+
+        private string GetOrderBy(string orderBy)
+        {
+            string result = string.Empty;
+
+            if (!string.IsNullOrEmpty(orderBy))
+            {
+                result += " order by ";
+                if (orderBy == "store")
+                    result += orderBy + " asc";
+                else
+                    result += orderBy + " desc";
+            }
+
+            return result;
         }
 
         /// <summary>

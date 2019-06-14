@@ -516,10 +516,11 @@ var ReceiptCommon = function () {
 
         that.CartData.goodsid = _dom.attr('data-goods-id');
 
-        updateSingleGoodsItem(that.CartData.goodsid, that.CartData.number, "edit");
+        _dom.attr("data-activityprice", (that.CartData.totalPrice).toFixed(2));
         that.Ele.shoppingcartgoodsnumber.html(that.CartData.totalNumber);
         that.Ele['youhui_total_price'].html("0.00");
         that.Ele.shoppingcartTotalprice.html((that.CartData.totalPrice).toFixed(2));
+        updateSingleGoodsItem(that.CartData.goodsid, that.CartData.number, that.CartData.operationtype);
 
         //CalculatingCommodityPrices(that.CartData, function (_result) {
         //    if (!_result['status']) {

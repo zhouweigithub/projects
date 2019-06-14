@@ -12,8 +12,6 @@ MySQL - 8.0.11 : Database - spetmall
 /*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
 /*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
-CREATE DATABASE /*!32312 IF NOT EXISTS*/`spetmall` /*!40100 DEFAULT CHARACTER SET utf8 */;
-
 /*Table structure for table `category` */
 
 DROP TABLE IF EXISTS `category`;
@@ -88,7 +86,8 @@ CREATE TABLE `member` (
   `discount` double(20,2) DEFAULT '0.00' COMMENT '打几折',
   `remark` varchar(200) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL COMMENT '备注',
   `crtime` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
-  PRIMARY KEY (`id`)
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `IX_phone` (`phone`)
 ) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8 COMMENT='会员信息';
 
 /*Data for the table `member` */
@@ -197,12 +196,13 @@ CREATE TABLE `product` (
   `thumbnail` varchar(500) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL COMMENT '缩略图',
   `remark` varchar(500) DEFAULT NULL COMMENT '备注',
   `crtime` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
-  PRIMARY KEY (`id`)
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `IX_BARCODE` (`barcode`)
 ) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8 COMMENT='商品信息';
 
 /*Data for the table `product` */
 
-insert  into `product`(`id`,`barcode`,`name`,`category`,`store`,`sales`,`warn`,`cost`,`price`,`ismemberdiscount`,`thumbnail`,`remark`,`crtime`) values (1,'1','正品萨迪卡玫瑰5乒乓球拍玫瑰7层纯木乒乓球底板直横拍可刻字',2,4,16,6,'1.00','2.00',1,'/images/upload/20190604022249300.jpeg',NULL,'2019-05-25 14:39:19'),(2,'1','呵呵',2,9,0,8,'1.00','2.00',0,'/images/upload/20190604022306613.jpeg',NULL,'2019-05-25 14:41:26'),(3,'3','泰迪专享',4,11,2,5,'1.00','4.00',1,'/images/upload/20190604022330100.jpeg',NULL,'2019-05-25 16:20:49'),(4,'77','test2',4,17,3,5,'1.00','2.00',1,'/images/upload/20190604022337062.jpeg',NULL,'2019-05-25 16:24:56'),(5,'6353541892457','我的小可爱',4,10,0,10,'3.00','4.00',0,'/images/upload/20190611044753621.jpeg','uuuuu','2019-06-11 16:48:22');
+insert  into `product`(`id`,`barcode`,`name`,`category`,`store`,`sales`,`warn`,`cost`,`price`,`ismemberdiscount`,`thumbnail`,`remark`,`crtime`) values (1,'2','正品萨迪卡玫瑰5乒乓球拍玫瑰7层纯木乒乓球底板直横拍可刻字',2,4,16,6,'1.00','2.00',1,'/images/upload/20190604022249300.jpeg',NULL,'2019-05-25 14:39:19'),(2,'1','呵呵',2,9,0,8,'1.00','2.00',0,'/images/upload/20190604022306613.jpeg',NULL,'2019-05-25 14:41:26'),(3,'3','泰迪专享',4,11,2,5,'1.00','4.00',1,'/images/upload/20190604022330100.jpeg',NULL,'2019-05-25 16:20:49'),(4,'77','test2',4,17,3,5,'1.00','2.00',1,'/images/upload/20190604022337062.jpeg',NULL,'2019-05-25 16:24:56'),(5,'6353541892457','我的小可爱',4,10,0,10,'3.00','4.00',0,'/images/upload/20190611044753621.jpeg','uuuuu','2019-06-11 16:48:22');
 
 /*Table structure for table `railcard` */
 
@@ -221,7 +221,8 @@ CREATE TABLE `railcard` (
   `endtime` date DEFAULT NULL COMMENT '结束时间',
   `remark` varchar(200) DEFAULT NULL COMMENT '备注',
   `crtime` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
-  PRIMARY KEY (`id`)
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `IX_phone` (`phone`)
 ) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8 COMMENT='优惠卡';
 
 /*Data for the table `railcard` */
@@ -315,7 +316,8 @@ CREATE TABLE `user` (
   `state` tinyint(4) DEFAULT NULL COMMENT '状态0正常 1受限',
   `lastlogintime` datetime DEFAULT NULL COMMENT '最后一次登录时间',
   `crtime` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
-  PRIMARY KEY (`id`)
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `IX_username` (`username`)
 ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 COMMENT='用户信息';
 
 /*Data for the table `user` */

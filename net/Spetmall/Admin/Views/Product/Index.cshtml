@@ -23,8 +23,8 @@
             </div>
             <div class="rightbtn">
                 <a href="javascript:;" yun_type="dialog" dialog_title="添加商品" uri="edit/0" dialog_width="60%" dialog_height="80%" class="barbtn01" id="open">添加商品</a>
-                <a href="?orderBy=sales" class="barbtn02 @(ViewBag.orderBy == "sales" ? "active" : "")">按售量</a>
-                <a href="?orderBy=store" class="barbtn02 @(ViewBag.orderBy == " store" ? "active" : "" )">按库存</a>
+                <a href="?orderBy=sales" class="barbtn02 @(ViewBag.orderBy == "sales" ? "active" : "")">按销量</a>
+                <a href="?orderBy=store" class="barbtn02 @(ViewBag.orderBy == "store" ? "active" : "" )">按库存</a>
                 <a id="export" href="#" class="barbtn02" target="_blank">导出Excel</a>
             </div>
         </form>
@@ -81,7 +81,7 @@
                     }
                 </ul>*@
 
-            <table class="edtitable" width="100%" border="0" cellspacing="0" cellpadding="0">
+            <table class="table01" width="100%" border="0" cellspacing="0" cellpadding="0">
                 <tbody>
                     <tr>
                         <th width="5%">ID</th>
@@ -89,8 +89,8 @@
                         <th width="16%">商品名称</th>
                         <th width="10%">条码</th>
                         <th width="7%">分类</th>
+                        <th width="7%">价格</th>
                         <th width="7%">成本</th>
-                        <th width="7%">卖价</th>
                         <th width="7%">库存</th>
                         <th width="7%">库存预警</th>
                         <th width="7%">销量</th>

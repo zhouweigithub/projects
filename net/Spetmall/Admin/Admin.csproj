@@ -226,9 +226,6 @@
     <Compile Include="Controllers\ReceiptController.cs" />
     <Compile Include="Controllers\ReportsController.cs" />
     <Compile Include="Controllers\ServerLogController.cs" />
-    <Compile Include="Controllers\HomeController.cs" />
-    <Compile Include="Controllers\LoginUserController.cs" />
-    <Compile Include="Controllers\RoleController.cs" />
     <Compile Include="Controllers\TransactionController.cs" />
     <Compile Include="Controllers\UploadController.cs" />
     <Compile Include="Global.asax.cs">
@@ -346,11 +343,10 @@
     <Content Include="Scripts\summernote.js" />
     <Content Include="static\images\defaultgoods.jpg" />
     <Content Include="static\images\upload-pic.png" />
+    <Content Include="static\js\skins\icons\question.png" />
     <Content Include="static\js\skins\icons\succeed.png" />
     <Content Include="static\js\skins\icons\warning.png" />
     <Content Include="static\js\widget.js" />
-    <Content Include="static\swfupload\js\upload.js" />
-    <Content Include="static\swfupload\upload.css" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
     </Content>
@@ -363,20 +359,7 @@
     <Content Include="Scripts\_references.js" />
     <Content Include="Views\_ViewStart.cshtml" />
     <Content Include="Views\Shared\Error.cshtml" />
-    <Content Include="Views\Shared\_LoginPartial.cshtml" />
-    <Content Include="Views\Shared\_Layout.cshtml" />
     <Content Include="Views\Web.config" />
-    <Content Include="Views\Home\Login.cshtml" />
-    <Content Include="Views\LoginUser\Add.cshtml" />
-    <Content Include="Views\LoginUser\Data.cshtml" />
-    <Content Include="Views\LoginUser\LoginUserIndex.cshtml" />
-    <Content Include="Views\LoginUser\Search.cshtml" />
-    <Content Include="Views\Role\Add.cshtml" />
-    <Content Include="Views\Role\Data.cshtml" />
-    <Content Include="Views\Role\Index.cshtml" />
-    <Content Include="Views\Role\Search.cshtml" />
-    <Content Include="Views\Home\Index.cshtml" />
-    <Content Include="Views\LoginUser\ChangePassword.cshtml" />
     <Content Include="Views\ServerLog\LogList.cshtml" />
     <Content Include="Views\ServerLog\LogView.cshtml" />
     <Content Include="Views\Shared\_Layout2.cshtml" />
@@ -412,6 +395,8 @@
     <Content Include="Views\Reports\Category.cshtml" />
     <Content Include="Views\Reports\Member.cshtml" />
     <Content Include="Views\Main\Login.cshtml" />
+    <Content Include="static\extend\laydate\theme\default\font\iconfont.ttf" />
+    <Content Include="static\extend\laydate\theme\default\font\iconfont.woff" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Images\upload\" />

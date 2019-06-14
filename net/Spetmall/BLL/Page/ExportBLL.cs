@@ -26,7 +26,7 @@ namespace Spetmall.BLL.Page
                     //sheetMain.DisplayGridlines = false;
                     IRow rowFirst = sheetMain.CreateRow(0);
 
-                    string[] titles = new string[] { "ID", "商品名称", "条码", "分类", "成本", "卖价", "库存", "库存预警", "销量", "会员折扣" };
+                    string[] titles = new string[] { "ID", "商品名称", "条码", "分类", "价格", "成本", "库存", "库存预警", "销量", "会员折扣" };
 
                     for (int i = 0; i < titles.Length; i++)
                     {
