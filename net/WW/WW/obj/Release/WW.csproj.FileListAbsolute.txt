@@ -1,0 +1,14 @@
+E:\wwxx\projects\net\WW\WW\bin\Release\WW.exe.config
+E:\wwxx\projects\net\WW\WW\bin\Release\WW.exe
+E:\wwxx\projects\net\WW\WW\bin\Release\WW.pdb
+E:\wwxx\projects\net\WW\WW\bin\Release\Util.dll
+E:\wwxx\projects\net\WW\WW\bin\Release\Ionic.Zip.dll
+E:\wwxx\projects\net\WW\WW\bin\Release\Newtonsoft.Json.dll
+E:\wwxx\projects\net\WW\WW\bin\Release\Util.pdb
+E:\wwxx\projects\net\WW\WW\bin\Release\Util.xml
+E:\wwxx\projects\net\WW\WW\bin\Release\Ionic.Zip.xml
+E:\wwxx\projects\net\WW\WW\bin\Release\Newtonsoft.Json.xml
+E:\wwxx\projects\net\WW\WW\obj\Release\WW.csproj.CoreCompileInputs.cache
+E:\wwxx\projects\net\WW\WW\obj\Release\WW.csproj.CopyComplete
+E:\wwxx\projects\net\WW\WW\obj\Release\WW.exe
+E:\wwxx\projects\net\WW\WW\obj\Release\WW.pdb

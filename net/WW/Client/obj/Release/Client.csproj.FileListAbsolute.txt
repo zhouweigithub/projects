@@ -1,0 +1,17 @@
+E:\wwxx\projects\net\WW\Client\bin\Release\Client.exe.config
+E:\wwxx\projects\net\WW\Client\bin\Release\Client.exe
+E:\wwxx\projects\net\WW\Client\bin\Release\SocketBase.dll
+E:\wwxx\projects\net\WW\Client\bin\Release\System.ValueTuple.dll
+E:\wwxx\projects\net\WW\Client\bin\Release\Util.dll
+E:\wwxx\projects\net\WW\Client\bin\Release\Ionic.Zip.dll
+E:\wwxx\projects\net\WW\Client\bin\Release\Newtonsoft.Json.dll
+E:\wwxx\projects\net\WW\Client\bin\Release\SocketBase.pdb
+E:\wwxx\projects\net\WW\Client\bin\Release\System.ValueTuple.xml
+E:\wwxx\projects\net\WW\Client\bin\Release\Util.pdb
+E:\wwxx\projects\net\WW\Client\bin\Release\Util.xml
+E:\wwxx\projects\net\WW\Client\bin\Release\Ionic.Zip.xml
+E:\wwxx\projects\net\WW\Client\bin\Release\Newtonsoft.Json.xml
+E:\wwxx\projects\net\WW\Client\obj\Release\Client.csprojAssemblyReference.cache
+E:\wwxx\projects\net\WW\Client\obj\Release\Client.csproj.CoreCompileInputs.cache
+E:\wwxx\projects\net\WW\Client\obj\Release\Client.csproj.CopyComplete
+E:\wwxx\projects\net\WW\Client\obj\Release\Client.exe
