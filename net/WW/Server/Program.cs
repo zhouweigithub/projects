@@ -1,4 +1,5 @@
-﻿using System;
+﻿using SocketBase;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
@@ -12,7 +13,7 @@ namespace Server
     {
         private static void Main(string[] args)
         {
-            SocketBase.ServerBase server = new SocketBase.ServerBase(string.Empty, 9729);
+            IServer server = new ServerBase(string.Empty, 9729);
         }
 
 

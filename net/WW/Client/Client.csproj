@@ -49,7 +49,7 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\SocketBase\SocketBase.csproj">
+    <ProjectReference Include="..\SocketBase\SocketBase.csproj">
       <Project>{206d5b97-3f22-4c99-add1-6c259b77a701}</Project>
       <Name>SocketBase</Name>
     </ProjectReference>

@@ -5,7 +5,7 @@ VisualStudioVersion = 15.0.28307.539
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WW", "WW\WW.csproj", "{F2462317-D9C9-4CA3-A80B-567A3C1E8688}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SocketBase", "..\SocketBase\SocketBase.csproj", "{206D5B97-3F22-4C99-ADD1-6C259B77A701}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SocketBase", "SocketBase\SocketBase.csproj", "{206D5B97-3F22-4C99-ADD1-6C259B77A701}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Server", "Server\Server.csproj", "{FA96E4A8-B75F-48AB-9847-DE1A664499C6}"
 EndProject
