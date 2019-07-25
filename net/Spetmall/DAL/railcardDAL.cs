@@ -19,7 +19,7 @@ namespace Spetmall.DAL
         {
             this.IsAddIntoCache = false;
             this.TableName = "railcard";
-            this.ItemName = "优惠卡";
+            this.ItemName = "洗澡卡";
             this.OrderbyFields = "id desc";
         }
 
@@ -50,7 +50,7 @@ namespace Spetmall.DAL
             }
             catch (Exception ex)
             {
-                WriteLog.Write(WriteLog.LogLevel.Error, "Getrailcards 获取优惠卡数据出错\r\n" + ex.Message);
+                WriteLog.Write(WriteLog.LogLevel.Error, "Getrailcards 获取洗澡卡数据出错\r\n" + ex.Message);
             }
             return new List<railcard>();
         }

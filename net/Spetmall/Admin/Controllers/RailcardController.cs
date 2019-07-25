@@ -65,7 +65,7 @@ namespace Spetmall.Admin.Controllers
                 railcard server = railcardDAL.GetInstance().GetEntityByKey<railcard>(railcard_record.railcardid);
 
                 if (server == null)
-                    errMsg = "无效优惠卡";
+                    errMsg = "无效洗澡卡";
                 else if (railcard_record.times == 0)
                     errMsg = "次数不能为0";
                 else if (server.lefttimes < railcard_record.times)
@@ -80,7 +80,7 @@ namespace Spetmall.Admin.Controllers
                     server.lefttimes = server.lefttimes - railcard_record.times;
                     status = railcardDAL.GetInstance().UpdateByKey(server, railcard_record.railcardid) > 0;
 
-                    //添加优惠卡的使用记录
+                    //添加洗澡卡的使用记录
                     railcardRecordDAL.GetInstance().Add(new railcard_record()
                     {
                         railcardid = railcard_record.railcardid,

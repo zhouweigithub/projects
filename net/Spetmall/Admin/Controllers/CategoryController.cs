@@ -15,7 +15,7 @@ namespace Spetmall.Admin.Controllers
 
         public ActionResult Index()
         {
-            List<category> datas = categoryDAL.GetInstance().GetFloorDatas();
+            List<category> datas = categoryDAL.GetInstance().GetFloorDatas(true);
             ViewBag.datas = datas;
             return View();
         }

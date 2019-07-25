@@ -23,7 +23,7 @@ ORDER BY a.id DESC
         {
             this.IsAddIntoCache = false;
             this.TableName = "railcard_record";
-            this.ItemName = "优惠卡使用记录";
+            this.ItemName = "洗澡卡使用记录";
             this.OrderbyFields = "id desc";
         }
 
@@ -51,7 +51,7 @@ ORDER BY a.id DESC
             }
             catch (Exception ex)
             {
-                WriteLog.Write(WriteLog.LogLevel.Error, "GetRailcardRecords 获取优惠卡使用记录出错\r\n" + ex.Message);
+                WriteLog.Write(WriteLog.LogLevel.Error, "GetRailcardRecords 获取洗澡卡使用记录出错\r\n" + ex.Message);
             }
             return new List<railcard_record>();
         }

@@ -17,15 +17,20 @@ namespace Spetmall.Model
         /// </summary>
         public int id { get; set; }
         /// <summary>
-        /// 条码
+        /// 商品条码
         /// </summary>
         [TableField]
         public string barcode { get; set; }
         /// <summary>
-        /// 名称
+        /// 商品名称
         /// </summary>
         [TableField]
         public string name { get; set; }
+        /// <summary>
+        /// 商品名称简拼
+        /// </summary>
+        [TableField]
+        public string py { get; set; }
         /// <summary>
         /// 分类
         /// </summary>

@@ -80,7 +80,7 @@ WHERE a.id='{0}'
         {
             string where = string.Empty;
             if (!string.IsNullOrWhiteSpace(keyWord))
-                where += $" and (a.name like'%{keyWord}%' or a.phone like'%{keyWord}%')";
+                where += $" and (a.name like'%{keyWord}%' or a.phone like'%{keyWord}%' or a.py like'%{keyWord}%')";
 
             return where;
         }

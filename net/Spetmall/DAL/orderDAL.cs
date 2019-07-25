@@ -110,7 +110,7 @@ WHERE a.state=1 ORDER BY a.crtime DESC
                 where += $" and (a.id='{keyword}' or b.phone='{keyword}')";
             }
 
-            if (!string.IsNullOrWhiteSpace(day))
+            if (string.IsNullOrWhiteSpace(keyword) && !string.IsNullOrWhiteSpace(day))
             {
                 int.TryParse(day, out int days);
                 string date = DateTime.Today.AddDays(-days).ToString("yyyy-MM-dd");

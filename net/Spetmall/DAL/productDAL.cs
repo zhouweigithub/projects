@@ -62,7 +62,7 @@ namespace Spetmall.DAL
             if (!string.IsNullOrWhiteSpace(category))
                 where += $" and a.category={category}";
             if (!string.IsNullOrWhiteSpace(keyWord))
-                where += $" and (a.name like'%{keyWord}%' or a.barcode like'%{keyWord}%')";
+                where += $" and (a.name like'%{keyWord}%' or a.barcode like'%{keyWord}%' or a.py like'%{keyWord}%')";
 
             return where;
         }

@@ -7,7 +7,7 @@ using Spetmall.Model.Common;
 namespace Spetmall.Model
 {
     /// <summary>
-    /// 优惠卡使用记录(BASE TABLE)
+    /// 洗澡卡使用记录(BASE TABLE)
     /// </summary>
     public class railcard_record
     {
@@ -17,7 +17,7 @@ namespace Spetmall.Model
         /// </summary>
         public int id { get; set; }
         /// <summary>
-        /// 优惠卡id
+        /// 洗澡卡id
         /// </summary>
         [TableField]
         public int railcardid { get; set; }

@@ -22,6 +22,11 @@ namespace Spetmall.Model
         [TableField]
         public string name { get; set; }
         /// <summary>
+        /// 姓名简拼
+        /// </summary>
+        [TableField]
+        public string py { get; set; }
+        /// <summary>
         /// 电话号码
         /// </summary>
         [TableField]

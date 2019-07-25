@@ -10,7 +10,7 @@
 <html>
 <head>
     <meta charset="UTF-8">
-    <title>优惠卡</title>
+    <title>洗澡卡</title>
     <link rel="stylesheet" type="text/css" href="/static/css/common.css?v=@HttpContext.Current.Application["ver"]">
     <link rel="stylesheet" type="text/css" href="/static/css/ui-dialog.css?v=@HttpContext.Current.Application["ver"]">
     <link rel="stylesheet" type="text/css" href="/static/css/buttons.css?v=@HttpContext.Current.Application["ver"]">
@@ -45,6 +45,11 @@
                 <li>
                     <label class="lbt"><em>(*)</em>手机号：</label><div>
                         <span class="mid">@railcard.phone</span>
+                    </div>
+                </li>
+                <li>
+                    <label class="lbt"><em>(*)</em>剩余次数：</label><div>
+                        <span class="mid">@railcard.lefttimes</span>
                     </div>
                 </li>
                 <li>

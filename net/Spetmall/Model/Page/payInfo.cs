@@ -41,7 +41,7 @@ namespace Spetmall.Model.Page
         /// </summary>
         public decimal rechargeMoney { get; set; }
         /// <summary>
-        /// 新增优惠卡金额
+        /// 新增洗澡卡金额
         /// </summary>
         public decimal railCardMoney { get; set; }
 

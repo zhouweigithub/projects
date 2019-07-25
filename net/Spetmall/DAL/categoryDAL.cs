@@ -32,15 +32,17 @@ namespace Spetmall.DAL
         /// <summary>
         /// 获取分类数据（包含层级）
         /// </summary>
+        /// <param name="isAll">是否包含隐藏了的分类</param>
         /// <returns></returns>
-        public List<category> GetFloorDatas()
+        public List<category> GetFloorDatas(bool isAll)
         {
             List<category> datas = new List<category>();
-            List<category> list = GetList<category>($"pid=0").ToList();
+            string where = isAll ? string.Empty : "and state=1";
+            List<category> list = GetList<category>($"pid=0 {where}").ToList();
             //按照序号和id排序
             list = list.OrderBy(a => a.index).ThenBy(b => b.id).ToList();
 
-            GetFloorDatas(list, 0, datas);
+            GetFloorDatas(list, 0, isAll, datas);
             return datas;
         }
 
@@ -50,40 +52,25 @@ namespace Spetmall.DAL
         /// <param name="pids">父id集</param>
         /// <param name="floor">层级，顶层为0</param>
         /// <param name="result"></param>
-        private void GetFloorDatas(List<category> parents, int floor, List<category> result)
+        private void GetFloorDatas(List<category> parents, int floor, bool isAll, List<category> result)
         {
             try
             {
+                string where = isAll ? string.Empty : "and state=1";
                 foreach (category parent in parents)
                 {
                     parent.floor = floor;
                     result.Add(parent);
 
-                    List<category> list = GetList<category>($"pid={parent.id}").ToList();
+                    List<category> list = GetList<category>($"pid={parent.id} {where}").ToList();
                     //按照序号和id排序
                     list = list.OrderBy(a => a.index).ThenBy(b => b.id).ToList();
 
                     if (list.Count > 0)
                     {
-                        GetFloorDatas(list, floor + 1, result);
+                        GetFloorDatas(list, floor + 1, isAll, result);
                     }
                 }
-                //IList<category> list = GetList<category>($"pid in({pids})");
-                //foreach (category item in list)
-                //{
-                //    item.floor = floor;
-                //}
-
-                //if (list.Count > 0)
-                //{
-                //    result.AddRange(list);
-                //    string pids = string.Join(",", list.Select(a => a.id));
-                //    GetFloorDatas(pids, ++floor, result);
-                //}
-                //else
-                //{
-                //    return;
-                //}
             }
             catch (Exception e)
             {

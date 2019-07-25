@@ -57,6 +57,7 @@ namespace Spetmall.Admin.Controllers
                 member.phone = member.phone.Trim();
                 member.email = member.email.Trim();
                 member.remark = member.remark.Trim();
+                member.py = Spetmall.Common.ChineseSpell.GetChineseSpell(member.name);
                 if (member.id == 0)
                 {
                     member.money = 0;

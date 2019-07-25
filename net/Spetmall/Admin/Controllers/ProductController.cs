@@ -14,10 +14,12 @@ namespace Spetmall.Admin.Controllers
     public class ProductController : Controller
     {
 
+        private static readonly string defaultProductImage = "/static/images/upload-pic.png";
+
         public ActionResult Index(string category, string keyWord, string orderBy)
         {
             List<product_show> datas = productDAL.GetInstance().GetProducts(string.Empty, category, keyWord, orderBy, 1, int.MaxValue);
-            List<category> categorys = categoryDAL.GetInstance().GetFloorDatas();
+            List<category> categorys = categoryDAL.GetInstance().GetFloorDatas(false);
             ViewBag.categorys = categorys;
             ViewBag.datas = datas;
             ViewBag.orderBy = orderBy;
@@ -32,7 +34,7 @@ namespace Spetmall.Admin.Controllers
                 product = new product()
                 {
                     ismemberdiscount = 1,
-                    thumbnail = "/static/images/upload-pic.png",
+                    thumbnail = defaultProductImage,
                 };
             }
             else
@@ -52,6 +54,12 @@ namespace Spetmall.Admin.Controllers
             try
             {
                 product.name = product.name.Trim();
+                product.py = ChineseSpell.GetChineseSpell(product.name);
+
+                //缩略图如果是默认图，则去掉
+                if (product.thumbnail == defaultProductImage)
+                    product.thumbnail = string.Empty;
+
                 if (product.id == 0)
                 {
                     status = productDAL.GetInstance().Add(product) > 0;
@@ -91,7 +99,7 @@ namespace Spetmall.Admin.Controllers
         public List<SelectListItem> GetCategoryItems()
         {
             List<SelectListItem> result = new List<SelectListItem>();
-            List<category> list = categoryDAL.GetInstance().GetFloorDatas();
+            List<category> list = categoryDAL.GetInstance().GetFloorDatas(false);
             foreach (category item in list)
             {
                 string space = string.Empty;

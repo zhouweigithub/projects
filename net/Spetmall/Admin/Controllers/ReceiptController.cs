@@ -10,6 +10,9 @@ using Spetmall.Model.Page;
 
 namespace Spetmall.Admin.Controllers
 {
+    /// <summary>
+    /// 收银
+    /// </summary>
     [Common.CustomAuthorize]
     public class ReceiptController : Controller
     {
@@ -28,7 +31,7 @@ namespace Spetmall.Admin.Controllers
             }
             ViewBag.orderJson = Util.Json.JsonUtil.Serialize(data);
 
-            List<category> categorys = categoryDAL.GetInstance().GetFloorDatas();
+            List<category> categorys = categoryDAL.GetInstance().GetFloorDatas(false);
             ViewBag.categorys = categorys;
             ViewBag.orderid = orderid;
             return View();
