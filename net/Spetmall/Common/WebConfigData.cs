@@ -41,6 +41,14 @@ namespace Spetmall.Common
         /// 小票打印机名字
         /// </summary>
         public static readonly string ReceiptPrinterName;
+        /// <summary>
+        /// 小票上的店名
+        /// </summary>
+        public static readonly string ReceiptPrinterShopName;
+        /// <summary>
+        /// 小票上的手机号
+        /// </summary>
+        public static readonly string ReceiptPrinterPhone;
 
         static WebConfigData()
         {
@@ -53,6 +61,8 @@ namespace Spetmall.Common
                 ExtraPageMenuIds = Config.GetConfigToString("ExtraPageMenuIds");
                 IgnoreSmsCodeIp = Config.GetConfigToString("IgnoreSmsCodeIp");
                 ReceiptPrinterName = Config.GetConfigToString("ReceiptPrinterName");
+                ReceiptPrinterShopName = Config.GetConfigToString("ReceiptPrinterShopName");
+                ReceiptPrinterPhone = Config.GetConfigToString("ReceiptPrinterPhone");
             }
             catch (Exception e)
             {

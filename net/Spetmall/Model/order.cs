@@ -18,7 +18,7 @@ namespace Spetmall.Model
         [TableField]
         public string id { get; set; }
         /// <summary>
-        /// 商品总金额
+        /// 商品折扣前总金额
         /// </summary>
         [TableField]
         public decimal productMoney { get; set; }
@@ -28,7 +28,7 @@ namespace Spetmall.Model
         [TableField]
         public decimal payMoney { get; set; }
         /// <summary>
-        /// 优惠金额
+        /// 优惠金额（不包含调价金额）
         /// </summary>
         [TableField]
         public decimal discountMoney { get; set; }

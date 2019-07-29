@@ -71,6 +71,7 @@ WHERE a.state=1 ORDER BY a.crtime DESC
         /// <param name="day"></param>
         /// <param name="startdate"></param>
         /// <param name="enddate"></param>
+        /// <param name="state">0正常订单 1临时挂单</param>
         /// <returns></returns>
         public static List<order_detail> GetOrderList(string keyword, string day, string startdate, string enddate, short state)
         {
@@ -98,6 +99,7 @@ WHERE a.state=1 ORDER BY a.crtime DESC
         /// <param name="day">最近几天</param>
         /// <param name="startdate">起始日期</param>
         /// <param name="enddate">结束日期</param>
+        /// <param name="state">0正常订单 1临时挂单</param>
         /// <returns></returns>
         private static string GetWhere(string keyword, string day, string startdate, string enddate, short state)
         {

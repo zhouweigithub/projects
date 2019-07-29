@@ -21,7 +21,7 @@ namespace Spetmall.Model.Page
         /// </summary>
         public decimal totalprice { get; set; }
         /// <summary>
-        /// 折扣金额
+        /// 优惠的金额
         /// </summary>
         public decimal discount_total_price { get; set; }
         /// <summary>
@@ -57,6 +57,10 @@ namespace Spetmall.Model.Page
         /// </summary>
         public string remark { get; set; }
         /// <summary>
+        /// 调价金额
+        /// </summary>
+        public decimal adjust_price { get; set; }
+        /// <summary>
         /// 商品数据
         /// </summary>
         public Dictionary<int, ReceiptOrderProductInfo> receiptgoodsdata { get; set; } = new Dictionary<int, ReceiptOrderProductInfo>();
@@ -68,6 +72,10 @@ namespace Spetmall.Model.Page
         /// 商品id
         /// </summary>
         public int id { get; set; }
+        /// <summary>
+        /// 条形码
+        /// </summary>
+        public string barcode { get; set; }
         /// <summary>
         /// 商品数量
         /// </summary>

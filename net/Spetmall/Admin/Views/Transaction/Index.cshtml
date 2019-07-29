@@ -37,14 +37,14 @@
             <tbody>
                 <tr>
                     <th width="15%">交易订单号</th>
-                    <th width="10%">商品金额</th>
+                    <th width="9%">商品金额</th>
                     <th width="10%">实际支付</th>
-                    <th width="10%">优惠</th>
-                    <th width="10%">调价</th>
-                    <th width="10%">支付方式</th>
-                    <th width="10%">用户</th>
+                    <th width="9%">优惠</th>
+                    <th width="9%">调价</th>
+                    <th width="9%">支付方式</th>
+                    <th width="9%">用户</th>
                     <th width="15%">交易时间</th>
-                    <th width="10%">操作</th>
+                    <th width="15%">操作</th>
                 </tr>
                 @{
                     var datas = ViewBag.datas as IList<order_detail>;
@@ -54,20 +54,20 @@
                             <td>@item.id</td>
                             <td>@item.productMoney</td>
                             <td>@item.payMoney</td>
-                            <td>@item.discountMoney</td>
+                            <td>@(-item.discountMoney)</td>
                             <td>@(-item.adjustMomey)</td>
                             <td>@item.payTypeString</td>
                             <td>@item.memberName</td>
                             <td>@item.crtime</td>
-                            <td><a href="Detail/@item.id">查看</a></td>
+                            <td><a href="Detail/@item.id">查看详情</a> @Ajax.ActionLink("打印小票", "Print", new { id = item.id }, new AjaxOptions() { HttpMethod = "Get", Confirm = "确定要打印该订单的小票吗？" })</td>
                         </tr>
                     }
                     <tr style="font-weight:bold;">
                         <td>数据汇总</td>
                         <td>@(datas.Sum(a => a.productMoney))</td>
                         <td>@(datas.Sum(a => a.payMoney))</td>
-                        <td>@(datas.Sum(a => a.discountMoney))</td>
-                        <td>@(datas.Sum(a => -a.adjustMomey))</td>
+                        <td>@(-datas.Sum(a => a.discountMoney))</td>
+                        <td>@(-datas.Sum(a => a.adjustMomey))</td>
                         <td></td>
                         <td></td>
                         <td></td>

@@ -2,12 +2,14 @@
 using System.Collections.Generic;
 using System.Drawing;
 using System.Drawing.Drawing2D;
+using System.Drawing.Imaging;
 using System.Drawing.Printing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using BarcodeLib;
 using Spetmall.Model;
+using Spetmall.Model.Custom;
 using Spetmall.Model.Page;
 
 namespace Spetmall.BLL.Page
@@ -17,47 +19,27 @@ namespace Spetmall.BLL.Page
     /// </summary>
     public class PrintReceiptBLL
     {
-        private order _orderInfo;
-        private List<receipt_confirm_products> _datas;
-        private static int pageWidth = GetYc(4.7);
+        private PrintObject _data;
+        private static readonly int _pageWidth = GetYc(4.7);
+        private readonly int _pageHeight;    //小票整体高度
 
-        ///// <summary>
-        ///// 调整字符间距
-        ///// </summary>
-        ///// <param name="hdc"></param>
-        ///// <param name="nCharExtra"></param>
-        ///// <returns></returns>
-        //[DllImport("gdi32.dll")]
-        //public static extern int SetTextCharacterExtra(IntPtr hdc, int nCharExtra);
-        public static readonly int productCount = 3;
 
         /// <summary>
         /// 打印小票
         /// </summary>
-        /// <param name="orderInfo"></param>
-        /// <param name="datas"></param>
-        public PrintReceiptBLL(order orderInfo, List<receipt_confirm_products> datas)
+        /// <param name="data"></param>
+        public PrintReceiptBLL(PrintObject data)
         {
-            _orderInfo = orderInfo;
-            _datas = datas;
+            _data = data;
+            _pageHeight = 400 + (int)(25.26 * _data.Products.Count) + 10;
         }
 
         public void Print()
         {
             PrintDocument printer = new PrintDocument();
             printer.PrinterSettings.PrinterName = Common.WebConfigData.ReceiptPrinterName;
-            int height = 400 + (int)(25.26 * productCount) + 20;
-            PaperSize size = new PaperSize("new1", pageWidth, height);
+            PaperSize size = new PaperSize("new1", _pageWidth, _pageHeight);
             printer.DefaultPageSettings.PaperSize = size;
-
-            //printer.DefaultPageSettings.Color = false;
-            //printer.PrintController = new PreviewPrintController();
-
-            //printer.PrinterSettings.PrintToFile = true;
-            //printer.PrinterSettings.PrintFileName = "printer.jpg";
-            //printer.DefaultPageSettings.PrinterResolution.X;
-            //设置边距红半厘米
-            //printer.DefaultPageSettings.Margins = new Margins(20, 20, 20, 20);
             printer.PrintPage += Printer_PrintPage;
             printer.Print();
         }
@@ -69,61 +51,64 @@ namespace Spetmall.BLL.Page
                 int marginLeft = 0;
                 int marginTop = 15;
                 float height = 30;
-                StringFormat formatCenter = new StringFormat();
-                formatCenter.Alignment = StringAlignment.Center;
-                formatCenter.LineAlignment = StringAlignment.Center;
-                StringFormat formatLeft = new StringFormat();
-                formatLeft.Alignment = StringAlignment.Near;
-                //formatLeft.LineAlignment = StringAlignment.Center;
-                StringFormat formatRight = new StringFormat();
-                formatRight.Alignment = StringAlignment.Far;
+                StringFormat formatCenter = new StringFormat
+                {
+                    Alignment = StringAlignment.Center,
+                    LineAlignment = StringAlignment.Center
+                };
+                StringFormat formatLeft = new StringFormat
+                {
+                    Alignment = StringAlignment.Near
+                };
+                StringFormat formatRight = new StringFormat
+                {
+                    Alignment = StringAlignment.Far
+                };
 
-                //输出高质量图片宋体
+                //输出高质量图片
                 e.Graphics.SmoothingMode = SmoothingMode.Default;
                 e.Graphics.InterpolationMode = InterpolationMode.HighQualityBicubic;
                 e.Graphics.CompositingQuality = CompositingQuality.HighQuality;
 
-                //调整字符间距
-                IntPtr hdc = e.Graphics.GetHdc();
-                //SetTextCharacterExtra(hdc, 1);
-                e.Graphics.ReleaseHdc(hdc);
-
-                string text = "♛红旗连锁♛";
+                string text = $"♛{_data.ShopName}♛";
                 Font font1 = new Font("黑体", 8);
                 float lineHeight8 = font1.GetHeight(e.Graphics);
 
                 Font font2 = new Font("黑体", 8);
                 float lineHeight2 = font2.GetHeight(e.Graphics);
 
-                e.Graphics.DrawString(text, font1, Brushes.Black, new RectangleF(0, marginTop, pageWidth, height), formatCenter);
+                e.Graphics.DrawString(text, font1, Brushes.Black, new RectangleF(0, marginTop, _pageWidth, height), formatCenter);
                 height += marginTop;
 
                 text = "✧✧✧✧✧✧✧✧✧✧✧";
-                e.Graphics.DrawString(text, font1, Brushes.Black, new RectangleF(0, height, pageWidth, 15), formatCenter);
+                e.Graphics.DrawString(text, font1, Brushes.Black, new RectangleF(0, height, _pageWidth, 15), formatCenter);
                 height += 15;
 
                 text = "收银票据";
-                e.Graphics.DrawString(text, font1, Brushes.Black, new RectangleF(0, height, pageWidth, 15), formatCenter);
+                e.Graphics.DrawString(text, font1, Brushes.Black, new RectangleF(0, height, _pageWidth, 15), formatCenter);
                 height += 15;
 
                 text = "**************************************";
-                e.Graphics.DrawString(text, font1, Brushes.Black, new RectangleF(0, height, pageWidth, 15), formatCenter);
+                e.Graphics.DrawString(text, font1, Brushes.Black, new RectangleF(0, height, _pageWidth, 15), formatCenter);
                 height += 15;
 
-                text = "时ㅤ间 " + DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");
+                text = "时ㅤ间 " + _data.Time.ToString("yyyy-MM-dd HH:mm:ss");
                 e.Graphics.DrawString(text, font1, Brushes.Black, marginLeft, height, formatLeft);
                 height += lineHeight8;
 
-                text = "订单号 28452151542";
+                text = "订单号 " + _data.OrderNo;
                 e.Graphics.DrawString(text, font1, Brushes.Black, marginLeft, height, formatLeft);
                 height += lineHeight8;
 
                 text = "**************************************";
-                e.Graphics.DrawString(text, font1, Brushes.Black, new RectangleF(0, height, pageWidth, 15), formatCenter);
+                e.Graphics.DrawString(text, font1, Brushes.Black, new RectangleF(0, height, _pageWidth, 15), formatCenter);
                 height += 15;
 
                 int moveWidth = 10;
-                int p1 = 0, p2 = moveWidth + pageWidth / 3, p3 = moveWidth + pageWidth / 9 * 5, p4 = moveWidth + pageWidth / 9 * 7;
+                int p1 = 0;
+                int p2 = moveWidth + _pageWidth / 3;
+                int p3 = moveWidth + _pageWidth / 9 * 5;
+                int p4 = moveWidth + _pageWidth / 9 * 7;
 
 
                 text = "商品名称";
@@ -135,81 +120,72 @@ namespace Spetmall.BLL.Page
                 text = "金额";
                 e.Graphics.DrawString(text, font1, Brushes.Black, p4, height);
 
-
-                //text = "商品名称\t单价\t数量\t金额";
-                //e.Graphics.DrawString(text, font1, Brushes.Black, marginLeft, height);
                 height += lineHeight8;
 
                 text = "--------------------------------------";
-                e.Graphics.DrawString(text, font1, Brushes.Black, new RectangleF(0, height, pageWidth, 15), formatCenter);
+                e.Graphics.DrawString(text, font1, Brushes.Black, new RectangleF(0, height, _pageWidth, 15), formatCenter);
                 height += 15;
 
-                for (int i = 0; i < productCount; i++)
+                foreach (PrintProducts item in _data.Products)
                 {
-                    text = "喜之郎果粒橙乐翻天500ml";
-                    e.Graphics.DrawString(text, font1, Brushes.Black, p1, height);
+                    e.Graphics.DrawString(item.Name, font1, Brushes.Black, p1, height);
                     height += lineHeight8;
 
-                    text = "35.00";
-                    e.Graphics.DrawString(text, font1, Brushes.Black, p2, height);
-                    text = "3.00";
-                    e.Graphics.DrawString(text, font1, Brushes.Black, p3, height);
-                    text = "99.55";
-                    e.Graphics.DrawString(text, font1, Brushes.Black, p4, height);
+                    //e.Graphics.DrawString(item.BarCode, font1, Brushes.Black, p1, height);
+                    e.Graphics.DrawString(RemoveLast0(item.Price), font1, Brushes.Black, p2, height);
+                    e.Graphics.DrawString(item.Count.ToString(), font1, Brushes.Black, p3, height);
+                    e.Graphics.DrawString(RemoveLast0(item.Money), font1, Brushes.Black, p4, height);
 
-                    //text = "喜之郎果粒橙乐翻天500ml";
-                    //e.Graphics.DrawString(text, font1, Brushes.Black, marginLeft, height);
-
-                    //text = "\t20.56\t3.00\t60.77";
-                    //e.Graphics.DrawString(text, font1, Brushes.Black, marginLeft, height);
                     height += lineHeight8;
                 }
 
-                text = "**************合计**************";
-                e.Graphics.DrawString(text, font1, Brushes.Black, new RectangleF(0, height, pageWidth, 15), formatCenter);
+                text = "-------------合计--------------";
+                e.Graphics.DrawString(text, font1, Brushes.Black, new RectangleF(0, height, _pageWidth, 15), formatCenter);
                 height += 15;
 
+                if (_data.ReceiptMoney != 0)
+                {
+                    text = "优惠";
+                    e.Graphics.DrawString(text, font2, Brushes.Black, marginLeft, height);
 
-                text = "优惠";
-                e.Graphics.DrawString(text, font2, Brushes.Black, marginLeft, height);
-
-                text = "-21.55";
-                e.Graphics.DrawString(text, font2, Brushes.Black, new RectangleF(0, height, pageWidth, lineHeight2), formatRight);
-                height += lineHeight2;
+                    text = RemoveLast0(-_data.ReceiptMoney);
+                    e.Graphics.DrawString(text, font2, Brushes.Black, new RectangleF(0, height, _pageWidth, lineHeight2), formatRight);
+                    height += lineHeight2;
+                }
 
                 text = "实付";
                 e.Graphics.DrawString(text, font2, Brushes.Black, marginLeft, height);
 
-                text = "958.88";
-                e.Graphics.DrawString(text, font2, Brushes.Black, new RectangleF(0, height, pageWidth, lineHeight2), formatRight);
+                text = RemoveLast0(_data.PayMoney);
+                e.Graphics.DrawString(text, font2, Brushes.Black, new RectangleF(0, height, _pageWidth, lineHeight2), formatRight);
                 height += lineHeight2;
 
-                //text = "**************************************";
-                //e.Graphics.DrawString(text, font1, Brushes.Black, new RectangleF(0, height, pageWidth, 15), formatCenter);
-                //height += 15;
+                Image img = Image.FromFile(Common.Const.RootWebPath + "Images\\wx.jpg");
+                e.Graphics.DrawImage(img, new Rectangle(_pageWidth / 4, (int)height + 5, _pageWidth / 2, _pageWidth / 2));
+                height += _pageWidth / 2 + 5;
 
-                Image img = Image.FromFile(AppDomain.CurrentDomain.BaseDirectory + "wx.jpg");
-                e.Graphics.DrawImage(img, new Rectangle((int)(pageWidth / 4.3), (int)height + 5, pageWidth / 2, pageWidth / 2));
-                height += (pageWidth - 10) / 2 + 5;
-
-                text = "添加客服微信，更多优惠早知道！";
-                e.Graphics.DrawString(text, font1, Brushes.Black, new RectangleF(0, height, pageWidth, 15), formatCenter);
+                text = "加客服微信好友";
+                e.Graphics.DrawString(text, font1, Brushes.Black, new RectangleF(0, height, _pageWidth, 15), formatCenter);
                 height += 15;
 
-                height += 10;   //增加10的间距
-                img = GetBarCode("28452151542", pageWidth - 20, 10);
-                e.Graphics.DrawImage(img, new Rectangle(2, (int)height, pageWidth - 10, 20));
-                height += 20;
+                height += 3;   //增加3的间距
 
-                text = "☏ 13254845784";
-                e.Graphics.DrawString(text, font1, Brushes.Black, new RectangleF(0, height, pageWidth, 15), formatCenter);
+                img = GetBarCode(_data.OrderNo, _pageWidth - 20, 15);
+                e.Graphics.DrawImage(img, new Rectangle((_pageWidth - img.Width) / 2, (int)height, img.Width, img.Height));
+                height += img.Height;
+
+                height += 3;
+
+                text = $"☏ {_data.Phone}";
+                e.Graphics.DrawString(text, font1, Brushes.Black, new RectangleF(0, height, _pageWidth, 15), formatCenter);
                 height += 15;
 
-                text = "谢谢惠顾，欢迎下次光临！";
-                e.Graphics.DrawString(text, font1, Brushes.Black, new RectangleF(0, height, pageWidth, 15), formatCenter);
+                text = "欢迎再次光临";
+                e.Graphics.DrawString(text, font1, Brushes.Black, new RectangleF(0, height, _pageWidth, 15), formatCenter);
                 height += 15;
 
                 img.Dispose();
+                e.Graphics.Dispose();
             }
             catch (Exception ex)
             {
@@ -227,7 +203,13 @@ namespace Spetmall.BLL.Page
             return (int)(cm * 10 / 25.4 * 100);
         }
 
-
+        /// <summary>
+        /// 生成条形码
+        /// </summary>
+        /// <param name="content"></param>
+        /// <param name="width"></param>
+        /// <param name="height"></param>
+        /// <returns></returns>
         private Image GetBarCode(string content, int width, int height)
         {
             try
@@ -251,6 +233,17 @@ namespace Spetmall.BLL.Page
                 Util.Log.LogUtil.Write("生成条码出错：" + e.Message, Util.Log.LogType.Error);
             }
             return null;
+        }
+
+        /// <summary>
+        /// 移除无用的小数位的数字0
+        /// </summary>
+        /// <param name="number"></param>
+        /// <returns></returns>
+        private string RemoveLast0(decimal number)
+        {
+            string tmp = number.ToString("F2");
+            return tmp.TrimEnd('0', '.');
         }
 
     }

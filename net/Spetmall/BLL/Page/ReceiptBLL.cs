@@ -1,6 +1,7 @@
 ﻿using Spetmall.Common;
 using Spetmall.DAL;
 using Spetmall.Model;
+using Spetmall.Model.Custom;
 using Spetmall.Model.Page;
 using System;
 using System.Collections.Generic;
@@ -386,11 +387,11 @@ namespace Spetmall.BLL.Page
                     return (false, "商品或活动信息已经变化，请重新下单");
                 }
 
-                isOk = orderDAL.GetInstance().Add(new order()
+                order order = new order()
                 {
                     id = orderid,
                     payType = postData.paytype,
-                    payMoney = datas.Sum(a => a.total_money),
+                    payMoney = postData.totalPayMoney,
                     discountMoney = datas.Sum(a => a.total_sale_money),
                     memberid = postData.memberid,
                     productMoney = datas.Sum(a => a.money),
@@ -401,7 +402,8 @@ namespace Spetmall.BLL.Page
                     profitMoney = datas.Sum(a => a.profit_money),
                     crdate = DateTime.Today,
                     crtime = DateTime.Now,
-                }) > 0;
+                };
+                isOk = orderDAL.GetInstance().Add(order) > 0;
 
                 foreach (receipt_confirm_products item in datas)
                 {
@@ -445,12 +447,35 @@ namespace Spetmall.BLL.Page
                         {
                             DeleteOrderById(postData.orderid);
                         }
+
+                        //打印小票
+                        PrintObject printObject = new PrintObject()
+                        {
+                            ShopName = WebConfigData.ReceiptPrinterShopName,
+                            Phone = WebConfigData.ReceiptPrinterPhone,
+                            QRCodeImg = Const.RootWebPath + "Images\\wx.jpg",
+                            OrderNo = orderid,
+                            Time = DateTime.Now,
+                            ReceiptMoney = order.discountMoney + order.adjustMomey,
+                            PayMoney = order.payMoney,
+                        };
+                        foreach (receipt_confirm_products item in datas)
+                        {
+                            PrintProducts pdts = new PrintProducts()
+                            {
+                                Name = item.productName,
+                                Price = item.price,
+                                Count = item.count,
+                                Money = item.money,
+                                BarCode = item.barcode,
+                            };
+                            printObject.Products.Add(pdts);
+                        }
+                        PrintReceiptBLL printer = new PrintReceiptBLL(printObject);
+                        printer.Print();
                     }
                 }
 
-                //打印小票
-                PrintReceiptBLL printer = new PrintReceiptBLL(null, null);
-                printer.Print();
             }
             catch (Exception e)
             {
@@ -539,6 +564,7 @@ namespace Spetmall.BLL.Page
         /// 获取订单及其中的商品信息
         /// </summary>
         /// <param name="orderid"></param>
+        /// <param name="state">0正常订单 1临时挂单</param>
         /// <returns></returns>
         public static ReceiptOrderInfo GetOrderInfo(string orderid, short state)
         {
@@ -574,6 +600,7 @@ namespace Spetmall.BLL.Page
                     totalprice = order.productMoney,
                     activitytotalprice = order.payMoney,
                     discount_total_price = order.discountMoney,
+                    adjust_price = order.adjustMomey,
                     memberid = order.memberid,
                     paytype = order.payTypeString,
                     memberName = order.memberName,

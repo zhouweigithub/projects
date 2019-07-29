@@ -14,7 +14,7 @@ namespace Spetmall.DAL
         private static readonly orderProductDAL Instance = new orderProductDAL();
 
         private static readonly string getProductInfoByOrderId = @"
-SELECT a.productid id,a.count number,a.discountMoney discount_goods_total_price,
+SELECT a.productid id,b.barcode,a.count number,a.discountMoney discount_goods_total_price,
 a.money goods_total_price,a.payMoney goods_activity_total_price,a.price,b.name,
 b.thumbnail mapthumimg,b.store,b.warn alarm FROM orderproduct a
 INNER JOIN product b ON a.productid=b.id
