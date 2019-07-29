@@ -34,6 +34,7 @@ namespace Spetmall.Admin.Controllers
         }
 
         //打印小票
+        [HttpPost]
         public ActionResult Print(string id)
         {
             try

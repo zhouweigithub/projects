@@ -280,9 +280,12 @@
 
 
         ReceiptsetOrderEle.bind('click', function () {
-            if (validate()) {
-                new yunmall_reqeust($(this), null, 'window.top.receiptcommon.Receiptresult');
-            }
+            var that = $(this)
+            art.dialog.confirm("确认要提交订单吗？", function () {
+                if (validate()) {
+                    new yunmall_reqeust(that, null, 'window.top.receiptcommon.Receiptresult');
+                }
+            });
         });
 
         function validate() {
@@ -302,18 +305,18 @@
 
 
 
-                                                                                                                                                    /*function setIframeHeight(iframe) {
-                                                                                                                                                        if (iframe) {
-                                                                                                                                                        var iframeWin = iframe.contentWindow || iframe.contentDocument.parentWindow;
-                                                                                                                                                        if (iframeWin.document.body) {
-                                                                                                                                                        iframe.height = iframeWin.document.documentElement.scrollHeight || iframeWin.document.body.scrollHeight;
-                                                                                                                                                        }
-                                                                                                                                                        }
-                                                                                                                                                    };
+                                                                                                                                                                        /*function setIframeHeight(iframe) {
+                                                                                                                                                                            if (iframe) {
+                                                                                                                                                                            var iframeWin = iframe.contentWindow || iframe.contentDocument.parentWindow;
+                                                                                                                                                                            if (iframeWin.document.body) {
+                                                                                                                                                                            iframe.height = iframeWin.document.documentElement.scrollHeight || iframeWin.document.body.scrollHeight;
+                                                                                                                                                                            }
+                                                                                                                                                                            }
+                                                                                                                                                                        };
 
-                                                                                                                                                    window.onload = function () {
-                                                                                                                                                        setIframeHeight(document.getElementById('external-frame'));
-                                                                                                                                                    };*/
+                                                                                                                                                                        window.onload = function () {
+                                                                                                                                                                            setIframeHeight(document.getElementById('external-frame'));
+                                                                                                                                                                        };*/
     </script>
 
 </body>

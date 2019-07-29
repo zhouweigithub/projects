@@ -41,6 +41,9 @@
     <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="AopSdk">
+      <HintPath>..\Lib\AopSdk.dll</HintPath>
+    </Reference>
     <Reference Include="BarcodeLib">
       <HintPath>..\Lib\BarcodeLib.dll</HintPath>
     </Reference>
@@ -89,6 +92,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Page\ActivityBLL.cs" />
+    <Compile Include="Page\AlipayBLL.cs" />
     <Compile Include="Page\ExportBLL.cs" />
     <Compile Include="Page\FullSendBLL.cs" />
     <Compile Include="Page\DiscountBLL.cs" />

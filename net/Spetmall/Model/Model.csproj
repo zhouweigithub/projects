@@ -50,6 +50,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Alipay\AlipayTradePayRequestParameters.cs" />
+    <Compile Include="Alipay\AlipayTradePayResponseParameters.cs" />
     <Compile Include="category.cs" />
     <Compile Include="Common\TableFieldAttribute.cs" />
     <Compile Include="Custom\PrintObject.cs" />

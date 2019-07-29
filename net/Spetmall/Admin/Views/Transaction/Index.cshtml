@@ -59,7 +59,7 @@
                             <td>@item.payTypeString</td>
                             <td>@item.memberName</td>
                             <td>@item.crtime</td>
-                            <td><a href="Detail/@item.id">查看详情</a> @Ajax.ActionLink("打印小票", "Print", new { id = item.id }, new AjaxOptions() { HttpMethod = "Get", Confirm = "确定要打印该订单的小票吗？" })</td>
+                            <td><a href="Detail/@item.id">查看详情</a> @Ajax.ActionLink("打印小票", "Print", new { id = item.id }, new AjaxOptions() { HttpMethod = "Post", Confirm = "确定要打印该订单的小票吗？" })</td>
                         </tr>
                     }
                     <tr style="font-weight:bold;">
