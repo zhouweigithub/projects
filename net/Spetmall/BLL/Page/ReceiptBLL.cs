@@ -4,6 +4,7 @@ using Spetmall.Model;
 using Spetmall.Model.Page;
 using System;
 using System.Collections.Generic;
+using System.Drawing.Printing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -446,6 +447,10 @@ namespace Spetmall.BLL.Page
                         }
                     }
                 }
+
+                //打印小票
+                PrintReceiptBLL printer = new PrintReceiptBLL(null, null);
+                printer.Print();
             }
             catch (Exception e)
             {
@@ -621,5 +626,6 @@ namespace Spetmall.BLL.Page
                 tmpProduct.fullsendInfo.sale += (double)diff;
             }
         }
+
     }
 }

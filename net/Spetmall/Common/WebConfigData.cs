@@ -37,6 +37,10 @@ namespace Spetmall.Common
         /// 不需要验证手机号就能登录的ip
         /// </summary>
         public static readonly string IgnoreSmsCodeIp;
+        /// <summary>
+        /// 小票打印机名字
+        /// </summary>
+        public static readonly string ReceiptPrinterName;
 
         static WebConfigData()
         {
@@ -48,6 +52,7 @@ namespace Spetmall.Common
                 ExtraUserNames = Config.GetConfigToString("ExtraUserNames");
                 ExtraPageMenuIds = Config.GetConfigToString("ExtraPageMenuIds");
                 IgnoreSmsCodeIp = Config.GetConfigToString("IgnoreSmsCodeIp");
+                ReceiptPrinterName = Config.GetConfigToString("ReceiptPrinterName");
             }
             catch (Exception e)
             {
