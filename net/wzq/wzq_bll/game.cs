@@ -117,10 +117,10 @@ namespace wzq_bll
                 }
             }
 
-            //Console.WriteLine("human");
-            //Console.WriteLine(getchessstring(score_human));
-            //Console.WriteLine("computer");
-            //Console.WriteLine(getchessstring(score_computer));
+            Console.WriteLine("human");
+            Console.WriteLine(getchessstring(score_human));
+            Console.WriteLine("computer");
+            Console.WriteLine(getchessstring(score_computer));
         }
 
         private int getscore(int x, int y, int value)
@@ -139,10 +139,10 @@ namespace wzq_bll
             (t15, t16, rightbottom, hasEmptyChess8) = getContinueCount(x, y, direct.rightbottom, value);
 
             int hor, ver, lefttilt, righttilt;
-            hor = left + right + 1;
-            ver = top + bottom + 1;
-            lefttilt = lefttop + rightbottom + 1;
-            righttilt = righttop + leftbottom + 1;
+            hor = left + right + (hasEmptyChess1 && hasEmptyChess2 ? 0 : 1);
+            ver = top + bottom + (hasEmptyChess3 && hasEmptyChess4 ? 0 : 1);
+            lefttilt = lefttop + rightbottom + (hasEmptyChess5 && hasEmptyChess8 ? 0 : 1);
+            righttilt = righttop + leftbottom + (hasEmptyChess6 && hasEmptyChess7 ? 0 : 1);
 
             int horscort = getscore(hor, t1, t2, t3, t4, hasEmptyChess1 || hasEmptyChess2);
             int verscort = getscore(ver, t5, t6, t7, t8, hasEmptyChess3 || hasEmptyChess4);
@@ -707,7 +707,7 @@ namespace wzq_bll
             rightbottom,
         }
 
-        public enum chesstype
+        private enum chesstype
         {
             empty,
             self,
