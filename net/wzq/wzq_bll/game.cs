@@ -87,11 +87,6 @@ namespace wzq_bll
             } while (p != null && p.value != 1);
         }
 
-        //public point getBestPosition(int value)
-        //{
-
-        //}
-
         private void copychess()
         {
             for (int i = 0; i < width; i++)
@@ -121,11 +116,11 @@ namespace wzq_bll
                     }
                 }
             }
-            Console.WriteLine("human");
-            Console.WriteLine(getchessstring(score_human));
-            Console.WriteLine("computer");
-            Console.WriteLine(getchessstring(score_computer));
 
+            //Console.WriteLine("human");
+            //Console.WriteLine(getchessstring(score_human));
+            //Console.WriteLine("computer");
+            //Console.WriteLine(getchessstring(score_computer));
         }
 
         private int getscore(int x, int y, int value)
