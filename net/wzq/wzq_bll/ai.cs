@@ -21,7 +21,8 @@ namespace wzq_bll
             game.refreshscore();
             List<scoreinfo> playerscores = game.getMaxScoreInfos(0);
             List<scoreinfo> computerscores = game.getMaxScoreInfos(1);
-            if (computerscores[0].score >= playerscores[0].score)
+            if ((computerscores[0].score + 800 >= playerscores[0].score || playerscores[0].score < 600 || (computerscores[0].score > 8000 && playerscores[0].score < 100000))
+                && game.gethistory().Length > 5)
             {   //进攻
                 if (computerscores.Count == 1)
                 {

@@ -57,7 +57,7 @@ namespace wzq
                 (int x, int y) = bll.getPoint(e.X, e.Y);
                 if (bll.iswin(y, x))
                 {
-                    MessageBox.Show("you win");
+                    MessageBox.Show("you win", "", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 }
                 else
                 {
@@ -76,9 +76,20 @@ namespace wzq
                 pictureBox1.Refresh();
                 if (bll.iswin(px, py))
                 {
-                    MessageBox.Show("you lost");
+                    MessageBox.Show("you lost", "", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
             }
+        }
+
+
+        private void pictureBox1_MouseEnter(object sender, EventArgs e)
+        {
+            Cursor = Cursors.Hand;
+        }
+
+        private void pictureBox1_MouseLeave(object sender, EventArgs e)
+        {
+            Cursor = Cursors.Default;
         }
     }
 }

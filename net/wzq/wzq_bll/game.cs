@@ -76,12 +76,15 @@ namespace wzq_bll
                 return;
 
             point p = history[history.Count - 1];
-            chess[p.x, p.y] = 0;
-            history.RemoveAt(history.Count - 1);
-
-            p = history[history.Count - 1];
-            chess[p.x, p.y] = 0;
-            history.RemoveAt(history.Count - 1);
+            do
+            {
+                chess[p.x, p.y] = 0;
+                history.RemoveAt(history.Count - 1);
+                if (history.Count > 0)
+                    p = history[history.Count - 1];
+                else
+                    p = null;
+            } while (p != null && p.value != 1);
         }
 
         //public point getBestPosition(int value)
@@ -127,16 +130,18 @@ namespace wzq_bll
 
         private int getscore(int x, int y, int value)
         {
+            bool hasEmptyChess1, hasEmptyChess2, hasEmptyChess3, hasEmptyChess4,
+                hasEmptyChess5, hasEmptyChess6, hasEmptyChess7, hasEmptyChess8;
             int left = 0, right = 0, top = 0, bottom = 0, lefttop = 0, righttop = 0, leftbottom = 0, rightbottom = 0;
             chesstype t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12, t13, t14, t15, t16;
-            (t1, t2, left) = getContinueCount(x, y, direct.left, value);
-            (t3, t4, right) = getContinueCount(x, y, direct.right, value);
-            (t5, t6, top) = getContinueCount(x, y, direct.top, value);
-            (t7, t8, bottom) = getContinueCount(x, y, direct.bottom, value);
-            (t9, t10, lefttop) = getContinueCount(x, y, direct.lefttop, value);
-            (t11, t12, leftbottom) = getContinueCount(x, y, direct.leftbottom, value);
-            (t13, t14, righttop) = getContinueCount(x, y, direct.righttop, value);
-            (t15, t16, rightbottom) = getContinueCount(x, y, direct.rightbottom, value);
+            (t1, t2, left, hasEmptyChess1) = getContinueCount(x, y, direct.left, value);
+            (t3, t4, right, hasEmptyChess2) = getContinueCount(x, y, direct.right, value);
+            (t5, t6, top, hasEmptyChess3) = getContinueCount(x, y, direct.top, value);
+            (t7, t8, bottom, hasEmptyChess4) = getContinueCount(x, y, direct.bottom, value);
+            (t9, t10, lefttop, hasEmptyChess5) = getContinueCount(x, y, direct.lefttop, value);
+            (t11, t12, leftbottom, hasEmptyChess6) = getContinueCount(x, y, direct.leftbottom, value);
+            (t13, t14, righttop, hasEmptyChess7) = getContinueCount(x, y, direct.righttop, value);
+            (t15, t16, rightbottom, hasEmptyChess8) = getContinueCount(x, y, direct.rightbottom, value);
 
             int hor, ver, lefttilt, righttilt;
             hor = left + right + 1;
@@ -144,10 +149,10 @@ namespace wzq_bll
             lefttilt = lefttop + rightbottom + 1;
             righttilt = righttop + leftbottom + 1;
 
-            int horscort = getscort(hor, t1, t2, t3, t4);
-            int verscort = getscort(ver, t5, t6, t7, t8);
-            int lefttiltscort = getscort(lefttilt, t9, t10, t11, t12);
-            int righttiltscort = getscort(righttilt, t13, t14, t15, t16);
+            int horscort = getscore(hor, t1, t2, t3, t4, hasEmptyChess1 || hasEmptyChess2);
+            int verscort = getscore(ver, t5, t6, t7, t8, hasEmptyChess3 || hasEmptyChess4);
+            int lefttiltscort = getscore(lefttilt, t9, t10, t15, t16, hasEmptyChess5 || hasEmptyChess8);
+            int righttiltscort = getscore(righttilt, t11, t12, t13, t14, hasEmptyChess6 || hasEmptyChess7);
 
             return horscort + verscort + lefttiltscort + righttiltscort;
         }
@@ -161,53 +166,83 @@ namespace wzq_bll
         /// <param name="a1">连子外右或下最近第1个</param>
         /// <param name="a2">连子外右或下最近第2个</param>
         /// <returns></returns>
-        private int getscort(int count, chesstype p1, chesstype p2, chesstype a1, chesstype a2)
+        private int getscore(int count, chesstype p1, chesstype p2, chesstype a1, chesstype a2, bool hasEmptyChess)
         {
+            int result = 0;
             if (count >= 5)
-                return 100000;   //满五
-
+            {
+                result = 100000;   //满五
+            }
             if (count == 4 && p1 == chesstype.empty && a1 == chesstype.empty)
-                return 10000;    //活四
+            {
+                result = 10000;    //活四
+            }
+            else if (count == 4 && (p1 == chesstype.empty || a1 == chesstype.empty))
+            {
+                result = 2200;    //冲四
+            }
+            else if (count == 3 && p1 == chesstype.empty && a1 == chesstype.empty)
+            {
+                result = 2000;    //活三
+            }
+            else if (count == 3 && (p1 == chesstype.empty || a1 == chesstype.empty))
+            {
+                result = 400;    //冲三
+            }
+            else if (count == 2 && p1 == chesstype.empty && a1 == chesstype.empty)
+            {
+                result = 200;    //活二
+            }
+            else if (count == 2 && (p1 == chesstype.empty || a1 == chesstype.empty))
+            {
+                result = 50;    //冲二
+            }
+            else if (count == 1 && p1 == chesstype.empty && a1 == chesstype.empty)
+            {
+                result = 10;    //活一
+            }
+            else if (count == 1 && (p1 == chesstype.empty || a1 == chesstype.empty))
+            {
+                result = 2;    //冲一
+            }
 
-            if (count == 4 && (p1 == chesstype.empty || a1 == chesstype.empty))
-                return 2000;    //冲四
+            if (hasEmptyChess)
+            {
+                result -= (int)(result * 0.2);
+            }
 
-            if (count == 3 && p1 == chesstype.empty && a1 == chesstype.empty)
-                return 2000;    //活三
-
-            if (count == 3 && (p1 == chesstype.empty || a1 == chesstype.empty))
-                return 400;    //冲三
-
-            if (count == 2 && p1 == chesstype.empty && a1 == chesstype.empty)
-                return 200;    //活二
-
-            if (count == 2 && (p1 == chesstype.empty || a1 == chesstype.empty))
-                return 50;    //冲二
-
-            if (count == 1 && p1 == chesstype.empty && a1 == chesstype.empty)
-                return 10;    //活一
-
-            if (count == 1 && (p1 == chesstype.empty || a1 == chesstype.empty))
-                return 2;    //冲一
-
-            return 0;
+            return result;
         }
 
-        private (chesstype t1, chesstype t2, int count) getContinueCount(int x, int y, direct d, int value)
+        private (chesstype t1, chesstype t2, int count, bool hasEmptyChess) getContinueCount(int x, int y, direct d, int value)
         {
             int count = 0;
             chesstype t1 = chesstype.empty;
             chesstype t2 = chesstype.empty;
             int q1, q2;
+            int emptyCount = 0; //搜索到的空位置的数量
+            bool hasEmptyChess = false; //搜索到的棋子中是否有空位置（允许出现一个空位置）
             switch (d)
             {
                 case direct.left:
-                    while (x != 0 && chess[x - 1, y] == value)
+                    //搜索到边界或者空位置数量达到2个或者搜索到对方的棋子就停止搜索
+                    while (x != 0 && emptyCount < 2 && chess[x - 1, y] != -value)
                     {
-                        x--;
-                        count++;
+                        if (chess[x - 1, y] == 0)
+                        {
+                            emptyCount++;   //空位置数量+1
+                            if (emptyCount < 2)
+                                x--;    //只有空位置数量小于2个才继续向前搜索
+                        }
+                        else if (chess[x - 1, y] == value)
+                        {   //自己的棋就继续搜索
+                            x--;
+                            count++;
+                            if (emptyCount > 0)
+                                hasEmptyChess = true;
+                        }
                     }
-                    q1 = x - 1;
+                    q1 = chess[x, y] == 0 && emptyCount >= 1 ? x : x - 1;  //如果前一个位置是空位置，就将前一个位置算成第一个
                     if (q1 >= 0)
                         t1 = chess[q1, y] == 0 ? chesstype.empty : chess[q1, y] == value ? chesstype.self : chesstype.enemy;
                     else
@@ -220,12 +255,23 @@ namespace wzq_bll
                         t2 = chesstype.border;
                     break;
                 case direct.right:
-                    while (x != width - 1 && chess[x + 1, y] == value)
+                    while (x != width - 1 && emptyCount < 2 && chess[x + 1, y] != -value)
                     {
-                        x++;
-                        count++;
+                        if (chess[x + 1, y] == 0)
+                        {
+                            emptyCount++;   //空位置数量+1
+                            if (emptyCount < 2)
+                                x++;    //只有空位置数量小于2个才继续向前搜索
+                        }
+                        else if (chess[x + 1, y] == value)
+                        {   //自己的棋就继续搜索
+                            x++;
+                            count++;
+                            if (emptyCount > 0)
+                                hasEmptyChess = true;
+                        }
                     }
-                    q1 = x + 1;
+                    q1 = chess[x, y] == 0 && emptyCount >= 1 ? x : x + 1;  //如果前一个位置是空位置，就将前一个位置算成第一个
                     if (q1 < width)
                         t1 = chess[q1, y] == 0 ? chesstype.empty : chess[q1, y] == value ? chesstype.self : chesstype.enemy;
                     else
@@ -238,12 +284,23 @@ namespace wzq_bll
                         t2 = chesstype.border;
                     break;
                 case direct.top:
-                    while (y != 0 && chess[x, y - 1] == value)
+                    while (y != 0 && emptyCount < 2 && chess[x, y - 1] != -value)
                     {
-                        y--;
-                        count++;
+                        if (chess[x, y - 1] == 0)
+                        {
+                            emptyCount++;   //空位置数量+1
+                            if (emptyCount < 2)
+                                y--;    //只有空位置数量小于2个才继续向前搜索
+                        }
+                        else if (chess[x, y - 1] == value)
+                        {   //自己的棋就继续搜索
+                            y--;
+                            count++;
+                            if (emptyCount > 0)
+                                hasEmptyChess = true;
+                        }
                     }
-                    q1 = y - 1;
+                    q1 = chess[x, y] == 0 && emptyCount >= 1 ? y : y - 1;  //如果前一个位置是空位置，就将前一个位置算成第一个
                     if (q1 >= 0)
                         t1 = chess[x, q1] == 0 ? chesstype.empty : chess[x, q1] == value ? chesstype.self : chesstype.enemy;
                     else
@@ -256,12 +313,23 @@ namespace wzq_bll
                         t2 = chesstype.border;
                     break;
                 case direct.bottom:
-                    while (y != height - 1 && chess[x, y + 1] == value)
+                    while (y != height - 1 && emptyCount < 2 && chess[x, y + 1] != -value)
                     {
-                        y++;
-                        count++;
+                        if (chess[x, y + 1] == 0)
+                        {
+                            emptyCount++;   //空位置数量+1
+                            if (emptyCount < 2)
+                                y++;    //只有空位置数量小于2个才继续向前搜索
+                        }
+                        else if (chess[x, y + 1] == value)
+                        {   //自己的棋就继续搜索
+                            y++;
+                            count++;
+                            if (emptyCount > 0)
+                                hasEmptyChess = true;
+                        }
                     }
-                    q1 = y + 1;
+                    q1 = chess[x, y] == 0 && emptyCount >= 1 ? y : y + 1;  //如果前一个位置是空位置，就将前一个位置算成第一个
                     if (q1 < height)
                         t1 = chess[x, q1] == 0 ? chesstype.empty : chess[x, q1] == value ? chesstype.self : chesstype.enemy;
                     else
@@ -274,14 +342,38 @@ namespace wzq_bll
                         t2 = chesstype.border;
                     break;
                 case direct.lefttop:
-                    while (x != 0 && y != 0 && chess[x - 1, y - 1] == value)
+                    while (x != 0 && y != 0 && emptyCount < 2 && chess[x - 1, y - 1] != -value)
                     {
-                        x--;
-                        y--;
-                        count++;
+                        if (chess[x - 1, y - 1] == 0)
+                        {
+                            emptyCount++;   //空位置数量+1
+                            if (emptyCount < 2)
+                            {
+                                x--;
+                                y--;    //只有空位置数量小于2个才继续向前搜索
+                            }
+                        }
+                        else if (chess[x - 1, y - 1] == value)
+                        {   //自己的棋就继续搜索
+                            x--;
+                            y--;
+                            count++;
+                            if (emptyCount > 0)
+                                hasEmptyChess = true;
+                        }
                     }
-                    q1 = x - 1;
-                    q2 = y - 1;
+
+                    //如果前一个位置是空位置，就将前一个位置算成第一个
+                    if (chess[x, y] == 0 && emptyCount >= 1)
+                    {
+                        q1 = x;
+                        q2 = y;
+                    }
+                    else
+                    {
+                        q1 = x - 1;
+                        q2 = y - 1;
+                    }
                     if (q1 >= 0 && q2 >= 0)
                         t1 = chess[q1, q2] == 0 ? chesstype.empty : chess[q1, q2] == value ? chesstype.self : chesstype.enemy;
                     else
@@ -295,14 +387,38 @@ namespace wzq_bll
                         t2 = chesstype.border;
                     break;
                 case direct.righttop:
-                    while (x != width - 1 && y != 0 && chess[x + 1, y - 1] == value)
+                    while (x != width - 1 && y != 0 && emptyCount < 2 && chess[x + 1, y - 1] != -value)
                     {
-                        x++;
-                        y--;
-                        count++;
+                        if (chess[x + 1, y - 1] == 0)
+                        {
+                            emptyCount++;   //空位置数量+1
+                            if (emptyCount < 2)
+                            {
+                                x++;
+                                y--;    //只有空位置数量小于2个才继续向前搜索
+                            }
+                        }
+                        else if (chess[x + 1, y - 1] == value)
+                        {   //自己的棋就继续搜索
+                            x++;
+                            y--;
+                            count++;
+                            if (emptyCount > 0)
+                                hasEmptyChess = true;
+                        }
                     }
-                    q1 = x + 1;
-                    q2 = y - 1;
+
+                    //如果前一个位置是空位置，就将前一个位置算成第一个
+                    if (chess[x, y] == 0 && emptyCount >= 1)
+                    {
+                        q1 = x;
+                        q2 = y;
+                    }
+                    else
+                    {
+                        q1 = x + 1;
+                        q2 = y - 1;
+                    }
                     if (q1 < width && q2 >= 0)
                         t1 = chess[q1, q2] == 0 ? chesstype.empty : chess[q1, q2] == value ? chesstype.self : chesstype.enemy;
                     else
@@ -316,14 +432,38 @@ namespace wzq_bll
                         t2 = chesstype.border;
                     break;
                 case direct.leftbottom:
-                    while (x != 0 && y != height - 1 && chess[x - 1, y + 1] == value)
+                    while (x != 0 && y != height - 1 && emptyCount < 2 && chess[x - 1, y + 1] != -value)
                     {
-                        x--;
-                        y++;
-                        count++;
+                        if (chess[x - 1, y + 1] == 0)
+                        {
+                            emptyCount++;   //空位置数量+1
+                            if (emptyCount < 2)
+                            {
+                                x--;
+                                y++;    //只有空位置数量小于2个才继续向前搜索
+                            }
+                        }
+                        else if (chess[x - 1, y + 1] == value)
+                        {   //自己的棋就继续搜索
+                            x--;
+                            y++;
+                            count++;
+                            if (emptyCount > 0)
+                                hasEmptyChess = true;
+                        }
                     }
-                    q1 = x - 1;
-                    q2 = y + 1;
+
+                    //如果前一个位置是空位置，就将前一个位置算成第一个
+                    if (chess[x, y] == 0 && emptyCount >= 1)
+                    {
+                        q1 = x;
+                        q2 = y;
+                    }
+                    else
+                    {
+                        q1 = x - 1;
+                        q2 = y + 1;
+                    }
                     if (q1 >= 0 && q2 < height)
                         t1 = chess[q1, q2] == 0 ? chesstype.empty : chess[q1, q2] == value ? chesstype.self : chesstype.enemy;
                     else
@@ -337,14 +477,38 @@ namespace wzq_bll
                         t2 = chesstype.border;
                     break;
                 case direct.rightbottom:
-                    while (x != width - 1 && y != height - 1 && chess[x + 1, y + 1] == value)
+                    while (x != width - 1 && y != height - 1 && emptyCount < 2 && chess[x + 1, y + 1] != -value)
                     {
-                        x++;
-                        y++;
-                        count++;
+                        if (chess[x + 1, y + 1] == 0)
+                        {
+                            emptyCount++;   //空位置数量+1
+                            if (emptyCount < 2)
+                            {
+                                x++;
+                                y++;    //只有空位置数量小于2个才继续向前搜索
+                            }
+                        }
+                        else if (chess[x + 1, y + 1] == value)
+                        {   //自己的棋就继续搜索
+                            x++;
+                            y++;
+                            count++;
+                            if (emptyCount > 0)
+                                hasEmptyChess = true;
+                        }
                     }
-                    q1 = x + 1;
-                    q2 = y + 1;
+
+                    //如果前一个位置是空位置，就将前一个位置算成第一个
+                    if (chess[x, y] == 0 && emptyCount >= 1)
+                    {
+                        q1 = x;
+                        q2 = y;
+                    }
+                    else
+                    {
+                        q1 = x + 1;
+                        q2 = y + 1;
+                    }
                     if (q1 < width && q2 < height)
                         t1 = chess[q1, q2] == 0 ? chesstype.empty : chess[q1, q2] == value ? chesstype.self : chesstype.enemy;
                     else
@@ -361,7 +525,7 @@ namespace wzq_bll
                     break;
             }
 
-            return (t1, t2, count);
+            return (t1, t2, count, hasEmptyChess);
         }
 
         private int getMaxContinueCount(int x, int y, int value)

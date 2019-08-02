@@ -56,9 +56,7 @@ namespace wzq
             {
                 if (item.value != 0)
                 {
-                    Image imgchess = item.value == -1 ? Properties.Resources.black : Properties.Resources.white;
-                    (int starth, int startv) = getPicturePosition(item.y, item.x);
-                    g.DrawImage(imgchess, new Rectangle(starth, startv, (int)width, (int)height));
+                    DrawChess(item, g);
                 }
             }
             g.Dispose();
@@ -69,16 +67,19 @@ namespace wzq
         {
             if (isHumanGo)
             {
-                Graphics g = Graphics.FromImage(img);
                 (int px, int py) = getPoint(x, y);
                 (int starth, int startv) = getPicturePosition(px, py);
                 if (px >= 0 && py >= 0 && px < hcount && py < vcount)
                 {
-                    me.go(py, px);
-                    g.DrawImage(Properties.Resources.black, new Rectangle(starth, startv, (int)width, (int)height));
-                    isHumanGo = false;
+                    if (me.go(py, px))
+                    {
+                        Graphics g = Graphics.FromImage(img);
+                        g.DrawImage(Properties.Resources.blackcur, new Rectangle(starth, startv, (int)width, (int)height));
+                        isHumanGo = false;
+                        ReDrawPreChess(g);
+                        g.Dispose();
+                    }
                 }
-                g.Dispose();
                 return img;
             }
             return null;
@@ -91,12 +92,30 @@ namespace wzq
                 Graphics g = Graphics.FromImage(img);
                 (int px, int py) = ai.go();
                 (int starth, int startv) = getPicturePosition(py, px);
-                g.DrawImage(Properties.Resources.white, new Rectangle(starth, startv, (int)width, (int)height));
+                g.DrawImage(Properties.Resources.whitecur, new Rectangle(starth, startv, (int)width, (int)height));
+                ReDrawPreChess(g);
                 isHumanGo = true;
                 g.Dispose();
                 return (px, py, img);
             }
             return (-1, -1, null);
+        }
+
+        private void ReDrawPreChess(Graphics g)
+        {
+            point[] his = game.gethistory();
+            if (his.Length < 2)
+                return;
+
+            point p = his[his.Length - 2];
+            DrawChess(p, g);
+        }
+
+        private void DrawChess(point p, Graphics g)
+        {
+            Image imgchess = p.value == -1 ? Properties.Resources.black : Properties.Resources.white;
+            (int starth, int startv) = getPicturePosition(p.y, p.x);
+            g.DrawImage(imgchess, new Rectangle(starth, startv, (int)width, (int)height));
         }
 
         public Image regret()
