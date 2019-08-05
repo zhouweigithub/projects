@@ -16,14 +16,21 @@ namespace Spetmall.Admin.Controllers
     public class TransactionController : Controller
     {
 
-        public ActionResult Index(string keyword, string starttime, string endtime, string time = "1")
+        public ActionResult Index(string keyword, string starttime, string endtime, string time = "1", int page = 1, int pageSize = 20)
         {
-            IList<order_detail> datas = orderDAL.GetOrderList(keyword, time, starttime, endtime, 0);
+            IList<order_detail> datas = orderDAL.GetOrderList(keyword, time, starttime, endtime, 0, page, pageSize);
+            int count = orderDAL.GetInstance().GetOrderListCount(keyword, time, starttime, endtime, 0);
+
             ViewBag.time = time;
             ViewBag.datas = datas;
             ViewBag.keyword = keyword;
             ViewBag.starttime = starttime;
             ViewBag.endtime = endtime;
+
+            ViewBag.Page = page;
+            ViewBag.PageSize = pageSize;
+            ViewBag.TotalDataCount = count;
+
             return View();
         }
 

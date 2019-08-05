@@ -2,6 +2,17 @@
 @{
     ViewBag.Title = "限时折扣";
 }
+
+<style>
+    .green {
+        background-color: #bde2ba;
+    }
+
+    .red {
+        background-color: #f8cfcf;
+    }
+</style>
+
 <div class="mianbox">
     <div class="tablebox padt">
         <div class="fenlei2">
@@ -25,13 +36,13 @@
                                 <tbody>
                                     <tr>
                                         <th width="5%">ID</th>
-                                        <th width="30%">标题</th>
-                                        <th width="15%">活动类型</th>
-                                        <th width="20%">日间范围</th>
-                                        <th width="15%">创建时间</th>
-                                        <th width="15%">管理操作</th>
+                                        <th width="25%">标题</th>
+                                        <th width="14%">活动类型</th>
+                                        <th width="19%">日间范围</th>
+                                        <th width="14%">创建时间</th>
+                                        <th width="10%">状态</th>
+                                        <th width="14%">操作</th>
                                     </tr>
-
                                     @{
                                         foreach (discount item in ViewBag.datas)
                                         {
@@ -41,6 +52,7 @@
                                                 <td>@item.TypeString</td>
                                                 <td>@item.starttime.ToString("yyyy/MM/dd") - @item.endtime.ToString("yyyy/MM/dd")</td>
                                                 <td>@item.crtime.ToString("yyyy/MM/dd HH:mm:ss")</td>
+                                                <td class="@(item.StateString=="已停用"||item.StateString=="已结束"?"red":item.StateString=="进行中"?"green":"")">@item.StateString</td>
                                                 <td>
                                                     <a href="DiscountEdit/@item.id">修改</a>
                                                     | <a href="javascript:yunmall_confirm_dialog('确定删除吗？','DiscountDelete/@item.id','reload')">删除</a>
@@ -52,28 +64,9 @@
                                 </tbody>
                             </table>
                         </div>
-                        <!--
-                         <ul class="clear">
-                                         <li  ><a href="/Activity/discountedit/id/93.html">
-                                <table width="100%" border="0" cellspacing="0" cellpadding="0">
-                                    <tr>
-                                      <td width="78"><img src="/static/images/hd01.png"></td>
-                                      <td>
-                                        <span>狗粮可好吃了</span>
-                                        <span>2019-05-22 00:00:00 到 2019-05-25 00:00:00 </span>
-                                      </td>
-                                    </tr>
-                                </table>
-                                </a>
-                             </li>
-
-                        </ul>
-                        -->
                     </div>
                     <div class="pagin"></div>
-
                 </div>
-
             </div>
         </div>
     </div>

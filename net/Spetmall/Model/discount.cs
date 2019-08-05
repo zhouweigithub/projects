@@ -64,5 +64,22 @@ namespace Spetmall.Model
             }
         }
 
+        public string StateString
+        {
+            get
+            {
+                if (state == 0)
+                    return "已停用";
+                else
+                {
+                    if (DateTime.Now < starttime)
+                        return "未开始";
+                    else if (DateTime.Now > endtime)
+                        return "已结束";
+                    else
+                        return "进行中";
+                }
+            }
+        }
     }
 }

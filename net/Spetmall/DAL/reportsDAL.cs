@@ -52,23 +52,18 @@ WHERE b.state=0 and a.productid='{0}' {1} GROUP BY b.crdate
         /// <param name="startdate"></param>
         /// <param name="enddate"></param>
         /// <returns></returns>
-        public static List<payInfo> GetPayInfos(string startdate, string enddate)
+        public static List<payInfo> GetPayInfos(string startdate, string enddate, int pageSize, int page)
         {
             try
             {
-                string where1 = string.Empty;
-                if (!string.IsNullOrEmpty(startdate))
-                    where1 += $" and crdate>='{startdate}'";
-                if (!string.IsNullOrEmpty(enddate))
-                    where1 += $" and crdate<='{enddate}'";
-
+                string where1 = GetWhereString(startdate, enddate);
                 string where2 = where1.Replace("crdate", "DATE(crtime)");
 
                 string sql = string.Format(getPayInfoSql, where1, where2);
 
                 using (DBHelper dbHelper = new DBHelper(WebConfigData.DataBaseType, WebConfigData.ConnString))
                 {
-                    DataTable dt = dbHelper.ExecuteDataTable(sql);
+                    DataTable dt = dbHelper.ExecuteDataTablePage(sql, pageSize, page);
                     if (dt != null && dt.Rows.Count > 0)
                         return dt.ToList<payInfo>();
                 }
@@ -79,6 +74,37 @@ WHERE b.state=0 and a.productid='{0}' {1} GROUP BY b.crdate
             }
 
             return new List<payInfo>();
+        }
+
+        private static string GetWhereString(string startdate, string enddate)
+        {
+            string where1 = string.Empty;
+            if (!string.IsNullOrEmpty(startdate))
+                where1 += $" and crdate>='{startdate}'";
+            if (!string.IsNullOrEmpty(enddate))
+                where1 += $" and crdate<='{enddate}'";
+            return where1;
+        }
+
+        public static int GetPayInfosCount(string startdate, string enddate)
+        {
+            try
+            {
+                string where = GetWhereString(startdate, enddate);
+                string sqldata = string.Format(getPayInfoSql, where, string.Empty);
+
+                using (DBHelper dbHelper = new DBHelper(WebConfigData.DataBaseType, WebConfigData.ConnString))
+                {
+                    string sql = string.Format("select count(1) from ({0})t", sqldata);
+                    int count = dbHelper.ExecuteScalarInt(sql);
+                    return count;
+                }
+            }
+            catch (Exception ex)
+            {
+                WriteLog.Write(WriteLog.LogLevel.Error, "GetPayInfosCount 获取数量出错\r\n" + ex.Message);
+            }
+            return 0;
         }
 
         /// <summary>

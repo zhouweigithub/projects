@@ -13,12 +13,19 @@ namespace Spetmall.Admin.Controllers
     public class RailcardController : Controller
     {
 
-        public ActionResult Index(string keyWord, string orderBy)
+        public ActionResult Index(string keyWord, string orderBy, int pageSize = 20, int page = 1)
         {
             List<railcard> datas = railcardDAL.GetInstance().GetRailcards(keyWord, orderBy);
+            int count = railcardDAL.GetInstance().GetRailcardsCount(keyWord);
+
             ViewBag.keyWord = keyWord;
             ViewBag.orderBy = orderBy;
             ViewBag.datas = datas;
+
+            ViewBag.Page = page;
+            ViewBag.PageSize = pageSize;
+            ViewBag.TotalDataCount = count;
+
             return View();
         }
 

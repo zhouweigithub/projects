@@ -27,5 +27,9 @@ namespace Spetmall.Model.Alipay
         /// 订单标题
         /// </summary>
         public string subject;
+        /// <summary>
+        /// 交易金额（元）
+        /// </summary>
+        public decimal total_amount;
     }
 }

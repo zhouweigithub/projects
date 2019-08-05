@@ -14,12 +14,19 @@ namespace Spetmall.Admin.Controllers
     public class MemberController : Controller
     {
 
-        public ActionResult Index(string keyWord, string orderBy)
+        public ActionResult Index(string keyWord, string orderBy, int pageSize = 20, int page = 1)
         {
             List<member_show> datas = memberDAL.GetInstance().GetMembers(keyWord, orderBy);
+            int count = memberDAL.GetInstance().GetMembersCount(keyWord);
+
             ViewBag.keyWord = keyWord;
             ViewBag.orderBy = orderBy;
             ViewBag.datas = datas;
+
+            ViewBag.Page = page;
+            ViewBag.PageSize = pageSize;
+            ViewBag.TotalDataCount = count;
+
             return View();
         }
 

@@ -48,5 +48,9 @@ namespace Spetmall.Model.Page
         /// 备注
         /// </summary>
         public string remark { get; set; }
+        /// <summary>
+        /// 支付宝或微信的付款码
+        /// </summary>
+        public string auth_code { get; set; }
     }
 }

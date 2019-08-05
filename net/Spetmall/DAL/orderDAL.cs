@@ -73,14 +73,14 @@ WHERE a.state=1 ORDER BY a.crtime DESC
         /// <param name="enddate"></param>
         /// <param name="state">0正常订单 1临时挂单</param>
         /// <returns></returns>
-        public static List<order_detail> GetOrderList(string keyword, string day, string startdate, string enddate, short state)
+        public static List<order_detail> GetOrderList(string keyword, string day, string startdate, string enddate, short state, int page, int pageSize)
         {
             try
             {
                 string where = GetWhere(keyword, day, startdate, enddate, state);
                 using (DBHelper dbHelper = new DBHelper(WebConfigData.DataBaseType, WebConfigData.ConnString))
                 {
-                    DataTable dt = dbHelper.ExecuteDataTable(string.Format(getOrderListSql, where));
+                    DataTable dt = dbHelper.ExecuteDataTablePage(string.Format(getOrderListSql, where), pageSize, page);
                     if (dt != null && dt.Rows.Count > 0)
                         return dt.ToList<order_detail>();
                 }
@@ -90,6 +90,25 @@ WHERE a.state=1 ORDER BY a.crtime DESC
                 WriteLog.Write(WriteLog.LogLevel.Error, "GetOrderList 获取订单信息出错\r\n" + ex);
             }
             return new List<order_detail>();
+        }
+
+        public int GetOrderListCount(string keyword, string day, string startdate, string enddate, short state)
+        {
+            try
+            {
+                string where = GetWhere(keyword, day, startdate, enddate, state);
+                using (DBHelper dbHelper = new DBHelper(WebConfigData.DataBaseType, WebConfigData.ConnString))
+                {
+                    string sql = string.Format("select count(1) from ({0})t", string.Format(getOrderListSql, where));
+                    int count = dbHelper.ExecuteScalarInt(sql);
+                    return count;
+                }
+            }
+            catch (Exception ex)
+            {
+                WriteLog.Write(WriteLog.LogLevel.Error, "GetOrderListCount 获取数量出错\r\n" + ex.Message);
+            }
+            return 0;
         }
 
         /// <summary>

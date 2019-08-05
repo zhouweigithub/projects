@@ -16,13 +16,20 @@ namespace Spetmall.Admin.Controllers
 
         private static readonly string defaultProductImage = "/static/images/upload-pic.png";
 
-        public ActionResult Index(string category, string keyWord, string orderBy)
+        public ActionResult Index(string category, string keyWord, string orderBy, int pageSize = 20, int page = 1)
         {
-            List<product_show> datas = productDAL.GetInstance().GetProducts(string.Empty, category, keyWord, orderBy, 1, int.MaxValue);
+            List<product_show> datas = productDAL.GetInstance().GetProducts(string.Empty, category, keyWord, orderBy, page, pageSize);
+            int count = productDAL.GetInstance().GetProductsCount(string.Empty, category, keyWord);
             List<category> categorys = categoryDAL.GetInstance().GetFloorDatas(false);
             ViewBag.categorys = categorys;
             ViewBag.datas = datas;
             ViewBag.orderBy = orderBy;
+
+            ViewBag.Page = page;
+            ViewBag.PageSize = pageSize;
+            ViewBag.TotalDataCount = count;
+            //ViewBag.TotalPages = ((count % pageSize == 0) ? (count / pageSize) : (count / pageSize + 1));
+
             return View();
         }
 

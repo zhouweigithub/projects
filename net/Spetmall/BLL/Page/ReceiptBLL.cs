@@ -570,7 +570,7 @@ namespace Spetmall.BLL.Page
         {
             try
             {
-                List<order_detail> orderList = orderDAL.GetOrderList(orderid, string.Empty, string.Empty, string.Empty, state);
+                List<order_detail> orderList = orderDAL.GetOrderList(orderid, string.Empty, string.Empty, string.Empty, state, 1, int.MaxValue);
                 if (orderList.Count > 0)
                 {
                     order_detail order = orderList[0];

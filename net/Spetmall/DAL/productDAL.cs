@@ -32,7 +32,7 @@ namespace Spetmall.DAL
             return Instance;
         }
 
-        public List<product_show> GetProducts(string productId, string category, string keyWord, string orderBy, int page, int pageSize)
+        public List<product_show> GetProducts(string productId, string category, string keyWord, string orderBy, int page = 1, int pageSize = 20)
         {
             try
             {
@@ -53,6 +53,28 @@ namespace Spetmall.DAL
             }
             return new List<product_show>();
         }
+
+        public int GetProductsCount(string productId, string category, string keyWord)
+        {
+            try
+            {
+                string where = GetWhere(productId, category, keyWord);
+                string sqldata = string.Format(getDatasSql, where, string.Empty);
+
+                using (DBHelper dbHelper = new DBHelper(WebConfigData.DataBaseType, WebConfigData.ConnString))
+                {
+                    string sql = string.Format("select count(1) from ({0})t", sqldata);
+                    int count = dbHelper.ExecuteScalarInt(sql);
+                    return count;
+                }
+            }
+            catch (Exception ex)
+            {
+                WriteLog.Write(WriteLog.LogLevel.Error, "GetProductsCount 获取数量出错\r\n" + ex.Message);
+            }
+            return 0;
+        }
+
 
         private string GetWhere(string productId, string category, string keyWord)
         {

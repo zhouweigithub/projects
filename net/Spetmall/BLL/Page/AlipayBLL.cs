@@ -16,21 +16,23 @@ namespace Spetmall.BLL.Page
         /// 条码支付
         /// </summary>
         /// <param name="orderid">商户订单号</param>
-        /// <param name="buyerAlipayCode">用户付款码</param>
-        /// <param name="oneProductName">任意一商品名称</param>
+        /// <param name="auth_code">用户付款码</param>
+        /// <param name="subject">任意一商品名称</param>
+        /// <param name="total_amount">总金额</param>
         /// <returns></returns>
-        public static string Pay(string orderid, string buyerAlipayCode, string oneProductName)
+        public static string Pay(string orderid, string auth_code, string subject, decimal total_amount)
         {
             IAopClient client = new DefaultAopClient("https://openapi.alipay.com/gateway.do", "app_id", "merchant_private_key", "json", "1.0", "RSA2", "alipay_public_key", "GBK", false);
             AlipayTradePayRequest request = new AlipayTradePayRequest();
             AlipayTradePayRequestParameters requestParameters = new AlipayTradePayRequestParameters()
             {
                 out_trade_no = orderid,
-                auth_code = buyerAlipayCode,
+                auth_code = auth_code,
                 scene = "bar_code",
-                subject = oneProductName,
+                subject = subject,
+                total_amount = total_amount,
             };
-
+            request.BizContent = Util.Json.JsonUtil.Serialize(requestParameters);
             AlipayTradePayResponse response = client.Execute(request);
 
             return response.IsError ? response.SubMsg : "支付成功";

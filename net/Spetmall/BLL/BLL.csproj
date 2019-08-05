@@ -89,6 +89,9 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\Lib\Util.dll</HintPath>
     </Reference>
+    <Reference Include="WxPayAPI">
+      <HintPath>..\Lib\WxPayAPI.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Page\ActivityBLL.cs" />
@@ -96,6 +99,7 @@
     <Compile Include="Page\ExportBLL.cs" />
     <Compile Include="Page\FullSendBLL.cs" />
     <Compile Include="Page\DiscountBLL.cs" />
+    <Compile Include="Page\PayBLL.cs" />
     <Compile Include="Page\PrintReceiptBLL.cs" />
     <Compile Include="Page\ReceiptBLL.cs" />
     <Compile Include="Page\ServerLog\ServerLogBLL.cs" />
@@ -104,6 +108,7 @@
     </Compile>
     <Compile Include="Page\TransactionBLL.cs" />
     <Compile Include="Page\Upload\UploadBLL.cs" />
+    <Compile Include="Page\WxpayBLL.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

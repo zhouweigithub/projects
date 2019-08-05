@@ -53,7 +53,7 @@ WHERE a.id='{0}'
             return Instance;
         }
 
-        public List<member_show> GetMembers(string keyWord, string orderBy)
+        public List<member_show> GetMembers(string keyWord, string orderBy, int pageSize = 20, int page = 1)
         {
             try
             {
@@ -64,7 +64,7 @@ WHERE a.id='{0}'
 
                 using (DBHelper dbHelper = new DBHelper(WebConfigData.DataBaseType, WebConfigData.ConnString))
                 {
-                    DataTable dt = dbHelper.ExecuteDataTable(sql);
+                    DataTable dt = dbHelper.ExecuteDataTablePage(sql, pageSize, page);
                     if (dt != null && dt.Rows.Count > 0)
                         return dt.ToList<member_show>();
                 }
@@ -74,6 +74,27 @@ WHERE a.id='{0}'
                 WriteLog.Write(WriteLog.LogLevel.Error, "GetMembers 获取会员数据出错\r\n" + ex.Message);
             }
             return new List<member_show>();
+        }
+
+        public int GetMembersCount(string keyWord)
+        {
+            try
+            {
+                string where = GetWhere(keyWord);
+                string sqldata = string.Format(getDatasSql, where, string.Empty);
+
+                using (DBHelper dbHelper = new DBHelper(WebConfigData.DataBaseType, WebConfigData.ConnString))
+                {
+                    string sql = string.Format("select count(1) from ({0})t", sqldata);
+                    int count = dbHelper.ExecuteScalarInt(sql);
+                    return count;
+                }
+            }
+            catch (Exception ex)
+            {
+                WriteLog.Write(WriteLog.LogLevel.Error, "GetMembersCount 获取数量出错\r\n" + ex.Message);
+            }
+            return 0;
         }
 
         private string GetWhere(string keyWord)
