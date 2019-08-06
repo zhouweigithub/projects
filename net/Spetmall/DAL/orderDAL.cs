@@ -29,6 +29,11 @@ SELECT a.id orderid,b.name,a.remark,a.crtime FROM `order` a
 LEFT JOIN member b ON a.memberid=b.id
 WHERE a.state=1 ORDER BY a.crtime DESC
 ";
+
+        private static readonly string getOrderListTotalSql = @"select sum(productMoney)productMoney,sum(payMoney)payMoney, 
+sum(discountMoney)discountMoney,sum(adjustMomey)adjustMomey from ({0})t";
+
+
         private orderDAL()
         {
             this.IsAddIntoCache = false;
@@ -110,6 +115,28 @@ WHERE a.state=1 ORDER BY a.crtime DESC
             }
             return 0;
         }
+
+        public order_detail GetOrderListTotal(string keyword, string day, string startdate, string enddate, short state)
+        {
+            try
+            {
+                string where = GetWhere(keyword, day, startdate, enddate, state);
+                string sql = string.Format(getOrderListTotalSql, string.Format(getOrderListSql, where));
+
+                using (DBHelper dbHelper = new DBHelper(WebConfigData.DataBaseType, WebConfigData.ConnString))
+                {
+                    DataTable dt = dbHelper.ExecuteDataTable(sql);
+                    if (dt != null && dt.Rows.Count > 0)
+                        return dt.ToList<order_detail>()[0];
+                }
+            }
+            catch (Exception ex)
+            {
+                WriteLog.Write(WriteLog.LogLevel.Error, "GetOrderListTotal 获取汇总数据出错\r\n" + ex.Message);
+            }
+            return null;
+        }
+
 
         /// <summary>
         /// 获取查询条件

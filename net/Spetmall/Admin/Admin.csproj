@@ -220,6 +220,7 @@
     <Compile Include="Controllers\ActivityController.cs" />
     <Compile Include="Controllers\CategoryController.cs" />
     <Compile Include="Controllers\MainController.cs" />
+    <Compile Include="Controllers\FinancialFlowController.cs" />
     <Compile Include="Controllers\MemberController.cs" />
     <Compile Include="Controllers\ProductController.cs" />
     <Compile Include="Controllers\RailcardController.cs" />
@@ -397,6 +398,8 @@
     <Content Include="Views\Main\Login.cshtml" />
     <Content Include="static\extend\laydate\theme\default\font\iconfont.ttf" />
     <Content Include="static\extend\laydate\theme\default\font\iconfont.woff" />
+    <Content Include="Views\FinancialFlow\Index.cshtml" />
+    <Content Include="Views\FinancialFlow\Edit.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Images\upload\" />

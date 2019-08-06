@@ -62,9 +62,9 @@ namespace Spetmall.Model
                     return "已停用";
                 else
                 {
-                    if (DateTime.Now < starttime)
+                    if (DateTime.Now.Date < starttime)
                         return "未开始";
-                    else if (DateTime.Now > endtime)
+                    else if (DateTime.Now.Date > endtime)
                         return "已结束";
                     else
                         return "进行中";

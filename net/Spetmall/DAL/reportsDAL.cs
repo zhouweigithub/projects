@@ -37,6 +37,9 @@ GROUP BY crdate
 ORDER BY crdate DESC
 ";
 
+        private static readonly string getPayInfoTotalSql = @"select sum(profitMoney)profitMoney,sum(payMoney)payMoney, 
+sum(discountMoney)discountMoney,sum(adjustMomey)adjustMomey,sum(costMoney)costMoney,sum(payCount)payCount from ({0})t";
+
         private static readonly string getProductInfoSql = @"
 SELECT b.crdate,SUM(a.count)`count` FROM orderproduct a
 INNER JOIN `order` b ON a.orderid=b.id
@@ -106,6 +109,28 @@ WHERE b.state=0 and a.productid='{0}' {1} GROUP BY b.crdate
             }
             return 0;
         }
+
+        public static payInfo GetPayInfosTotal(string startdate, string enddate)
+        {
+            try
+            {
+                string where = GetWhereString(startdate, enddate);
+                string sqldata = string.Format(getPayInfoSql, where, string.Empty);
+
+                using (DBHelper dbHelper = new DBHelper(WebConfigData.DataBaseType, WebConfigData.ConnString))
+                {
+                    DataTable dt = dbHelper.ExecuteDataTable(string.Format(getPayInfoTotalSql, sqldata));
+                    if (dt != null && dt.Rows.Count > 0)
+                        return dt.ToList<payInfo>()[0];
+                }
+            }
+            catch (Exception ex)
+            {
+                WriteLog.Write(WriteLog.LogLevel.Error, "GetPayInfosTotal 获取汇总数据出错\r\n" + ex.Message);
+            }
+            return null;
+        }
+
 
         /// <summary>
         /// 获取商品交易数量流水

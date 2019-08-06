@@ -488,3 +488,5 @@ input.dssc-btn {font:normal 12px/20px "microsoft yahei";text-decoration:none;col
 .search_time_map .search_button {float:left;padding-left:10px;}
 .search_time_map .search_button input {border:0px;height:30px;width:60px;text-align:center;line-height:30px;border-radius:3px;font-size:13px;color:#fff;float:left;background:linear-gradient(#2fb3f1,#1991ce);}
 .error {color:red;}
+.width150px{width:150px;display:inline-block;}
+.total {font-weight: bold;}

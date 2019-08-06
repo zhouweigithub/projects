@@ -20,12 +20,14 @@ namespace Spetmall.Admin.Controllers
         {
             IList<order_detail> datas = orderDAL.GetOrderList(keyword, time, starttime, endtime, 0, page, pageSize);
             int count = orderDAL.GetInstance().GetOrderListCount(keyword, time, starttime, endtime, 0);
+            order_detail total = orderDAL.GetInstance().GetOrderListTotal(keyword, time, starttime, endtime, 0);
 
             ViewBag.time = time;
             ViewBag.datas = datas;
             ViewBag.keyword = keyword;
             ViewBag.starttime = starttime;
             ViewBag.endtime = endtime;
+            ViewBag.total = total;
 
             ViewBag.Page = page;
             ViewBag.PageSize = pageSize;

@@ -798,7 +798,8 @@ $(function () {
         var _id = 'yunmalldate_' + Math.floor(Math.random() * 1000000) + "_" + Math.floor(new Date().getTime());
         $(this).attr('id', _id);
         laydate.render({
-            elem: '#' + _id
+            elem: '#' + _id,
+            format: "yyyy-MM-dd"
         });
     });
 

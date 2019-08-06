@@ -18,7 +18,7 @@
             </form>
         </div>
         <div class="rightbtn">
-            <a href="javascript:;" yun_type="dialog" dialog_title="添加洗澡卡" uri="Add" dialog_width="50%" class="barbtn01" id="open" style="font-size:24px;">添加洗澡卡</a>
+            <a href="javascript:;" yun_type="dialog" dialog_title="添加洗澡卡" uri="Add" dialog_width="50%" dialog_height="570px" class="barbtn01" id="open" style="font-size:24px;">添加洗澡卡</a>
             <a href="?keyWord=@ViewBag.keyWord&orderBy=money" class="barbtn02 @(@ViewBag.orderBy=="money"?"active":"")">按总金额</a>
             <a href="?keyWord=@ViewBag.keyWord&orderBy=lefttimes" class="barbtn02 @(@ViewBag.orderBy=="lefttimes"?"active":"")">按剩余次数</a>
         </div>
@@ -58,7 +58,7 @@
                             <td>@item.crtime</td>
                             <td>@item.remark</td>
                             <td>
-                                <a href="javascript:;" yun_type="dialog" dialog_title="使用洗澡卡" uri="edit/@item.id" dialog_width="60%" dialog_height="50%" id="open">使用洗澡卡</a>
+                                <a href="javascript:;" yun_type="dialog" dialog_title="使用洗澡卡" uri="edit/@item.id" dialog_width="50%" dialog_height="480px" id="open">使用洗澡卡</a>
                                 | <a href="Record/@item.id">使用记录</a>
                                 | <a href="javascript:void(0);" onclick="yunmall_confirm_dialog('您确定要删除这条记录吗?','delete/@item.id','reload')">删除</a>
                             </td>

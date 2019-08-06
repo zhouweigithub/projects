@@ -1,0 +1,110 @@
+﻿@using Spetmall.Model;
+@{
+    ViewBag.Title = "资金流水管理";
+}
+
+<link href="~/static/extend/jquery.pagination-1.2.7/jquery.pagination.css?ver=@HttpContext.Current.Application["ver"]" rel="stylesheet" />
+<script src="~/static/extend/jquery.pagination-1.2.7/jquery.pagination-1.2.7.js?ver=@HttpContext.Current.Application["ver"]"></script>
+
+<div class="mianbox">
+    <div class="searchbar">
+        <form action="" method="get">
+            <div style=" padding-right:460px;">
+                <div class="search">
+                    @Html.TextBox("keyWord", null, new { placeholder = "请输入备注信息" })
+                    <a href="javascript:;" id="yunmall_flow_search">查询</a>
+                </div>
+            </div>
+            <div class="rightbtn">
+                <a href="javascript:;" yun_type="dialog" dialog_title="添加记录" uri="edit/0" dialog_width="40%" dialog_height="350px" class="barbtn01" id="open">添加记录</a>
+                <a href="?keyWord=@ViewBag.keyWord&startdate=@ViewBag.startdate&enddate=@ViewBag.enddate&type=@ViewBag.type&pageSize=@ViewBag.pageSize&page=@ViewBag.page&orderBy=date" class="barbtn02 @(ViewBag.orderBy == "date" ? "active" : "")">按日期</a>
+                <a href="?keyWord=@ViewBag.keyWord&startdate=@ViewBag.startdate&enddate=@ViewBag.enddate&type=@ViewBag.type&pageSize=@ViewBag.pageSize&page=@ViewBag.page&orderBy=type" class="barbtn02 @(ViewBag.orderBy == "type" ? "active" : "")">按类型</a>
+                <a href="?keyWord=@ViewBag.keyWord&startdate=@ViewBag.startdate&enddate=@ViewBag.enddate&type=@ViewBag.type&pageSize=@ViewBag.pageSize&page=@ViewBag.page&orderBy=money" class="barbtn02 @(ViewBag.orderBy == "money" ? "active" : "")">按金额</a>
+            </div>
+            <div style="margin-top:5px;">
+                @Html.TextBox("startdate", null, new { @class = "yunmalldate form-control width150px", autocomplete = "off", placeholder = "开始日期" }) 到
+                @Html.TextBox("enddate", null, new { @class = "yunmalldate form-control width150px", autocomplete = "off", placeholder = "结束日期" })
+                类型 @Html.DropDownList("type", ViewBag.TypeList as List<SelectListItem>, new { @class = "form-control width150px", style = "height:36px;" })
+            </div>
+        </form>
+    </div>
+
+    <div class="tablebox padt">
+        <table class="table01" width="100%" border="0" cellspacing="0" cellpadding="0">
+            <tbody>
+                <tr>
+                    <th width="15%">日期</th>
+                    <th width="10%">类型</th>
+                    <th width="15%">金额</th>
+                    <th width="40%">备注</th>
+                    <th width="20%">操作</th>
+                </tr>
+                @{
+                    foreach (financial_flow item in ViewBag.datas)
+                    {
+                        <tr>
+                            <td>@item.date.ToString("yyyy-MM-dd")</td>
+                            <td>@item.TypeString</td>
+                            <td>@item.money</td>
+                            <td>@item.remark</td>
+                            <td style="max-width:100px;">
+                                <a href="javascript:;" yun_type="dialog" dialog_title="修改" uri="edit/@item.id" dialog_width="40%" dialog_height="350px">修改</a>
+                                | <a href="javascript:void(0);" onclick="yunmall_confirm_dialog('您确定要删除这条记录吗?','delete/@item.id','reload')">删除</a>
+                            </td>
+                        </tr>
+                    }
+                    var total = ViewBag.total as financial_flow;
+                    if (total != null)
+                    {
+                        <tr class="total">
+                            <td>统计汇总</td>
+                            <td></td>
+                            <td>@total.money</td>
+                            <td></td>
+                            <td></td>
+                        </tr>
+                    }
+                }
+            </tbody>
+        </table>
+        <div id="pager" class="m-pagination"></div>
+    </div>
+</div>
+<script language="javascript">
+    var page=@ViewBag.Page;
+    var pagesize=@ViewBag.PageSize;
+    var totalTotalRecordCount=@ViewBag.TotalDataCount;
+
+    $(function () {
+        $("#yunmall_flow_search").bind('click', function () {
+            $(this).closest("form").submit();
+        });
+
+        $("#pager").page({
+            pageSize: pagesize,
+            total: totalTotalRecordCount,
+            pageSizeItems: [20, 50, 100],
+            showJump: true,
+            showPageSizes: true,
+            pageBtnCount: 15,
+            showInfo: false,
+            firstBtnText: "|<<",
+            lastBtnText: ">>|",
+            prevBtnText: "<",
+            nextBtnText: ">"
+        }).on("pageClicked", function (event, pageNumber) {
+            location.href = "Index?keyWord=" + getUrlParam("keyWord") + "&orderBy=" + getUrlParam("orderBy")
+                + "&startdate=" + getUrlParam("startdate") + "&enddate=" + getUrlParam("enddate") + "&type=" + getUrlParam("type")
+                + "&pagesize=" + pagesize + "&page=" + (pageNumber + 1);
+        }).on("jumpClicked", function (event, pageNumber) {
+            location.href = "Index?keyWord=" + getUrlParam("keyWord") + "&orderBy=" + getUrlParam("orderBy")
+                + "&startdate=" + getUrlParam("startdate") + "&enddate=" + getUrlParam("enddate") + "&type=" + getUrlParam("type")
+                + "&pagesize=" + pagesize + "&page=" + (pageNumber + 1);
+        }).on("pageSizeChanged", function (event, pageSize) {
+            location.href = "Index?keyWord=" + getUrlParam("keyWord") + "&orderBy=" + getUrlParam("orderBy")
+                + "&startdate=" + getUrlParam("startdate") + "&enddate=" + getUrlParam("enddate") + "&type=" + getUrlParam("type")
+                + "&pagesize=" + pageSize + "&page=1";
+        }).page("setPage", page - 1);
+
+    });
+</script>

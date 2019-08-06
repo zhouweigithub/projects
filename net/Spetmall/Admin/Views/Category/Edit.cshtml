@@ -28,7 +28,7 @@
 
 <body class="iframebody">
 
-    <form class="" action="edit">
+    <form class="" action="edit" style="margin-top:20px;">
         <input name="id" type="hidden" value="@Model.id" />
         <input name="pid" type="hidden" value="@Model.pid" />
         <ul class="formlist">
@@ -54,7 +54,7 @@
             </li>
             <li>
                 <label class="lbt">描述：</label><div>
-                    @Html.TextAreaFor(m => m.remark, new { @class = "form-control", placeholder = "请输入描述" })
+                    @Html.TextBoxFor(m => m.remark, new { @class = "form-control", placeholder = "请输入描述" })
                 </div>
             </li>
         </ul>

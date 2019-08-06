@@ -524,7 +524,8 @@ namespace Spetmall.BLL.Page
 
         private static string CreateNewOrderId()
         {   //获取首位不为0的随机数
-            return Function.GetRangeNumber(1, "123456789") + Function.GetRangeNumber(14, Common.RangeType.Number);
+            //return Function.GetRangeNumber(1, "123456789") + Function.GetRangeNumber(14, Common.RangeType.Number);
+            return Converter.ConvertToMySqlTimeStamp(DateTime.Now, 13);
         }
 
         /// <summary>

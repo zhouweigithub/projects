@@ -6,11 +6,6 @@
 <link href="~/static/extend/jquery.pagination-1.2.7/jquery.pagination.css?ver=@HttpContext.Current.Application["ver"]" rel="stylesheet" />
 <script src="~/static/extend/jquery.pagination-1.2.7/jquery.pagination-1.2.7.js?ver=@HttpContext.Current.Application["ver"]"></script>
 
-<style>
-    .total {
-        font-weight: bold;
-    }
-</style>
 <div class="mianbox">
     <div class="fenlei2 fenlei6">
         <ul class="clear">
@@ -64,16 +59,17 @@
                             </tr>
                         }
                         {
-                            if (datas.Count > 0)
+                            if (ViewBag.total != null)
                             {
+                                var total = ViewBag.total as payInfo;
                                 <tr class="total">
-                                    <td>数据汇总</td>
-                                    <td>@datas.Sum(a => a.payMoney)</td>
-                                    <td>@datas.Sum(a => a.costMoney)</td>
-                                    <td>@datas.Sum(a => a.profitMoney)</td>
-                                    <td>@datas.Sum(a => a.payCount)</td>
-                                    <td>@datas.Sum(a => a.rechargeMoney)</td>
-                                    <td>@datas.Sum(a => a.railCardMoney)</td>
+                                    <td>统计汇总</td>
+                                    <td>@total.payMoney</td>
+                                    <td>@total.costMoney</td>
+                                    <td>@total.profitMoney</td>
+                                    <td>@total.payCount</td>
+                                    <td>@total.rechargeMoney</td>
+                                    <td>@total.railCardMoney</td>
                                 </tr>
                             }
                         }

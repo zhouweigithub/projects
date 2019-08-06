@@ -302,7 +302,13 @@ var ArtSpecData = function () {
         var type = $("#type").val();
         if (type == 1) {
             //选择了分类
-            var categoryId = $("#placeofdelivery select").last().val();
+            var categoryId = 0;
+            $("#placeofdelivery select").each(function (index, item) {
+                if ($(item).val() != '') {
+                    categoryId = $(item).val();
+                    return;
+                }
+            });
             $("#categoryOrProducts").val(categoryId);
         }
         else if (type == 2) {
@@ -471,11 +477,11 @@ var ArtSpecData = function () {
         });
     }
 
-
+    //'               		<div class="goodsguizhe_attr">单笔订单满：<input name="content[min_price][{#specconfigid}]" type="text" class="txt guizhe1" value="{#min_price}" /> , 立减现金<input name="content[reduce_price][{#specconfigid}]" type="text" class="txt guizhe2" value="{#reduce_price}" />  , 送礼物 <input name="formsubmits" id="specbutton" type="button" data-index="{#specconfigid}" class="btn dssc-btn" value="选择商品"/> <a href="javascript:;" class="specdel">删除</a></div>',
     /*模版*/
     function template() {
         return ['<div class="goodsguizhe_attrs">',
-            '               		<div class="goodsguizhe_attr">单笔订单满：<input name="content[min_price][{#specconfigid}]" type="text" class="txt guizhe1" value="{#min_price}" /> , 立减现金<input name="content[reduce_price][{#specconfigid}]" type="text" class="txt guizhe2" value="{#reduce_price}" />  , 送礼物 <input name="formsubmits" id="specbutton" type="button" data-index="{#specconfigid}" class="btn dssc-btn" value="选择商品"/> <a href="javascript:;" class="specdel">删除</a></div>',
+            '               		<div class="goodsguizhe_attr">单笔订单满：<input name="content[min_price][{#specconfigid}]" type="text" class="txt guizhe1" value="{#min_price}" /> , 立减现金<input name="content[reduce_price][{#specconfigid}]" type="text" class="txt guizhe2" value="{#reduce_price}" />   <a href="javascript:;" class="specdel">删除</a></div>',
             '                    <div class="goodsguizhe_attr_list">',
             '                    </div>',
             '</div>'].join("\n");

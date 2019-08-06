@@ -55,6 +55,7 @@
     <Compile Include="category.cs" />
     <Compile Include="Common\TableFieldAttribute.cs" />
     <Compile Include="Custom\PrintObject.cs" />
+    <Compile Include="financial_flow.cs" />
     <Compile Include="Page\active_date.cs" />
     <Compile Include="Page\fullsend_edit.cs" />
     <Compile Include="Page\discount_edit.cs" />

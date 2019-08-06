@@ -22,8 +22,10 @@ namespace Spetmall.Admin.Controllers
             }
             List<payInfo> datas = reportsDAL.GetPayInfos(startdate, enddate, pageSize, page);
             int count = reportsDAL.GetPayInfosCount(startdate, enddate);
+            payInfo total = reportsDAL.GetPayInfosTotal(startdate, enddate);
 
             ViewBag.datas = datas;
+            ViewBag.total = total;
             ViewBag.Page = page;
             ViewBag.PageSize = pageSize;
             ViewBag.TotalDataCount = count;
