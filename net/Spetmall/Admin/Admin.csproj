@@ -241,6 +241,7 @@
     <Content Include="App_Data\menu.xml">
       <SubType>Designer</SubType>
     </Content>
+    <Content Include="Images\wx.jpg" />
     <Content Include="static\css\buttons.css" />
     <Content Include="static\css\common.css" />
     <Content Include="static\css\receipt.css" />
