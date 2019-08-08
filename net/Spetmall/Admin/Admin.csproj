@@ -251,6 +251,9 @@
     <Content Include="static\dialog\js\dialog.min.js" />
     <Content Include="static\extend\honeySwitch\lib\honeySwitch.css" />
     <Content Include="static\extend\honeySwitch\lib\honeySwitch.js" />
+    <Content Include="static\extend\jquery.pagination-1.2.7\jquery.pagination-1.2.7.js" />
+    <Content Include="static\extend\jquery.pagination-1.2.7\jquery.pagination-1.2.7.min.js" />
+    <Content Include="static\extend\jquery.pagination-1.2.7\jquery.pagination.css" />
     <Content Include="static\extend\laydate\laydate.js" />
     <Content Include="static\extend\laydate\theme\default\laydate.css" />
     <Content Include="static\extend\select2\select2.min.css" />
