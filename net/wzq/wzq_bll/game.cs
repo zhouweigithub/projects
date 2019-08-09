@@ -117,10 +117,10 @@ namespace wzq_bll
                 }
             }
 
-            Console.WriteLine("human");
-            Console.WriteLine(getchessstring(score_human));
-            Console.WriteLine("computer");
-            Console.WriteLine(getchessstring(score_computer));
+            //Console.WriteLine("human");
+            //Console.WriteLine(getchessstring(score_human));
+            //Console.WriteLine("computer");
+            //Console.WriteLine(getchessstring(score_computer));
         }
 
         private int getscore(int x, int y, int value)
@@ -144,24 +144,45 @@ namespace wzq_bll
             lefttilt = lefttop + rightbottom + (hasEmptyChess5 && hasEmptyChess8 ? 0 : 1);
             righttilt = righttop + leftbottom + (hasEmptyChess6 && hasEmptyChess7 ? 0 : 1);
 
-            int horscort = getscore(hor, t1, t2, t3, t4, hasEmptyChess1 || hasEmptyChess2);
-            int verscort = getscore(ver, t5, t6, t7, t8, hasEmptyChess3 || hasEmptyChess4);
-            int lefttiltscort = getscore(lefttilt, t9, t10, t15, t16, hasEmptyChess5 || hasEmptyChess8);
-            int righttiltscort = getscore(righttilt, t11, t12, t13, t14, hasEmptyChess6 || hasEmptyChess7);
+            //水平方面是否靠近棋子较多那一侧
+            bool isNearMoreHor = GetIsNearMore(left, right, hasEmptyChess1, hasEmptyChess2);
+            bool isNearMoreVer = GetIsNearMore(top, bottom, hasEmptyChess3, hasEmptyChess4);
+            bool isNearMoreLefttilt = GetIsNearMore(lefttop, rightbottom, hasEmptyChess5, hasEmptyChess8);
+            bool isNearMoreRighttilt = GetIsNearMore(righttop, leftbottom, hasEmptyChess6, hasEmptyChess7);
+
+            int horscort = getscore(hor, isNearMoreHor, t1, t2, t3, t4, hasEmptyChess1 || hasEmptyChess2);
+            int verscort = getscore(ver, isNearMoreVer, t5, t6, t7, t8, hasEmptyChess3 || hasEmptyChess4);
+            int lefttiltscort = getscore(lefttilt, isNearMoreLefttilt, t9, t10, t15, t16, hasEmptyChess5 || hasEmptyChess8);
+            int righttiltscort = getscore(righttilt, isNearMoreRighttilt, t11, t12, t13, t14, hasEmptyChess6 || hasEmptyChess7);
 
             return horscort + verscort + lefttiltscort + righttiltscort;
+        }
+
+        private bool GetIsNearMore(int count1, int count2, bool hasEmptyChess1, bool hasEmptyChess2)
+        {
+            if (count1 >= count2)
+            {
+                return !hasEmptyChess1;
+            }
+            else if (count2 >= count1)
+            {
+                return !hasEmptyChess2;
+            }
+            else
+                return true;
         }
 
         /// <summary>
         /// 
         /// </summary>
         /// <param name="count">连子数量</param>
+        /// <param name="isMore">是否更靠近棋子更多那一侧</param>
         /// <param name="p1">连子外左或上最近第1个</param>
         /// <param name="p2">连子外左或上最近第2个</param>
         /// <param name="a1">连子外右或下最近第1个</param>
         /// <param name="a2">连子外右或下最近第2个</param>
         /// <returns></returns>
-        private int getscore(int count, chesstype p1, chesstype p2, chesstype a1, chesstype a2, bool hasEmptyChess)
+        private int getscore(int count, bool isMore, chesstype p1, chesstype p2, chesstype a1, chesstype a2, bool hasEmptyChess)
         {
             int result = 0;
             if (count >= 5)
@@ -204,6 +225,8 @@ namespace wzq_bll
             if (hasEmptyChess)
             {
                 result -= (int)(result * 0.2);
+                if (!isMore)    //如果含有空位，并且不是个数较多那一侧，则减少一定权重
+                    result -= 1000;
             }
 
             return result;
@@ -625,10 +648,10 @@ namespace wzq_bll
             }
         }
 
-        public List<scoreinfo> getMaxScoreInfos(int flag)
+        public List<scoreinfo> getMaxScoreInfos(int value)
         {
-            int maxscore = getMaxScore(flag);
-            var array = flag == 0 ? score_human : score_computer;
+            int maxscore = getMaxScore(value);
+            var array = value == -1 ? score_human : score_computer;
             List<scoreinfo> result = new List<scoreinfo>();
             for (int i = 0; i < width; i++)
             {
@@ -652,7 +675,7 @@ namespace wzq_bll
         private int getMaxScore(int flag)
         {
             int max = 0;
-            var array = flag == 0 ? score_human : score_computer;
+            var array = flag == -1 ? score_human : score_computer;
             for (int i = 0; i < width; i++)
             {
                 for (int j = 0; j < height; j++)

@@ -15,24 +15,30 @@ namespace wzq_bll
             game = _game;
         }
 
-        public (int x, int y) go()
+        public (int x, int y) go(int value)
         {
             int x = 0, y = 0;
+
             game.refreshscore();
-            List<scoreinfo> playerscores = game.getMaxScoreInfos(0);
+
+            List<scoreinfo> playerscores = game.getMaxScoreInfos(-1);
             List<scoreinfo> computerscores = game.getMaxScoreInfos(1);
-            if ((playerscores[0].score - computerscores[0].score <= 2000 || playerscores[0].score < 3000 || (computerscores[0].score > 8000 && playerscores[0].score < 100000))
+
+            List<scoreinfo> jingong = value == -1 ? playerscores : computerscores;  //当前走棋方
+            List<scoreinfo> fangshou = value == -1 ? computerscores : playerscores;  //当前走棋的反方
+
+            if ((fangshou[0].score - jingong[0].score <= 2000 || fangshou[0].score < 3000 || (jingong[0].score > 8000 && fangshou[0].score < 100000))
                 && game.gethistory().Length > 5)
             {   //进攻
-                if (computerscores.Count == 1)
+                if (jingong.Count == 1)
                 {
-                    x = computerscores[0].x;
-                    y = computerscores[0].y;
+                    x = jingong[0].x;
+                    y = jingong[0].y;
                 }
                 else
                 {   //多个分数一样的点，就选择对方这些点中值最高的点
                     int maxscore = 0;
-                    foreach (scoreinfo item in computerscores)
+                    foreach (scoreinfo item in jingong)
                     {
                         int score = game.gethumanscore(item.x, item.y);
                         if (score > maxscore)
@@ -46,15 +52,15 @@ namespace wzq_bll
             }
             else
             {   //防守
-                if (playerscores.Count == 1)
+                if (fangshou.Count == 1)
                 {
-                    x = playerscores[0].x;
-                    y = playerscores[0].y;
+                    x = fangshou[0].x;
+                    y = fangshou[0].y;
                 }
                 else
                 {   //多个分数一样的点，就选择对方这些点中值最高的点
                     int maxscore = 0;
-                    foreach (scoreinfo item in playerscores)
+                    foreach (scoreinfo item in fangshou)
                     {
                         int score = game.gethumanscore(item.x, item.y);
                         if (score > maxscore)
@@ -67,8 +73,14 @@ namespace wzq_bll
                 }
 
             }
-            game.go(x, y, 1);
+            game.go(x, y, value);
             return (x, y);
         }
+
+        public void go(int x, int y, int value)
+        {
+            game.go(x, y, value);
+        }
+
     }
 }
