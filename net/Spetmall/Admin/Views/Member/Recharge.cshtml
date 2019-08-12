@@ -29,7 +29,7 @@
             <ul class="formlist">
                 <li><label class="lbt"><em>(*)</em>会员姓名：</label><div><span class="mid">@ViewBag.Name</span></div></li>
                 <li>
-                    <label class="lbt"><em>(*)</em>冲值金额：</label><div>
+                    <label class="lbt"><em>(*)</em>充值金额：</label><div>
                         <input name="money" id="money" class="form-control" type="text" placeholder="请输入充值金额" value="">
                         <span id="errmoney" class="error"></span>
                     </div>
@@ -38,6 +38,18 @@
                     <label class="lbt"><em>(*)</em>实际支付：</label><div>
                         <input name="paymoney" id="paymoney" class="form-control" type="text" placeholder="请输入实际支付金额" value="">
                         <span id="errpaymoney" class="error"></span>
+                    </div>
+                </li>
+                <li>
+                    <label class="lbt"><em>(*)</em>支付方式：</label><div>
+                        <select name="paytype" id="paytype" class="form-control" style="height:36px;">
+                            <option value="">请选择</option>
+                            <option value="1">现金</option>
+                            <option value="2">微信</option>
+                            <option value="3">支付宝</option>
+                            <option value="6">其他</option>
+                        </select>
+                        <span id="errpaytype" class="error"></span>
                     </div>
                 </li>
                 <li><label class="lbt">说明：</label><div><textarea name="remark" id="remark" class="form-textarea confiem_remarks_information" style="height:60px;" cols="" rows=""></textarea></div></li>
@@ -50,6 +62,7 @@
             var result = true;
             result = IsValueNotEmpty("money", "errmoney", "充值金额") && result;
             result = IsValueNotEmpty("paymoney", "errpaymoney", "实际支付金额") && result;
+            result = IsValueNotEmpty("paytype", "errpaytype", "支付方式") && result;
             result = result && IsValueDecimal("money", "errmoney", "充值金额");
             result = result && IsValueDecimal("paymoney", "errpaymoney", "实际支付金额");
             return result;

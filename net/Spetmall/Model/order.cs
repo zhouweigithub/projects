@@ -48,7 +48,7 @@ namespace Spetmall.Model
         [TableField]
         public decimal profitMoney { get; set; }
         /// <summary>
-        /// 支付方式
+        /// 支付方式 1现金 2微信 3支付宝 4余额 5刷卡 6其他
         /// </summary>
         [TableField]
         public short payType { get; set; }

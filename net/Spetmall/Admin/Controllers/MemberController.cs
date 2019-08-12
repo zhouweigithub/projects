@@ -119,7 +119,7 @@ namespace Spetmall.Admin.Controllers
         }
 
         [HttpPost]
-        public ActionResult Recharge(int memberid, decimal money, decimal payMoney, string remark)
+        public ActionResult Recharge(int memberid, decimal money, decimal payMoney, short payType, string remark)
         {
             bool status = false;
             string errMsg = string.Empty;
@@ -139,6 +139,7 @@ namespace Spetmall.Admin.Controllers
                         memberid = memberid,
                         money = money,
                         paymoney = payMoney,
+                        payType = payType,
                         remark = remark,
                         balance = balance,
                     });

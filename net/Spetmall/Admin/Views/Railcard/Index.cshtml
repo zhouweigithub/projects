@@ -12,13 +12,14 @@
         <div style=" padding-right:430px;">
             <form action="" method="get">
                 <div class="search">
-                    <input type="text" name="keyWord" value="" placeholder="请输入手机号或姓名">
+                    @Html.TextBox("keyWord", null, new { placeholder = "请输入手机号或宠物名字(简拼)" })
+                    @*<input type="text" name="keyWord" value="" placeholder="请输入手机号或宠物名字(简拼)">*@
                     <a href="javascript:;" id="yunmall_goods_search">查询</a>
                 </div>
             </form>
         </div>
         <div class="rightbtn">
-            <a href="javascript:;" yun_type="dialog" dialog_title="添加洗澡卡" uri="Add" dialog_width="50%" dialog_height="570px" class="barbtn01" id="open" style="font-size:24px;">添加洗澡卡</a>
+            <a href="javascript:;" yun_type="dialog" dialog_title="添加洗澡卡" uri="Add" dialog_width="50%" dialog_height="610px" class="barbtn01" id="open" style="font-size:24px;">添加洗澡卡</a>
             <a href="?keyWord=@ViewBag.keyWord&orderBy=money" class="barbtn02 @(@ViewBag.orderBy=="money"?"active":"")">按总金额</a>
             <a href="?keyWord=@ViewBag.keyWord&orderBy=lefttimes" class="barbtn02 @(@ViewBag.orderBy=="lefttimes"?"active":"")">按剩余次数</a>
         </div>

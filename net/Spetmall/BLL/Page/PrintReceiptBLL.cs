@@ -31,7 +31,8 @@ namespace Spetmall.BLL.Page
         public PrintReceiptBLL(PrintObject data)
         {
             _data = data;
-            _pageHeight = 400 + (int)(25.26 * _data.Products.Count) + 10;
+            //整体高度=非商品高度+商品高度+底部额外高度
+            _pageHeight = 400 + (int)(25.26 * _data.Products.Count) + 20;
         }
 
         public void Print()
@@ -170,7 +171,7 @@ namespace Spetmall.BLL.Page
 
                 height += 3;   //增加3的间距
 
-                img = GetBarCode(_data.OrderNo, _pageWidth - 20, 15);
+                img = GetBarCode(_data.OrderNo, _pageWidth - 20, 25);
                 e.Graphics.DrawImage(img, new Rectangle((_pageWidth - img.Width) / 2, (int)height, img.Width, img.Height));
                 height += img.Height;
 

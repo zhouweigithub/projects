@@ -43,8 +43,9 @@ namespace Spetmall.Admin.Controllers
             {
                 railcard.name = railcard.name.Trim();
                 railcard.phone = railcard.phone.Trim();
-                railcard.petname = railcard.petname.Trim();
                 railcard.remark = railcard.remark.Trim();
+                railcard.remark = railcard.remark.Trim();
+                railcard.py = Spetmall.Common.ChineseSpell.GetChineseSpell(railcard.petname);
                 status = railcardDAL.GetInstance().Add(railcard) > 0;
             }
             catch (Exception e)

@@ -16,29 +16,50 @@ namespace Spetmall.DAL
     {
 
         private static readonly string getPayInfoSql = @"
-SELECT crdate,IFNULL(SUM(payMoney),0)payMoney,IFNULL(SUM(discountMoney),0)discountMoney,
-IFNULL(SUM(adjustMomey),0)adjustMomey,IFNULL(SUM(profitMoney),0)profitMoney,
-IFNULL(SUM(costMoney),0)costMoney,COUNT(1)payCount ,0 rechargeMoney,0 railCardMoney
-FROM `order` WHERE state=0 {0}
+SELECT crdate,SUM(payMoney)payMoney,SUM(discountMoney)discountMoney,SUM(adjustMomey)adjustMomey, 
+SUM(profitMoney)profitMoney,SUM(costMoney)costMoney,SUM(payCount)payCount,SUM(rechargeMoney)rechargeMoney,
+SUM(railCardMoney)railCardMoney,SUM(xjMoney)xjMoney,SUM(wxMoney)wxMoney,SUM(zfbMoney)zfbMoney,
+SUM(yueMoney)yueMoney,SUM(qitaMoney)qitaMoney
+FROM(
+    SELECT crdate,IFNULL(SUM(payMoney),0)payMoney,IFNULL(SUM(discountMoney),0)discountMoney,
+    IFNULL(SUM(adjustMomey),0)adjustMomey,IFNULL(SUM(profitMoney),0)profitMoney,
+    IFNULL(SUM(costMoney),0)costMoney,COUNT(1)payCount ,0 rechargeMoney,0 railCardMoney,
+    IFNULL(SUM(IF(paytype=1,payMoney,0)),0)xjMoney,IFNULL(SUM(IF(paytype=2,payMoney,0)),0)wxMoney,
+    IFNULL(SUM(IF(paytype=3,payMoney,0)),0)zfbMoney,IFNULL(SUM(IF(paytype=4,payMoney,0)),0)yueMoney,
+    IFNULL(SUM(IF(paytype=6,payMoney,0)),0)qitaMoney
+    FROM `order` WHERE state=0 {0}
+    GROUP BY crdate
+
+    UNION
+
+	SELECT DATE(crtime)crdate,SUM(payMoney)payMoney,0 discountMoney,0 adjustMomey,0 profitMoney,
+    0 costMoney,0 payCount,SUM(paymoney)rechargeMoney,0 railCardMoney, 
+    IFNULL(SUM(IF(paytype=1,payMoney,0)),0)xjMoney,IFNULL(SUM(IF(paytype=2,payMoney,0)),0)wxMoney,
+    IFNULL(SUM(IF(paytype=3,payMoney,0)),0)zfbMoney,IFNULL(SUM(IF(paytype=4,payMoney,0)),0)yueMoney,
+    IFNULL(SUM(IF(paytype=6,payMoney,0)),0)qitaMoney
+    FROM recharge WHERE 1=1 {1}
+    GROUP BY crdate
+
+    UNION
+
+	SELECT DATE(crtime)crdate,SUM(money)payMoney,0 discountMoney,0 adjustMomey,0 profitMoney,
+    0 costMoney,0 payCount,0 rechargeMoney,SUM(money)railCardMoney, 
+    IFNULL(SUM(IF(paytype=1,money,0)),0)xjMoney,IFNULL(SUM(IF(paytype=2,money,0)),0)wxMoney,
+    IFNULL(SUM(IF(paytype=3,money,0)),0)zfbMoney,IFNULL(SUM(IF(paytype=4,money,0)),0)yueMoney,
+    IFNULL(SUM(IF(paytype=6,money,0)),0)qitaMoney
+    FROM railcard  WHERE 1=1 {1}
+    GROUP BY crdate
+)t
 GROUP BY crdate
-
-UNION
-
-SELECT DATE(crtime)crdate,0 payMoney,0 discountMoney,0 adjustMomey,0 profitMoney,
-0 costMoney,0 payCount,SUM(paymoney)rechargeMoney,0 railCardMoney FROM recharge WHERE 1=1 {1}
-GROUP BY crdate
-
-UNION
-
-SELECT DATE(crtime)crdate,0 payMoney,0 discountMoney,0 adjustMomey,0 profitMoney,
-0 costMoney,0 payCount,0 rechargeMoney,SUM(money)railCardMoney FROM railcard  WHERE 1=1 {1}
-GROUP BY crdate
-
 ORDER BY crdate DESC
 ";
 
         private static readonly string getPayInfoTotalSql = @"select sum(profitMoney)profitMoney,sum(payMoney)payMoney, 
-sum(discountMoney)discountMoney,sum(adjustMomey)adjustMomey,sum(costMoney)costMoney,sum(payCount)payCount from ({0})t";
+sum(discountMoney)discountMoney,sum(adjustMomey)adjustMomey,sum(costMoney)costMoney,sum(payCount)payCount,
+SUM(rechargeMoney)rechargeMoney,SUM(railCardMoney)railCardMoney,
+sum(xjMoney)xjMoney,sum(wxMoney)wxMoney,sum(zfbMoney)zfbMoney,
+sum(yueMoney)yueMoney,sum(qitaMoney)qitaMoney
+from ({0})t";
 
         private static readonly string getProductInfoSql = @"
 SELECT b.crdate,SUM(a.count)`count` FROM orderproduct a
@@ -94,7 +115,8 @@ WHERE b.state=0 and a.productid='{0}' {1} GROUP BY b.crdate
             try
             {
                 string where = GetWhereString(startdate, enddate);
-                string sqldata = string.Format(getPayInfoSql, where, string.Empty);
+                string where2 = where.Replace("crdate", "DATE(crtime)");
+                string sqldata = string.Format(getPayInfoSql, where, where2);
 
                 using (DBHelper dbHelper = new DBHelper(WebConfigData.DataBaseType, WebConfigData.ConnString))
                 {
@@ -115,7 +137,8 @@ WHERE b.state=0 and a.productid='{0}' {1} GROUP BY b.crdate
             try
             {
                 string where = GetWhereString(startdate, enddate);
-                string sqldata = string.Format(getPayInfoSql, where, string.Empty);
+                string where2 = where.Replace("crdate", "DATE(crtime)");
+                string sqldata = string.Format(getPayInfoSql, where, where2);
 
                 using (DBHelper dbHelper = new DBHelper(WebConfigData.DataBaseType, WebConfigData.ConnString))
                 {

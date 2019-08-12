@@ -27,7 +27,7 @@
 
 <body class="iframebody">
 
-    <form class=" pad15" action="?" method="post" style="margin-top:30px;">
+    <form class=" pad15" action="?" method="post" style="margin-top:20px;">
         <ul class="formlist">
             <li>
                 <label class="lbt"><em>(*)</em>手机号：</label><div>
@@ -51,6 +51,11 @@
                 </div>
             </li>
             <li>
+                <label class="lbt">宠物类型：</label><div>
+                    @Html.TextBoxFor(a => a.pettype, new { @class = "form-control", placeholder = "请输入宠物类型" })
+                </div>
+            </li>
+            <li>
                 <label class="lbt"><em>(*)</em>使用次数：</label><div>
                     @Html.TextBoxFor(a => a.times, new { @class = "form-control", placeholder = "请输入使用次数" })
                     <span id="errtimes" class="error"></span>
@@ -60,6 +65,18 @@
                 <label class="lbt"><em>(*)</em>总金额：</label><div>
                     @Html.TextBoxFor(a => a.money, new { @class = "form-control", placeholder = "请输入总金额" })
                     <span id="errmoney" class="error"></span>
+                </div>
+            </li>
+            <li>
+                <label class="lbt"><em>(*)</em>支付方式：</label><div>
+                    <select name="paytype" id="paytype" class="form-control" style="height:36px;">
+                        <option value="">请选择</option>
+                        <option value="1">现金</option>
+                        <option value="2">微信</option>
+                        <option value="3">支付宝</option>
+                        <option value="6">其他</option>
+                    </select>
+                    <span id="errpaytype" class="error"></span>
                 </div>
             </li>
             <li>
@@ -87,11 +104,14 @@
     <script>
         function isValid() {
             var result = true;
+            var starttimeid = $("input[name='starttime']")[0].id;
+            var endtimeid = $("input[name='endtime']")[0].id;
             result = IsValueNotEmpty("phone", "errphone", "手机号") && result;
             result = IsValueNotEmpty("times", "errtimes", "使用次数") && result;
             result = IsValueNotEmpty("money", "errmoney", "总金额") && result;
-            result = IsValueNotEmpty("starttime", "errstarttime", "开始时间") && result;
-            result = IsValueNotEmpty("endtime", "errendtime", "结束时间") && result;
+            result = IsValueNotEmpty("paytype", "errpaytype", "支付方式") && result;
+            result = IsValueNotEmpty(starttimeid, "errstarttime", "开始时间") && result;
+            result = IsValueNotEmpty(endtimeid, "errendtime", "结束时间") && result;
             result = result && IsValueNumber("times", "errtimes", "使用次数");
             result = result && IsValueDecimal("money", "errmoney", "总金额");
             return result;

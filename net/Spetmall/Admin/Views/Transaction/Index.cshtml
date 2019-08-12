@@ -53,6 +53,7 @@
                     var datas = ViewBag.datas as IList<order_detail>;
                     foreach (order_detail item in datas)
                     {
+                        bool isIn24Hour = (DateTime.Now - item.crtime).TotalHours < 24;
                         <tr>
                             <td>@item.id</td>
                             <td>@item.productMoney</td>
@@ -62,7 +63,11 @@
                             <td>@item.payTypeString</td>
                             <td>@item.memberName</td>
                             <td>@item.crtime</td>
-                            <td><a href="Detail/@item.id">查看详情</a> @Ajax.ActionLink("打印小票", "Print", new { id = item.id }, new AjaxOptions() { HttpMethod = "Post", Confirm = "确定要打印该订单的小票吗？" })</td>
+                            <td>
+                                <a href="Detail/@item.id">查看详情</a>
+                                | @Ajax.ActionLink("打印小票", "Print", new { id = item.id }, new AjaxOptions() { HttpMethod = "Post", Confirm = "确定要打印该订单的小票吗？" })
+                                @( Html.Raw(isIn24Hour ? " | <a href=\"javascript:void(0); \" onclick=\"yunmall_confirm_dialog('您确定要删除这个订单吗?', 'delete/" + item.id + "', 'reload')\">删除</a>" : ""))
+                            </td>
                         </tr>
                     }
                     if (ViewBag.total != null)

@@ -37,12 +37,17 @@
                 <tbody>
                     <tr>
                         <th width="15%">日期</th>
-                        <th width="14%">收银总金额</th>
-                        <th width="14%">成本总量</th>
-                        <th width="14%">利润总量</th>
-                        <th width="14%">收银订单总数</th>
-                        <th width="14%">会员充值总金额</th>
-                        <th width="15%">新增洗澡卡总金额</th>
+                        <th width="10%">营业总额</th>
+                        <th width="8%">现金</th>
+                        <th width="8%">微信</th>
+                        <th width="8%">支付宝</th>
+                        <th width="8%">账户余额</th>
+                        <th width="8%">其他</th>
+                        <th width="7%">商品成本</th>
+                        <th width="7%">商品利润</th>
+                        <th width="7%">收银订单数</th>
+                        <th width="7%">会员充值</th>
+                        <th width="7%">洗澡卡充值</th>
                     </tr>
                     @{
                         List<payInfo> datas = ViewBag.datas as List<payInfo>;
@@ -51,6 +56,11 @@
                             <tr>
                                 <td>@item.crdate.ToString("yyyy-MM-dd")</td>
                                 <td>@item.payMoney</td>
+                                <td>@item.xjMoney</td>
+                                <td>@item.wxMoney</td>
+                                <td>@item.zfbMoney</td>
+                                <td>@item.yueMoney</td>
+                                <td>@item.qitaMoney</td>
                                 <td>@item.costMoney</td>
                                 <td>@item.profitMoney</td>
                                 <td>@item.payCount</td>
@@ -65,6 +75,11 @@
                                 <tr class="total">
                                     <td>统计汇总</td>
                                     <td>@total.payMoney</td>
+                                    <td>@total.xjMoney</td>
+                                    <td>@total.wxMoney</td>
+                                    <td>@total.zfbMoney</td>
+                                    <td>@total.yueMoney</td>
+                                    <td>@total.qitaMoney</td>
                                     <td>@total.costMoney</td>
                                     <td>@total.profitMoney</td>
                                     <td>@total.payCount</td>

@@ -12,6 +12,8 @@ using Spetmall.Model.Page;
 
 namespace Spetmall.Admin.Controllers
 {
+
+    //交易明细
     [Common.CustomAuthorize]
     public class TransactionController : Controller
     {
@@ -34,6 +36,28 @@ namespace Spetmall.Admin.Controllers
             ViewBag.TotalDataCount = count;
 
             return View();
+        }
+
+        public ActionResult Delete(string id)
+        {
+            bool status = false;
+            string errMsg = string.Empty;
+            try
+            {
+                status = orderDAL.GetInstance().DeleteByKey(id) > 0;
+                status = status && orderProductDAL.GetInstance().Delete($"orderid='{id}'") > 0;
+            }
+            catch (Exception e)
+            {
+                errMsg = e.Message;
+                Util.Log.LogUtil.Write($"删除订单信息失败,orderid:{id}\r\t{e}", Util.Log.LogType.Error);
+            }
+
+            return Json(new
+            {
+                status,
+                msg = errMsg,
+            }, JsonRequestBehavior.AllowGet);
         }
 
         public ActionResult Detail(string id)

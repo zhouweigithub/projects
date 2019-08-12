@@ -81,7 +81,7 @@ namespace Spetmall.DAL
         {
             string where = string.Empty;
             if (!string.IsNullOrWhiteSpace(keyWord))
-                where += $" and (name like'%{keyWord}%' or phone like'%{keyWord}%')";
+                where += $" and (petname like'%{keyWord}%' or phone like'%{keyWord}%' or py like'%{keyWord}%')";
 
             return where;
         }

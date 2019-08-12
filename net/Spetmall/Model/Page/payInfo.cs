@@ -44,6 +44,26 @@ namespace Spetmall.Model.Page
         /// 新增洗澡卡金额
         /// </summary>
         public decimal railCardMoney { get; set; }
+        /// <summary>
+        /// 现金支付金额
+        /// </summary>
+        public decimal xjMoney { get; set; }
+        /// <summary>
+        /// 微信支付金额
+        /// </summary>
+        public decimal wxMoney { get; set; }
+        /// <summary>
+        /// 支付宝支付金额
+        /// </summary>
+        public decimal zfbMoney { get; set; }
+        /// <summary>
+        /// 余额支付金额
+        /// </summary>
+        public decimal yueMoney { get; set; }
+        /// <summary>
+        /// 其他方式支付金额
+        /// </summary>
+        public decimal qitaMoney { get; set; }
 
     }
 

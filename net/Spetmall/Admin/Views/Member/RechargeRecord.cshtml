@@ -24,8 +24,9 @@
                     <th width="17%">充值时间</th>
                     <th width="10%">充值金额</th>
                     <th width="10%">支付金额</th>
+                    <th width="10%">支付方式</th>
                     <th width="10%">当前余额</th>
-                    <th width="25%">描述</th>
+                    <th width="15%">描述</th>
                 </tr>
                 @{
                     foreach (recharge item in ViewBag.rechargeList)
@@ -36,6 +37,7 @@
                             <td>@item.crtime</td>
                             <td>@item.money</td>
                             <td>@item.paymoney</td>
+                            <td>@item.payType</td>
                             <td>@item.balance</td>
                             <td>@item.remark</td>
                         </tr>

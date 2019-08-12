@@ -37,10 +37,20 @@ namespace Spetmall.Model
         [TableField]
         public string petname { get; set; }
         /// <summary>
+        /// 宠物名字简拼
+        /// </summary>
+        [TableField]
+        public string py { get; set; }
+        /// <summary>
         /// 宠物年龄（岁）
         /// </summary>
         [TableField]
         public short petage { get; set; }
+        /// <summary>
+        /// 宠物类型
+        /// </summary>
+        [TableField]
+        public string pettype { get; set; }
         /// <summary>
         /// 剩余使用次数
         /// </summary>
@@ -70,6 +80,11 @@ namespace Spetmall.Model
         /// 
         /// </summary>
         public DateTime crtime { get; set; }
+        /// <summary>
+        /// 支付方式 1现金 2微信 3支付宝 4余额 5刷卡 6其他
+        /// </summary>
+        [TableField]
+        public short payType { get; set; }
 
     }
 }
