@@ -18,6 +18,9 @@ namespace Spetmall.Common
         /// <returns></returns>
         public static string GetChineseSpell(string strText)
         {
+            if (string.IsNullOrWhiteSpace(strText))
+                return string.Empty;
+
             int len = strText.Length;
             string myStr = "";
             for (int i = 0; i < len; i++)

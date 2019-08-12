@@ -37,6 +37,13 @@ namespace UpdatePY
                 item.py = ChineseSpell.GetChineseSpell(item.name);
                 productDAL.GetInstance().UpdateByKey(item, item.id);
             }
+
+            var list3 = railcardDAL.GetInstance().GetList<railcard>();
+            foreach (railcard item in list3)
+            {
+                item.py = ChineseSpell.GetChineseSpell(item.petname);
+                railcardDAL.GetInstance().UpdateByKey(item, item.id);
+            }
         }
     }
 }
