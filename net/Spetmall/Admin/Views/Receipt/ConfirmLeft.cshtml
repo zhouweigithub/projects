@@ -65,12 +65,12 @@
                             </div>
                         </td>
                         <td>
-                            <span class="price-now">@item.price</span>
+                            <span class="price-now">@item.price.ToString("g0")</span>
                         </td>
                         <td align="center">
                             @item.count
                         </td>
-                        <td><span class="simple-price">@item.money</span></td>
+                        <td><span class="simple-price">@item.money.ToString("g0")</span></td>
                     </tr>
 
                     if (item.discount_money > 0 || item.fullSend_money > 0 || item.member_money > 0)
@@ -82,15 +82,15 @@
                                         <h3>优惠</h3>
                                         @if (item.discount_money > 0)
                                         {
-                                            <div class="youhuixiangqing"><span class="green">-￥@item.discount_money</span>@item.discountMsg</div>
+                                            <div class="youhuixiangqing"><span class="green">-￥@item.discount_money.ToString("g0")</span>@item.discountMsg</div>
                                         }
                                         @if (item.fullSend_money > 0)
                                         {
-                                            <div class="youhuixiangqing"><span class="green">-￥@item.fullSend_money</span>@item.fullSendMsg</div>
+                                            <div class="youhuixiangqing"><span class="green">-￥@item.fullSend_money.ToString("g0")</span>@item.fullSendMsg</div>
                                         }
                                         @if (item.member_money > 0)
                                         {
-                                            <div class="youhuixiangqing"><span class="green">-￥@item.member_money</span>@item.memberMsg</div>
+                                            <div class="youhuixiangqing"><span class="green">-￥@item.member_money.ToString("g0")</span>@item.memberMsg</div>
                                         }
                                     </div>
                                 </div>

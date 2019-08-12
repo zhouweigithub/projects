@@ -45,7 +45,7 @@
                         <tr>
                             <td>@item.date.ToString("yyyy-MM-dd")</td>
                             <td>@item.TypeString</td>
-                            <td>@item.money</td>
+                            <td>@item.money.ToString("g0")</td>
                             <td>@item.remark</td>
                             <td style="max-width:100px;">
                                 <a href="javascript:;" yun_type="dialog" dialog_title="修改" uri="edit/@item.id" dialog_width="40%" dialog_height="350px">修改</a>
@@ -59,7 +59,7 @@
                         <tr class="total">
                             <td>统计汇总</td>
                             <td></td>
-                            <td>@total.money</td>
+                            <td>@total.money.ToString("g0")</td>
                             <td></td>
                             <td></td>
                         </tr>

@@ -197,8 +197,8 @@ var ReceiptCommon = function () {
 
     this.setReceiptdata = function (_config) {
         ///this.setReceipt( _config );
-        this.Ele['confiem_total_amount'].html(goods_price((_config['originaltotalprice'])));
-        this.Ele['confiem_preferential_amount'].html(goods_price((_config['discounttotalprice'])));
+        this.Ele['confiem_total_amount'].html(goods_price(_config['originaltotalprice']));
+        this.Ele['confiem_preferential_amount'].html(goods_price(_config['discounttotalprice']));
         this.Ele['need_pay_amount'].html(goods_price(_config['originaltotalprice'] - _config['discounttotalprice']));
         this.Ele['pay_amount'].val(goods_price(_config['originaltotalprice'] - _config['discounttotalprice']));
         this.Ele['totalMoney'].val(goods_price(_config['originaltotalprice']));
@@ -428,7 +428,7 @@ var ReceiptCommon = function () {
 
     function create_item(_data, _reload) {
 
-        _data['unitprice'] = (_data['price']).toFixed(2);
+        _data['unitprice'] = (_data['price']);
 
 
         if (that.Ele.shoppingcart.find('li[data-goods-id=' + _data['id'] + ']').size() > 0) {
@@ -460,7 +460,7 @@ var ReceiptCommon = function () {
 
 
     function create_goods(_data) {
-        _data['my_price'] = goods_price(_data['price']);
+        _data['my_price'] = _data['price'];
         _data['mapthumimg'] = _data['thumbnail'];
 
         if (_data['store'] <= _data['warn']) {

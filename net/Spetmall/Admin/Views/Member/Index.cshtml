@@ -47,8 +47,8 @@
                             <td>@item.id</td>
                             <td>@item.phone</td>
                             <td>@item.name</td>
-                            <td>@item.money</td>
-                            <td>@item.money</td>
+                            <td>@item.money.ToString("g0")</td>
+                            <td>@item.money.ToString("g0")</td>
                             <td>@item.discount 折</td>
                             <td>@item.order_count 次</td>
                             <td style="max-width:20%;">@Html.Raw(item.petsHtml)</td>

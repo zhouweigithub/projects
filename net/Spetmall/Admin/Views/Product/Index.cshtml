@@ -109,8 +109,8 @@
                                 <td>@item.name</td>
                                 <td>@item.barcode</td>
                                 <td>@item.categoryName</td>
-                                <td>@item.cost</td>
-                                <td>@item.price</td>
+                                <td>@item.price.ToString("g0")</td>
+                                <td>@item.cost.ToString("g0")</td>
                                 <td style="@(item.store<=item.warn?"background-color:#f1debd":"")">@item.store</td>
                                 <td>@item.warn</td>
                                 <td>@item.sales</td>

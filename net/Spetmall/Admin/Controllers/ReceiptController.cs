@@ -10,9 +10,7 @@ using Spetmall.Model.Page;
 
 namespace Spetmall.Admin.Controllers
 {
-    /// <summary>
-    /// 收银
-    /// </summary>
+    //收银
     [Common.CustomAuthorize]
     public class ReceiptController : Controller
     {

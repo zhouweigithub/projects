@@ -56,18 +56,18 @@
                         {
                             <tr>
                                 <td>@item.crdate.ToString("yyyy-MM-dd")</td>
-                                <td>@item.payMoney</td>
-                                <td>@item.xjMoney</td>
-                                <td>@item.wxMoney</td>
-                                <td>@item.zfbMoney</td>
-                                <td>@item.yueMoney</td>
-                                <td>@item.qitaMoney</td>
-                                <td>@item.costMoney</td>
-                                <td>@item.profitMoney</td>
+                                <td>@item.payMoney.ToString("g0")</td>
+                                <td>@item.xjMoney.ToString("g0")</td>
+                                <td>@item.wxMoney.ToString("g0")</td>
+                                <td>@item.zfbMoney.ToString("g0")</td>
+                                <td>@item.yueMoney.ToString("g0")</td>
+                                <td>@item.qitaMoney.ToString("g0")</td>
+                                <td>@item.costMoney.ToString("g0")</td>
+                                <td>@item.profitMoney.ToString("g0")</td>
                                 <td>@item.payCount</td>
-                                <td>@item.productMoney</td>
-                                <td>@item.rechargeMoney</td>
-                                <td>@item.railCardMoney</td>
+                                <td>@item.productMoney.ToString("g0")</td>
+                                <td>@item.rechargeMoney.ToString("g0")</td>
+                                <td>@item.railCardMoney.ToString("g0")</td>
                             </tr>
                         }
                         {
@@ -76,18 +76,18 @@
                                 var total = ViewBag.total as payInfo;
                                 <tr class="total">
                                     <td>统计汇总</td>
-                                    <td>@total.payMoney</td>
-                                    <td>@total.xjMoney</td>
-                                    <td>@total.wxMoney</td>
-                                    <td>@total.zfbMoney</td>
-                                    <td>@total.yueMoney</td>
-                                    <td>@total.qitaMoney</td>
-                                    <td>@total.costMoney</td>
-                                    <td>@total.profitMoney</td>
+                                    <td>@total.payMoney.ToString("g0")</td>
+                                    <td>@total.xjMoney.ToString("g0")</td>
+                                    <td>@total.wxMoney.ToString("g0")</td>
+                                    <td>@total.zfbMoney.ToString("g0")</td>
+                                    <td>@total.yueMoney.ToString("g0")</td>
+                                    <td>@total.qitaMoney.ToString("g0")</td>
+                                    <td>@total.costMoney.ToString("g0")</td>
+                                    <td>@total.profitMoney.ToString("g0")</td>
                                     <td>@total.payCount</td>
-                                    <td>@total.productMoney</td>
-                                    <td>@total.rechargeMoney</td>
-                                    <td>@total.railCardMoney</td>
+                                    <td>@total.productMoney.ToString("g0")</td>
+                                    <td>@total.rechargeMoney.ToString("g0")</td>
+                                    <td>@total.railCardMoney.ToString("g0")</td>
                                 </tr>
                             }
                         }

@@ -35,10 +35,10 @@
                             <td>@item.id</td>
                             <td>@item.sno</td>
                             <td>@item.crtime</td>
-                            <td>@item.money</td>
-                            <td>@item.paymoney</td>
+                            <td>@item.money.ToString("g0")</td>
+                            <td>@item.paymoney.ToString("g0")</td>
                             <td>@item.payType</td>
-                            <td>@item.balance</td>
+                            <td>@item.balance.ToString("g0")</td>
                             <td>@item.remark</td>
                         </tr>
                     }

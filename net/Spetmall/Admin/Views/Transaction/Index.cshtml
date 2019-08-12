@@ -56,10 +56,10 @@
                         bool isIn24Hour = (DateTime.Now - item.crtime).TotalHours < 48;
                         <tr>
                             <td>@item.id</td>
-                            <td>@item.productMoney</td>
-                            <td>@item.payMoney</td>
-                            <td>@(-item.discountMoney)</td>
-                            <td>@(-item.adjustMomey)</td>
+                            <td>@item.productMoney.ToString("g0")</td>
+                            <td>@item.payMoney.ToString("g0")</td>
+                            <td>@((-item.discountMoney).ToString("g0"))</td>
+                            <td>@((-item.adjustMomey).ToString("g0"))</td>
                             <td>@item.payTypeString</td>
                             <td>@item.memberName</td>
                             <td>@item.crtime</td>
@@ -81,10 +81,10 @@
                         var total = ViewBag.total as order_detail;
                         <tr class="total">
                             <td>数据汇总</td>
-                            <td>@total.productMoney</td>
-                            <td>@total.payMoney</td>
-                            <td>@(-total.discountMoney)</td>
-                            <td>@(-total.adjustMomey)</td>
+                            <td>@total.productMoney.ToString("g0")</td>
+                            <td>@total.payMoney.ToString("g0")</td>
+                            <td>@((-total.discountMoney).ToString("g0"))</td>
+                            <td>@((-total.adjustMomey).ToString("g0"))</td>
                             <td></td>
                             <td></td>
                             <td></td>

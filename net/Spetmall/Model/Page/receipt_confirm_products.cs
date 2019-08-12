@@ -175,7 +175,7 @@ namespace Spetmall.Model.Page
                     }
                     else if (discountInfo.ruleType == 1)
                     {
-                        return $"满{discountInfo.aim}元,打{discountInfo.sale}折";
+                        return $"满{discountInfo.aim.ToString("g0")}元,打{discountInfo.sale}折";
                     }
                     else
                     {
@@ -194,7 +194,7 @@ namespace Spetmall.Model.Page
             {
                 if (fullSend_money > 0)
                 {
-                    return $"满{fullsendInfo.aim}元,减{fullsendInfo.saleOrign}元";
+                    return $"满{fullsendInfo.aim.ToString("g0")}元,减{fullsendInfo.saleOrign}元";
                 }
                 else
                 {

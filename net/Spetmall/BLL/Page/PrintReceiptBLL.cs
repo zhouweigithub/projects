@@ -133,9 +133,9 @@ namespace Spetmall.BLL.Page
                     height += lineHeight8;
 
                     //e.Graphics.DrawString(item.BarCode, font1, Brushes.Black, p1, height);
-                    e.Graphics.DrawString(RemoveLast0(item.Price), font1, Brushes.Black, p2, height);
+                    e.Graphics.DrawString(item.Price.ToString("g0"), font1, Brushes.Black, p2, height);
                     e.Graphics.DrawString(item.Count.ToString(), font1, Brushes.Black, p3, height);
-                    e.Graphics.DrawString(RemoveLast0(item.Money), font1, Brushes.Black, p4, height);
+                    e.Graphics.DrawString(item.Money.ToString("g0"), font1, Brushes.Black, p4, height);
 
                     height += lineHeight8;
                 }
@@ -149,7 +149,7 @@ namespace Spetmall.BLL.Page
                     text = "优惠";
                     e.Graphics.DrawString(text, font2, Brushes.Black, marginLeft, height);
 
-                    text = RemoveLast0(-_data.ReceiptMoney);
+                    text = (-_data.ReceiptMoney).ToString("g0");
                     e.Graphics.DrawString(text, font2, Brushes.Black, new RectangleF(0, height, _pageWidth, lineHeight2), formatRight);
                     height += lineHeight2;
                 }
@@ -157,7 +157,7 @@ namespace Spetmall.BLL.Page
                 text = "实付";
                 e.Graphics.DrawString(text, font2, Brushes.Black, marginLeft, height);
 
-                text = RemoveLast0(_data.PayMoney);
+                text = _data.PayMoney.ToString("g0");
                 e.Graphics.DrawString(text, font2, Brushes.Black, new RectangleF(0, height, _pageWidth, lineHeight2), formatRight);
                 height += lineHeight2;
 
