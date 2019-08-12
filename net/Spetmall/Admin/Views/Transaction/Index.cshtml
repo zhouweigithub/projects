@@ -12,7 +12,7 @@
         <form action="?" method="get">
             <div style=" padding-right:660px;">
                 <div class="search">
-                    @Html.TextBox("keyword", null, new { autocomplete = "off", placeholder = "请输入订单号或会员手机号" })
+                    @Html.TextBox("keyword", null, new { autocomplete = "off", placeholder = "请输入订单号或会员手机号或会员ID" })
                 </div>
             </div>
             <div class="rightbtn">
@@ -34,6 +34,7 @@
                 <li><a href="?keyword=@ViewBag.keyword&starttime=@ViewBag.starttime&endtime=@ViewBag.endtime&time=7" class="@(ViewBag.time=="7"?"active2":"")">近一周</a></li>
                 <li><a href="?keyword=@ViewBag.keyword&starttime=@ViewBag.starttime&endtime=@ViewBag.endtime&time=30" class="@(ViewBag.time=="30"?"active2":"")">近一月</a></li>
                 <li><a href="?keyword=@ViewBag.keyword&starttime=@ViewBag.starttime&endtime=@ViewBag.endtime&time=365" class="@(ViewBag.time=="365"?"active2":"")">近一年</a></li>
+                <li><a href="?keyword=@ViewBag.keyword&starttime=@ViewBag.starttime&endtime=@ViewBag.endtime&time=36500" class="@(ViewBag.time=="36500"?"active2":"")">所有</a></li>
             </ul>
         </div>
         <table class="table01" width="100%" border="0" cellspacing="0" cellpadding="0">

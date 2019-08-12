@@ -85,6 +85,23 @@ namespace Spetmall.Model
         /// </summary>
         [TableField]
         public short payType { get; set; }
+        /// <summary>
+        /// 状态
+        /// </summary>
+        public string StateString
+        {
+            get
+            {
+                if (times <= 0)
+                    return "已用完";
+                else if (DateTime.Now < starttime)
+                    return "未开始";
+                else if (DateTime.Now > endtime)
+                    return "已过期";
+                else
+                    return "正常";
+            }
+        }
 
     }
 }

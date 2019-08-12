@@ -155,10 +155,10 @@ sum(discountMoney)discountMoney,sum(adjustMomey)adjustMomey from ({0})t";
 
             if (!string.IsNullOrWhiteSpace(keyword))
             {
-                where += $" and (a.id='{keyword}' or b.phone='{keyword}')";
+                where += $" and (a.id='{keyword}' or b.phone='{keyword}' or b.id='{keyword}')";
             }
 
-            if (string.IsNullOrWhiteSpace(keyword) && !string.IsNullOrWhiteSpace(day))
+            if (!string.IsNullOrWhiteSpace(day))
             {
                 int.TryParse(day, out int days);
                 string date = DateTime.Today.AddDays(-days).ToString("yyyy-MM-dd");

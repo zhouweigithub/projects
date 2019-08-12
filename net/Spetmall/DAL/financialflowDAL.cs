@@ -143,6 +143,8 @@ namespace Spetmall.DAL
 
             if (!string.IsNullOrWhiteSpace(orderBy))
                 orderby = $"order by {orderBy} desc";
+            else
+                orderby = $"order by id desc";
 
             return orderby;
         }

@@ -62,6 +62,7 @@
             result = IsValueNotEmpty(dateid, "errdate", "日期") && result;
             result = IsValueNotEmpty("type", "errtype", "类型") && result;
             result = IsValueNotEmpty("money", "errmoney", "金额") && result;
+            result = IsValueNot0("money", "errmoney", "金额") && result;
 
             result = result && IsValueDecimal("money", "errmoney", "金额");
 

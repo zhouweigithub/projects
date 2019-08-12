@@ -39,6 +39,7 @@
                     <th>剩余次数</th>
                     <th>使用时间范围</th>
                     <th>办卡时间</th>
+                    <th>状态</th>
                     <th>备注</th>
                     <th>查看消费记录</th>
                 </tr>
@@ -56,6 +57,7 @@
                             <td>@item.lefttimes</td>
                             <td>@item.starttime.ToString("yyyy/MM/dd") - @item.endtime.ToString("yyyy/MM/dd")</td>
                             <td>@item.crtime</td>
+                            <td class="@(item.StateString=="已用完"||item.StateString=="已过期"?"red":item.StateString=="正常"?"green":"")">@item.StateString</td>
                             <td>@item.remark</td>
                             <td>
                                 <a href="javascript:;" yun_type="dialog" dialog_title="使用洗澡卡" uri="edit/@item.id" dialog_width="50%" dialog_height="480px" id="open">使用洗澡卡</a>

@@ -200,7 +200,7 @@ em {font-style:normal}
 .fenlei li a {background:#46abe4;text-align:center;display:block;color:#fff;font-size:14px;height:40px;line-height:40px;padding:0px;border-left:1px solid #186c9b;border-right:1px solid #a6defe;border-bottom:1px solid #186c9b;border-top:1px solid #a6defe;}
 .fenlei li.active a,.fenlei2 li.active a {background:#0e87cc;}
 .fenlei2 {margin:10px 0;border-bottom:1px solid #ddd;background:#0e87cc;}
-.fenlei2 li {float:left;margin-top:-1px;width:20%;}
+.fenlei2 li {float:left;margin-top:-1px;width:16.666%;}
 .fenlei2 li a {background:#46abe4;text-align:center;display:block;color:#fff;font-size:14px;height:40px;line-height:40px;padding:0px;border-left:1px solid #186c9b;border-right:1px solid #a6defe;border-bottom:1px solid #186c9b;border-top:1px solid #a6defe;}
 .fenlei2 li a.active2 {background:#056497;}
 .fenlei6 li {width:16.6666%;}
@@ -490,3 +490,5 @@ input.dssc-btn {font:normal 12px/20px "microsoft yahei";text-decoration:none;col
 .error {color:red;}
 .width150px{width:150px;display:inline-block;}
 .total {font-weight: bold;}
+.green {background-color: #bde2ba;}
+.red {background-color: #f8cfcf;}
