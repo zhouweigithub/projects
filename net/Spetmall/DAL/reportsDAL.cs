@@ -19,14 +19,14 @@ namespace Spetmall.DAL
 SELECT crdate,SUM(payMoney)payMoney,SUM(discountMoney)discountMoney,SUM(adjustMomey)adjustMomey, 
 SUM(profitMoney)profitMoney,SUM(costMoney)costMoney,SUM(payCount)payCount,SUM(rechargeMoney)rechargeMoney,
 SUM(railCardMoney)railCardMoney,SUM(xjMoney)xjMoney,SUM(wxMoney)wxMoney,SUM(zfbMoney)zfbMoney,
-SUM(yueMoney)yueMoney,SUM(qitaMoney)qitaMoney
+SUM(yueMoney)yueMoney,SUM(qitaMoney)qitaMoney,SUM(productMoney)productMoney
 FROM(
     SELECT crdate,IFNULL(SUM(payMoney),0)payMoney,IFNULL(SUM(discountMoney),0)discountMoney,
     IFNULL(SUM(adjustMomey),0)adjustMomey,IFNULL(SUM(profitMoney),0)profitMoney,
     IFNULL(SUM(costMoney),0)costMoney,COUNT(1)payCount ,0 rechargeMoney,0 railCardMoney,
     IFNULL(SUM(IF(paytype=1,payMoney,0)),0)xjMoney,IFNULL(SUM(IF(paytype=2,payMoney,0)),0)wxMoney,
     IFNULL(SUM(IF(paytype=3,payMoney,0)),0)zfbMoney,IFNULL(SUM(IF(paytype=4,payMoney,0)),0)yueMoney,
-    IFNULL(SUM(IF(paytype=6,payMoney,0)),0)qitaMoney
+    IFNULL(SUM(IF(paytype=6,payMoney,0)),0)qitaMoney,IFNULL(SUM(payMoney),0)productMoney
     FROM `order` WHERE state=0 {0}
     GROUP BY crdate
 
@@ -36,7 +36,7 @@ FROM(
     0 costMoney,0 payCount,SUM(paymoney)rechargeMoney,0 railCardMoney, 
     IFNULL(SUM(IF(paytype=1,payMoney,0)),0)xjMoney,IFNULL(SUM(IF(paytype=2,payMoney,0)),0)wxMoney,
     IFNULL(SUM(IF(paytype=3,payMoney,0)),0)zfbMoney,IFNULL(SUM(IF(paytype=4,payMoney,0)),0)yueMoney,
-    IFNULL(SUM(IF(paytype=6,payMoney,0)),0)qitaMoney
+    IFNULL(SUM(IF(paytype=6,payMoney,0)),0)qitaMoney,0 productMoney
     FROM recharge WHERE 1=1 {1}
     GROUP BY crdate
 
@@ -46,7 +46,7 @@ FROM(
     0 costMoney,0 payCount,0 rechargeMoney,SUM(money)railCardMoney, 
     IFNULL(SUM(IF(paytype=1,money,0)),0)xjMoney,IFNULL(SUM(IF(paytype=2,money,0)),0)wxMoney,
     IFNULL(SUM(IF(paytype=3,money,0)),0)zfbMoney,IFNULL(SUM(IF(paytype=4,money,0)),0)yueMoney,
-    IFNULL(SUM(IF(paytype=6,money,0)),0)qitaMoney
+    IFNULL(SUM(IF(paytype=6,money,0)),0)qitaMoney,0 productMoney
     FROM railcard  WHERE 1=1 {1}
     GROUP BY crdate
 )t
@@ -58,7 +58,7 @@ ORDER BY crdate DESC
 sum(discountMoney)discountMoney,sum(adjustMomey)adjustMomey,sum(costMoney)costMoney,sum(payCount)payCount,
 SUM(rechargeMoney)rechargeMoney,SUM(railCardMoney)railCardMoney,
 sum(xjMoney)xjMoney,sum(wxMoney)wxMoney,sum(zfbMoney)zfbMoney,
-sum(yueMoney)yueMoney,sum(qitaMoney)qitaMoney
+sum(yueMoney)yueMoney,sum(qitaMoney)qitaMoney,sum(productMoney)productMoney
 from ({0})t";
 
         private static readonly string getProductInfoSql = @"

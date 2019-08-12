@@ -37,6 +37,10 @@ namespace Spetmall.Model.Page
         /// </summary>
         public int payCount { get; set; }
         /// <summary>
+        /// 商品金额
+        /// </summary>
+        public decimal productMoney { get; set; }
+        /// <summary>
         /// 会员充值金额
         /// </summary>
         public decimal rechargeMoney { get; set; }
