@@ -17,19 +17,19 @@ namespace wzq
         private bool isPlaying = true;
         private readonly int hcount = 19, vcount = 19, startx = 21, starty = 25;
         private readonly float width = 27.83f, height = 26.83f;
-        private bool isHumanGo = false;
 
         /// <summary>
         /// 是否托管给电脑走棋
         /// </summary>
         public bool IsAutoPlaying { get; set; } = false;
+        public bool IsHumanGo { get; set; } = false;
 
         public bll()
         {
             game = new game(hcount, vcount);
             me = new me(game);
             ai = new ai(game);
-            isHumanGo = true;
+            IsHumanGo = true;
         }
 
         public (int x, int y) getPoint(int x, int y)
@@ -49,7 +49,7 @@ namespace wzq
         public void reset()
         {
             game.reset();
-            isHumanGo = true;
+            IsHumanGo = true;
             isPlaying = true;
             IsAutoPlaying = false;
         }
@@ -75,7 +75,7 @@ namespace wzq
 
         public Image humanGo(int x, int y, Image img)
         {
-            if (isHumanGo)
+            if (IsHumanGo)
             {
                 (int px, int py) = getPoint(x, y);
                 (int starth, int startv) = getPicturePosition(px, py);
@@ -85,7 +85,7 @@ namespace wzq
                     {
                         Graphics g = Graphics.FromImage(img);
                         g.DrawImage(Properties.Resources.blackcur, new Rectangle(starth, startv, (int)width, (int)height));
-                        isHumanGo = false;
+                        IsHumanGo = false;
                         ReDrawPreChess(g);
                         g.Dispose();
                     }
@@ -98,7 +98,7 @@ namespace wzq
         public (int px, int py, Image img) aiGo(Image img)
         {
             int px, py;
-            int value = isHumanGo ? -1 : 1;
+            int value = IsHumanGo ? -1 : 1;
 
             Graphics g = Graphics.FromImage(img);
             if (game.gethistory().Length == 0)
@@ -116,7 +116,7 @@ namespace wzq
             Image imgChess = value == -1 ? Properties.Resources.blackcur : Properties.Resources.whitecur;
             g.DrawImage(imgChess, new Rectangle(starth, startv, (int)width, (int)height));
             ReDrawPreChess(g);
-            isHumanGo = !isHumanGo;
+            IsHumanGo = !IsHumanGo;
             g.Dispose();
             return (px, py, img);
         }
@@ -147,6 +147,8 @@ namespace wzq
 
         public Image regret()
         {
+            IsHumanGo = true;
+            IsAutoPlaying = false;
             game.reget();
             return refresh();
         }

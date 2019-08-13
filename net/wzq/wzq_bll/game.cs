@@ -29,6 +29,11 @@ namespace wzq_bll
             return score_human[x, y];
         }
 
+        public int getcomputerscore(int x, int y)
+        {
+            return score_computer[x, y];
+        }
+
         private void init(int width, int height)
         {
             chess = new int[width, height];
@@ -201,11 +206,11 @@ namespace wzq_bll
             {
                 result = 2000;    //活三
             }
-            else if (count == 3 && (p1 == chesstype.empty || a1 == chesstype.empty))
+            else if (count == 3 && (p1 == chesstype.empty || a1 == chesstype.empty) && p2 != chesstype.enemy && a2 != chesstype.enemy)
             {
                 result = 400;    //冲三
             }
-            else if (count == 2 && p1 == chesstype.empty && a1 == chesstype.empty)
+            else if (count == 2 && p1 == chesstype.empty && a1 == chesstype.empty && (p2 == chesstype.empty || a2 == chesstype.empty))
             {
                 result = 200;    //活二
             }

@@ -40,7 +40,7 @@ namespace wzq_bll
                     int maxscore = 0;
                     foreach (scoreinfo item in jingong)
                     {
-                        int score = game.gethumanscore(item.x, item.y);
+                        int score = value == -1 ? game.getcomputerscore(item.x, item.y) : game.gethumanscore(item.x, item.y);
                         if (score > maxscore)
                         {
                             maxscore = score;
@@ -62,7 +62,7 @@ namespace wzq_bll
                     int maxscore = 0;
                     foreach (scoreinfo item in fangshou)
                     {
-                        int score = game.gethumanscore(item.x, item.y);
+                        int score = value == -1 ? game.getcomputerscore(item.x, item.y) : game.gethumanscore(item.x, item.y);
                         if (score > maxscore)
                         {
                             maxscore = score;
