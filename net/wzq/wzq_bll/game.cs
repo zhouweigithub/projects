@@ -11,7 +11,6 @@ namespace wzq_bll
         private int width;
         private int height;
         private int[,] chess;
-        private int[,] chess_copy;
         private int[,] score_human;
         private int[,] score_computer;
         private List<point> history = new List<point>();
@@ -22,6 +21,24 @@ namespace wzq_bll
             this.width = width;
             this.height = height;
             init(width, height);
+        }
+
+        public game(game game)
+        {
+            if (game != null)
+            {
+                width = game.width;
+                height = game.height;
+                chess = (int[,])game.chess.Clone();
+                score_human = (int[,])game.score_human.Clone();
+                score_computer = (int[,])game.score_computer.Clone();
+                history = game.history.GetRange(0, game.history.Count);
+            }
+        }
+
+        public int getChessValue(int x, int y)
+        {
+            return chess[x, y];
         }
 
         public int gethumanscore(int x, int y)
@@ -37,7 +54,6 @@ namespace wzq_bll
         private void init(int width, int height)
         {
             chess = new int[width, height];
-            chess_copy = new int[width, height];
             score_human = new int[width, height];
             score_computer = new int[width, height];
         }
@@ -61,12 +77,11 @@ namespace wzq_bll
             {
                 chess[x, y] = value;
                 history.Add(new point(x, y, value));
+                refreshscore();
                 return true;
             }
-            else
-            {
-                return false;
-            }
+
+            return false;
         }
 
         public bool iswin(int x, int y)
@@ -90,20 +105,11 @@ namespace wzq_bll
                 else
                     p = null;
             } while (p != null && p.value != 1);
+
+            refreshscore();
         }
 
-        private void copychess()
-        {
-            for (int i = 0; i < width; i++)
-            {
-                for (int j = 0; j < height; j++)
-                {
-                    chess_copy[i, j] = chess[i, j];
-                }
-            }
-        }
-
-        public void refreshscore()
+        private void refreshscore()
         {
             for (int i = 0; i < width; i++)
             {
@@ -233,6 +239,9 @@ namespace wzq_bll
                 if (!isMore)    //如果含有空位，并且不是个数较多那一侧，则减少一定权重
                     result -= 1000;
             }
+
+            if (result < 0)
+                result = 0;
 
             return result;
         }
@@ -695,7 +704,32 @@ namespace wzq_bll
             return max;
         }
 
-        private string getchessstring(int[,] array)
+        public List<scoreinfo> getHighScores(int value, int count)
+        {
+            var array = value == -1 ? score_human : score_computer;
+            List<scoreinfo> list = convertToList(array);
+            var sortedList = list.OrderByDescending(a => a.score);
+            return sortedList.Take(count).ToList();
+        }
+
+        private List<scoreinfo> convertToList(int[,] array)
+        {
+            List<scoreinfo> result = new List<scoreinfo>();
+            for (int i = 0; i < width; i++)
+            {
+                for (int j = 0; j < height; j++)
+                {
+                    if (array[i, j] != 0)
+                    {
+                        result.Add(new scoreinfo(i, j, array[i, j]));
+                    }
+                }
+            }
+
+            return result;
+        }
+
+        public string getchessstring(int[,] array)
         {
             StringBuilder sb = new StringBuilder();
             for (int i = 0; i < width; i++)
