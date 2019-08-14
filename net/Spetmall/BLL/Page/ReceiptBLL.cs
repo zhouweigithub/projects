@@ -387,6 +387,7 @@ namespace Spetmall.BLL.Page
                     return (false, "商品或活动信息已经变化，请重新下单");
                 }
 
+                decimal adjustMoney = postData.totalNeedMoney - postData.totalPayMoney;
                 order order = new order()
                 {
                     id = orderid,
@@ -395,11 +396,11 @@ namespace Spetmall.BLL.Page
                     discountMoney = datas.Sum(a => a.total_sale_money),
                     memberid = postData.memberid,
                     productMoney = datas.Sum(a => a.money),
-                    adjustMomey = postData.totalNeedMoney - postData.totalPayMoney,
+                    adjustMomey = adjustMoney,
                     state = state,
                     remark = postData.remark,
                     costMoney = datas.Sum(a => a.cost_money),
-                    profitMoney = datas.Sum(a => a.profit_money),
+                    profitMoney = datas.Sum(a => a.profit_money) - adjustMoney, //总利润需要减去调价的金额
                     crdate = DateTime.Today,
                     crtime = DateTime.Now,
                 };

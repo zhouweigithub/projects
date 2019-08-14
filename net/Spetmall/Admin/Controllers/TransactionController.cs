@@ -38,6 +38,41 @@ namespace Spetmall.Admin.Controllers
             return View();
         }
 
+        public ActionResult Edit(string id)
+        {
+            order order = orderDAL.GetInstance().GetEntityByKey<order>(id);
+            return View(order);
+        }
+
+        [HttpPost]
+        public ActionResult Edit(order order)
+        {
+            bool status = false;
+            string errMsg = string.Empty;
+            try
+            {
+                order server = orderDAL.GetInstance().GetEntityByKey<order>(order.id);
+                //老的调价金额
+                decimal oldAdjustMoney = server.adjustMomey;
+                //新的调价金额
+                decimal newAdjustMoney = server.payMoney + server.adjustMomey - order.payMoney;
+
+                server.payType = order.payType;
+                server.remark = order.remark;
+                server.payMoney = order.payMoney;
+                server.adjustMomey = newAdjustMoney;
+                server.profitMoney = server.profitMoney + oldAdjustMoney - newAdjustMoney;
+
+                status = orderDAL.GetInstance().UpdateByKey(server, order.id) > 0;
+            }
+            catch (Exception e)
+            {
+                errMsg = e.Message;
+            }
+            return Content(CommonBLL.GetReturnJson(status, errMsg));
+        }
+
+
         public ActionResult Delete(string id)
         {
             bool status = false;

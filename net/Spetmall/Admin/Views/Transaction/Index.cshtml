@@ -71,6 +71,8 @@
                                     if (isIn24Hour)
                                     {
                                         @Html.Raw(" | ")
+                                        <a href="javascript:;" yun_type="dialog" dialog_title="修改订单" uri="edit/@item.id" dialog_width="50%" dialog_height="410px" title="下单后48小时以内可修改">修改</a>
+                                        @Html.Raw(" | ")
                                         @Html.ActionLink("删除", "", null, new { href = "javascript:void(0);", onclick = "yunmall_confirm_dialog('您确定要删除这个订单吗?', 'delete/" + item.id + "', 'reload')", title = "下单后48小时以内可删除" });
                                     }
                                 }

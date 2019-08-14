@@ -404,6 +404,7 @@
     <Content Include="static\extend\laydate\theme\default\font\iconfont.woff" />
     <Content Include="Views\FinancialFlow\Index.cshtml" />
     <Content Include="Views\FinancialFlow\Edit.cshtml" />
+    <Content Include="Views\Transaction\Edit.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Images\upload\" />
