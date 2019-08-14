@@ -95,7 +95,7 @@ namespace wzq_bll
 
         private static bool CanJinGong(game game, List<scoreinfo> jingong, List<scoreinfo> fangshou)
         {
-            return (fangshou[0].score - jingong[0].score <= 2000 || fangshou[0].score < 3000 || (jingong[0].score > 8000 && fangshou[0].score < 100000))
+            return (fangshou[0].score - jingong[0].score <= 2000 || fangshou[0].score < 3000 || (jingong[0].score > 8000 && fangshou[0].score < 80000))
                 && game.gethistory().Length > 5;
         }
 
@@ -103,11 +103,11 @@ namespace wzq_bll
         {
             int x = -1, y = -1;
             if (CanJinGong(game, value))
-            {
+            {   //进攻
                 (x, y) = think(value);
             }
             else
-            {
+            {   //防守
                 (x, y) = think(-value);
             }
 

@@ -77,7 +77,7 @@ namespace wzq_bll
             {
                 chess[x, y] = value;
                 history.Add(new point(x, y, value));
-                refreshscore();
+                refreshscore(-value);
                 return true;
             }
 
@@ -106,10 +106,14 @@ namespace wzq_bll
                     p = null;
             } while (p != null && p.value != 1);
 
-            refreshscore();
+            refreshscore(-1);
         }
 
-        private void refreshscore()
+        /// <summary>
+        /// 刷新分数
+        /// </summary>
+        /// <param name="jjingongValue">进攻方的值</param>
+        private void refreshscore(int jjingongValue)
         {
             for (int i = 0; i < width; i++)
             {
@@ -117,8 +121,8 @@ namespace wzq_bll
                 {
                     if (chess[i, j] == 0)
                     {
-                        score_human[i, j] = getscore(i, j, -1);
-                        score_computer[i, j] = getscore(i, j, 1);
+                        score_human[i, j] = getscore(i, j, -1, jjingongValue == -1);
+                        score_computer[i, j] = getscore(i, j, 1, jjingongValue == 1);
                     }
                     else
                     {
@@ -134,7 +138,15 @@ namespace wzq_bll
             //Console.WriteLine(getchessstring(score_computer));
         }
 
-        private int getscore(int x, int y, int value)
+        /// <summary>
+        /// 给每个位置打分
+        /// </summary>
+        /// <param name="x">x坐标</param>
+        /// <param name="y">y坐标</param>
+        /// <param name="value">位置的棋子标识</param>
+        /// <param name="isJinGong">是否为进攻方，进攻方将获得更高的分数</param>
+        /// <returns></returns>
+        private int getscore(int x, int y, int value, bool isJinGong)
         {
             bool hasEmptyChess1, hasEmptyChess2, hasEmptyChess3, hasEmptyChess4,
                 hasEmptyChess5, hasEmptyChess6, hasEmptyChess7, hasEmptyChess8;
@@ -166,7 +178,9 @@ namespace wzq_bll
             int lefttiltscort = getscore(lefttilt, isNearMoreLefttilt, t9, t10, t15, t16, hasEmptyChess5 || hasEmptyChess8);
             int righttiltscort = getscore(righttilt, isNearMoreRighttilt, t11, t12, t13, t14, hasEmptyChess6 || hasEmptyChess7);
 
-            return horscort + verscort + lefttiltscort + righttiltscort;
+            int score = horscort + verscort + lefttiltscort + righttiltscort;
+            //进攻方分数增加一些
+            return isJinGong ? (int)(score * 1.3) : score;
         }
 
         private bool GetIsNearMore(int count1, int count2, bool hasEmptyChess1, bool hasEmptyChess2)

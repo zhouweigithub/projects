@@ -60,7 +60,7 @@ namespace wzq
                 if (bll.iswin(y, x))
                 {
                     button3.Text = "托管";
-                    MessageBox.Show("you win", "", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    MessageBox.Show("you win", "over", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 }
                 else
                 {
@@ -83,7 +83,9 @@ namespace wzq
                 {
                     timer1.Stop();
                     button3.Text = "托管";
-                    MessageBox.Show("you lost", "", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    string msg = bll.IsHumanGo ? "you win" : "you lost";
+                    MessageBoxIcon icon = bll.IsHumanGo ? MessageBoxIcon.Information : MessageBoxIcon.Warning;
+                    MessageBox.Show(msg, "over", MessageBoxButtons.OK, icon);
                 }
             }
         }
