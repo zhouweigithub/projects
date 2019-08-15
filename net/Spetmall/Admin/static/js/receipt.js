@@ -459,7 +459,7 @@ var ReceiptCommon = function () {
     }
 
 
-    function create_goods(_data) {
+    function create_goods(_data, isScanningGun) {
         _data['my_price'] = _data['price'];
         _data['mapthumimg'] = _data['thumbnail'];
 
@@ -476,6 +476,7 @@ var ReceiptCommon = function () {
             create_item(_data, true);
         }
         goods_item_bind(_dom);
+        isScanningGun && _dom.click();  //扫码枪扫出来的直接选中
     }
 
     function removeDisabled(_Lidom, _cartdata) {
@@ -560,7 +561,7 @@ var ReceiptCommon = function () {
     this.filterGoods = function (_config) {
         this.pageinit();
         _config && (this.pagewhere = $.extend(this.pagewhere, _config));
-        paginate(function () {
+        paginate(true, function () {
             that.Ele.goodsitems.empty();
         });
     }
@@ -571,7 +572,7 @@ var ReceiptCommon = function () {
     }
 
     /*分页*/
-    function paginate(_callback) {
+    function paginate(isScanningGun, _callback) {
         that.reloadStatus = true;
         $.get('/Receipt/QueryProduct', that.pagewhere, function (_RESULT) {
             that.reloadStatus = false;
@@ -585,7 +586,7 @@ var ReceiptCommon = function () {
                 for (var i in _RESULT['data']) {
                     var _data = _RESULT['data'][i];
                     _data['goodsinfo'] = JSON.stringify(_data);
-                    create_goods(_data);
+                    create_goods(_data, isScanningGun);
                 }
 
 
