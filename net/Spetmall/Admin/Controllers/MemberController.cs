@@ -62,22 +62,15 @@ namespace Spetmall.Admin.Controllers
             {
                 member.name = member.name.Trim();
                 member.phone = member.phone.Trim();
-                member.email = member.email.Trim();
-                member.remark = member.remark.Trim();
+                if (!string.IsNullOrWhiteSpace(member.email))
+                    member.email = member.email.Trim();
+                if (!string.IsNullOrWhiteSpace(member.remark))
+                    member.remark = member.remark.Trim();
                 member.py = Spetmall.Common.ChineseSpell.GetChineseSpell(member.name);
                 if (member.id == 0)
                 {
                     member.money = 0;
                     status = memberDAL.GetInstance().Add<member>(member) > 0;
-                    //添加会员时，插入一条充值记录
-                    //rechargeDAL.GetInstance().Add<recharge>(new recharge()
-                    //{
-                    //    sno = GetSno(),
-                    //    memberid = member.id,
-                    //    money = member.money,
-                    //    remark = "添加会员时充值",
-                    //    balance = member.money,
-                    //});
                 }
                 else
                 {
