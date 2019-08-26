@@ -363,7 +363,6 @@ var ReceiptCommon = function () {
                 _keyupNumber = 0;
                 _start_microtime = 0;
                 keyword_content = $.trim(that.Ele.keyword.val());
-
             }, 50)
         });
 
@@ -371,7 +370,6 @@ var ReceiptCommon = function () {
             if (_start_microtime <= 0) {
                 start_microtime = new Date().getTime();
             }
-
         });
 
         $(document).keyup(function (event) {
@@ -381,12 +379,13 @@ var ReceiptCommon = function () {
 
                 var reg = new RegExp("^" + keyword_content);
                 _keyword_val = _keyword_val.replace(reg, '');
+
                 if (/^[\d]{8,}$/.test(_keyword_val) && (new Date().getTime() - start_microtime) < 50) {
+                    //检测到扫码枪输入
                     that.Ele.keyword.val(_keyword_val);
                     that.filterGoods({ keyword: _keyword_val, scanninggun: 'yes' });
-                    //console.log("这是扫码抢",_keyword_val);
                 } else {
-                    $(".receipt-keyword-btn").trigger("click");
+                    that.filterGoods({ keyword: _keyword_val, scanninggun: 'false' });
                 }
 
             }
@@ -476,7 +475,10 @@ var ReceiptCommon = function () {
             create_item(_data, true);
         }
         goods_item_bind(_dom);
-        isScanningGun && _dom.click();  //扫码枪扫出来的直接选中
+
+        //扫码枪扫出来的直接选中
+        if (isScanningGun)
+            _dom.click();
     }
 
     function removeDisabled(_Lidom, _cartdata) {
@@ -561,7 +563,7 @@ var ReceiptCommon = function () {
     this.filterGoods = function (_config) {
         this.pageinit();
         _config && (this.pagewhere = $.extend(this.pagewhere, _config));
-        paginate(true, function () {
+        paginate(_config != null && _config.scanninggun == "yes", function () {
             that.Ele.goodsitems.empty();
         });
     }
