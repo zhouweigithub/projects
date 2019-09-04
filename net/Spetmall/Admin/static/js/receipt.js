@@ -373,21 +373,20 @@ var ReceiptCommon = function () {
         });
 
         $(document).keyup(function (event) {
-
+            //按下回车键
             if (event.keyCode == 13) {
                 var _keyword_val = $.trim(that.Ele.keyword.val());
 
-                var reg = new RegExp("^" + keyword_content);
-                _keyword_val = _keyword_val.replace(reg, '');
-
                 if (/^[\d]{8,}$/.test(_keyword_val) && (new Date().getTime() - start_microtime) < 50) {
                     //检测到扫码枪输入
-                    that.Ele.keyword.val(_keyword_val);
+                    var reg = new RegExp("^" + keyword_content);
+                    _keyword_val = _keyword_val.replace(reg, '');
                     that.filterGoods({ keyword: _keyword_val, scanninggun: 'yes' });
                 } else {
-                    that.filterGoods({ keyword: _keyword_val, scanninggun: 'false' });
+                    //手动输入
+                    that.filterGoods({ keyword: _keyword_val, scanninggun: 'no' });
                 }
-
+                that.Ele.keyword.val(_keyword_val);
             }
         });
 
