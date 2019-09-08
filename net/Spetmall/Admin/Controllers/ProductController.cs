@@ -64,7 +64,7 @@ namespace Spetmall.Admin.Controllers
                 product.py = ChineseSpell.GetChineseSpell(product.name);
 
                 //缩略图如果是默认图，则去掉
-                if (product.thumbnail == defaultProductImage)
+                if (product.thumbnail == defaultProductImage || string.IsNullOrWhiteSpace(product.thumbnail))
                     product.thumbnail = string.Empty;
 
                 if (product.id == 0)

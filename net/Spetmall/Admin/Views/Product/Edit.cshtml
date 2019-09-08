@@ -122,11 +122,20 @@
 
         $(function () {
             $('.bar_code_generation').bind('click', function () {
-                $("input[name=barcode]").val(9 + "" + (Math.round(Math.random() * 1000000000)));
+                $("input[name=barcode]").val(9 + "" + randomString(9));
             });
         });
 
-
+        function randomString(len) {
+            len = len || 32;
+            var $chars = '0123456789';
+            var maxPos = $chars.length;
+            var pwd = '';
+            for (i = 0; i < len; i++) {
+                pwd += $chars.charAt(Math.floor(Math.random() * maxPos));
+            }
+            return pwd;
+        }
 
         (function () {
             /*新增加分类*/
