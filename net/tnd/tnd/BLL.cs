@@ -1,15 +1,13 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using System.Text;
 
 namespace tnd
 {
     public class BLL
     {
-        const string aesKey = "501f0205-4f71-44d2-8243-e44a96516593";
-        static readonly Encoding encoding = Encoding.Default;
+        private const string aesKey = "501f0205-4f71-44d2-8243-e44a96516593";
+        private static readonly Encoding encoding = Encoding.Default;
 
 
         public static string EnCode(string inPath)

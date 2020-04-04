@@ -1,7 +1,7 @@
 ﻿using System;
-using System.Text;
-using System.Security.Cryptography;
 using System.IO;
+using System.Security.Cryptography;
+using System.Text;
 
 namespace tnd
 {
@@ -49,9 +49,11 @@ namespace tnd
         /// <returns></returns>
         public static string RSA(string scr)
         {
-            CspParameters csp = new CspParameters(); //密钥容器知识参见https://docs.microsoft.com/zh-cn/dotnet/standard/security/how-to-store-asymmetric-keys-in-a-key-container
-                                                     //在Web中配置参见https://docs.microsoft.com/zh-cn/previous-versions/aspnet/yxw286t2%28v%3dvs.100%29
-            csp.KeyContainerName = "tuyile006.cnblogs.com";//密匙容器的名称，保持加密解密一致才能解密成功
+            CspParameters csp = new CspParameters
+            {
+                //在Web中配置参见https://docs.microsoft.com/zh-cn/previous-versions/aspnet/yxw286t2%28v%3dvs.100%29
+                KeyContainerName = "tuyile006.cnblogs.com"//密匙容器的名称，保持加密解密一致才能解密成功
+            }; //密钥容器知识参见https://docs.microsoft.com/zh-cn/dotnet/standard/security/how-to-store-asymmetric-keys-in-a-key-container
             using (RSACryptoServiceProvider rsa = new RSACryptoServiceProvider(csp))
             {
                 byte[] plaindata = Encoding.Default.GetBytes(scr);//将要加密的字符串转换为字节数组
@@ -68,8 +70,10 @@ namespace tnd
         {
             try
             {
-                CspParameters csp = new CspParameters();
-                csp.KeyContainerName = "tuyile006.cnblogs.com";//密匙容器的名称，保持加密解密一致才能解密成功
+                CspParameters csp = new CspParameters
+                {
+                    KeyContainerName = "tuyile006.cnblogs.com"//密匙容器的名称，保持加密解密一致才能解密成功
+                };
                 using (RSACryptoServiceProvider rsa = new RSACryptoServiceProvider(csp))
                 {
                     byte[] bytes = Convert.FromBase64String(scr); //加密时用了Base64，则解密时对应的也要用Base64解码
@@ -89,8 +93,10 @@ namespace tnd
         /// <returns></returns>
         public static string GetRSAPublicKey()
         {
-            CspParameters csp = new CspParameters();
-            csp.KeyContainerName = "tuyile006.cnblogs.com";//密匙容器的名称，保持加密解密一致才能解密成功
+            CspParameters csp = new CspParameters
+            {
+                KeyContainerName = "tuyile006.cnblogs.com"//密匙容器的名称，保持加密解密一致才能解密成功
+            };
             using (RSACryptoServiceProvider rsa = new RSACryptoServiceProvider(csp))
             {
                 return rsa.ToXmlString(false);
@@ -100,7 +106,7 @@ namespace tnd
         #endregion
 
         #region DES
-        const string DesIV_64 = "xiaoy><@";//定义默认加密密钥 8个字节 
+        private const string DesIV_64 = "xiaoy><@";//定义默认加密密钥 8个字节 
         /// <summary>
         /// 按指定键值进行DES加密
         /// </summary>
@@ -170,7 +176,7 @@ namespace tnd
         #endregion
 
         #region AES
-        const string AesIV_128 = "xiaoy设计.";//定义默认加密密钥 16个字节 Unicode编码为8个英文或汉字
+        private const string AesIV_128 = "xiaoy设计.";//定义默认加密密钥 16个字节 Unicode编码为8个英文或汉字
         /// <summary>
         /// 按指定键值进行AES加密
         /// </summary>

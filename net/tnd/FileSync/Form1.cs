@@ -1,10 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
 using System.Windows.Forms;
 
 namespace FileSync
@@ -25,7 +19,7 @@ namespace FileSync
             BLL.StartCopyHanlder += BLL_StartCopyHanlder;
             BLL.CoppingHanlder += BLL_CoppingHanlder;
             BLL.EndCopyHanlder += BLL_EndCopyHanlder;
-            this.FormClosing += Form1_FormClosing;
+            FormClosing += Form1_FormClosing;
         }
 
         private void Form1_FormClosing(object sender, FormClosingEventArgs e)
@@ -108,7 +102,7 @@ namespace FileSync
 
         private void timer1_Tick(object sender, EventArgs e)
         {
-            var span = DateTime.Now - startTime;
+            TimeSpan span = DateTime.Now - startTime;
             label4.Text = span.Hours.ToString().PadLeft(2, '0') + ":"
                 + span.Minutes.ToString().PadLeft(2, '0') + ":"
                 + span.Seconds.ToString().PadLeft(2, '0');

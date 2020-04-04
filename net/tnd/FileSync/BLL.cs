@@ -4,7 +4,6 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading;
-using System.Threading.Tasks;
 
 namespace FileSync
 {
@@ -16,11 +15,11 @@ namespace FileSync
         /// <summary>
         /// 原始目录中的文件
         /// </summary>
-        private static List<string> sourceFileList;
+        private static readonly List<string> sourceFileList;
         /// <summary>
         /// 目标目录中的文件
         /// </summary>
-        private static List<string> aimFileList;
+        private static readonly List<string> aimFileList;
         /// <summary>
         /// 需要同步的文件
         /// </summary>
@@ -28,7 +27,7 @@ namespace FileSync
         /// <summary>
         /// 复制失败的文件
         /// </summary>
-        private static List<string> failedFileList;
+        private static readonly List<string> failedFileList;
         /// <summary>
         /// 正在复制的文件
         /// </summary>
@@ -126,7 +125,7 @@ namespace FileSync
         private static void SyncFiles()
         {
             successCount = 0;
-            foreach (var item in syncFileList)
+            foreach (string item in syncFileList)
             {
                 currentCopyFile = sourceFolder + item;
                 try

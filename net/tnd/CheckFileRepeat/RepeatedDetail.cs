@@ -1,18 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
 using System.IO;
-using System.Linq;
-using System.Text;
 using System.Windows.Forms;
 
 namespace CheckFileRepeat
 {
     public partial class RepeatedDetail : Form
     {
-        private string fileName;
+        private readonly string fileName;
         private List<string> sources;
 
         public RepeatedDetail(string fileName)
@@ -48,7 +43,7 @@ namespace CheckFileRepeat
 
         private void button1_Click(object sender, EventArgs e)
         {
-            foreach (var item in sources)
+            foreach (string item in sources)
             {
                 BLL.DataFileView(item);
             }

@@ -20,14 +20,14 @@ namespace CheckFileRepeat
 
         public static List<string> GetFilePaths(string fileName)
         {
-            var files = sources.FirstOrDefault(a => a.Key == fileName);
+            KeyValuePair<string, List<string>> files = sources.FirstOrDefault(a => a.Key == fileName);
             return files.Value;
         }
 
         public static List<FileModel> GetRepeatedFiles()
         {
             List<FileModel> result = new List<FileModel>();
-            foreach (var item in sources)
+            foreach (KeyValuePair<string, List<string>> item in sources)
             {
                 result.Add(new FileModel()
                 {
@@ -102,9 +102,11 @@ namespace CheckFileRepeat
                 return;
             }
 
-            ProcessStartInfo psi = new ProcessStartInfo();
-            psi.FileName = filePath;
-            psi.UseShellExecute = true;
+            ProcessStartInfo psi = new ProcessStartInfo
+            {
+                FileName = filePath,
+                UseShellExecute = true
+            };
 
             Process.Start(psi);
         }
