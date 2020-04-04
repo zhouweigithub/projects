@@ -1,0 +1,63 @@
+﻿@using Spetmall.Model;
+@{
+    ViewBag.Title = "限时折扣";
+}
+
+<div class="mianbox">
+    <div class="tablebox padt">
+        <div class="fenlei2">
+            <ul class="nav nav-tabs clear" role="tablist">
+                <li role="presentation" class="active"><a href="DiscountIndex" aria-controls="home" role="tab" data-toggle="tab">商品折扣</a></li>
+                <li role="presentation"><a href="FullSendIndex" aria-controls="profile" role="tab" data-toggle="tab">买就减</a></li>
+                <!--  <li><a href="#">+ 添加活动</a></li>-->
+            </ul>
+
+        </div>
+        <div>
+            <!-- Tab panes -->
+            <div class="tab-content">
+                <div role="tabpanel" class="tab-pane active" id="home">
+                    <div class="huodog padtb">
+                        <div class="padtb">
+                            <a href="DiscountEdit/0" class="btn btn-primary" id="open">添加商品折扣活动</a>
+                        </div>
+                        <div>
+                            <table class="table01" width="100%" border="0" cellspacing="0" cellpadding="0">
+                                <tbody>
+                                    <tr>
+                                        <th width="5%">ID</th>
+                                        <th width="25%">标题</th>
+                                        <th width="14%">活动类型</th>
+                                        <th width="19%">日期范围</th>
+                                        <th width="14%">创建时间</th>
+                                        <th width="10%">状态</th>
+                                        <th width="14%">操作</th>
+                                    </tr>
+                                    @{
+                                        foreach (discount item in ViewBag.datas)
+                                        {
+                                            <tr>
+                                                <td>@item.id</td>
+                                                <td>@item.name</td>
+                                                <td>@item.TypeString</td>
+                                                <td>@item.starttime.ToString("yyyy/MM/dd") - @item.endtime.ToString("yyyy/MM/dd")</td>
+                                                <td>@item.crtime.ToString("yyyy/MM/dd HH:mm:ss")</td>
+                                                <td class="@(item.StateString=="已停用"||item.StateString=="已结束"?"red":item.StateString=="进行中"?"green":"")">@item.StateString</td>
+                                                <td>
+                                                    <a href="DiscountEdit/@item.id">修改</a>
+                                                    | <a href="javascript:yunmall_confirm_dialog('确定删除吗？','DiscountDelete/@item.id','reload')">删除</a>
+                                                    | <a href="javascript:yunmall_confirm_dialog('确定@(item.state == 0 ? "启用" : "停用")吗？','UpdateDiscountState?id=@item.id&state=@(item.state==0?1:0)','reload')">@(item.state == 0 ? "启用" : "停用")</a>
+                                                </td>
+                                            </tr>
+                                        }
+                                    }
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <div class="pagin"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -22,7 +22,7 @@ namespace API.Controllers
             ResponseResult result = null;
             try
             {
-                int student_id = DBData.GetInstance(DBTable.student).GetEntity<Student>($"username='{token}'").id;
+                int student_id = GeneralBLL.GetStudentByUserName(token).id;
                 List<CouponListJson> list = CouponDAL.GetCouponList(student_id);
                 result = new ResponseResult(0, "ok", list);
             }
@@ -41,7 +41,7 @@ namespace API.Controllers
             ResponseResult result = null;
             try
             {
-                int student_id = DBData.GetInstance(DBTable.student).GetEntity<Student>($"username='{token}'").id;
+                int student_id = GeneralBLL.GetStudentByUserName(token).id;
                 CouponListJson coupons = CouponBLL.GetDefaultCoupon(student_id, product_id, total_money);
                 result = new ResponseResult(0, "ok", coupons);
             }
@@ -60,7 +60,7 @@ namespace API.Controllers
             ResponseResult result = null;
             try
             {
-                int student_id = DBData.GetInstance(DBTable.student).GetEntity<Student>($"username='{token}'").id;
+                int student_id = GeneralBLL.GetStudentByUserName(token).id;
                 List<CouponListJson> coupons = CouponBLL.GetAvailableCoupon(student_id, products);
                 result = new ResponseResult(0, "ok", coupons);
             }

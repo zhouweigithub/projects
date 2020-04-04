@@ -63,7 +63,10 @@
     <Compile Include="Custom\CustWXLoginResult.cs" />
     <Compile Include="Custom\CustProductPriceInfoJson.cs" />
     <Compile Include="HotCourse.cs" />
+    <Compile Include="OrderCallbackPay.cs" />
     <Compile Include="Request\AddStudentCommentRequest.cs" />
+    <Compile Include="Request\CoachCompleteClassRequest.cs" />
+    <Compile Include="Request\CoachImageRequest.cs" />
     <Compile Include="Request\WithdrawRequest.cs" />
     <Compile Include="Request\CoachAddClassCommentRequest.cs" />
     <Compile Include="Request\UpdateOrderStateRequest.cs" />
@@ -74,6 +77,7 @@
     <Compile Include="Response\ClassCoachJson.cs" />
     <Compile Include="Response\ClassStudentJson.cs" />
     <Compile Include="Response\CoachAppointedClassJson.cs" />
+    <Compile Include="Response\CoachClassStudentJson.cs" />
     <Compile Include="Response\CourseSpecificationJson.cs" />
     <Compile Include="Response\ProductInfoJson.cs" />
     <Compile Include="Response\HomePageJson.cs" />
@@ -136,6 +140,8 @@
     <Compile Include="Common\TableFieldAttribute.cs" />
     <Compile Include="Common\DataValueModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="WXPay\WXPayQueryOrderParameter.cs" />
+    <Compile Include="WXPay\WXPayQueryOrderResult.cs" />
     <Compile Include="WXPay\WXPayRequestParameter.cs" />
     <Compile Include="WXPay\WXPayRequestResult.cs" />
     <Compile Include="WXPay\WXPayCloseOrderParameter.cs" />
@@ -144,6 +150,7 @@
     <Compile Include="WXPay\WXPayRefundResult.cs" />
     <Compile Include="WXPay\WXPayNotifyParameter.cs" />
     <Compile Include="WXPay\WXPayRefundNotifyParameter.cs" />
+    <Compile Include="WXPay\WXPayResultBackToWX.cs" />
     <Compile Include="WXPay\WXPayToClientPara.cs" />
   </ItemGroup>
   <ItemGroup />

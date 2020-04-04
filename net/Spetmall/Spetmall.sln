@@ -1,0 +1,60 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.28307.539
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Admin", "Admin\Admin.csproj", "{18D30B5D-165E-4FC1-80E7-F568A19E7FBC}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DAL", "DAL\DAL.csproj", "{0ED3CB0B-FF76-439B-9429-940DAC6408F2}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BLL", "BLL\BLL.csproj", "{587B7667-664E-460B-8967-49ED7E162F90}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Model", "Model\Model.csproj", "{63807E98-4F05-4B3A-8BFD-7D75EB8A4ED0}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Common", "Common\Common.csproj", "{7EE488D5-4AF3-4EF5-B36D-170263267E07}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UpdatePY", "UpdatePY\UpdatePY.csproj", "{00AF821C-1600-47EC-8C04-6154CA9ED140}"
+EndProject
+Global
+	GlobalSection(SubversionScc) = preSolution
+		Svn-Managed = True
+		Manager = AnkhSVN - Subversion Support for Visual Studio
+	EndGlobalSection
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{18D30B5D-165E-4FC1-80E7-F568A19E7FBC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{18D30B5D-165E-4FC1-80E7-F568A19E7FBC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{18D30B5D-165E-4FC1-80E7-F568A19E7FBC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{18D30B5D-165E-4FC1-80E7-F568A19E7FBC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0ED3CB0B-FF76-439B-9429-940DAC6408F2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0ED3CB0B-FF76-439B-9429-940DAC6408F2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0ED3CB0B-FF76-439B-9429-940DAC6408F2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0ED3CB0B-FF76-439B-9429-940DAC6408F2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{587B7667-664E-460B-8967-49ED7E162F90}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{587B7667-664E-460B-8967-49ED7E162F90}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{587B7667-664E-460B-8967-49ED7E162F90}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{587B7667-664E-460B-8967-49ED7E162F90}.Release|Any CPU.Build.0 = Release|Any CPU
+		{63807E98-4F05-4B3A-8BFD-7D75EB8A4ED0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{63807E98-4F05-4B3A-8BFD-7D75EB8A4ED0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{63807E98-4F05-4B3A-8BFD-7D75EB8A4ED0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{63807E98-4F05-4B3A-8BFD-7D75EB8A4ED0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7EE488D5-4AF3-4EF5-B36D-170263267E07}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7EE488D5-4AF3-4EF5-B36D-170263267E07}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7EE488D5-4AF3-4EF5-B36D-170263267E07}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7EE488D5-4AF3-4EF5-B36D-170263267E07}.Release|Any CPU.Build.0 = Release|Any CPU
+		{00AF821C-1600-47EC-8C04-6154CA9ED140}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{00AF821C-1600-47EC-8C04-6154CA9ED140}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{00AF821C-1600-47EC-8C04-6154CA9ED140}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{00AF821C-1600-47EC-8C04-6154CA9ED140}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		VisualSVNWorkingCopyRoot = .
+		SolutionGuid = {9FE08E48-F3DD-4F70-8A1A-FCB83562BB24}
+	EndGlobalSection
+EndGlobal

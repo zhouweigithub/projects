@@ -1,0 +1,134 @@
+﻿@using Spetmall.Model.Page;
+@{
+    ViewBag.Title = "基本交易报表";
+}
+
+<link href="~/static/extend/jquery.pagination-1.2.7/jquery.pagination.css?ver=@HttpContext.Current.Application["ver"]" rel="stylesheet" />
+<script src="~/static/extend/jquery.pagination-1.2.7/jquery.pagination-1.2.7.js?ver=@HttpContext.Current.Application["ver"]"></script>
+
+<div class="mianbox">
+    <div class="fenlei2 fenlei6">
+        <ul class="clear">
+            <li class="active"><a href="index">基本交易报表</a></li>
+            <li><a href="SalePerformance">销售业绩报表</a></li>
+            <li><a href="Products">商品销量报表</a></li>
+            <li><a href="Category">分类统计</a></li>
+            <li><a href="Member">会员报表</a></li>
+        </ul>
+    </div>
+    <div class="search_time_map">
+        <form action="?" method="get">
+            <div class="search_field">
+                @Html.TextBox("startdate", null, new { @class = "yunmalldate", autocomplete = "off" })
+            </div>
+            <div class="search_split"> 到 </div>
+            <div class="search_field">
+                @Html.TextBox("enddate", null, new { @class = "yunmalldate", autocomplete = "off" })
+            </div>
+            <div class="search_button">
+                <input value="搜 索" type="submit" />
+            </div>
+        </form>
+    </div>
+
+    <div class="tablebox padt">
+        <div style=" margin-top:10px; ">
+            <table class="table01" width="100%" border="0" cellspacing="0" cellpadding="0">
+                <tbody>
+                    <tr>
+                        <th width="10%">日期</th>
+                        <th width="9%">营业总额</th>
+                        <th width="8%">现金</th>
+                        <th width="8%">微信</th>
+                        <th width="8%">支付宝</th>
+                        <th width="8%">会员余额</th>
+                        <th width="7%">其他</th>
+                        <th width="7%">收银订单数</th>
+                        <th width="7%">商品金额</th>
+                        <th width="7%">商品成本</th>
+                        <th width="7%">商品利润</th>
+                        <th width="7%">会员充值</th>
+                        <th width="7%">洗澡卡充值</th>
+                    </tr>
+                    @{
+                        List<payInfo> datas = ViewBag.datas as List<payInfo>;
+                        foreach (payInfo item in datas)
+                        {
+                            <tr>
+                                <td>@item.crdate.ToString("yyyy-MM-dd")</td>
+                                <td>@item.payMoney.ToString("g0")</td>
+                                <td>@item.xjMoney.ToString("g0")</td>
+                                <td>@item.wxMoney.ToString("g0")</td>
+                                <td>@item.zfbMoney.ToString("g0")</td>
+                                <td>@item.yueMoney.ToString("g0")</td>
+                                <td>@item.qitaMoney.ToString("g0")</td>
+                                <td>@item.payCount</td>
+                                <td>@item.productMoney.ToString("g0")</td>
+                                <td>@item.costMoney.ToString("g0")</td>
+                                <td>@item.profitMoney.ToString("g0")</td>
+                                <td>@item.rechargeMoney.ToString("g0")</td>
+                                <td>@item.railCardMoney.ToString("g0")</td>
+                            </tr>
+                        }
+                        {
+                            if (ViewBag.total != null)
+                            {
+                                var total = ViewBag.total as payInfo;
+                                <tr class="total">
+                                    <td>统计汇总</td>
+                                    <td>@total.payMoney.ToString("g0")</td>
+                                    <td>@total.xjMoney.ToString("g0")</td>
+                                    <td>@total.wxMoney.ToString("g0")</td>
+                                    <td>@total.zfbMoney.ToString("g0")</td>
+                                    <td>@total.yueMoney.ToString("g0")</td>
+                                    <td>@total.qitaMoney.ToString("g0")</td>
+                                    <td>@total.payCount</td>
+                                    <td>@total.productMoney.ToString("g0")</td>
+                                    <td>@total.costMoney.ToString("g0")</td>
+                                    <td>@total.profitMoney.ToString("g0")</td>
+                                    <td>@total.rechargeMoney.ToString("g0")</td>
+                                    <td>@total.railCardMoney.ToString("g0")</td>
+                                </tr>
+                            }
+                        }
+                    }
+                </tbody>
+            </table>
+            <div id="pager" class="m-pagination"></div>
+        </div>
+    </div>
+</div>
+<script language="javascript">
+
+    var page=@ViewBag.Page;
+    var pagesize=@ViewBag.PageSize;
+    var totalTotalRecordCount=@ViewBag.TotalDataCount;
+
+    $(function () {
+        //分页
+        $("#pager").page({
+            pageSize: pagesize,
+            total: totalTotalRecordCount,
+            pageSizeItems: [20, 50, 100],
+            showJump: true,
+            showPageSizes: true,
+            pageBtnCount: 15,
+            showInfo: false,
+            firstBtnText: "|<<",
+            lastBtnText: ">>|",
+            prevBtnText: "<",
+            nextBtnText: ">"
+        }).on("pageClicked", function (event, pageNumber) {
+            location.href = "Index?startdate=" + getUrlParam("startdate") + "&enddate=" + getUrlParam("enddate")
+                 + "&pagesize=" + pagesize + "&page=" + (pageNumber + 1);
+        }).on("jumpClicked", function (event, pageNumber) {
+            location.href = "Index?startdate=" + getUrlParam("startdate") + "&enddate=" + getUrlParam("enddate")
+                 + "&pagesize=" + pagesize + "&page=" + (pageNumber + 1);
+        }).on("pageSizeChanged", function (event, pageSize) {
+            location.href = "Index?startdate=" + getUrlParam("startdate") + "&enddate=" + getUrlParam("enddate")
+                + "&pagesize=" + pageSize + "&page=1" ;
+        }).page("setPage", page - 1);
+    });
+
+</script>
+

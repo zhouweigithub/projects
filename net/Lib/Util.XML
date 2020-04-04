@@ -1,0 +1,2627 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Util</name>
+    </assembly>
+    <members>
+        <member name="T:Util.AppCharge.DataEncoded">
+            <summary>
+            数据编码枚举
+            </summary>
+        </member>
+        <member name="F:Util.AppCharge.DataEncoded.Encoded">
+            <summary>
+            已编码
+            </summary>
+        </member>
+        <member name="F:Util.AppCharge.DataEncoded.NotEncoded">
+            <summary>
+            未编码
+            </summary>
+        </member>
+        <member name="T:Util.AppCharge.Receipt">
+            <summary>
+            APP Store充值收据对象
+            </summary>
+        </member>
+        <member name="M:Util.AppCharge.Receipt.#ctor(System.String)">
+            <summary>
+            Creates the receipt from Apple's Response
+            </summary>
+            <param name="receipt">Apple's Response</param>
+        </member>
+        <member name="T:Util.AppCharge.ReceiptVerificationUtil">
+            <summary>
+            Receipt验证助手类
+            </summary>
+        </member>
+        <member name="M:Util.AppCharge.ReceiptVerificationUtil.ConvertReceiptToPost(System.String)">
+            <summary>
+            Make a String with the receipt encoded
+            </summary>
+            <param name="receipt"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Util.AppCharge.ReceiptVerificationUtil.ConvertAppStoreTokenToBytes(System.String)">
+            <summary>
+            Takes the receipt from Apple's App Store and converts it to bytes
+            that we can understand
+            </summary>
+            <param name="token"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Util.AppCharge.ReceiptVerificationUtil.ConvertReceiptToPost(System.String,Util.AppCharge.DataEncoded)">
+            <summary>
+            Make a String with the receipt encoded
+            </summary>
+            <param name="receipt"></param>
+            <param name="dataEncoded">数据编码枚举</param>
+            <returns></returns>
+        </member>
+        <member name="M:Util.AppCharge.ReceiptVerificationUtil.GetReceipt(System.String,System.String,Util.AppCharge.DataEncoded)">
+            <summary>
+            获取Receipt对象
+            </summary>
+            <param name="url">Receipt验证地址</param>
+            <param name="receiptData">ReceiptData</param>
+            <param name="dataEncoded">数据编码枚举</param>
+            <returns>Receipt对象</returns>
+        </member>
+        <member name="M:Util.AppCharge.ReceiptVerificationUtil.GetReceipt(System.String,System.Boolean,Util.AppCharge.DataEncoded)">
+            <summary>
+            获取Receipt对象
+            </summary>
+            <param name="receiptData">ReceiptData</param>
+            <param name="sandbox">是否sandbox模式</param>
+            <param name="dataEncoded">数据编码枚举</param>
+            <returns>Receipt对象</returns>
+        </member>
+        <member name="M:Util.AppCharge.ReceiptVerificationUtil.ValidateCharge(System.String[],System.String,System.String,System.Boolean,Util.AppCharge.DataEncoded,Util.AppCharge.Receipt@)">
+            <summary>
+            验证充值信息是否合法
+            </summary>
+            <param name="bundleIdentifier">软件包唯一标识</param>
+            <param name="productID">产品ID</param>
+            <param name="receiptData">Receipt数据</param>
+            <param name="sandBox">是否沙盒</param>
+            <param name="dataEncoded">数据编码枚举</param>
+            <param name="receipt">输出的receipt对象</param>
+            <exception cref="T:System.Net.WebException"></exception>
+            <exception cref="T:System.ArgumentException"></exception>
+            <exception cref="T:System.ArgumentNullException"></exception>
+            <exception cref="T:System.InvalidOperationException"></exception>
+            <returns>是否合法</returns>
+        </member>
+        <member name="T:Util.AppConfigUtil">
+            <summary>
+            AppConfig文件处理助手类
+            </summary>
+        </member>
+        <member name="P:Util.AppConfigUtil.ConfigPath">
+            <summary>
+            当前读取的配置文件路径
+            </summary>
+        </member>
+        <member name="F:Util.AppConfigUtil.mConfiguration">
+            配置对象
+        </member>
+        <member name="F:Util.AppConfigUtil.ConfigFileNotSpecified">
+            配置文件未指定提示
+        </member>
+        <member name="M:Util.AppConfigUtil.#cctor">
+            <summary>
+            静态初始化 (默认加载当前程序目录下, 唯一的*.config配置文档)
+            </summary>
+        </member>
+        <member name="M:Util.AppConfigUtil.GetConnectionStringsConfig(System.String)">
+            <summary>
+            依据连接串名字connectionName返回数据连接字符串
+            </summary>
+            <param name="connectionName">连接名称</param>
+            <returns></returns>
+        </member>
+        <member name="M:Util.AppConfigUtil.UpdateConnectionStringsConfig(System.String,System.String,System.String)">
+            <summary>
+            更新连接字符串
+            </summary>
+            <param name="newName">连接字符串名称</param>
+            <param name="newConString">连接字符串内容</param>
+            <param name="newProviderName">数据提供程序名称</param>
+        </member>
+        <member name="M:Util.AppConfigUtil.GetAppConfig(System.String)">
+            <summary>
+            返回＊.exe.config文件中appSettings配置节的value项
+            </summary>
+            <param name="strKey">key</param>
+            <returns></returns>
+        </member>
+        <member name="M:Util.AppConfigUtil.UpdateAppConfig(System.String,System.String)">
+            <summary>
+            在＊.exe.config文件中appSettings配置节更新或增加一对键、值对
+            </summary>
+            <param name="newKey">新的key</param>
+            <param name="newValue">新的value</param>
+        </member>
+        <member name="M:Util.AppConfigUtil.SetConfigFile(System.String)">
+            <summary>
+            设置配置文件路径
+            </summary>
+            <param name="path">配置文件路径</param>
+        </member>
+        <member name="T:Util.CommonReturnObject">
+            <summary>
+            通用返回对象
+            </summary>
+        </member>
+        <member name="P:Util.CommonReturnObject.Code">
+            <summary>
+            返回的状态值；0：成功；非0：失败（根据实际情况进行定义）
+            </summary>
+        </member>
+        <member name="P:Util.CommonReturnObject.Message">
+            <summary>
+            返回的描述信息；
+            </summary>
+        </member>
+        <member name="P:Util.CommonReturnObject.Data">
+            <summary>
+            返回的数据
+            </summary>
+        </member>
+        <member name="M:Util.CommonReturnObject.#ctor">
+            <summary>
+            Initializes a new instance of the <see cref="T:Util.CommonReturnObject"/> class.
+            </summary>
+        </member>
+        <member name="M:Util.CommonReturnObject.#ctor(System.Int32,System.String,System.Object)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Util.CommonReturnObject"/> class.
+            </summary>
+            <param name="code">The code.</param>
+            <param name="message">The message.</param>
+            <param name="data">The data.</param>
+        </member>
+        <member name="T:Util.Conversion.ConvertUtil">
+            <summary>
+            转换辅助类，将object对象转换为对应的类型
+            </summary>
+        </member>
+        <member name="M:Util.Conversion.ConvertUtil.TryParseToString(System.Object,System.String@,System.Boolean)">
+            <summary>
+            将对象转换为String类型
+            </summary>
+            <param name="obj">要转换的对象</param>
+            <param name="result">保存转换的值，如果转换成功，则为转换后的值；否则为默认值</param>
+            <param name="allowEmpty">是否允许空值</param>
+            <returns>如果转换成功，则为true，否则为false</returns>
+        </member>
+        <member name="M:Util.Conversion.ConvertUtil.TryParseToByte(System.Object,System.Byte@)">
+            <summary>
+             将对象转换为Byte类型
+            </summary>
+            <param name="obj">要转换的对象</param>
+            <param name="result">要保存转换的值，如果转换成功，则为转换后的值；否则为默认值</param>
+            <returns>如果转换成功，则为true，否则为false</returns>
+        </member>
+        <member name="M:Util.Conversion.ConvertUtil.TryParseToSByte(System.Object,System.SByte@)">
+            <summary>
+            将对象转换为SByte类型
+            </summary>
+            <param name="obj">要转换的对象</param>
+            <param name="result">要保存转换的值，如果转换成功，则为转换后的值；否则为默认值</param>
+            <returns>如果转换成功，则为true，否则为false</returns>
+        </member>
+        <member name="M:Util.Conversion.ConvertUtil.TryParseToDateTime(System.Object,System.DateTime@)">
+            <summary>
+            将对象转换为DateTime类型
+            </summary>
+            <param name="obj">要转换的对象</param>
+            <param name="result">要保存转换的值，如果转换成功，则为转换后的值；否则为默认值</param>
+            <returns>如果转换成功，则为true，否则为false</returns>
+        </member>
+        <member name="M:Util.Conversion.ConvertUtil.TryParseToGuid(System.Object,System.Guid@,System.Boolean)">
+            <summary>
+            将对象转换为Guid类型
+            </summary>
+            <param name="obj">要转换的对象</param>
+            <param name="result">要保存转换的值，如果转换成功，则为转换后的值；否则为默认值</param>
+            <param name="allowEmpty">是否允许空值</param>
+            <returns>如果转换成功，则为true，否则为false</returns>
+        </member>
+        <member name="M:Util.Conversion.ConvertUtil.TryParseToBoolean(System.Object,System.Boolean@)">
+            <summary>
+            将对象转换为Boolean类型
+            </summary>
+            <param name="obj">要转换的对象</param>
+            <param name="result">要保存转换的值，如果转换成功，则为转换后的值；否则为默认值</param>
+            <returns>如果转换成功，则为true，否则为false</returns>
+        </member>
+        <member name="M:Util.Conversion.ConvertUtil.TryParseToChar(System.Object,System.Char@)">
+            <summary>
+            将对象转换为Char类型
+            </summary>
+            <param name="obj">要转换的对象</param>
+            <param name="result">要保存转换的值，如果转换成功，则为转换后的值；否则为默认值</param>
+            <returns>如果转换成功，则为true，否则为false</returns>
+        </member>
+        <member name="M:Util.Conversion.ConvertUtil.TryParseToDecimal(System.Object,System.Decimal@)">
+            <summary>
+            将对象转换为Decimal类型
+            </summary>
+            <param name="obj">要转换的对象</param>
+            <param name="result">要保存转换的值，如果转换成功，则为转换后的值；否则为默认值</param>
+            <returns>如果转换成功，则为true，否则为false</returns>
+        </member>
+        <member name="M:Util.Conversion.ConvertUtil.TryParseToDouble(System.Object,System.Double@)">
+            <summary>
+            将对象转换为Double类型
+            </summary>
+            <param name="obj">要转换的对象</param>
+            <param name="result">要保存转换的值，如果转换成功，则为转换后的值；否则为默认值</param>
+            <returns>如果转换成功，则为true，否则为false</returns>
+        </member>
+        <member name="M:Util.Conversion.ConvertUtil.TryParseToInt16(System.Object,System.Int16@)">
+            <summary>
+            将对象转换为Int16类型
+            </summary>
+            <param name="obj">要转换的对象</param>
+            <param name="result">要保存转换的值，如果转换成功，则为转换后的值；否则为默认值</param>
+            <returns>如果转换成功，则为true，否则为false</returns>
+        </member>
+        <member name="M:Util.Conversion.ConvertUtil.TryParseToInt32(System.Object,System.Int32@)">
+            <summary>
+            将对象转换为int32类型
+            </summary>
+            <param name="obj">要转换的对象</param>
+            <param name="result">要保存转换的值，如果转换成功，则为转换后的值；否则为默认值</param>
+            <returns>如果转换成功，则为true，否则为false</returns>
+        </member>
+        <member name="M:Util.Conversion.ConvertUtil.TryParseToInt64(System.Object,System.Int64@)">
+            <summary>
+            将对象转换为Int64类型
+            </summary>
+            <param name="obj">要转换的对象</param>
+            <param name="result">要保存转换的值，如果转换成功，则为转换后的值；否则为默认值</param>
+            <returns>如果转换成功，则为true，否则为false</returns>
+        </member>
+        <member name="M:Util.Conversion.ConvertUtil.TryParseToSingle(System.Object,System.Single@)">
+            <summary>
+            将对象转换为Single类型
+            </summary>
+            <param name="obj">要转换的对象</param>
+            <param name="result">要保存转换的值，如果转换成功，则为转换后的值；否则为默认值</param>
+            <returns>如果转换成功，则为true，否则为false</returns>
+        </member>
+        <member name="M:Util.Conversion.ConvertUtil.TryParseToUInt16(System.Object,System.UInt16@)">
+            <summary>
+            将对象转换为UInt16类型
+            </summary>
+            <param name="obj">要转换的对象</param>
+            <param name="result">要保存转换的值，如果转换成功，则为转换后的值；否则为默认值</param>
+            <returns>如果转换成功，则为true，否则为false</returns>
+        </member>
+        <member name="M:Util.Conversion.ConvertUtil.TryParseToUInt32(System.Object,System.UInt32@)">
+            <summary>
+            将对象转换为UInt32类型
+            </summary>
+            <param name="obj">要转换的对象</param>
+            <param name="result">要保存转换的值，如果转换成功，则为转换后的值；否则为默认值</param>
+            <returns>如果转换成功，则为true，否则为false</returns>
+        </member>
+        <member name="M:Util.Conversion.ConvertUtil.TryParseToUInt64(System.Object,System.UInt64@)">
+            <summary>
+            将对象转换为UInt64类型
+            </summary>
+            <param name="obj">要转换的对象</param>
+            <param name="result">要保存转换的值，如果转换成功，则为转换后的值；否则为默认值</param>
+            <returns>如果转换成功，则为true，否则为false</returns>
+        </member>
+        <member name="T:Util.Conversion.ParseNullableUtil">
+            <summary>
+            转换为可空类型工具类
+            </summary>
+        </member>
+        <member name="M:Util.Conversion.ParseNullableUtil.ParseNullableToByte(System.Object)">
+            <summary>
+             将对象转换为Byte类型
+            </summary>
+            <param name="obj">要转换的对象</param>
+            <returns>转换后的数据</returns>
+        </member>
+        <member name="M:Util.Conversion.ParseNullableUtil.ParseNullableToSByte(System.Object)">
+            <summary>
+            将对象转换为SByte类型
+            </summary>
+            <param name="obj">要转换的对象</param>
+            <returns>转换后的数据</returns>
+        </member>
+        <member name="M:Util.Conversion.ParseNullableUtil.ParseNullableToDateTime(System.Object)">
+            <summary>
+            将对象转换为DateTime类型
+            </summary>
+            <param name="obj">要转换的对象</param>
+            <returns>转换后的数据</returns>
+        </member>
+        <member name="M:Util.Conversion.ParseNullableUtil.ParseNullableToGuid(System.Object)">
+            <summary>
+            将对象转换为guid
+            </summary>
+            <param name="obj">要转换的对象</param>
+            <returns>转换后的数据</returns>
+        </member>
+        <member name="M:Util.Conversion.ParseNullableUtil.ParseNullableToBoolean(System.Object)">
+            <summary>
+            将对象转换为Boolean类型
+            </summary>
+            <param name="obj">要转换的对象</param>
+            <returns>转换后的数据</returns>
+        </member>
+        <member name="M:Util.Conversion.ParseNullableUtil.ParseNullableToChar(System.Object)">
+            <summary>
+            将对象转换为Char类型
+            </summary>
+            <param name="obj">要转换的对象</param>
+            <returns>转换后的数据</returns>
+        </member>
+        <member name="M:Util.Conversion.ParseNullableUtil.ParseNullableToDecimal(System.Object)">
+            <summary>
+            将对象转换为Decimal类型
+            </summary>
+            <param name="obj">要转换的对象</param>
+            <returns>转换后的数据</returns>
+        </member>
+        <member name="M:Util.Conversion.ParseNullableUtil.ParseNullableToDouble(System.Object)">
+            <summary>
+            将对象转换为Double类型
+            </summary>
+            <param name="obj">要转换的对象</param>
+            <returns>转换后的数据</returns>
+        </member>
+        <member name="M:Util.Conversion.ParseNullableUtil.ParseNullableToInt16(System.Object)">
+            <summary>
+            将对象转换为Int16类型
+            </summary>
+            <param name="obj">要转换的对象</param>
+            <returns>转换后的数据</returns>
+        </member>
+        <member name="M:Util.Conversion.ParseNullableUtil.ParseNullableToInt32(System.Object)">
+            <summary>
+            将对象转换为int32类型
+            </summary>
+            <param name="obj">要转换的对象</param>
+            <returns>转换后的数据</returns>
+        </member>
+        <member name="M:Util.Conversion.ParseNullableUtil.ParseNullableToInt64(System.Object)">
+            <summary>
+            将对象转换为Int64类型
+            </summary>
+            <param name="obj">要转换的对象</param>
+            <returns>转换后的数据</returns>
+        </member>
+        <member name="M:Util.Conversion.ParseNullableUtil.ParseNullableToSingle(System.Object)">
+            <summary>
+            将对象转换为Single类型
+            </summary>
+            <param name="obj">要转换的对象</param>
+            <returns>转换后的数据</returns>
+        </member>
+        <member name="M:Util.Conversion.ParseNullableUtil.ParseNullableToUInt16(System.Object)">
+            <summary>
+            将对象转换为UInt16类型
+            </summary>
+            <param name="obj">要转换的对象</param>
+            <returns>转换后的数据</returns>
+        </member>
+        <member name="M:Util.Conversion.ParseNullableUtil.ParseNullableToUInt32(System.Object)">
+            <summary>
+            将对象转换为UInt32类型
+            </summary>
+            <param name="obj">要转换的对象</param>
+            <returns>转换后的数据</returns>
+        </member>
+        <member name="M:Util.Conversion.ParseNullableUtil.ParseNullableToUInt64(System.Object)">
+            <summary>
+            将对象转换为UInt64类型
+            </summary>
+            <param name="obj">要转换的对象</param>
+            <returns>转换后的数据</returns>
+        </member>
+        <member name="T:Util.DateTimeUtil">
+            <summary>
+            时间助手类
+            </summary>
+        </member>
+        <member name="M:Util.DateTimeUtil.DateTimeToInt32(System.DateTime)">
+            <summary>
+            获得int型的日期（如20140812）
+            </summary>
+            <param name="time">时间</param>
+            <returns>int型的日期</returns>
+        </member>
+        <member name="M:Util.DateTimeUtil.GetGreenWichTime(System.DateTime)">
+            <summary>
+            获取格林威治时间格式字符串(yyyy-MM-dd HH:mm:ss)
+            </summary>
+            <param name="time">需要转换的时间</param>
+            <exception cref="T:System.FormatException">System.FormatException</exception>
+            <exception cref="T:System.ArgumentOutOfRangeException">System.ArgumentOutOfRangeException</exception>
+            <returns>格林威治时间格式字符串</returns>
+        </member>
+        <member name="M:Util.DateTimeUtil.GetShortGreenWichTime(System.DateTime)">
+            <summary>
+            获取格林威治时间格式字符串(yyyy-MM-dd)
+            </summary>
+            <param name="time">需要转换的时间</param>
+            <exception cref="T:System.FormatException">System.FormatException</exception>
+            <exception cref="T:System.ArgumentOutOfRangeException">System.ArgumentOutOfRangeException</exception>
+            <returns>格林威治时间格式字符串</returns>
+        </member>
+        <member name="M:Util.DateTimeUtil.GetIntervalMonths(System.DateTime,System.DateTime)">
+            <summary>
+            获取指定时间之间的月数
+            </summary>
+            <param name="begin">开始时间</param>
+            <param name="end">结束时间</param>
+            <exception cref="T:System.ArgumentException">System.ArgumentException</exception>
+            <returns>间隔的月数</returns>
+        </member>
+        <member name="M:Util.DateTimeUtil.GetIntervalDays(System.DateTime,System.DateTime)">
+            <summary>
+            获取指定时间之间的天数差
+            </summary>
+            <param name="begin">开始时间</param>
+            <param name="end">结束时间</param>
+            <exception cref="T:System.ArgumentException">System.ArgumentException</exception>
+            <returns>间隔的天数</returns>
+        </member>
+        <member name="M:Util.DateTimeUtil.GetUnixTimeStamp(System.DateTime)">
+            <summary>
+            获取1970-1-1 00:00:00至指定时间的时间戳（单位：秒）
+            </summary>
+            <param name="time">指定时间</param>
+            <exception cref="T:System.ArgumentException">System.ArgumentException</exception>
+            <returns>时间戳（单位：秒）</returns>
+        </member>
+        <member name="M:Util.DateTimeUtil.GetUnixTimeStampX32(System.DateTime)">
+            <summary>
+            获取1970-1-1 00:00:00至指定时间的时间戳（单位：秒）
+            </summary>
+            <param name="time">指定时间</param>
+            <exception cref="T:System.ArgumentException">System.ArgumentException</exception>
+            <returns>时间戳（单位：秒）</returns>
+        </member>
+        <member name="M:Util.DateTimeUtil.ConvertTimeToDecimal(System.DateTime)">
+            <summary>
+            将时间部分转化为小数（如9:30->9.5）
+            </summary>
+            <param name="time">时间</param>
+            <returns>转化后的小数</returns>
+        </member>
+        <member name="M:Util.DateTimeUtil.FormatDate(System.DayOfWeek)">
+            <summary>
+            将一周中的每天的枚举值转化为数字
+            </summary>
+            <param name="dayOfWeek">一周中的每天的枚举值</param>
+            <returns>1-7</returns>
+        </member>
+        <member name="T:Util.DeviceUtil">
+            <summary>
+            设备助手类
+            </summary>
+        </member>
+        <member name="M:Util.DeviceUtil.ConvertMACToStandardFormat(System.String)">
+            <summary>
+            将MAC地址转化为标准格式
+            </summary>
+            <param name="mac">mac</param>
+            <returns>标准格式的MAC</returns>
+        </member>
+        <member name="M:Util.DeviceUtil.ConvertIDFAToStandardFormat(System.String)">
+            <summary>
+            将IDFA地址转化为标准格式
+            </summary>
+            <param name="idfa">IDFA</param>
+            <returns>标准格式的IDFA</returns>
+        </member>
+        <member name="M:Util.DeviceUtil.GetIdentifier(System.String,System.String)">
+            <summary>
+            根据MAC和IDFA获取唯一标识
+            </summary>
+            <param name="mac">设备的mac</param>
+            <param name="idfa">idfa</param>
+            <returns>唯一标识</returns>
+        </member>
+        <member name="T:Util.Extension.DictionaryExtension">
+            <summary>
+            Dictionary扩展类
+            </summary>
+        </member>
+        <member name="M:Util.Extension.DictionaryExtension.AllKeysIsExist``2(System.Collections.Generic.Dictionary{``0,``1},``0[])">
+            <summary>
+            判断关键字是否都在字典中存在
+            </summary>
+            <typeparam name="T1">字典的key类型</typeparam>
+            <typeparam name="T2">字典的value类型</typeparam>
+            <param name="dict">字典</param>
+            <param name="keys">要检测的关键字对象</param>
+            <returns>如果关键字都存在，则为true，否则为false</returns>
+        </member>
+        <member name="M:Util.Extension.DictionaryExtension.AllKeysIsExist``2(System.Collections.Generic.Dictionary{``0,``1},System.Collections.Generic.IEnumerable{``0})">
+            <summary>
+            判断关键字是否都在字典中存在
+            </summary>
+            <typeparam name="T1">字典的key类型</typeparam>
+            <typeparam name="T2">字典的value类型</typeparam>
+            <param name="dict">字典</param>
+            <param name="keys">要检测的关键字对象</param>
+            <returns>如果关键字都存在，则为true，否则为false</returns>
+        </member>
+        <member name="T:Util.FileUtil">
+            <summary>
+            文件助手类
+            </summary>
+        </member>
+        <member name="M:Util.FileUtil.GetFileLineCount(System.String,System.String)">
+            <summary>
+            获取指定目录下文件行数
+            </summary>
+            <param name="path">目录</param>
+            <param name="suffix">文件后缀，用于过滤文件</param>
+            <returns>文件行数</returns>
+        </member>
+        <member name="M:Util.FileUtil.GetFileList(System.String,System.String)">
+            <summary>
+            获取指定目录下的所有文件、包括子文件夹里面的文件
+            </summary>
+            <param name="path">目录</param>
+            <param name="suffix">文件后缀，用于过滤文件</param>
+            <returns>文件的全路径列表</returns>
+        </member>
+        <member name="M:Util.FileUtil.GetFileList(System.IO.DirectoryInfo,System.String)">
+            <summary>
+            获取指定目录对象下的所有文件、包括子文件夹里面的文件
+            </summary>
+            <param name="dirInfo">目录信息对象</param>
+            <param name="suffix">文件后缀，用于过滤文件</param>
+            <returns>文件的全路径列表</returns>
+        </member>
+        <member name="M:Util.FileUtil.GetFileContent(System.String)">
+            <summary>
+            获取指定url文件的内容
+            </summary>
+            <param name="url">文件的url地址</param>
+            <exception cref="T:System.ArgumentNullException">System.ArgumentNullException</exception>
+            <exception cref="T:System.Net.WebException">System.Net.WebException</exception>
+            <exception cref="T:System.NotSupportedException">System.NotSupportedException</exception>
+            <returns>文件的内容</returns>
+        </member>
+        <member name="M:Util.FileUtil.WriteFile(System.String,System.String,System.Boolean,System.String[])">
+            <summary>
+            向指定文件里面写入信息
+            </summary>
+            <param name="filePath">文件夹名称</param>
+            <param name="fileName">文件名称</param>
+            <param name="append">若要追加数据到该文件中，则为 true；若要覆盖该文件，则为 false。 如果指定的文件不存在，该参数无效，且构造函数将创建一个新文件。</param>
+            <param name="msgs">信息列表</param>
+        </member>
+        <member name="M:Util.FileUtil.GetFileNameList(System.String)">
+            <summary>
+            获取文件名称列表
+            </summary>
+            <param name="filePath">文件夹名称</param>
+            <returns>文件名称列表</returns>
+        </member>
+        <member name="M:Util.FileUtil.ReadFile(System.String)">
+            <summary>
+            读取文件中的内容
+            </summary>
+            <param name="fileName">文件名称</param>
+            <returns>文件中的内容列表</returns>
+        </member>
+        <member name="M:Util.FileUtil.DeleteFile(System.String)">
+            <summary>
+            删除文件
+            </summary>
+            <param name="fileName">文件名称</param>
+        </member>
+        <member name="M:Util.FileUtil.CreateZip(System.Collections.Generic.IEnumerable{System.String},System.Collections.Generic.IEnumerable{System.String},System.String)">
+            <summary>
+            压缩文件或者文件夹
+            </summary>
+            <param name="files">要压缩的文件列表</param>
+            <param name="folders">要压缩的文件夹列表</param>
+            <param name="savePath">保存的路径</param>
+        </member>
+        <member name="M:Util.FileUtil.ExtractZip(System.String,System.String)">
+            <summary>
+            解压zip文件
+            </summary>
+            <param name="zipPath">zip文件路径</param>
+            <param name="targetPath">解压后的目标目录</param>
+        </member>
+        <member name="T:Util.GameError">
+            <summary>
+            游戏错误类
+            </summary>
+        </member>
+        <member name="P:Util.GameError.Message">
+            <summary>
+            错误信息
+            </summary>
+        </member>
+        <member name="P:Util.GameError.IfHandled">
+            <summary>
+            是否已处理
+            </summary>
+        </member>
+        <member name="M:Util.GameError.#ctor(System.String)">
+            <summary>
+            构造函数
+            </summary>
+            <param name="message">错误信息</param>
+        </member>
+        <member name="T:Util.Json.BsonUtil">
+            <summary>
+            BSON助手类
+            </summary>
+        </member>
+        <member name="M:Util.Json.BsonUtil.Serialize(System.Object)">
+            <summary>
+            序列化对象为Bson数据
+            </summary>
+            <param name="obj">序列对象</param>
+            <exception cref="T:System.ArgumentException">System.ArgumentException</exception>
+            <exception cref="T:System.ArgumentNullException">System.ArgumentNullException</exception>
+            <exception cref="T:System.InvalidOperationException">System.InvalidOperationException</exception>
+            <returns>序列化后的字符串</returns>
+        </member>
+        <member name="M:Util.Json.BsonUtil.Serialize(System.Collections.Generic.Dictionary{System.String,System.Object})">
+            <summary>
+            序列化Dictionary对象为Bson数据
+            </summary>
+            <param name="obj">Dictionary对象</param>
+            <exception cref="T:System.ArgumentException">System.ArgumentException</exception>
+            <exception cref="T:System.ArgumentNullException">System.ArgumentNullException</exception>
+            <exception cref="T:System.InvalidOperationException">System.InvalidOperationException</exception>
+            <returns>序列化后的字符串</returns>
+        </member>
+        <member name="M:Util.Json.BsonUtil.Serialize(System.String[],System.Object[])">
+            <summary>
+            序列化数据集合为Bson数据
+            </summary>
+            <param name="keys">key数组</param>
+            <param name="values">value数组</param>
+            <exception cref="T:System.ArgumentException">System.ArgumentException</exception>
+            <exception cref="T:System.ArgumentNullException">System.ArgumentNullException</exception>
+            <exception cref="T:System.InvalidOperationException">System.InvalidOperationException</exception>
+            <returns>序列化后的字符串</returns>
+        </member>
+        <member name="M:Util.Json.BsonUtil.Deserialize``1(System.Byte[])">
+            <summary>
+            反序列化Json数据为指定对象
+            </summary>
+            <typeparam name="T">指定返回对象</typeparam>
+            <param name="byteArray">Bson二进制数据</param>
+            <exception cref="T:System.ArgumentException">System.ArgumentException</exception>
+            <exception cref="T:System.ArgumentNullException">System.ArgumentNullException</exception>
+            <exception cref="T:System.InvalidOperationException">System.InvalidOperationException</exception>
+            <returns>反序列化后的T对象</returns>
+        </member>
+        <member name="M:Util.Json.BsonUtil.Deserialize(System.Byte[])">
+            <summary>
+            反序列化Json数据为Dictionary对象
+            </summary>
+            <param name="byteArray">Bson二进制数据</param>
+            <exception cref="T:System.ArgumentException">System.ArgumentException</exception>
+            <exception cref="T:System.ArgumentNullException">System.ArgumentNullException</exception>
+            <exception cref="T:System.InvalidOperationException">System.InvalidOperationException</exception>
+            <returns>反序列化后的Dictionary对象</returns>
+        </member>
+        <member name="T:Util.Json.JsonUtil">
+            <summary>
+            JSON助手类
+            </summary>
+        </member>
+        <member name="M:Util.Json.JsonUtil.Serialize(System.Object,Newtonsoft.Json.Formatting)">
+            <summary>
+            序列化对象为Json数据
+            </summary>
+            <param name="obj">序列对象</param>
+            <param name="format">格式</param>
+            <exception cref="T:System.ArgumentException"></exception>
+            <exception cref="T:System.ArgumentNullException"></exception>
+            <exception cref="T:System.InvalidOperationException"></exception>
+            <returns>序列化后的字符串</returns>
+        </member>
+        <member name="M:Util.Json.JsonUtil.Serialize(System.Collections.Generic.Dictionary{System.String,System.Object},Newtonsoft.Json.Formatting)">
+            <summary>
+            序列化Dictionary对象为Json数据
+            </summary>
+            <param name="obj">Dictionary对象</param>
+            <param name="format">格式</param>
+            <exception cref="T:System.ArgumentException"></exception>
+            <exception cref="T:System.ArgumentNullException"></exception>
+            <exception cref="T:System.InvalidOperationException"></exception>
+            <returns>序列化后的字符串</returns>
+        </member>
+        <member name="M:Util.Json.JsonUtil.Serialize(System.String[],System.Object[],Newtonsoft.Json.Formatting)">
+            <summary>
+            序列化数据集合为Json数据
+            </summary>
+            <param name="keys">key数组</param>
+            <param name="values">value数组</param>
+            <param name="obj">Dictionary对象</param>
+            <exception cref="T:System.ArgumentException"></exception>
+            <exception cref="T:System.ArgumentNullException"></exception>
+            <exception cref="T:System.InvalidOperationException"></exception>
+            <returns>序列化后的字符串</returns>
+        </member>
+        <member name="M:Util.Json.JsonUtil.Deserialize``1(System.String)">
+            <summary>
+            反序列化Json数据为指定对象
+            </summary>
+            <typeparam name="T">指定返回对象</typeparam>
+            <param name="str">Json字符串</param>
+            <exception cref="T:System.ArgumentException"></exception>
+            <exception cref="T:System.ArgumentNullException"></exception>
+            <exception cref="T:System.InvalidOperationException"></exception>
+            <returns>反序列化后的T对象</returns>
+        </member>
+        <member name="M:Util.Json.JsonUtil.Deserialize(System.String)">
+            <summary>
+            反序列化Json数据为Dictionary对象
+            </summary>
+            <param name="str">Json字符串</param>
+            <exception cref="T:System.ArgumentException"></exception>
+            <exception cref="T:System.ArgumentNullException"></exception>
+            <exception cref="T:System.InvalidOperationException"></exception>
+            <returns>反序列化后的Dictionary对象</returns>
+        </member>
+        <member name="T:Util.Lock.LockUtil">
+            <summary>
+            锁助手类-共享锁
+            </summary>
+        </member>
+        <member name="F:Util.Lock.LockUtil.mLockObj">
+            <summary>
+            定义全局锁对象
+            </summary>
+        </member>
+        <member name="F:Util.Lock.LockUtil.mLockObjDic">
+            <summary>
+            定义存放所有锁的列表
+            </summary>
+        </member>
+        <member name="M:Util.Lock.LockUtil.GetLock(System.String)">
+            <summary>
+            根据key获取锁对象
+            </summary>
+            <param name="key">锁的唯一标识</param>
+            <returns>锁对象</returns>
+        </member>
+        <member name="M:Util.Lock.LockUtil.ReleaseLock(System.String)">
+            <summary>
+            释放锁
+            </summary>
+            <param name="key">锁的唯一标识</param>
+        </member>
+        <member name="M:Util.Lock.LockUtil.ReleaseAllLock">
+            <summary>
+            主动清空所有锁资源，避免长久驻留内存
+            </summary>
+        </member>
+        <member name="T:Util.Lock.MonitorUtil">
+            <summary>
+            排他锁工具类
+            </summary>
+        </member>
+        <member name="T:Util.Lock.MonitorUtil.CustomMonitor">
+            <summary>
+            自定义锁对象
+            </summary>
+        </member>
+        <member name="F:Util.Lock.MonitorUtil.CustomMonitor.lockObj">
+            <summary>
+            锁对象
+            </summary>
+        </member>
+        <member name="M:Util.Lock.MonitorUtil.CustomMonitor.#ctor(System.Object)">
+            <summary>
+            构造函数
+            </summary>
+            <param name="lockObj">锁对象</param>
+        </member>
+        <member name="M:Util.Lock.MonitorUtil.CustomMonitor.Dispose">
+            <summary>
+            锁释放
+            </summary>
+        </member>
+        <member name="T:Util.Lock.MonitorUtil.LockInfo">
+            <summary>
+            锁信息对象
+            </summary>
+        </member>
+        <member name="P:Util.Lock.MonitorUtil.LockInfo.CustomMonitor">
+            <summary>
+            自定义锁对象
+            </summary>
+        </member>
+        <member name="P:Util.Lock.MonitorUtil.LockInfo.LockObj">
+            <summary>
+            锁实例
+            </summary>
+        </member>
+        <member name="M:Util.Lock.MonitorUtil.LockInfo.#ctor(Util.Lock.MonitorUtil.CustomMonitor,System.Object)">
+            <summary>
+            构造函数
+            </summary>
+            <param name="customMonitor">自定义锁对象</param>
+            <param name="lockObj">锁实例</param>            
+        </member>
+        <member name="F:Util.Lock.MonitorUtil.lockInfoDicLockObj">
+            <summary>
+            同步对象
+            </summary>
+        </member>
+        <member name="F:Util.Lock.MonitorUtil.mLockInfoDic">
+            <summary>
+            锁信息集合
+            </summary>
+        </member>
+        <member name="M:Util.Lock.MonitorUtil.GetLockInfo(System.String)">
+            <summary>
+            获取锁对象信息
+            </summary>
+            <param name="key">锁的唯一标识</param>
+            <returns>返回锁对象</returns>
+        </member>
+        <!-- 对于成员“M:Util.Lock.MonitorUtil.GetLock(System.String,System.Int32)”忽略有格式错误的 XML 注释 -->
+        <member name="M:Util.Lock.MonitorUtil.GetLock(System.Object,System.Int32)">
+            <summary>
+            获取已存在的锁的操作类
+            </summary>
+            <param name="lockObj">同步对象</param>
+            <returns>返回锁的操作类</returns>
+            <exception cref="T:System.TimeoutException">获取锁对象超时时，抛出此异常</exception>
+            <example>
+            Object lockObj = new Object();
+            using(MonitorUtil.GetLock(lockObj))
+            {
+                // do something
+            }
+            </example>
+        </member>
+        <member name="M:Util.Lock.MonitorUtil.ReleaseLock(System.String)">
+            <summary>
+            主动释放锁资源，避免长久驻留内存
+            </summary>
+            <param name="key">锁的唯一标识</param>
+        </member>
+        <member name="M:Util.Lock.MonitorUtil.ReleaseAllLock">
+            <summary>
+            主动清空所有锁资源，避免长久驻留内存
+            </summary>
+        </member>
+        <member name="T:Util.Lock.ReaderWriterLockUtil">
+            <summary>
+            读写锁工具类
+            </summary>
+        </member>
+        <member name="T:Util.Lock.ReaderWriterLockUtil.LockTypeEnum">
+            <summary>
+            锁类型枚举
+            </summary>
+        </member>
+        <member name="F:Util.Lock.ReaderWriterLockUtil.LockTypeEnum.Reader">
+            <summary>
+            读,在此方式下，如果要切换到写。则会报异常
+            </summary>
+        </member>
+        <member name="F:Util.Lock.ReaderWriterLockUtil.LockTypeEnum.Writer">
+            <summary>
+            写
+            </summary>
+        </member>
+        <member name="F:Util.Lock.ReaderWriterLockUtil.LockTypeEnum.EnterUpgradeableReader">
+            <summary>
+            可升级的读，在读中可能需要切换到写锁，用此方式，此方式性能比Writer高
+            </summary>
+        </member>
+        <member name="T:Util.Lock.ReaderWriterLockUtil.CustomMonitor">
+            <summary>
+            自定义锁对象
+            </summary>
+        </member>
+        <member name="F:Util.Lock.ReaderWriterLockUtil.CustomMonitor.rwLockObj">
+            <summary>
+            锁对象
+            </summary>
+        </member>
+        <member name="F:Util.Lock.ReaderWriterLockUtil.CustomMonitor.lockType">
+            <summary>
+            锁类型
+            </summary>
+        </member>
+        <member name="M:Util.Lock.ReaderWriterLockUtil.CustomMonitor.#ctor(System.Threading.ReaderWriterLockSlim,Util.Lock.ReaderWriterLockUtil.LockTypeEnum)">
+            <summary>
+            构造函数
+            </summary>
+            <param name="rwLockObj">读写锁对象</param>
+            <param name="lockType">获取方式</param>
+        </member>
+        <member name="M:Util.Lock.ReaderWriterLockUtil.CustomMonitor.Dispose">
+            <summary>
+            锁释放
+            </summary>
+        </member>
+        <member name="F:Util.Lock.ReaderWriterLockUtil.mLockObj">
+            <summary>
+            lockObjData同步对象
+            </summary>
+        </member>
+        <member name="F:Util.Lock.ReaderWriterLockUtil.mLockSlimDic">
+            <summary>
+            锁集合
+            </summary>
+        </member>
+        <!-- 对于成员“M:Util.Lock.ReaderWriterLockUtil.GetLock(System.String,Util.Lock.ReaderWriterLockUtil.LockTypeEnum,System.Int32)”忽略有格式错误的 XML 注释 -->
+        <member name="M:Util.Lock.ReaderWriterLockUtil.GetLock(System.Threading.ReaderWriterLockSlim,Util.Lock.ReaderWriterLockUtil.LockTypeEnum,System.Int32)">
+            <summary>
+            获取锁对象
+            </summary>
+            <param name="lockSlimObj">锁对象</param>
+            <param name="lockType">锁类型</param>
+            <param name="millisecondsTimeout">等待的毫秒数；&lt;=0表示无限期等待。</param>
+            <returns>返回锁对象</returns>
+            <exception cref="T:System.TimeoutException">获取锁对象超时时，抛出此异常</exception>
+            <remarks>
+            对同一个锁操作时，读的代码块内不能包含写的代码块，也不能在写的代码块包含读的代码块，这会导致内部异常,如果确实想要写，请使用<see cref="F:Util.Lock.ReaderWriterLockUtil.LockTypeEnum.EnterUpgradeableReader"/>，比如：
+            <code>
+            using("test", LockTypeEnum.EnterUpgradeableReader)
+            {
+                using("test",LockTypeEnum.Write)
+                {
+                    // do something
+                }
+            }
+            </code>
+            </remarks>
+        </member>
+        <member name="M:Util.Lock.ReaderWriterLockUtil.DisposeLock(System.String)">
+            <summary>
+            主动释放锁资源，避免长久驻留内存
+            </summary>
+            <param name="key">锁的唯一标识</param>
+        </member>
+        <member name="M:Util.Lock.ReaderWriterLockUtil.DisposeAllLock">
+            <summary>
+            主动清空所有锁资源，避免长久驻留内存
+            </summary>
+        </member>
+        <member name="M:Util.Lock.ReaderWriterLockUtil.GetLockSlimByInfiniteWait(System.Threading.ReaderWriterLockSlim,Util.Lock.ReaderWriterLockUtil.LockTypeEnum)">
+            <summary>
+            获取锁对象，获取过程会死等。直到获取到锁对象
+            </summary>
+            <param name="lockObj">锁对象</param>
+            <param name="lockType">锁类型</param>
+            <returns>返回锁对象</returns>
+        </member>
+        <member name="M:Util.Lock.ReaderWriterLockUtil.GetLockSlim(System.String)">
+            <summary>
+            获取锁对象信息
+            </summary>
+            <param name="key">锁的唯一标识</param>
+            <returns>返回锁对象</returns>
+        </member>
+        <member name="T:Util.Log.LogType">
+            <summary>
+            日志类型
+            </summary>
+        </member>
+        <member name="F:Util.Log.LogType.Info">
+            <summary>
+            信息
+            </summary>
+        </member>
+        <member name="F:Util.Log.LogType.Warn">
+            <summary>
+            警告
+            </summary>
+        </member>
+        <member name="F:Util.Log.LogType.Debug">
+            <summary>
+            调试
+            </summary>
+        </member>
+        <member name="F:Util.Log.LogType.Error">
+            <summary>
+            错误
+            </summary>
+        </member>
+        <member name="F:Util.Log.LogType.Fatal">
+            <summary>
+            致命
+            </summary>
+        </member>
+        <member name="T:Util.Log.LogUtil">
+            <summary>
+            日志助手类
+            </summary>
+        </member>
+        <member name="M:Util.Log.LogUtil.GetLogPath">
+            <summary>
+            获取日志文件存放的路径
+            </summary>
+            <returns>日志文件存放的路径</returns>
+        </member>
+        <member name="M:Util.Log.LogUtil.SetLogPath(System.String)">
+            <summary>
+            设置日志文件存放的路径
+            </summary>
+            <param name="logPath">日志文件存放的路径</param>
+        </member>
+        <member name="M:Util.Log.LogUtil.Write(System.String,Util.Log.LogType,System.Boolean)">
+            <summary>
+            写日志
+            </summary>
+            <param name="msg">日志信息</param>
+            <param name="logType">日志类型</param>
+            <param name="ifIncludeHour">是否包含小时</param>
+            <exception cref="T:System.ArgumentNullException"></exception>
+        </member>
+        <member name="T:Util.Mail.MailUtil">
+            <summary>
+            邮件助手类
+            </summary>
+        </member>
+        <member name="M:Util.Mail.MailUtil.Send(System.Collections.Generic.IEnumerable{System.String},System.String,System.String,System.Collections.Generic.IEnumerable{System.String},System.Boolean)">
+            <summary>
+            发送邮件
+            </summary>
+            <param name="mailTo">收件人</param>
+            <param name="subject">邮件主题</param>
+            <param name="body">邮件内容</param>
+            <param name="attachFiles">附件路径</param>
+            <param name="isBodyHtml">内容是否为Html</param>
+            <exception cref="T:System.ArgumentException"></exception>
+            <exception cref="T:System.ArgumentNullException"></exception>
+            <exception cref="T:System.FormatException"></exception>
+            <exception cref="T:System.InvalidOperationException"></exception>
+            <exception cref="T:System.ObjectDisposedException"></exception>
+            <exception cref="T:System.Net.Mail.SmtpException"></exception>
+            <exception cref="T:System.Net.Mail.SmtpFailedRecipientsException"></exception>        
+        </member>
+        <member name="M:Util.Mail.MailUtil.Send(System.Object)">
+            <summary>
+            发送邮件
+            </summary>
+            <param name="state">相关参数</param>
+        </member>
+        <member name="M:Util.Mail.MailUtil.SetSenderInfo(System.String,System.String,System.String)">
+            <summary>
+            设置发送者信息（一次设定，永久生效）
+            </summary>
+            <param name="mailHost">邮箱主机地址</param>
+            <param name="address">发送者邮件地址</param>
+            <param name="password">发送者密码</param>
+        </member>
+        <member name="M:Util.Mail.MailUtil.SendMail(System.String[],System.String,System.String,Util.Mail.SendPattern,System.Boolean)">
+            <summary>
+            发送邮件
+            </summary>
+            <param name="mailTo">收件人地址</param>
+            <param name="subject">邮件主题</param>
+            <param name="body">邮件内容</param>
+            <param name="sendPattern">发送模式</param>
+            <param name="isBodyHtml">内容是否为Html</param>
+            <exception cref="T:System.ArgumentException"></exception>
+            <exception cref="T:System.ArgumentNullException"></exception>
+            <exception cref="T:System.FormatException"></exception>
+            <exception cref="T:System.InvalidOperationException"></exception>
+            <exception cref="T:System.ObjectDisposedException"></exception>
+            <exception cref="T:System.Net.Mail.SmtpException"></exception>
+            <exception cref="T:System.Net.Mail.SmtpFailedRecipientsException"></exception>
+        </member>
+        <member name="M:Util.Mail.MailUtil.SendMail(System.Collections.Generic.IEnumerable{System.String},System.String,System.String,System.Collections.Generic.IEnumerable{System.String},Util.Mail.SendPattern,System.Boolean)">
+            <summary>
+            发送邮件
+            </summary>
+            <param name="mailTo">收件人</param>
+            <param name="subject">邮件主题</param>
+            <param name="body">邮件内容</param>
+            <param name="attachFiles">附件</param>
+            <param name="sendPattern">发送模式</param>
+            <param name="isBodyHtml">内容是否为Html</param>
+        </member>
+        <member name="T:Util.Mail.SendPattern">
+            <summary>
+            发送模式
+            </summary>
+        </member>
+        <member name="F:Util.Mail.SendPattern.Synchronous">
+            <summary>
+            同步模式
+            </summary>
+        </member>
+        <member name="F:Util.Mail.SendPattern.Asynchronous">
+            <summary>
+            异步模式
+            </summary>
+        </member>
+        <member name="T:Util.MarshalUtil">
+            <summary>
+            Marshal辅助类，用于扩展Marshal中未直接实现的方法
+            </summary>
+        </member>
+        <member name="M:Util.MarshalUtil.PtrToByteArray(System.IntPtr,System.Int32)">
+            <summary>
+            将IntPtr指向的UTF8数据转化成字符数组
+            </summary>
+            <param name="ptr">指针</param>
+            <param name="length">数据长度</param>
+            <returns>字符串</returns>
+        </member>
+        <member name="M:Util.MarshalUtil.PtrToStringUTF8(System.IntPtr,System.Int32)">
+            <summary>
+            将IntPtr指向的UTF8数据转化成字符串
+            </summary>
+            <param name="ptr">指针</param>
+            <param name="length">数据长度</param>
+            <returns>字符串</returns>
+        </member>
+        <member name="T:Util.Math.ByteUtil">
+            <summary>
+            Byte助手类
+            </summary>
+        </member>
+        <member name="M:Util.Math.ByteUtil.GetRandNum(System.Byte,System.Byte,Util.Math.IncludeMaxValue)">
+            <summary>
+             一个大于等于 minValue 且小于或等于 maxValue 的 8 位无符号整数
+            </summary>
+            <param name="minValue">返回的随机数的下界（随机数可取该下界值）</param>
+            <param name="maxValue">返回的随机数的上界maxValue 必须大于等于 minValue</param>
+            <param name="includeMaxValue">是否包括上限值</param>
+            <exception cref="T:System.ArgumentOutOfRangeException"></exception>
+            <returns>随机数</returns>
+        </member>
+        <member name="M:Util.Math.ByteUtil.SwapByte(System.Byte[],System.Int32,System.Int32)">
+            <summary>
+            交换字节
+            </summary>
+            <param name="byteArray">字节数组</param>
+            <param name="i">第一个字符</param>
+            <param name="j">第二个字符</param>
+            <returns>交换位置后的字节数组</returns>
+        </member>
+        <member name="M:Util.Math.ByteUtil.Combine(System.Byte[],System.Byte[])">
+            <summary>
+            合并两个字节数组
+            </summary>
+            <param name="a">字节数组</param>
+            <param name="b">字节数组</param>
+            <returns></returns>
+        </member>
+        <member name="M:Util.Math.ByteUtil.GetSubArray(System.Byte[],System.Int32,System.Int32)">
+            <summary>
+            获取子数组
+            </summary>
+            <param name="byteArray">字节数组</param>
+            <param name="lowerIndex">开始索引</param>
+            <param name="length">长度</param>
+            <returns>子数组</returns>
+        </member>
+        <member name="T:Util.Math.DoubleUtil">
+            <summary>
+            Double助手类
+            </summary>
+        </member>
+        <member name="M:Util.Math.DoubleUtil.GetRandNum">
+            <summary>
+            返回一个介于 0.0 和 1.0 之间的随机数。
+            </summary>
+            <returns>大于等于 0.0 并且小于 1.0 的双精度浮点数</returns>
+        </member>
+        <member name="T:Util.Math.IncludeMaxValue">
+            <summary>
+            包含最大值的枚举
+            </summary>
+        </member>
+        <member name="F:Util.Math.IncludeMaxValue.Yes">
+            <summary>
+            包含
+            </summary>
+        </member>
+        <member name="F:Util.Math.IncludeMaxValue.No">
+            <summary>
+            不包含
+            </summary>
+        </member>
+        <member name="T:Util.Math.IntUtil">
+            <summary>
+            Int助手类
+            </summary>
+        </member>
+        <member name="M:Util.Math.IntUtil.GetRandNum(System.Int32,System.Int32,Util.Math.IncludeMaxValue)">
+            <summary>
+             一个大于等于 minValue 且小于或等于 maxValue 的 32 位带符号整数
+            </summary>
+            <param name="minValue">返回的随机数的下界（随机数可取该下界值）</param>
+            <param name="maxValue">返回的随机数的上界maxValue 必须大于等于 minValue</param>
+            <param name="includeMaxValue">是否包括上限值</param>
+            <exception cref="T:System.ArgumentOutOfRangeException"></exception>
+            <returns>随机数</returns>
+        </member>
+        <member name="M:Util.Math.IntUtil.ConvertToInt32List(System.String[])">
+            <summary>
+            将字符串数组转化为Int32列表
+            </summary>
+            <param name="strArray">字符串数组</param>
+            <exception cref="T:System.ArgumentNullException"></exception>
+            <exception cref="T:System.FormatException"></exception>
+            <exception cref="T:System.OverflowException"></exception>
+            <returns>Int32列表</returns>
+        </member>
+        <member name="M:Util.Math.IntUtil.ConvertToInt64List(System.String[])">
+            <summary>
+            将字符串数组转化为Int64列表
+            </summary>
+            <param name="strArray">字符串数组</param>
+            <exception cref="T:System.ArgumentNullException"></exception>
+            <exception cref="T:System.FormatException"></exception>
+            <exception cref="T:System.OverflowException"></exception>
+            <returns>Int64列表</returns>
+        </member>
+        <member name="M:Util.Math.IntUtil.CalcForInt32(System.Int32,System.Int32,System.Int32)">
+            <summary>
+            计算数据
+            </summary>
+            <param name="value">用于计算的值</param>
+            <param name="multiplier">乘数</param>
+            <param name="divisor">除数</param>
+            <returns>计算后结果</returns>
+            <exception cref="T:System.OverflowException">如果计算的结果溢出，则抛出异常</exception>
+        </member>
+        <member name="M:Util.Math.IntUtil.CalcForInt64(System.Int64,System.Int64,System.Int64)">
+            <summary>
+            计算数据
+            </summary>
+            <param name="value">用于计算的值</param>
+            <param name="multiplier">乘数</param>
+            <param name="divisor">除数</param>
+            <returns>计算后结果</returns>
+            <exception cref="T:System.OverflowException">如果计算的结果溢出，则抛出异常</exception>
+        </member>
+        <member name="T:Util.Math.RandomUtil">
+            <summary>
+            随机数助手类
+            </summary>
+        </member>
+        <member name="T:Util.Math.RandomUtil.ItemWeight`1">
+            <summary>
+            权重函数
+            </summary>
+            <typeparam name="T">数据项类型</typeparam>
+            <param name="item">数据项</param>
+            <returns>符合条件的数据项</returns>
+        </member>
+        <member name="M:Util.Math.RandomUtil.GetRandItem``1(System.Collections.Generic.IList{``0})">
+            <summary>
+            获取一个随机项
+            </summary>
+            <typeparam name="T">类型</typeparam>
+            <param name="source">源数据集合</param>
+            <returns>随机项</returns>
+        </member>
+        <member name="M:Util.Math.RandomUtil.GetRandItem``1(System.Collections.Generic.IList{``0},Util.Math.RandomUtil.ItemWeight{``0})">
+            <summary>
+            根据权值获取随机项
+            </summary>
+            <typeparam name="T">类型</typeparam>
+            <param name="source">源数据集合</param>
+            <param name="itemWeight">权重函数</param>
+            <returns>随机项</returns>
+        </member>
+        <member name="M:Util.Math.RandomUtil.GetRandList``1(System.Collections.Generic.IList{``0},System.Int32,System.Boolean)">
+            <summary>
+            获取随机列表
+            </summary>
+            <typeparam name="T">元素类型</typeparam>
+            <param name="source">源列表</param>
+            <param name="count">随机数量</param>
+            <param name="ifAllowDuplicate">是否允许重复</param>
+            <returns>随机后结果</returns>
+        </member>
+        <member name="M:Util.Math.RandomUtil.GetRandNumList(System.Int32,System.Int32,System.Int32,System.Boolean)">
+            <summary>
+            获取随机数列表（1~10000，超过10000会抛出异常）
+            </summary>
+            <param name="minValue">获取随机数的区间下限值</param>
+            <param name="maxValue">获取随机数的区间上限值</param>
+            <param name="count">随机数量</param>
+            <param name="ifAllowDuplicate">是否允许重复</param>
+            <returns>随机数列表</returns>
+        </member>
+        <member name="T:Util.Message.MessageSKUtil">
+            <summary>
+            处理消息发送的助手类(基于sokect)
+            </summary>
+        </member>
+        <member name="P:Util.Message.MessageSKUtil.MessageFolder">
+            <summary>
+            保存失败消息的文件夹
+            </summary>
+        </member>
+        <member name="P:Util.Message.MessageSKUtil.ThreadUtilObj">
+            <summary>
+            线程助手对象
+            </summary>
+        </member>
+        <member name="P:Util.Message.MessageSKUtil.SKConfig">
+            <summary>
+            socket配置
+            </summary>
+        </member>
+        <member name="M:Util.Message.MessageSKUtil.#ctor(System.String,System.Int32,System.Int32,System.Int32,Util.Message.SKConfig)">
+            <summary>
+            静态构造函数，用于初始化数据
+            </summary>
+        </member>
+        <member name="M:Util.Message.MessageSKUtil.HandleMessage(System.Net.Sockets.Socket,Util.Message.SendMessageObject)">
+            <summary>
+            处理消息
+            </summary>
+            <param name="socket">socket对象</param>
+            <param name="message">消息</param>
+        </member>
+        <member name="M:Util.Message.MessageSKUtil.HeartBeat(System.Net.Sockets.Socket)">
+            <summary>
+            心跳
+            </summary>
+            <param name="socket">socket对象</param>
+        </member>
+        <member name="M:Util.Message.MessageSKUtil.SaveMessage(Util.Message.SendMessageObject)">
+            <summary>
+            Saves the message.
+            </summary>
+            <param name="message">The message.</param>
+        </member>
+        <member name="M:Util.Message.MessageSKUtil.TimingMethod">
+            <summary>
+            定时执行的方法
+            </summary>
+        </member>
+        <member name="M:Util.Message.MessageSKUtil.ConsumeMessage">
+            <summary>
+            消耗消息
+            </summary>
+        </member>
+        <member name="M:Util.Message.MessageSKUtil.SendMessage(Util.Message.SendMessageObject)">
+            <summary>
+            Sends the message.
+            </summary>
+            <param name="message">The message.</param>
+        </member>
+        <member name="M:Util.Message.MessageSKUtil.SaveMessage">
+            <summary>
+            将队列中尚未发送的数据保存到文件中
+            </summary>
+        </member>
+        <member name="T:Util.Message.SKConfig">
+            <summary>
+            sk配置
+            </summary>
+        </member>
+        <member name="P:Util.Message.SKConfig.Ip">
+            <summary>
+            ip
+            </summary>
+        </member>
+        <member name="P:Util.Message.SKConfig.Port">
+            <summary>
+            端口
+            </summary>
+        </member>
+        <member name="M:Util.Message.SKConfig.#ctor(System.String,System.Int32)">
+            <summary>
+            构造函数
+            </summary>
+            <param name="ip">ip</param>
+            <param name="port">端口</param>
+        </member>
+        <member name="T:Util.Message.MessageUtil">
+            <summary>
+            处理消息发送的助手类
+            </summary>
+        </member>
+        <member name="F:Util.Message.MessageUtil.mMessageFolder">
+            <summary>
+            保存失败消息的文件夹
+            </summary>
+        </member>
+        <member name="F:Util.Message.MessageUtil.mThreadUtilObj">
+            <summary>
+            线程助手对象
+            </summary>
+        </member>
+        <member name="M:Util.Message.MessageUtil.HandleMessage(Util.Message.SendMessageObject)">
+            <summary>
+            处理消息
+            </summary>
+            <param name="message">消息</param>
+        </member>
+        <member name="M:Util.Message.MessageUtil.SaveMessage(Util.Message.SendMessageObject)">
+            <summary>
+            Saves the message.
+            </summary>
+            <param name="message">The message.</param>
+        </member>
+        <member name="M:Util.Message.MessageUtil.TimingMethod">
+            <summary>
+            定时执行的方法
+            </summary>
+        </member>
+        <member name="M:Util.Message.MessageUtil.ConsumeMessage">
+            <summary>
+            消耗消息
+            </summary>
+        </member>
+        <member name="M:Util.Message.MessageUtil.SetParam(System.String,System.Int32,System.Int32,System.Int32)">
+            <summary>
+            设置参数
+            </summary>
+            <param name="messageFolder">存储消息的目录</param>
+            <param name="minThreadCount">最小的线程数量[10,100]</param>
+            <param name="maxThreadCount">最大的线程数量[minThreadCount, 500]</param>
+            <param name="messageCountPerThread">每个线程平均需要处理的数量</param>
+        </member>
+        <member name="M:Util.Message.MessageUtil.SendMessage(Util.Message.SendMessageObject)">
+            <summary>
+            Sends the message.
+            </summary>
+            <param name="message">The message.</param>
+        </member>
+        <member name="M:Util.Message.MessageUtil.SaveMessage">
+            <summary>
+            将队列中尚未发送的数据保存到文件中
+            </summary>
+        </member>
+        <member name="T:Util.Message.SendMessageObject">
+            <summary>
+            发送的消息对象
+            </summary>
+        </member>
+        <member name="P:Util.Message.SendMessageObject.Url">
+            <summary>
+            要发送的地址
+            </summary>
+        </member>
+        <member name="P:Util.Message.SendMessageObject.Message">
+            <summary>
+            要发送的消息
+            </summary>
+        </member>
+        <member name="P:Util.Message.SendMessageObject.IsPost">
+            <summary>
+            是否为POST方式发送
+            </summary>
+        </member>
+        <member name="M:Util.Message.SendMessageObject.#ctor(System.String,System.String,System.Boolean)">
+            <summary>
+            构造函数
+            </summary>
+            <param name="url">要发送的地址</param>
+            <param name="message">要发送的消息</param>
+            <param name="isPost">是否为POST方式发送</param>
+        </member>
+        <member name="T:Util.OS.CPUUtil">
+            <summary>
+            CPU助手类
+            </summary>
+        </member>
+        <member name="M:Util.OS.CPUUtil.GetPhysicalProcessorCount">
+            <summary>
+            获取物理处理的数量
+            </summary>
+            <returns>物理处理的数量</returns>
+        </member>
+        <member name="M:Util.OS.CPUUtil.GetLogicalProcessorCount">
+            <summary>
+            获取逻辑处理器的数量
+            </summary>
+            <returns>逻辑处理器的数量</returns>
+        </member>
+        <member name="M:Util.OS.CPUUtil.GetCoreCount">
+            <summary>
+            获取处理器核的数量
+            </summary>
+            <returns>处理器核的数量</returns>
+        </member>
+        <member name="T:Util.OS.ThreadUtil">
+            <summary>
+            Thread助手类
+            </summary>
+        </member>
+        <member name="P:Util.OS.ThreadUtil.InitedThreadCount">
+            <summary>
+            已经初始化的线程数量
+            </summary>
+        </member>
+        <member name="P:Util.OS.ThreadUtil.MinThreadCount">
+            <summary>
+            最小的线程数量
+            </summary>
+        </member>
+        <member name="P:Util.OS.ThreadUtil.MaxThreadCount">
+            <summary>
+            最大的线程数量
+            </summary>
+        </member>
+        <member name="P:Util.OS.ThreadUtil.MessageCountPerThread">
+            <summary>
+            每个线程平均需要处理的数量
+            </summary>
+        </member>
+        <member name="P:Util.OS.ThreadUtil.ThreadStartFunc">
+            <summary>
+            供初始化线程的方法
+            </summary>
+        </member>
+        <member name="M:Util.OS.ThreadUtil.#ctor(System.Int32,System.Int32,System.Int32,System.Threading.ThreadStart)">
+            <summary>
+            构造函数
+            </summary>
+            <param name="minThreadCount">最小的线程数量[10,100]</param>
+            <param name="maxThreadCount">最大的线程数量[minThreadCount, 500]</param>
+            <param name="messageCountPerThread">每个线程平均需要处理的数量[10,100]</param>
+            <param name="threadStartFunc">FuncForThread</param>
+        </member>
+        <member name="M:Util.OS.ThreadUtil.InitNewThread(System.Int32)">
+            <summary>
+            初始化新线程
+            </summary>
+            <param name="count">线程数量，大于0表示增加，小于0表示删除</param>
+        </member>
+        <member name="M:Util.OS.ThreadUtil.DynamicAdjustThread(System.Int32)">
+            <summary>
+            动态调整线程数量
+            </summary>
+            <param name="queueCount">队列中数据的数量</param>
+        </member>
+        <member name="T:Util.Reflection.ReflectionCache">
+            <summary>
+            类型缓存类
+            </summary>
+        </member>
+        <member name="M:Util.Reflection.ReflectionCache.GetMehtod(System.String)">
+            <summary>
+            获取缓存的方法
+            </summary>
+            <param name="key">方法对应的key</param>
+            <returns>如果key对应的方法存在，则返回；否则返回null</returns>
+        </member>
+        <member name="M:Util.Reflection.ReflectionCache.SetMethod(System.String,System.Reflection.MethodInfo)">
+            <summary>
+            设置方法缓存
+            </summary>
+            <param name="key">方法对应的key</param>
+            <param name="method">要缓存的方法对象</param>
+        </member>
+        <member name="M:Util.Reflection.ReflectionCache.GetType(System.String)">
+            <summary>
+            根据key取出缓存的方法
+            </summary>
+            <param name="key">类型对应的key</param>
+            <returns>如果key对应的类型存在，则返回对应的类型，否则返回null</returns>
+        </member>
+        <member name="M:Util.Reflection.ReflectionCache.SetType(System.String,System.Type)">
+            <summary>
+            将方法放入缓存中，如果方法已经存在，则覆盖；不存在，则添加
+            </summary>
+            <param name="key">方法对应的key</param>
+            <param name="type">要缓存的方法</param>
+        </member>
+        <member name="M:Util.Reflection.ReflectionCache.Clear">
+            <summary>
+            清除缓存
+            </summary>
+        </member>
+        <member name="T:Util.Reflection.ReflectionClass">
+            <summary>
+            反射构造的实例类对象，可以通过该类调用实例方法
+            </summary>
+        </member>
+        <member name="M:Util.Reflection.ReflectionClass.#ctor(System.Object)">
+            <summary>
+            初始化
+            </summary>
+            <param name="obj">反射出的类类型对象</param>
+            <param name="reflectionInvoke">与ReflectionClass相关联的ReflectionInvoke对象</param>
+        </member>
+        <member name="M:Util.Reflection.ReflectionClass.CallInstanceMethod(System.String)">
+            <summary>
+            调用反射类型的实例方法
+            </summary>
+            <param name="methodName">要调用的方法名称</param>
+            <returns>调用方法的返回值</returns>
+        </member>
+        <member name="M:Util.Reflection.ReflectionClass.CallInstanceMethod(System.String,System.Object[])">
+            <summary>
+            调用反射类型的实例方法
+                注：
+                    方法参数不能包含null值，如果要传递null，请使用CallInstanceMethod(String , Type[] , params Object[] )重载
+            </summary>
+            <param name="methodName">要调用的方法名称</param>
+            <param name="param">与方法匹配的参数</param>
+            <returns>调用方法的返回值</returns>
+        </member>
+        <member name="M:Util.Reflection.ReflectionClass.CallInstanceMethod(System.String,System.Type[],System.Object[])">
+            <summary>
+            调用反射类型的实例方法
+            </summary>
+            <param name="methodName">要调用的方法名称</param>
+            <param name="paramTypes">参数对应的类型列表</param>
+            <param name="param">与方法匹配的参数列表</param>
+            <returns>调用方法的返回值</returns>
+        </member>
+        <member name="T:Util.Reflection.ReflectionUtil">
+            <summary>
+            反射助手类
+            </summary>
+        </member>
+        <member name="M:Util.Reflection.ReflectionUtil.CreateInstance(System.String,System.String)">
+            <summary>
+            创建ReflectionInvoke.ReflectionClass对象的实例
+            </summary>
+            <param name="assemblyName">要反射的程序集名称</param>
+            <param name="className">要反射的类名称</param>
+            <returns>创建的ReflectionInvoke.ReflectionClass对象</returns>
+        </member>
+        <member name="M:Util.Reflection.ReflectionUtil.CreateInstance(System.String,System.String,System.Object[])">
+            <summary>
+            创建ReflectionInvoke.ReflectionClass对象
+            </summary>
+            <param name="assemblyName">要反射的程序集名称</param>
+            <param name="className">要反射的类名称</param>
+            <param name="param">调用反射类的构造函数所需要的参数</param>
+            <returns>创建的ReflectionInvoke.ReflectionClass对象</returns>
+        </member>
+        <member name="M:Util.Reflection.ReflectionUtil.CallStaticMethod(System.String,System.String,System.String)">
+            <summary>
+            调用类中的静态方法
+            </summary>
+            <param name="assemblyName">要反射的程序集名称</param>
+            <param name="className">静态方法所在的类</param>
+            <param name="methodName">方法名称</param>
+            <returns>调用方法所返回的值</returns>
+        </member>
+        <member name="M:Util.Reflection.ReflectionUtil.CallStaticMethod(System.String,System.String,System.String,System.Object[])">
+            <summary>
+            调用类中的静态方法
+                注：
+                    param实参中中不能包含null，如要传递null，请使用CallStaticMethod(String ,String ,String ,Type[] ,param Object[] )重载方法
+            </summary>
+            <param name="assemblyName">要反射的程序集名称</param>
+            <param name="className">静态方法所在的类</param>
+            <param name="methodName">方法名称</param>
+            <param name="param">方法所需要的参数</param>
+            <returns>调用方法所返回的值</returns>
+        </member>
+        <member name="M:Util.Reflection.ReflectionUtil.CallStaticMethod(System.String,System.String,System.String,System.Type[],System.Object[])">
+            <summary>
+            调用类中的静态方法
+            </summary>
+            <param name="assemblyName">要反射的程序集名称</param>
+            <param name="className">静态方法所在的类</param>
+            <param name="methodName">方法名称</param>
+            <param name="types">参数类型列表</param>
+            <param name="param">方法所需要的参数</param>
+            <returns>调用方法所返回的值</returns>
+        </member>
+        <member name="M:Util.Reflection.ReflectionUtil.CheckParamExists(System.String[],System.String)">
+            <summary>
+            检查参数的存在性
+            </summary>
+            <param name="paramNames">参数名称列表</param>
+            <param name="paramNameItem">参数名称</param>
+            <returns>是否存在</returns>
+        </member>
+        <member name="M:Util.Reflection.ReflectionUtil.GetParamTypes(System.Object[])">
+            <summary>
+            根据参数获取参数对应的类型
+            </summary>
+            <param name="param">参数列表</param>
+            <returns>与参数列表对应的参数类型</returns>
+        </member>
+        <member name="M:Util.Reflection.ReflectionUtil.GetClassType(System.String,System.String)">
+            <summary>
+            返回指定类型的类型对象
+            </summary>
+            <param name="assemblyName">要反射的程序集名称</param>
+            <param name="className">要获取对象类型的类名称</param>
+            <returns>该类所对应的类型</returns>
+        </member>
+        <member name="M:Util.Reflection.ReflectionUtil.GetMethod(System.String,System.String,System.String,System.Type[])">
+            <summary>
+            返回指定的方法类型对象
+            </summary>
+            <param name="assemblyName">要反射的程序集名称</param>
+            <param name="className">要获取对象类型的类名称</param>
+            <param name="methodName">方法名称</param>
+            <param name="types">方法所需要的参数</param>
+            <returns>该类所对应的类型</returns>
+        </member>
+        <member name="M:Util.Reflection.ReflectionUtil.AssemblyType(System.String,System.String)">
+            <summary>
+            反射指定类型
+            </summary>
+            <param name="assemblyName">要反射的程序集名称</param>
+            <param name="className">要反射的类名称</param>
+            <returns>该类所对应的类型</returns>
+        </member>
+        <member name="T:Util.Security.DESUtil">
+            <summary>
+            DES加密助手类
+            </summary>
+        </member>
+        <member name="M:Util.Security.DESUtil.EncryptString(System.String,System.String)">
+            <summary>
+            加密字符串
+            </summary>
+            <param name="sourceString">源字符串</param>
+            <param name="key">DES加密的私钥，必须是8位长的字符串</param>
+            <returns>加密后的字符串</returns>
+        </member>
+        <member name="M:Util.Security.DESUtil.DecryptString(System.String,System.String)">
+            <summary>
+            解密字符串
+            </summary>
+            <param name="encryptedString">源字符串</param>
+            <param name="key">DES加密的私钥，必须是8位长的字符串</param>
+            <returns>解密后的字符串</returns>
+        </member>
+        <member name="T:Util.Security.HMACSHA1Util">
+            <summary>
+            Hmac－SHA1加密助手类
+            </summary>
+        </member>
+        <member name="M:Util.Security.HMACSHA1Util.HmacSha1(System.String,System.String,Util.Security.LetterCase)">
+            <summary>
+            Hmac－SHA1加密
+            </summary>
+            <param name="sourceString">源字符串</param>
+            <param name="encryptKey">加密key</param>
+            <param name="letterCase">大小写枚举</param>
+            <exception cref="T:System.ArgumentNullException">System.ArgumentNullException</exception>
+            <returns>加密后的字符串</returns>
+        </member>
+        <member name="M:Util.Security.HMACSHA1Util.HmacSha1(System.String,System.String,System.Boolean,Util.Security.LetterCase)">
+            <summary>
+            Hmac－SHA1加密
+            </summary>
+            <param name="sourceString">源字符串</param>
+            <param name="encryptKey">加密key</param>
+            <param name="ifBase64Encode">是否进行Base64编码(当需要Base64编码时,letterCase无效)</param>
+            <param name="letterCase">大小写枚举</param>
+            <exception cref="T:System.ArgumentNullException">System.ArgumentNullException</exception>
+            <returns>加密后的字符串</returns>
+        </member>
+        <member name="T:Util.Security.HMACMD5Util">
+            <summary>
+            Hmac-MD5加密助手类
+            </summary>
+        </member>
+        <member name="M:Util.Security.HMACMD5Util.HmacMD5(System.String,System.String,System.Boolean,Util.Security.LetterCase)">
+            <summary>
+            Hmac－MD5加密
+            </summary>
+            <param name="sourceString">源字符串</param>
+            <param name="encryptKey">加密key</param>
+            <param name="ifBase64Encode">是否进行Base64编码(当需要Base64编码时,letterCase无效)</param>
+            <param name="letterCase">大小写枚举</param>
+            <exception cref="T:System.ArgumentNullException">System.ArgumentNullException</exception>
+            <returns>加密后的字符串</returns>
+        </member>
+        <member name="T:Util.Security.MD5Util">
+            <summary>
+            MD5助手类
+            </summary>
+        </member>
+        <member name="M:Util.Security.MD5Util.MD5(System.String,Util.Security.LetterCase)">
+            <summary>
+            MD5加密
+            </summary>
+            <param name="str">需要加密的字符串</param>
+            <param name="letterCase">大小写枚举</param>
+            <exception cref="T:System.ArgumentNullException">System.ArgumentNullException</exception>
+            <returns>加密后的字符串</returns>
+        </member>
+        <member name="M:Util.Security.MD5Util.MD5(System.Byte[],Util.Security.LetterCase)">
+            <summary>
+            MD5加密
+            </summary>
+            <param name="byteArray">需要加密的字节数组</param>
+            <param name="letterCase">大小写枚举</param>
+            <exception cref="T:System.ArgumentNullException">System.ArgumentNullException</exception>
+            <returns>加密后的字符串</returns>
+        </member>
+        <member name="M:Util.Security.MD5Util.MD5WithBase64(System.String)">
+            <summary>
+            md5加密，并把结果进行Base64
+            </summary>
+            <param name="str">The string.</param>
+            <returns></returns>
+            <exception cref="T:System.ArgumentNullException">str;str can't be empty.</exception>
+        </member>
+        <member name="M:Util.Security.MD5Util.MD5WithBase64(System.Byte[])">
+            <summary>
+            md5加密，并把结果进行Base64
+            </summary>
+            <param name="byteArray">The byte array.</param>
+            <returns></returns>
+        </member>
+        <member name="T:Util.Security.MoqikakaUtil">
+            <summary>
+            摩奇卡卡安全工具类
+            </summary>
+        </member>
+        <member name="M:Util.Security.MoqikakaUtil.EncodeString(System.String,System.String)">
+            <summary>
+            摩奇卡卡的加密代码
+            </summary>
+            <param name="source">待加密字符串</param>
+            <param name="key">加密key</param>
+            <returns>加密字符串</returns>
+        </member>
+        <member name="T:Util.Security.RSAUtil">
+            <summary>
+            非对称RSA加密类 可以参考
+            http://www.cnblogs.com/hhh/archive/2011/06/03/2070692.html
+            http://blog.csdn.net/zhilunchen/article/details/2943158
+            若是私匙加密 则需公钥解密
+            反之公钥加密 私匙来解密
+            需要BigInteger类来辅助
+            </summary>
+        </member>
+        <member name="F:Util.Security.RSAUtil.DWKEYSIZE">
+            <summary>
+            RSA的容器 可以解密的源字符串长度为 DWKEYSIZE/8-11 
+            </summary>
+        </member>
+        <member name="T:Util.Security.RSAUtil.RSAKey">
+            <summary>
+            RSA加密的密匙结构  公钥和私匙
+            </summary>
+        </member>
+        <member name="M:Util.Security.RSAUtil.GetRASKey">
+            <summary>
+            得到RSA的解谜的密匙对
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Util.Security.RSAUtil.CheckSourceValidate(System.String)">
+            <summary>
+            检查明文的有效性 DWKEYSIZE/8-11 长度之内为有效 中英文都算一个字符
+            </summary>
+            <param name="source"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Util.Security.RSAUtil.ComponentKey(System.Byte[],System.Byte[])">
+            <summary>
+            组合成密匙字符串
+            </summary>
+            <param name="b1"></param>
+            <param name="b2"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Util.Security.RSAUtil.ResolveKey(System.String,System.Byte[]@,System.Byte[]@)">
+            <summary>
+            解析密匙
+            </summary>
+            <param name="key">密匙</param>
+            <param name="b1">RSA的相应参数1</param>
+            <param name="b2">RSA的相应参数2</param>
+        </member>
+        <member name="M:Util.Security.RSAUtil.EncryptString(System.String,System.String)">
+            <summary>
+            字符串加密
+            </summary>
+            <param name="source">源字符串 明文</param>
+            <param name="key">密匙</param>
+            <returns>加密遇到错误将会返回原字符串</returns>
+        </member>
+        <member name="M:Util.Security.RSAUtil.DecryptString(System.String,System.String)">
+            <summary>
+            字符串解密
+            </summary>
+            <param name="encryptString">密文</param>
+            <param name="key">密钥</param>
+            <returns>遇到解密失败将会返回原字符串</returns>
+        </member>
+        <member name="M:Util.Security.RSAUtil.EncryptString(System.String,Util.Security.BigInteger,Util.Security.BigInteger)">
+            <summary>
+            用指定的密匙加密 
+            </summary>
+            <param name="source">明文</param>
+            <param name="d">可以是RSACryptoServiceProvider生成的D</param>
+            <param name="n">可以是RSACryptoServiceProvider生成的Modulus</param>
+            <returns>返回密文</returns>
+        </member>
+        <member name="M:Util.Security.RSAUtil.DecryptString(System.String,Util.Security.BigInteger,Util.Security.BigInteger)">
+            <summary>
+            用指定的密匙加密 
+            </summary>
+            <param name="source">密文</param>
+            <param name="e">可以是RSACryptoServiceProvider生成的Exponent</param>
+            <param name="n">可以是RSACryptoServiceProvider生成的Modulus</param>
+            <returns>返回明文</returns>
+        </member>
+        <member name="M:Util.Security.RSAUtil.ConvertFromPublicKey(System.String)">
+            <summary>
+            将公钥转换为RSA参数
+            </summary>
+            <param name="pemFileConent">公钥pem文件内容</param>
+            <returns>RSA参数</returns>
+        </member>
+        <member name="M:Util.Security.RSAUtil.ConvertFromPrivateKey(System.String)">
+            <summary>
+            将私钥转换为RSA参数
+            </summary>
+            <param name="pemFileConent">私钥pem文件内容</param>
+            <returns>RSA参数</returns>
+        </member>
+        <member name="M:Util.Security.RSAUtil.CompareBytearrays(System.Byte[],System.Byte[])">
+            <summary>
+            比较Byte数组
+            </summary>
+            <param name="a">A数组</param>
+            <param name="b">B数组</param>
+            <returns>结果</returns>
+        </member>
+        <member name="M:Util.Security.RSAUtil.GetIntegerSize(System.IO.BinaryReader)">
+            <summary>
+            获取整形的大小
+            </summary>
+            <param name="binr">字节读取器</param>
+            <returns>整形大小</returns>
+        </member>
+        <member name="M:Util.Security.RSAUtil.DecodeRSAPrivateKey(System.Byte[])">
+            <summary>
+             根据私钥构造CSP对象
+            </summary>
+            <param name="privkey">二进制的私钥</param>
+            <returns>CSP对象</returns>
+        </member>
+        <member name="M:Util.Security.RSAUtil.DecodePrivateKeyInfo(System.Byte[])">
+            <summary>
+            根据私钥构造CSP对象
+            </summary>
+            <param name="pkcs8">二进制的私钥</param>
+            <returns>CSP对象</returns>
+        </member>
+        <member name="M:Util.Security.RSAUtil.DecodePemPrivateKey(System.String)">
+            <summary>
+            根据私钥构造CSP对象
+            </summary>
+            <param name="pemFileConent">私钥字符串</param>
+            <returns>CSP对象</returns>
+        </member>
+        <member name="M:Util.Security.RSAUtil.Decrypt(System.Byte[],System.String)">
+            <summary>
+            使用私钥进行解密
+            </summary>
+            <param name="data">加密的字符串</param>
+            <param name="privateKey">私钥</param>
+            <returns>解密后的字符串</returns>
+        </member>
+        <member name="M:Util.Security.RSAUtil.SignWithSHA1(System.String,System.String)">
+            <summary>
+            签名
+            </summary>
+            <param name="content">待签名字符串</param>
+            <param name="privateKey">私钥</param>
+            <returns>签名后字符串</returns>
+        </member>
+        <member name="M:Util.Security.RSAUtil.SignWithMD5(System.String,System.String)">
+            <summary>
+            签名
+            </summary>
+            <param name="content">待签名字符串</param>
+            <param name="privateKey">私钥</param>
+            <returns>签名后字符串</returns>
+        </member>
+        <member name="M:Util.Security.RSAUtil.VerifyWithSHA1(System.String,System.String,System.String)">
+            <summary>
+            验证签名是否正确
+            </summary>
+            <param name="verifyString">待验证字符串</param>
+            <param name="signString">签名</param>
+            <param name="publicKey">公钥</param>
+            <returns>true(通过)，false(不通过)</returns>
+        </member>
+        <member name="M:Util.Security.RSAUtil.VerifyWithMD5(System.String,System.String,System.String)">
+            <summary>
+            验证签名是否正确
+            </summary>
+            <param name="verifyString">待验证字符串</param>
+            <param name="signString">签名</param>
+            <param name="publicKey">公钥</param>
+            <returns>true(通过)，false(不通过)</returns>
+        </member>
+        <member name="M:Util.Security.RSAUtil.DecryptData(System.String,System.String)">
+            <summary>
+            解密
+            </summary>
+            <param name="resData">加密字符串</param>
+            <param name="privateKey">私钥</param>
+            <param name="input_charset">编码格式</param>
+            <returns>明文</returns>
+        </member>
+        <member name="M:Util.Security.RSAUtil.Decrypt(System.String,System.String,System.Boolean)">
+            <summary>
+            使用公钥进行解密
+            </summary>
+            <param name="encryptData">加密数据</param>
+            <param name="publicKeyFilePath">公钥文件路径</param>
+            <param name="isDirect">是否直接解密，PP属于这种情况</param>
+            <returns>解密数据</returns>
+        </member>
+        <member name="T:Util.Security.SHA1Util">
+            <summary>
+            SHA1助手类
+            </summary>
+        </member>
+        <member name="M:Util.Security.SHA1Util.SHA1(System.String,Util.Security.LetterCase)">
+            <summary>
+            SHA1加密
+            </summary>
+            <param name="str">需要加密的字符串</param>
+            <param name="letterCase">大小写枚举</param>
+            <exception cref="T:System.ArgumentNullException">System.ArgumentNullException</exception>
+            <returns>加密后的字符串</returns>
+        </member>
+        <member name="M:Util.Security.SHA1Util.SHA1(System.Byte[],Util.Security.LetterCase)">
+            <summary>
+            SHA1加密
+            </summary>
+            <param name="byteArray">需要加密的字节数组</param>
+            <param name="letterCase">大小写枚举</param>
+            <exception cref="T:System.ArgumentNullException">System.ArgumentNullException</exception>
+            <returns>加密后的字符串</returns>
+        </member>
+        <member name="T:Util.Security.LetterCase">
+            <summary>
+            字符的大小写枚举
+            </summary>
+        </member>
+        <member name="F:Util.Security.LetterCase.UpperCase">
+            <summary>
+            大写
+            </summary>
+        </member>
+        <member name="F:Util.Security.LetterCase.LowerCase">
+            <summary>
+            小写
+            </summary>
+        </member>
+        <member name="T:Util.ServiceInstallUtil">
+            <summary>
+            Windows服务安装帮助类
+            </summary>
+        </member>
+        <member name="M:Util.ServiceInstallUtil.IsServiceExist(System.String)">
+            <summary>
+            检查服务是否存在
+            </summary>
+            <param name="serviceName">服务名</param>
+            <returns>服务是否存在</returns>
+        </member>
+        <member name="M:Util.ServiceInstallUtil.InstallService(System.String,System.Collections.IDictionary)">
+            <summary>
+            安装Windows服务
+            </summary>
+            <param name="filepath">服务exe文件路径</param>
+            <param name="stateSaver">状态集, 默认为null</param>
+        </member>
+        <member name="M:Util.ServiceInstallUtil.UnInstallService(System.String)">
+            <summary>
+            卸载Windows服务
+            </summary>
+            <param name="filepath">服务exe文件路径</param>
+        </member>
+        <member name="M:Util.ServiceInstallUtil.IsServiceStart(System.String)">
+            <summary>
+            判断某个Windows服务是否已经开启
+            </summary>
+            <param name="serviceName">服务名</param>
+            <returns>服务是否已经开启</returns>
+        </member>
+        <member name="M:Util.ServiceInstallUtil.StartService(System.String,System.Int32)">
+            <summary>
+            开启服务
+            </summary>
+            <param name="serviceName">服务名</param>
+            <param name="waitSeconds">启动等待秒数, 默认为5</param>
+            <returns>是否开启成功</returns>
+        </member>
+        <member name="M:Util.ServiceInstallUtil.StopService(System.String,System.Int32)">
+            <summary>
+            停止服务
+            </summary>
+            <param name="serviceName">服务名</param>
+            <param name="waitSeconds">启动等待秒数, 默认为5</param>
+            <returns>服务是否成功停止</returns>
+        </member>
+        <member name="T:Util.StringUtil">
+            <summary>
+            字符串工具类
+            </summary>
+        </member>
+        <member name="M:Util.StringUtil.IsChinese(System.String)">
+            <summary>
+            判断字符串是否为中文
+            </summary>
+            <param name="str">待验证字符串</param>
+            <returns>是否为中文</returns>
+        </member>
+        <member name="M:Util.StringUtil.IsGuid(System.String)">
+            <summary>
+            判断字符串是否为GUID类型
+            </summary>
+            <param name="str">被检测的字符串</param>
+            <returns>串是否为GUID类型</returns>
+        </member>
+        <member name="M:Util.StringUtil.Base64Encode(System.String)">
+            <summary>
+            Base64 Encoding
+            </summary>
+            <param name="str">待编码的字符串</param>
+            <exception cref="T:System.ArgumentNullException">System.ArgumentNullException</exception>
+            <exception cref="T:System.Text.EncoderFallbackException">System.Text.EncoderFallbackException</exception>
+            <returns>编码后的字符串</returns>
+        </member>
+        <member name="M:Util.StringUtil.Base64Decode(System.String)">
+            <summary>
+            Base64 Decoding
+            </summary>
+            <param name="str">待解码的字符串</param>
+            <exception cref="T:System.ArgumentNullException">System.ArgumentNullException</exception>
+            <exception cref="T:System.FormatException">System.FormatException</exception>
+            <returns>解码后的字符串</returns>
+        </member>
+        <member name="M:Util.StringUtil.Split(System.String,System.String[])">
+            <summary>
+            分隔字符串，得到字符串数组
+            </summary>
+            <param name="sourceString">源字符串</param>
+            <param name="delimiterArray">分隔字符串数组</param>
+            <exception cref="T:System.ArgumentException">System.ArgumentException</exception>
+            <exception cref="T:System.ArgumentNullException">System.ArgumentNullException</exception>
+            <returns>分隔后的字符串数组</returns>
+        </member>
+        <member name="M:Util.StringUtil.Split(System.String,System.Char[])">
+            <summary>
+            分隔字符串，得到字符串数组
+            </summary>
+            <param name="sourceString">源字符串</param>
+            <param name="delimiterArray">分隔符数组</param>
+            <exception cref="T:System.ArgumentException">System.ArgumentException</exception>
+            <exception cref="T:System.ArgumentNullException">System.ArgumentNullException</exception>
+            <returns>分隔后的字符串数组</returns>
+        </member>
+        <member name="M:Util.StringUtil.Split(System.String,System.Char)">
+            <summary>
+            分隔字符串，得到字符串数组
+            </summary>
+            <param name="sourceString">源字符串</param>
+            <param name="delimiter">分隔符</param>
+            <exception cref="T:System.ArgumentException">System.ArgumentException</exception>
+            <exception cref="T:System.ArgumentNullException">System.ArgumentNullException</exception>
+            <returns>分隔后的字符串数组</returns>
+        </member>
+        <member name="M:Util.StringUtil.Replace(System.String,System.String,System.String)">
+            <summary>
+            替换源字符串中的参数
+            </summary>
+            <param name="sourceString">源字符串</param>
+            <param name="source">需要替换的参数名称</param>
+            <param name="dest">替换的参数值</param>
+            <exception cref="T:System.ArgumentException">System.ArgumentException</exception>
+            <returns>替换后的字符串</returns>
+        </member>
+        <member name="M:Util.StringUtil.Replace(System.String,System.String[],System.String[])">
+            <summary>
+            替换源字符串中的参数
+            </summary>
+            <param name="sourceString">源字符串</param>
+            <param name="source">需要替换的内容数组</param>
+            <param name="dest">进行替换的内容数组</param>
+            <exception cref="T:System.ArgumentException">System.ArgumentException</exception>
+            <returns>替换后的字符串</returns>
+        </member>
+        <member name="M:Util.StringUtil.Replace(System.String,System.Collections.Generic.Dictionary{System.String,System.Object})">
+            <summary>
+            替换源字符串中的参数
+            </summary>
+            <param name="sourceString">源字符串</param>
+            <param name="paramList">需要替换的名称/值对</param>
+            <exception cref="T:System.ArgumentException">System.ArgumentException</exception>
+            <returns>替换后的字符串</returns>
+        </member>
+        <member name="M:Util.StringUtil.ToDBC(System.Char)">
+            <summary>
+            将指定的全角字符转换为半角字符
+            </summary>
+            <param name="input">要转换的全角字符</param>
+            <returns>返回转换后的半角字符</returns>
+        </member>
+        <member name="M:Util.StringUtil.ToDBC(System.String)">
+            <summary>
+            将指定的全角字符串转换为半角字符串
+            </summary>
+            <param name="input">要转换的全角字符串</param>
+            <returns>对应的半角字符串</returns>
+        </member>
+        <member name="M:Util.StringUtil.IsMobilePhone(System.String)">
+            <summary>
+            验证是否是手机号码
+            </summary>
+            <param name="input">输入字符串</param>
+            <returns>是否是手机号码</returns>
+        </member>
+        <member name="T:Util.Web.DataCompress">
+            <summary>
+            数据压缩枚举
+            </summary>
+        </member>
+        <member name="F:Util.Web.DataCompress.Compress">
+            <summary>
+            压缩
+            </summary>
+        </member>
+        <member name="F:Util.Web.DataCompress.NotCompress">
+            <summary>
+            未压缩
+            </summary>
+        </member>
+        <member name="T:Util.Web.GetDataUtil">
+            <summary>
+            Get数据助手类
+            </summary>
+        </member>
+        <member name="M:Util.Web.GetDataUtil.CreateWebRequest(System.String,System.String,System.Collections.Generic.Dictionary{System.String,System.String},System.Int32,System.String,System.String,System.Version,System.Int32)">
+            <summary>
+            创建HttpWebRequest对象(GET方式)
+            </summary>
+            <param name="url">url</param>
+            <param name="getData">请求的数据</param>
+            <param name="headers">request头部信息</param>
+            <param name="timeout">超时的毫秒数</param>
+            <param name="userAgent">用户代理数据</param>
+            <param name="contentType">内容类型信息</param>
+            <param name="httpVersion">HTTP版本</param>
+            <param name="connectionLimit">连接数量限制</param>
+            <returns>HttpWebRequest对象</returns>
+        </member>
+        <member name="M:Util.Web.GetDataUtil.GetWebData(System.String,System.String,Util.Web.DataCompress,System.Collections.Generic.Dictionary{System.String,System.String},System.Int32,System.String,System.String,System.Version)">
+            <summary>
+            通过GET方式提交数据到url
+            </summary>
+            <param name="url">url</param>
+            <param name="getData">请求的参数</param>
+            <param name="compress">数据压缩枚举</param>
+            <param name="headers">request头部信息</param>
+            <param name="timeout">超时的毫秒数</param>
+            <param name="userAgent">用户代理数据</param>
+            <param name="contentType">内容类型信息</param>
+            <param name="httpVersion">HTTP版本</param>
+            <exception cref="T:System.ArgumentNullException"></exception>
+            <exception cref="T:System.Text.EncoderFallbackException"></exception>
+            <exception cref="T:System.Net.WebException"></exception>
+            <returns>从页面返回的数据</returns>
+        </member>
+        <member name="T:Util.Web.PostDataUtil">
+            <summary>
+            Post数据助手类
+            </summary>
+        </member>
+        <member name="M:Util.Web.PostDataUtil.CreateWebRequest(System.String,System.Byte[],System.Collections.Generic.Dictionary{System.String,System.String},System.Int32,System.String,System.String,System.Version,System.Int32)">
+            <summary>
+            创建HttpWebRequest对象(POST方式)
+            </summary>
+            <param name="url">url</param>
+            <param name="byteArray">发送的字节数组</param>
+            <param name="headers">request头部信息</param>
+            <param name="timeout">超时的毫秒数</param>
+            <param name="userAgent">用户代理数据</param>
+            <param name="contentType">内容类型信息</param>
+            <param name="httpVersion">HTTP版本</param>
+            <param name="connectionLimit">连接数量限制</param>
+            <returns>HttpWebRequest对象</returns>
+        </member>
+        <member name="M:Util.Web.PostDataUtil.PostWebData(System.String,System.String,Util.Web.DataCompress,System.Collections.Generic.Dictionary{System.String,System.String},System.Int32,System.String,System.String,System.Version,System.Int32)">
+            <summary>
+            Post数据
+            </summary>
+            <param name="url">目的地的Url</param>
+            <param name="postData">发送的数据</param>
+            <param name="compress">数据压缩枚举</param>
+            <param name="headers">request头部信息</param>
+            <param name="timeout">超时的毫秒数</param>
+            <param name="userAgent">用户代理数据</param>
+            <param name="contentType">内容类型信息</param>
+            <param name="httpVersion">HTTP版本</param>
+            <param name="connectionLimit">连接数量限制</param>
+            <exception cref="T:System.ArgumentNullException">Thrown when url or postData is null or empty</exception>
+            <exception cref="T:System.Text.EncoderFallbackException">System.Text.EncoderFallbackException</exception>
+            <returns>从页面返回的数据</returns>
+        </member>
+        <member name="M:Util.Web.PostDataUtil.PostWebData(System.String,System.Byte[],Util.Web.DataCompress,System.Collections.Generic.Dictionary{System.String,System.String},System.Int32,System.String,System.String,System.Version,System.Int32)">
+            <summary>
+            Post数据
+            </summary>
+            <param name="url">目的地的Url</param>
+            <param name="postData">发送的数据</param>
+            <param name="compress">数据压缩枚举</param>
+            <param name="headers">request头部信息</param>
+            <param name="timeout">超时的毫秒数</param>
+            <param name="userAgent">用户代理数据</param>
+            <param name="contentType">内容类型信息</param>
+            <param name="httpVersion">HTTP版本</param>
+            <param name="connectionLimit">连接数量限制</param>
+            <exception cref="T:System.ArgumentNullException"></exception>
+            <exception cref="T:System.Text.EncoderFallbackException"></exception>
+            <exception cref="T:System.Net.WebException"></exception>
+            <returns>从页面返回的数据</returns>
+        </member>
+        <member name="M:Util.Web.PostDataUtil.PostWebData(System.String,System.String,System.Collections.Generic.Dictionary{System.String,System.String},System.Int32,System.String,System.String,System.Version,System.Int32)">
+            <summary>
+            Post数据
+            </summary>
+            <param name="url">目的地的Url</param>
+            <param name="postData">发送的数据</param>
+            <param name="headers">request头部信息</param>
+            <param name="timeout">超时的毫秒数</param>
+            <param name="userAgent">用户代理数据</param>
+            <param name="contentType">内容类型信息</param>
+            <param name="httpVersion">HTTP版本</param>
+            <param name="connectionLimit">连接数量限制</param>
+            <exception cref="T:System.ArgumentNullException">Thrown when url or postData is null or empty</exception>
+            <exception cref="T:System.Text.EncoderFallbackException">System.Text.EncoderFallbackException</exception>
+            <exception cref="T:System.Net.WebException"></exception>
+            <returns>从页面返回的数据</returns>
+        </member>
+        <member name="M:Util.Web.PostDataUtil.PostWebData(System.String,System.Byte[],System.Collections.Generic.Dictionary{System.String,System.String},System.Int32,System.String,System.String,System.Version,System.Int32)">
+            <summary>
+            Post数据
+            </summary>
+            <param name="url">目的地的Url</param>
+            <param name="postData">发送的数据</param>
+            <param name="headers">request头部信息</param>
+            <param name="timeout">超时的毫秒数</param>
+            <param name="userAgent">用户代理数据</param>
+            <param name="contentType">内容类型信息</param>
+            <param name="httpVersion">HTTP版本</param>
+            <param name="connectionLimit">连接数量限制</param>
+            <exception cref="T:System.ArgumentNullException"></exception>
+            <exception cref="T:System.Text.EncoderFallbackException"></exception>
+            <exception cref="T:System.Net.WebException"></exception>
+            <returns>从页面返回的数据</returns>
+        </member>
+        <member name="T:Util.Web.WebUtil">
+            <summary>
+            Web助手类
+            </summary>
+        </member>
+        <member name="M:Util.Web.WebUtil.GetRequestIP(System.Web.HttpRequest,System.Boolean)">
+            <summary>
+            获取Http请求的IP地址
+            </summary>
+            <param name="request">Http请求</param>
+            <param name="ifAllowDelegate">是否允许代理</param>
+            <returns>IP地址</returns>
+        </member>
+        <member name="M:Util.Web.WebUtil.GetWebData(System.String,System.String,Util.Web.DataCompress,System.Collections.Generic.Dictionary{System.String,System.String},System.Int32,System.String,System.String,System.Version)">
+            <summary>
+            通过GET方式提交数据到url
+            </summary>
+            <param name="url">url</param>
+            <param name="getData">请求的参数</param>
+            <param name="compress">数据压缩枚举</param>
+            <param name="headers">request头部信息</param>
+            <param name="timeout">超时的毫秒数</param>
+            <param name="userAgent">用户代理数据</param>
+            <param name="contentType">内容类型信息</param>
+            <param name="httpVersion">HTTP版本</param>
+            <exception cref="T:System.ArgumentNullException"></exception>
+            <exception cref="T:System.Text.EncoderFallbackException"></exception>
+            <exception cref="T:System.Net.WebException"></exception>
+            <returns>从页面返回的数据</returns>
+        </member>
+        <member name="M:Util.Web.WebUtil.PostWebData(System.String,System.String,Util.Web.DataCompress,System.Collections.Generic.Dictionary{System.String,System.String},System.Int32,System.String,System.String,System.Version,System.Int32)">
+            <summary>
+            Post数据
+            </summary>
+            <param name="url">目的地的Url</param>
+            <param name="postData">发送的数据</param>
+            <param name="compress">数据压缩枚举</param>
+            <param name="headers">request头部信息</param>
+            <param name="timeout">超时的毫秒数</param>
+            <param name="userAgent">用户代理数据</param>
+            <param name="contentType">内容类型信息</param>
+            <param name="httpVersion">HTTP版本</param>
+            <param name="connectionLimit">连接数量限制</param>
+            <exception cref="T:System.ArgumentNullException"></exception>
+            <exception cref="T:System.Text.EncoderFallbackException"></exception>
+            <exception cref="T:System.Net.WebException"></exception>
+            <returns>从页面返回的数据</returns>
+        </member>
+        <member name="M:Util.Web.WebUtil.PostWebData(System.String,System.Byte[],Util.Web.DataCompress,System.Collections.Generic.Dictionary{System.String,System.String},System.Int32,System.String,System.String,System.Version,System.Int32)">
+            <summary>
+            Post数据
+            </summary>
+            <param name="url">目的地的Url</param>
+            <param name="postData">发送的数据</param>
+            <param name="compress">数据压缩枚举</param>
+            <param name="headers">request头部信息</param>
+            <param name="timeout">超时的毫秒数</param>
+            <param name="userAgent">用户代理数据</param>
+            <param name="contentType">内容类型信息</param>
+            <param name="httpVersion">HTTP版本</param>
+            <param name="connectionLimit">连接数量限制</param>
+            <exception cref="T:System.ArgumentNullException"></exception>
+            <exception cref="T:System.Text.EncoderFallbackException"></exception>
+            <exception cref="T:System.Net.WebException"></exception>
+            <returns>从页面返回的数据</returns>
+        </member>
+        <member name="M:Util.Web.WebUtil.PostWebData(System.String,System.String,System.Collections.Generic.Dictionary{System.String,System.String},System.Int32,System.String,System.String,System.Version,System.Int32)">
+             <summary>
+             Post数据
+             </summary>
+             <param name="url">目的地的Url</param>
+             <param name="postData">发送的数据</param>
+             <param name="headers">request头部信息</param>
+             <param name="timeout">超时的毫秒数</param>
+             <param name="userAgent">用户代理数据</param>
+             <param name="contentType">内容类型信息</param>
+             <param name="httpVersion">HTTP版本</param>
+             <param name="connectionLimit">连接数量限制</param>
+            <exception cref="T:System.ArgumentNullException"></exception>
+             <exception cref="T:System.Text.EncoderFallbackException"></exception>
+             <exception cref="T:System.Net.WebException"></exception>
+             <returns>从页面返回的数据</returns>
+        </member>
+        <member name="M:Util.Web.WebUtil.PostWebData(System.String,System.Byte[],System.Collections.Generic.Dictionary{System.String,System.String},System.Int32,System.String,System.String,System.Version,System.Int32)">
+            <summary>
+            Post数据
+            </summary>
+            <param name="url">目的地的Url</param>
+            <param name="postData">发送的数据</param>
+            <param name="headers">request头部信息</param>
+            <param name="timeout">超时的毫秒数</param>
+            <param name="userAgent">用户代理数据</param>
+            <param name="contentType">内容类型信息</param>
+            <param name="httpVersion">HTTP版本</param>
+            <param name="connectionLimit">连接数量限制</param>
+            <exception cref="T:System.ArgumentNullException"></exception>
+            <exception cref="T:System.Text.EncoderFallbackException"></exception>
+            <exception cref="T:System.Net.WebException"></exception>
+            <returns>从页面返回的数据</returns>
+        </member>
+        <member name="T:Util.XML.XMLUtil">
+            <summary>
+            XML助手类
+            </summary>
+        </member>
+        <member name="M:Util.XML.XMLUtil.GetXmlNode(System.String,System.String)">
+            <summary>
+            返回 XML字符串 节点value
+            </summary>
+            <param name="xmlDoc">XML格式 数据</param>
+            <param name="xmlNode">节点</param>
+            <exception cref="T:System.Xml.XmlException"></exception>
+            <returns>节点value</returns>
+        </member>
+        <member name="M:Util.Zlib.SupportClass.Identity(System.Int64)">
+            <summary>
+            This method returns the literal value received
+            </summary>
+            <param name="literal">The literal to return</param>
+            <returns>The received value</returns>
+        </member>
+        <member name="M:Util.Zlib.SupportClass.Identity(System.UInt64)">
+            <summary>
+            This method returns the literal value received
+            </summary>
+            <param name="literal">The literal to return</param>
+            <returns>The received value</returns>
+        </member>
+        <member name="M:Util.Zlib.SupportClass.Identity(System.Single)">
+            <summary>
+            This method returns the literal value received
+            </summary>
+            <param name="literal">The literal to return</param>
+            <returns>The received value</returns>
+        </member>
+        <member name="M:Util.Zlib.SupportClass.Identity(System.Double)">
+            <summary>
+            This method returns the literal value received
+            </summary>
+            <param name="literal">The literal to return</param>
+            <returns>The received value</returns>
+        </member>
+        <member name="M:Util.Zlib.SupportClass.URShift(System.Int32,System.Int32)">
+            <summary>
+            Performs an unsigned bitwise right shift with the specified number
+            </summary>
+            <param name="number">Number to operate on</param>
+            <param name="bits">Ammount of bits to shift</param>
+            <returns>The resulting number from the shift operation</returns>
+        </member>
+        <member name="M:Util.Zlib.SupportClass.URShift(System.Int32,System.Int64)">
+            <summary>
+            Performs an unsigned bitwise right shift with the specified number
+            </summary>
+            <param name="number">Number to operate on</param>
+            <param name="bits">Ammount of bits to shift</param>
+            <returns>The resulting number from the shift operation</returns>
+        </member>
+        <member name="M:Util.Zlib.SupportClass.URShift(System.Int64,System.Int32)">
+            <summary>
+            Performs an unsigned bitwise right shift with the specified number
+            </summary>
+            <param name="number">Number to operate on</param>
+            <param name="bits">Ammount of bits to shift</param>
+            <returns>The resulting number from the shift operation</returns>
+        </member>
+        <member name="M:Util.Zlib.SupportClass.URShift(System.Int64,System.Int64)">
+            <summary>
+            Performs an unsigned bitwise right shift with the specified number
+            </summary>
+            <param name="number">Number to operate on</param>
+            <param name="bits">Ammount of bits to shift</param>
+            <returns>The resulting number from the shift operation</returns>
+        </member>
+        <member name="M:Util.Zlib.SupportClass.ReadInput(System.IO.Stream,System.Byte[],System.Int32,System.Int32)">
+            <summary>Reads a number of characters from the current source Stream and writes the data to the target array at the specified index.</summary>
+            <param name="sourceStream">The source Stream to read from.</param>
+            <param name="target">Contains the array of characteres read from the source Stream.</param>
+            <param name="start">The starting index of the target array.</param>
+            <param name="count">The maximum number of characters to read from the source Stream.</param>
+            <returns>The number of characters read. The number will be less than or equal to count depending on the data available in the source Stream. Returns -1 if the end of the stream is reached.</returns>
+        </member>
+        <member name="M:Util.Zlib.SupportClass.ReadInput(System.IO.TextReader,System.Byte[],System.Int32,System.Int32)">
+            <summary>Reads a number of characters from the current source TextReader and writes the data to the target array at the specified index.</summary>
+            <param name="sourceTextReader">The source TextReader to read from</param>
+            <param name="target">Contains the array of characteres read from the source TextReader.</param>
+            <param name="start">The starting index of the target array.</param>
+            <param name="count">The maximum number of characters to read from the source TextReader.</param>
+            <returns>The number of characters read. The number will be less than or equal to count depending on the data available in the source TextReader. Returns -1 if the end of the stream is reached.</returns>
+        </member>
+        <member name="M:Util.Zlib.SupportClass.ToByteArray(System.String)">
+            <summary>
+            Converts a string to an array of Bytes
+            </summary>
+            <param name="sourceString">The string to be converted</param>
+            <returns>The new array of Bytes</returns>
+        </member>
+        <member name="M:Util.Zlib.SupportClass.ToCharArray(System.Byte[])">
+            <summary>
+            Converts an array of Bytes to an array of chars
+            </summary>
+            <param name="ByteArray">The array of Bytes to convert</param>
+            <returns>The new array of chars</returns>
+        </member>
+        <member name="P:Util.Zlib.ZInputStream.TotalIn">
+            <summary> Returns the total number of Bytes input so far.</summary>
+        </member>
+        <member name="P:Util.Zlib.ZInputStream.TotalOut">
+            <summary> Returns the total number of Bytes output so far.</summary>
+        </member>
+        <member name="P:Util.Zlib.ZOutputStream.TotalIn">
+            <summary> Returns the total number of Bytes input so far.</summary>
+        </member>
+        <member name="P:Util.Zlib.ZOutputStream.TotalOut">
+            <summary> Returns the total number of Bytes output so far.</summary>
+        </member>
+    </members>
+</doc>

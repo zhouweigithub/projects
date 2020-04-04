@@ -14,5 +14,9 @@ namespace Sunny.Model.Response
         public int student_count { get; set; }
         public string venue_name { get; set; }
         public string campus_name { get; set; }
+        /// <summary>
+        /// 上课的学生
+        /// </summary>
+        public List<Student> students { get; set; } = new List<Student>();
     }
 }

@@ -41,6 +41,7 @@ namespace Sunny.Model
         /// <summary>
         /// 教练评级
         /// </summary>
+        [TableField]
         public short level { get; set; }
         /// <summary>
         /// 电话号码

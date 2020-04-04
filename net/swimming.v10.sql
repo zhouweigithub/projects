@@ -200,17 +200,17 @@ CREATE TABLE `coach` (
   `type` tinyint(4) DEFAULT '0' COMMENT '类型0游泳1画画2弹琴3...',
   `level` tinyint(4) DEFAULT '0' COMMENT '教练评级',
   `headimg` varchar(500) DEFAULT NULL COMMENT '头像图片地址',
-  `cash` int(11) NOT NULL DEFAULT '0' COMMENT '账户余额',
+  `cash` decimal(10,2) NOT NULL DEFAULT '0.00' COMMENT '账户余额',
   `state` tinyint(4) NOT NULL DEFAULT '0' COMMENT '0正常 1受限',
   `crtime` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
   PRIMARY KEY (`id`),
   UNIQUE KEY `IX_USERNAME` (`username`),
   UNIQUE KEY `IX_PHONE` (`phone`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8 COMMENT='注册教练信息表';
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8 COMMENT='注册教练信息表';
 
 /*Data for the table `coach` */
 
-insert  into `coach`(`id`,`username`,`password`,`name`,`sex`,`phone`,`type`,`level`,`headimg`,`cash`,`state`,`crtime`) values (1,'xxx','fff','李咏',0,'125412541',0,0,'http://cms-bucket.nosdn.127.net/2355aab3ab86470593a7fe33239a09cb20170105080207.jpg',0,0,'2019-01-08 11:23:10'),(2,'ttt','ss','李白',1,'3456798765',0,0,'http://cms-bucket.nosdn.127.net/2355aab3ab86470593a7fe33239a09cb20170105080207.jpg',0,0,'2019-01-11 16:16:47'),(3,'eee','ggg','陆游',0,'33333333333',0,0,'http://cms-bucket.nosdn.127.net/2355aab3ab86470593a7fe33239a09cb20170105080207.jpg',0,0,'2019-01-11 16:17:45'),(4,'77','88','陈坤',0,'13266945548',0,0,'http://cms-bucket.nosdn.127.net/2355aab3ab86470593a7fe33239a09cb20170105080207.jpg',0,0,'2019-01-11 16:30:57');
+insert  into `coach`(`id`,`username`,`password`,`name`,`sex`,`phone`,`type`,`level`,`headimg`,`cash`,`state`,`crtime`) values (1,'xxx','fff','李咏',0,'13425645987',0,0,'http://cms-bucket.nosdn.127.net/2355aab3ab86470593a7fe33239a09cb20170105080207.jpg','0.00',0,'2019-01-08 11:23:10'),(2,'ttt','ss','李白',1,'3456798765',0,0,'http://cms-bucket.nosdn.127.net/2355aab3ab86470593a7fe33239a09cb20170105080207.jpg','0.00',0,'2019-01-11 16:16:47'),(3,'eee','ggg','陆游',0,'33333333333',0,0,'http://cms-bucket.nosdn.127.net/2355aab3ab86470593a7fe33239a09cb20170105080207.jpg','0.00',0,'2019-01-11 16:17:45'),(4,'77','88','陈坤',0,'13266945548',0,0,'http://cms-bucket.nosdn.127.net/2355aab3ab86470593a7fe33239a09cb20170105080207.jpg','0.00',0,'2019-01-11 16:30:57'),(5,'oqol35CUc3zO2cPEmXmDnC5YNL1k_0',NULL,NULL,0,'13800000000',0,0,NULL,'0.00',0,'2019-02-01 10:31:06'),(6,'ddd','',NULL,0,'13548798487',0,0,NULL,'0.00',0,'2019-02-01 22:00:11');
 
 /*Table structure for table `coach_caption` */
 
@@ -259,7 +259,7 @@ CREATE TABLE `coachcaption_venue` (
 
 /*Data for the table `coachcaption_venue` */
 
-insert  into `coachcaption_venue`(`coach_id`,`venue_id`,`crtime`) values (2,1,'2019-01-11 16:17:05'),(4,2,'2019-01-14 14:44:04');
+insert  into `coachcaption_venue`(`coach_id`,`venue_id`,`crtime`) values (1,1,'2019-01-31 23:12:41'),(2,2,'2019-01-11 16:17:05'),(4,2,'2019-01-14 14:44:04');
 
 /*Table structure for table `coupon` */
 
@@ -314,11 +314,11 @@ CREATE TABLE `course` (
   `over_hour` int(11) DEFAULT '0' COMMENT '已完成学时',
   `crtime` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8 COMMENT='购买成功的课程表';
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8 COMMENT='购买成功的课程表';
 
 /*Data for the table `course` */
 
-insert  into `course`(`id`,`student_id`,`product_id`,`venue_id`,`order_id`,`max_count`,`hour`,`over_hour`,`crtime`) values (1,12,1,1,'ddd',1,10,1,'2019-01-11 17:44:49'),(2,12,4,1,'dd',0,2,0,'2019-01-11 17:48:06'),(3,12,2,2,'gg',2,5,2,'2019-01-11 17:48:23'),(4,12,3,1,'eee',3,3,3,'2019-01-27 10:19:14'),(5,13,2,2,'www',1,2,1,'2019-01-30 10:52:38');
+insert  into `course`(`id`,`student_id`,`product_id`,`venue_id`,`order_id`,`max_count`,`hour`,`over_hour`,`crtime`) values (1,12,1,2,'1000012_2019013122284880142203',1,10,0,'2019-01-31 22:28:48'),(2,12,1,1,'1000012_2019013122385635224832',1,10,0,'2019-01-31 22:38:56');
 
 /*Table structure for table `course_price` */
 
@@ -457,7 +457,43 @@ CREATE TABLE `order` (
 
 /*Data for the table `order` */
 
-insert  into `order`(`order_id`,`userid`,`money`,`discount_money`,`coupon_money`,`receiver`,`phone`,`address`,`message`,`deliver_id`,`freight`,`state`,`crdate`,`crtime`) values ('aaa',12,'50.00','10.00','5.00','Mr杨','13254689954','杭州西湖中心','呵呵','1','0.00',0,'2019-01-25','2019-01-25 21:04:34'),('bbb',12,'50.00','10.00','5.00','Mr杨','13254689954','杭州西湖中心','呵呵','1','0.00',1,'2019-01-25','2019-01-25 21:04:34'),('ccc',12,'50.00','10.00','5.00','Mr杨','13254689954','杭州西湖中心','呵呵','2','0.00',2,'2019-01-25','2019-01-25 21:04:34'),('ddd',12,'50.00','10.00','5.00','Mr杨','13254689954','杭州西湖中心','呵呵','2','0.00',3,'2019-01-25','2019-01-25 21:04:34'),('eee',12,'50.00','10.00','5.00','Mr杨','13254689954','杭州西湖中心','呵呵','2','0.00',4,'2019-01-25','2019-01-25 21:04:34'),('fff',12,'50.00','10.00','5.00','Mr杨','13254689954','杭州西湖中心','呵呵','2','0.00',5,'2019-01-25','2019-01-25 21:04:34'),('vvv',13,'50.00','10.00','5.00','Mr杨','13254689954','杭州西湖中心','呵呵','2','0.00',3,'2019-01-25','2019-01-25 21:04:34');
+insert  into `order`(`order_id`,`userid`,`money`,`discount_money`,`coupon_money`,`receiver`,`phone`,`address`,`message`,`deliver_id`,`freight`,`state`,`crdate`,`crtime`) values ('1000012_2019013122255290976702',12,'600.00','0.00','0.00',NULL,NULL,NULL,'请尽快发货','0','0.00',0,'2019-01-31','2019-01-31 22:25:52'),('1000012_2019013122284880142203',12,'200.00','0.00','0.00',NULL,NULL,NULL,'请尽快发货','0','0.00',0,'2019-01-31','2019-01-31 22:28:48'),('1000012_2019013122385635224832',12,'600.00','0.00','0.00',NULL,NULL,NULL,'请尽快发货','0','0.00',0,'2019-01-31','2019-01-31 22:38:56');
+
+/*Table structure for table `order_callback_pay` */
+
+DROP TABLE IF EXISTS `order_callback_pay`;
+
+CREATE TABLE `order_callback_pay` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `appid` varchar(32) DEFAULT NULL COMMENT '小程序ID',
+  `mch_id` varchar(32) DEFAULT NULL COMMENT '商户号',
+  `device_info` varchar(32) DEFAULT NULL COMMENT '设备号',
+  `nonce_str` varchar(32) DEFAULT NULL COMMENT '随机字符串',
+  `sign` varchar(32) DEFAULT NULL COMMENT '签名',
+  `sign_type` varchar(32) DEFAULT NULL COMMENT '签名类型',
+  `result_code` varchar(16) DEFAULT NULL COMMENT '业务结果',
+  `err_code` varchar(32) DEFAULT NULL COMMENT '错误代码',
+  `err_code_des` varchar(128) DEFAULT NULL COMMENT '错误代码描述',
+  `openid` varchar(128) DEFAULT NULL COMMENT '用户标识',
+  `is_subscribe` varchar(1) DEFAULT NULL COMMENT '是否关注公众账号',
+  `trade_type` varchar(16) DEFAULT NULL COMMENT '交易类型',
+  `bank_type` varchar(16) DEFAULT NULL COMMENT '付款银行',
+  `total_fee` int(11) DEFAULT '0' COMMENT '订单金额',
+  `settlement_total_fee` int(11) DEFAULT NULL COMMENT '应结订单金额',
+  `fee_type` varchar(8) DEFAULT NULL COMMENT '货币种类',
+  `cash_fee` int(11) DEFAULT '0' COMMENT '现金支付金额',
+  `cash_fee_type` varchar(16) DEFAULT NULL COMMENT '现金支付货币类型',
+  `coupon_fee` int(11) DEFAULT '0' COMMENT '总代金券金额',
+  `coupon_count` int(11) DEFAULT '0' COMMENT '代金券使用数量',
+  `transaction_id` varchar(32) DEFAULT NULL COMMENT '微信支付订单号',
+  `out_trade_no` varchar(32) DEFAULT NULL COMMENT '商户订单号',
+  `attach` varchar(128) DEFAULT NULL COMMENT '商家数据包',
+  `time_end` varchar(14) DEFAULT NULL COMMENT '支付完成时间',
+  `crtime` timestamp NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='支付回调';
+
+/*Data for the table `order_callback_pay` */
 
 /*Table structure for table `order_coupon` */
 
@@ -474,8 +510,6 @@ CREATE TABLE `order_coupon` (
 
 /*Data for the table `order_coupon` */
 
-insert  into `order_coupon`(`order_id`,`coupon_id`,`name`,`count`,`money`) values ('aaa',1,'优惠券1',1,'0.00'),('vvv',2,'优惠券1',1,'0.00');
-
 /*Table structure for table `order_discount` */
 
 DROP TABLE IF EXISTS `order_discount`;
@@ -490,8 +524,6 @@ CREATE TABLE `order_discount` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='订单折扣信息';
 
 /*Data for the table `order_discount` */
-
-insert  into `order_discount`(`order_id`,`product_id`,`discount_id`,`name`,`money`) values ('aaa',1,1,'开业大促销','20.00'),('vvv',1,1,'开业大促销','30.00');
 
 /*Table structure for table `order_product` */
 
@@ -513,7 +545,7 @@ CREATE TABLE `order_product` (
 
 /*Data for the table `order_product` */
 
-insert  into `order_product`(`order_id`,`product_id`,`product_name`,`plan_code`,`count`,`price`,`orig_price`,`total_amount`,`discount_amount`,`venueid`) values ('aaa',1,'就是这个商品这个商品','ddd',1,'50.00','60.00','50.00','10.00',1),('bbb',1,'就是这个商品这个商品','ddd',1,'50.00','60.00','50.00','10.00',1),('ccc',1,'就是这个商品这个商品','ddd',1,'50.00','60.00','50.00','10.00',1),('ddd',1,'就是这个商品这个商品','ddd',1,'50.00','60.00','50.00','10.00',1),('eee',1,'就是这个商品这个商品','ddd',1,'50.00','60.00','50.00','10.00',1),('fff',1,'就是这个商品这个商品','ddd',1,'50.00','60.00','50.00','10.00',1),('vvv',1,'就是这个商品这个商品','ddd',1,'50.00','60.00','50.00','10.00',1);
+insert  into `order_product`(`order_id`,`product_id`,`product_name`,`plan_code`,`count`,`price`,`orig_price`,`total_amount`,`discount_amount`,`venueid`) values ('1000012_2019013122284880142203',1,'富贵鸟棉衣男外套2018冬季新款棉服男士修身韩版连帽',NULL,1,'200.00','200.00','200.00','0.00',2),('1000012_2019013122385635224832',1,'富贵鸟棉衣男外套2018冬季新款棉服男士修身韩版连帽',NULL,1,'600.00','600.00','600.00','0.00',1);
 
 /*Table structure for table `order_product_specification_detail` */
 
@@ -529,7 +561,7 @@ CREATE TABLE `order_product_specification_detail` (
 
 /*Data for the table `order_product_specification_detail` */
 
-insert  into `order_product_specification_detail`(`order_id`,`product_id`,`plan_code`,`price`) values ('aaa',1,'ddd','50.00');
+insert  into `order_product_specification_detail`(`order_id`,`product_id`,`plan_code`,`price`) values ('1000012_2019013122154621835553',1,'0','600.00'),('1000012_2019013122255290976702',1,'0','600.00'),('1000012_2019013122284880142203',1,'0','200.00'),('1000012_2019013122385635224832',1,'0','600.00'),('aaa',1,'ddd','50.00');
 
 /*Table structure for table `pay_record` */
 
@@ -546,11 +578,11 @@ CREATE TABLE `pay_record` (
   `balance` decimal(10,0) DEFAULT '0' COMMENT '余额',
   `crtime` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8 COMMENT='用户资金变动记录';
+) ENGINE=InnoDB AUTO_INCREMENT=18 DEFAULT CHARSET=utf8 COMMENT='用户资金变动记录';
 
 /*Data for the table `pay_record` */
 
-insert  into `pay_record`(`id`,`user_id`,`user_type`,`order_id`,`money`,`type`,`comment`,`balance`,`crtime`) values (1,12,0,'aaa','23.00',1,'fff','20','2019-01-26 22:17:58'),(2,12,0,'aaa','45.00',3,'ee','55','2019-01-26 22:18:31'),(3,13,0,'vvv','-98.00',0,'交保护费','24','2019-01-30 13:58:29'),(4,13,0,NULL,'33.00',0,'fff','1','2019-01-30 13:58:41');
+insert  into `pay_record`(`id`,`user_id`,`user_type`,`order_id`,`money`,`type`,`comment`,`balance`,`crtime`) values (1,12,0,'aaa','23.00',1,'fff','20','2019-01-26 22:17:58'),(2,12,0,'aaa','45.00',3,'ee','55','2019-01-26 22:18:31'),(3,13,0,'vvv','-98.00',0,'交保护费','24','2019-01-30 13:58:29'),(4,13,0,NULL,'33.00',0,'fff','1','2019-01-30 13:58:41'),(5,12,0,'1000012_2019013121263377531538','-550.00',0,'购买商品','1105','2019-01-31 21:26:33'),(6,12,0,'1000012_2019013121372061906707','-600.00',0,'购买商品','505','2019-01-31 21:37:20'),(7,12,0,'1000012_2019013121393832226437','-600.00',0,'购买商品','-95','2019-01-31 21:39:38'),(8,12,0,'1000012_2019013121462421286731','-600.00',0,'购买商品','-695','2019-01-31 21:46:24'),(9,12,0,'1000012_2019013122015888491177','-600.00',0,'购买商品','-1295','2019-01-31 22:01:58'),(10,12,0,'1000012_2019013122034696373033','-200.00',0,'购买商品','-1495','2019-01-31 22:03:46'),(11,12,0,'1000012_2019013122054276137172','-600.00',0,'购买商品','-2095','2019-01-31 22:05:42'),(12,12,0,'1000012_2019013122094184108541','-600.00',0,'购买商品','-2695','2019-01-31 22:09:41'),(13,12,0,'1000012_2019013122131867058174','-600.00',0,'购买商品','-3295','2019-01-31 22:13:18'),(14,12,0,'1000012_2019013122154621835553','-600.00',0,'购买商品','-3895','2019-01-31 22:15:46'),(15,12,0,'1000012_2019013122255290976702','-600.00',0,'购买商品','-4495','2019-01-31 22:25:52'),(16,12,0,'1000012_2019013122284880142203','-200.00',0,'购买商品','-4695','2019-01-31 22:28:48'),(17,12,0,'1000012_2019013122385635224832','-600.00',0,'购买商品','-5295','2019-01-31 22:38:56');
 
 /*Table structure for table `product` */
 
@@ -608,7 +640,7 @@ CREATE TABLE `product_discount` (
 
 /*Data for the table `product_discount` */
 
-insert  into `product_discount`(`id`,`product_id`,`discount_id`,`start_time`,`end_time`,`state`,`crttime`) values (1,1,1,'2019-01-25 10:46:55','2019-01-27 10:47:01',0,'2019-01-08 10:47:05'),(2,2,2,'2019-01-08 14:52:30','2019-01-23 14:52:34',0,'2019-01-14 14:52:29'),(3,3,2,'2019-01-25 10:46:55','2019-01-27 10:47:01',0,'2019-01-08 10:47:05');
+insert  into `product_discount`(`id`,`product_id`,`discount_id`,`start_time`,`end_time`,`state`,`crttime`) values (1,1,1,'2019-01-25 10:46:55','2019-01-28 10:47:01',0,'2019-01-08 10:47:05'),(2,2,2,'2019-01-08 14:52:30','2019-01-23 14:52:34',0,'2019-01-14 14:52:29'),(3,3,2,'2019-01-25 10:46:55','2019-01-27 10:47:01',0,'2019-01-08 10:47:05');
 
 /*Table structure for table `product_headimg` */
 
@@ -768,7 +800,7 @@ CREATE TABLE `student` (
 
 /*Data for the table `student` */
 
-insert  into `student`(`id`,`username`,`password`,`name`,`sex`,`phone`,`birthday`,`headimg`,`cash`,`state`,`crtime`) values (1,'xyz','e10adc3949ba59abbe56e057f20f883e','陈乔朋',0,'15271459965','2019-06-27','http://img3.redocn.com/tupian/20150318/shengdanquanbiankuangsucai_4020876.jpg','112.00',0,'2019-01-14 14:58:12'),(2,'space','54ea1cafa9e86fe45877ef16e38a8774','庄仕华',0,'17033215468','2019-01-01','http://img1.imgtn.bdimg.com/it/u=93745383,492158812&fm=26&gp=0.jpg','0.00',0,'2019-01-14 15:00:26'),(12,'oqol35CUc3zO2cPEmXmDnC5YNL1k','','Tina',0,'18601647920','0001-01-01',NULL,'1655.00',0,'2019-01-26 14:32:03'),(13,'oqol35CYq6duEqrtKSg__mHWl0X8','','李雷',0,'13281250775','0001-01-01',NULL,'2044.00',0,'2019-01-30 10:49:05');
+insert  into `student`(`id`,`username`,`password`,`name`,`sex`,`phone`,`birthday`,`headimg`,`cash`,`state`,`crtime`) values (1,'xyz','e10adc3949ba59abbe56e057f20f883e','陈乔朋',0,'15271459965','2019-06-27','http://img3.redocn.com/tupian/20150318/shengdanquanbiankuangsucai_4020876.jpg','112.00',0,'2019-01-14 14:58:12'),(2,'space','54ea1cafa9e86fe45877ef16e38a8774','庄仕华',0,'17033215468','2019-01-01','http://img1.imgtn.bdimg.com/it/u=93745383,492158812&fm=26&gp=0.jpg','0.00',0,'2019-01-14 15:00:26'),(12,'oqol35CUc3zO2cPEmXmDnC5YNL1k','','Tina',0,'18601647920','0001-01-01',NULL,'-5295.00',0,'2019-01-26 14:32:03'),(13,'oqol35CYq6duEqrtKSg__mHWl0X8','','李雷',0,'13281250775','0001-01-01',NULL,'2044.00',0,'2019-01-30 10:49:05');
 
 /*Table structure for table `student_coupon` */
 
@@ -786,7 +818,7 @@ CREATE TABLE `student_coupon` (
 
 /*Data for the table `student_coupon` */
 
-insert  into `student_coupon`(`student_id`,`coupon_id`,`count`,`state`,`crtime`) values (1,1,10,0,'2019-01-08 17:22:05'),(1,2,1,0,'2019-01-28 13:57:26'),(12,3,5,0,'2019-01-25 21:07:41'),(13,1,3,0,'2019-01-30 11:21:59'),(13,2,1,1,'2019-01-30 11:22:05'),(13,3,8,0,'2019-01-30 11:23:00');
+insert  into `student_coupon`(`student_id`,`coupon_id`,`count`,`state`,`crtime`) values (10,2,1,0,'2019-01-28 13:57:26'),(12,1,0,0,'2019-01-08 17:22:05'),(12,3,5,0,'2019-01-25 21:07:41'),(13,1,3,0,'2019-01-30 11:21:59'),(13,2,1,1,'2019-01-30 11:22:05'),(13,3,8,0,'2019-01-30 11:23:00');
 
 /*Table structure for table `venue` */
 

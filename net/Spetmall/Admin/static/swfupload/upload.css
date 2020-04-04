@@ -1,0 +1,138 @@
+@charset "utf-8";
+/* CSS Document */
+/***
+ * uimaker
+ * http://www.uimaker.com
+ * e-mail: admin@uimaker.com
+ */
+*{font-size:9pt;border:0;margin:0;padding:0;}
+body{font-family:'微软雅黑'; margin:0 auto;}
+ul{display:block;margin:0;padding:0;list-style:none;}
+li{display:block;margin:0;padding:0;list-style: none;}
+img{border:0;}
+dl,dt,dd,span{margin:0;padding:0;display:block;}
+a,a:focus{text-decoration:none;color:#000;outline:none;blr:expression(this.onFocus=this.blur());}
+a:hover{color:#00a4ac;text-decoration:none;}
+table{border-collapse:collapse;border-spacing: 0;}
+cite{font-style:normal;}
+h2{font-weight:normal;}
+em{font-style: normal}
+
+
+.options{ padding:5px;}
+.options ul.tab{ margin:0px; padding:0px; padding-left:20px; position:relative; bottom:-1px;  overflow:hidden;}
+.options ul.tab li{float:left;cursor: pointer; border:1px solid #dce3ed; margin-right:10px; padding:0px 10px; background:#eaeef4; height:30px; line-height:30px; }
+.options ul.tab li.on{ background:#FFF; border-bottom:0; height:31px;}
+.options ul.tab li.icon { background-image: url(./images/exclamation_small.png);padding-left: 18px;background-repeat: no-repeat;background-position: 3px center;}
+
+
+
+.options .optionlist{border:1px solid #dce3ed; padding:10px; padding-bottom:0px;}
+
+.options .upload{ }
+.options .upload .uploadbutton{ }
+
+.options #html5uploadbutton{ height:30px; position:relative;}
+.options  .html5select{ height:30px; position:absolute; left:0px; top:0px; z-index:100; background:url(./images/uplode3.gif) no-repeat center top; display:block; width:115px;}
+.options  .html5selectfile{ z-index:101;}
+.options  .html5selectfile .multifile{ height:30px; opacity:0;}
+
+
+
+
+/*上传完成后的效果*/
+.selectoption{ overflow:hidden; padding-top:10px; width:605px; overflow:hidden; margin:0px auto;}
+.selectoption ul.attrlist{ margin:0px; padding:0px;width:630px;}
+.selectoption  li{ float:left; padding:5px 0px;padding-right:10px;}
+.selectoption  li .item{ text-align: center;overflow: hidden;background: #fff;border: none;position: relative;}
+.selectoption  li a.word{ display: table-cell;vertical-align: middle;text-align: center;*display: block;border: 1px solid #eee;width: 111px;height: 115px;*font-size: 67px;}
+.selectoption  li a.word:hover{border-color: #d0def1;background: #f3f6fa;}
+.selectoption  li a.word span{ display:block; height:30px; line-height:30px;}
+.selectoption  li a.word img{ width:80px; height:80px; vertical-align: middle;}
+.selectoption  li a.selected{border-color: #d0def1;background: #f3f6fa;}
+.selectoption  li a.selected .icon { background: url(./images/msg_bg.png) no-repeat left -249px;width: 16px; height: 18px;top: 4px;*top: 2px;right: 3px;z-index: 100;position: absolute; overflow: hidden;}
+.selectoption  li .item span{ display:block;font-size:12px; height:24px; line-height:24px; background:#CCC; text-align:left; text-indent:0.4em; width:113px;}
+.selectoption  li .item span em{ float:left; width:75px; height:24px; overflow:hidden;text-overflow:ellipsis;}
+.selectoption  li a.del{ float:right; padding-right:5px; font-size:12px;}
+.explain-col {border: 1px solid #ffbe7a;zoom: 1;background: #fffced;padding: 8px 10px;line-height: 20px}
+
+
+
+
+
+
+/*上传进度*/
+.options .selectoption a.on{border-color: #d0def1;background: #f3f6fa;}
+.options .uploadlist{ overflow:hidden;}
+.options .uploadlist ul{ margin:0px; padding:0px;}
+.options .uploadlist ul li{ clear:both;  background-color: #F7F7F7;  font-size:12px; overflow:hidden; margin-top:12px; border:1px solid #ccc; position:relative;}
+.options .uploadlist ul li.error{ background:#F00;}
+.options .uploadlist ul li a{ background:url(./images/cross.png) no-repeat; width:20px; height:20px; position:absolute; top:4px; right:0px;}
+.options .uploadlist ul li a:hover{ background-position:0px -48px;}
+.options .uploadlist ul li p{ margin:0px; padding:0px; display:block; height:30px; line-height:30px; text-indent:0.5em;}
+.options .uploadlist ul li p i{ font-size:12px; color:#FFF; padding-left:10px;}
+.options .uploadlist ul li span{ background:#FFCC00;height:5px;display:block; overflow:hidden; /*border-radius:5px;*/}
+.options .uploadlist ul li span em{ background:#F00; height:5px;display:block; overflow:hidden; }
+
+/*附件列表*/
+.attrlist li .item span em{ width:110px; text-align:center;}
+.attrlist2 li .item span em{width:78px; }
+
+.tabson{ overflow:hidden;}
+.tabson form{ overflow:hidden; display:block;}
+.seachform {
+    border: 1px solid #ffbe7a;
+    background: #fffced;
+    padding: 4px 10px;
+	overflow:hidden;
+	
+}
+.options .attr .seachform   li{ overflow:hidden;}
+
+
+ .scinput {
+    width: 150px;
+    height: 22px;
+    line-height: 22px;
+    border-top: solid 1px #a7b5bc;
+    border-left: solid 1px #a7b5bc;
+    border-right: solid 1px #ced9df;
+    border-bottom: solid 1px #ced9df;
+    background: url(../images/inputbg.gif) repeat-x;
+    text-indent: 10px;
+}
+
+.scbtn {
+    width: 85px;
+    height: 25px;
+    background: url(./images/btnbg.png) no-repeat center;
+    font-size: 14px;
+    font-weight: bold;
+    color: #fff;
+    cursor: pointer;
+    border-radius: 3px;
+    behavior: url(../../../css/js/pie.htc);
+}
+
+
+/*page*/
+.pagin{position:relative;margin-top:10px;padding:0 12px;}
+.pagin .blue{color:#056dae;font-style:normal;}
+.pagin .pagination{position:absolute;right:12px;top:0;}
+.pagin .pagination  li{float:left;}
+.pagin .pagination  li  a,.pagin .pagination  li span{float:left;width:31px;height:28px;border:1px solid #DDD; text-align:center;line-height:30px;border-left:none;color:#3399d5;}
+.pagin .pagination  li:first-child a{border-left:1px solid #DDD;}
+.pagin .pagination  li:first-child span{border-left:1px solid #DDD;border-bottom-left-radius:5px;border-top-left-radius:5px;}
+.pagin .pagination  li:first-child a{border-bottom-left-radius:5px;border-top-left-radius:5px;}
+.pagin .pagination  li:last-child a{border-bottom-right-radius:5px;border-top-right-radius:5px;}
+.pagin .pagination  li:last-child span{border-bottom-right-radius:5px;border-top-right-radius:5px;}
+.pagin .pagination  li.active,.pagin .paginList .paginItem.current a{background:#f5f5f5; cursor:default;color:#737373;}
+.pagin .pagination  li:hover{background:#f5f5f5;}
+.pagin .pagination  li.disabled,.pagin .paginList .paginItem.more a:hover{ cursor:default;}
+.pagin .pagination  li.disabled:hover{background:#FFF;}
+.pagin .pagination  li.disabled span{color:#737373;}
+
+
+.pagepre{background:url(./images/pre.gif) no-repeat center center; width:31px; height:28px;}
+.pagenxt{background:url(./images/next.gif) no-repeat center center; width:31px; height:28px;}
+

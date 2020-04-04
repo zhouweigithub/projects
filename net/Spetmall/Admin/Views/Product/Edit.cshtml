@@ -1,0 +1,315 @@
+﻿@model Spetmall.Model.product
+@{
+    ViewBag.Title = "商品管理";
+    Layout = null;
+}
+
+
+<!doctype html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>商品管理</title>
+    <link rel="stylesheet" type="text/css" href="/static/css/common.css?v=@HttpContext.Current.Application["ver"]">
+    <link rel="stylesheet" type="text/css" href="/static/css/ui-dialog.css?v=@HttpContext.Current.Application["ver"]">
+    <script type="text/javascript" src="/static/js/jquery-1.12.2.min.js?v=@HttpContext.Current.Application["ver"]"></script>
+    <script src="/static/js/artDialog.source.js?v=@HttpContext.Current.Application["ver"]"></script>
+    <script src="/static/js/iframeTools.source.js?v=@HttpContext.Current.Application["ver"]"></script>
+    <script src="/static/js/service-common.js?v=@HttpContext.Current.Application["ver"]"></script>
+    <script src="/static/js/iframe.js?v=@HttpContext.Current.Application["ver"]"></script>
+    <script src="/static/js/common.js?v=@HttpContext.Current.Application["ver"]"></script>
+    <link href="/static/extend/select2/select2.min.css?v=@HttpContext.Current.Application["ver"]" rel="stylesheet" />
+    <script src="/static/extend/select2/select2.min.js?v=@HttpContext.Current.Application["ver"]"></script>
+    <script src="/Scripts/common.js?v=@HttpContext.Current.Application["ver"]"></script>
+</head>
+<body class="iframebody">
+    <form class="" action="?">
+        @Html.HiddenFor(m => m.id)
+        <div class="form-options">
+            <ul class="formlist">
+                <li>
+                    <label class="lbt">缩略图：</label> <div>
+                        <span class="yun_upload_images" style="padding-top:0px; padding-bottom:20px">
+                            @Html.HiddenFor(m => m.thumbnail, new { @class = "dfinput  thumb_f64165672ceb97dc00593b60f0c14cc9" })
+                            <a href="javascript:;" class="yunmall_upload_img2" yun_attachment=".thumb_f64165672ceb97dc00593b60f0c14cc9" onclick="document.getElementById('imgFile').click();" cropping="[156,156]">
+                                <input type="file" id="imgFile" name="imgFile" style="display:none;width:500px;" accept="image/*" />
+                                <img src="@Model.thumbnail" id="pimg" width="120" class="thumb_f64165672ceb97dc00593b60f0c14cc9" onerror="this.src='/static/images/upload-pic.png';" />
+                            </a>
+                        </span>
+                    </div>
+                </li>
+
+                <li>
+                    <label class="lbt"><em>(*)</em>商品名称：</label><div>
+                        @Html.TextBoxFor(m => m.name, new { @class = "form-control", placeholder = "请输入商品名称" })
+                        <span id="errname" class="error"></span>
+                    </div>
+                </li>
+                <li>
+                    <label class="lbt"><em>(*)</em>条码：</label><div>
+                        <table width="100%" border="0" cellspacing="0" cellpadding="0">
+                            <tr>
+                                <td>
+                                    <div style=" overflow:hidden; position:relative;">
+                                        <div style="position:absolute; right:11px; top:0px; width:25px; height:36px; background:url(/static/images/tiaoma.png) no-repeat right center; background-size:auto 90% ;"></div>
+                                        @Html.TextBoxFor(m => m.barcode, new { @class = "form-control", placeholder = "请输入条形码" })
+                                        <span id="errbarcode" class="error"></span>
+                                    </div>
+                                </td>
+                                <td width="10"></td>
+                                <td width="50" style=" padding-right:10px;"><a href="javascript:;" class="btn btn-primary btn-block barcode-select">查询</a></td>
+                                <td width="50"><a href="javascript:;" class="btn btn-primary btn-block bar_code_generation">生成</a></td>
+                            </tr>
+                        </table>
+                    </div>
+                </li>
+                <li>
+                    <label class="lbt"><em>(*)</em>分类：</label>
+                    <div class="form-option-list">
+                        <div class="store_class_list">
+                            @Html.DropDownListFor(a => a.category, ViewBag.categoryItems as List<SelectListItem>, "请选择分类", new { @class = "sys-common-select store_class_select mySelect" })
+                            <span id="errcategory" class="error"></span>
+                        </div>
+                    </div>
+                </li>
+                <li>
+                    <label class="lbt"><em>(*)</em>价格：</label><div>
+                        @Html.TextBoxFor(m => m.price, new { @class = "form-control", placeholder = "请输入价格" })
+                        <span id="errprice" class="error"></span>
+                    </div>
+                </li>
+                <li>
+                    <label class="lbt"><em>(*)</em>成本：</label><div>
+                        @Html.TextBoxFor(m => m.cost, new { @class = "form-control", placeholder = "请输入成本" })
+                        <span id="errcost" class="error"></span>
+                    </div>
+                </li>
+                <li>
+                    <label class="lbt"><em>(*)</em>库存：</label><div>
+                        @Html.TextBoxFor(m => m.store, new { @class = "form-control", onkeyup = "this.value=this.value.replace(/\\D/g,'')", onafterpaste = "this.value=this.value.replace(/\\D/g,'')", placeholder = "请输入库存" })
+                        <span id="errstore" class="error"></span>
+                    </div>
+                </li>
+                <li>
+                    <label class="lbt"><em>(*)</em>库存预警：</label><div>
+                        @Html.TextBoxFor(m => m.warn, new { @class = "form-control", onkeyup = "this.value=this.value.replace(/\\D/g,'')", onafterpaste = "this.value=this.value.replace(/\\D/g,'')", placeholder = "请输入库存" })
+                        <span id="errwarn" class="error"></span>
+                    </div>
+                </li>
+                <li>
+                    <label class="lbt">会员折扣：</label><div>
+                        <cite>
+                            <label>
+                                <input name="ismemberdiscount" type="radio" @(Model.ismemberdiscount == 1 ? "checked=\"checked\"" : "") value="1" />启用&nbsp;&nbsp;&nbsp;
+                            </label>
+                            <label>
+                                <input name="ismemberdiscount" type="radio" @(Model.ismemberdiscount == 0 ? "checked=\"checked\"" : "") value="0" />不启用
+                            </label>
+                        </cite>
+                    </div>
+                </li>
+                <li>
+                    <label class="lbt"><em>(*)</em>备注：</label><div>
+                        @Html.TextBoxFor(m => m.remark, new { @class = "form-control", placeholder = "请输入备注" })
+                    </div>
+                </li>
+            </ul>
+        </div>
+        <div class="padt" style="text-align: center"><span id="open" class="btn btnyes yunmall_button">保 存</span></div>
+
+    </form>
+    <script language="javascript">
+
+        $(function () {
+            $('.bar_code_generation').bind('click', function () {
+                $("input[name=barcode]").val(9 + "" + randomString(9));
+            });
+        });
+
+        function randomString(len) {
+            len = len || 32;
+            var $chars = '0123456789';
+            var maxPos = $chars.length;
+            var pwd = '';
+            for (i = 0; i < len; i++) {
+                pwd += $chars.charAt(Math.floor(Math.random() * maxPos));
+            }
+            return pwd;
+        }
+
+        (function () {
+            /*新增加分类*/
+            $("#store_class_btn").bind('click', function () {
+
+                var _select_element = $(this).closest('li').find('.sys-common-select:first').clone();
+                _select_element.attr('name', 'store_class[]');
+                $(".store_class_list").append(_select_element);
+                _select_element.select2({
+                    width: 156,
+                    placeholder: '请选择',
+                    allowClear: true
+                });
+
+                _select_element.bind('change', function (e) {
+                    e.preventDefault();
+                    store_class_validate($(this));
+                });
+            });
+
+
+
+            $('.barcode-select').bind('click', function () {
+                getScanninggungoodsinfo($.trim($("input[name=barcode]").val()));
+            });
+
+
+
+
+            function store_class_validate(_that) {
+                var _selectd_val = _that.val();
+                if (_selectd_val != '0' && $(".store_class_select option:selected[value=" + _selectd_val + "]").size() > 1) {
+                    _that.select2("val", "0");
+                    alert("此分类已经选择");
+                    return false;
+                }
+            }
+
+
+            CheckScanningGun();
+            //扫码抢
+            function CheckScanningGun() {
+                var _Element = $("input[name=barcode]"), _start_microtime = 0, _keyupNumber = 0, Timeout = null, keyword_content = $.trim(_Element.val());
+                _Element.bind('keyup', function () {
+                    _keyupNumber += 0;
+
+                    if (Timeout) window.clearTimeout(Timeout);
+                    Timeout = setTimeout(function () {
+                        _keyupNumber = 0;
+                        _start_microtime = 0;
+                        keyword_content = $.trim(_Element.val());
+
+                    }, 50)
+                });
+
+                _Element.bind('keypress', function () {
+                    if (_start_microtime <= 0) {
+                        start_microtime = new Date().getTime();
+                    }
+
+                });
+
+                $(document).keyup(function (event) {
+
+                    if (event.keyCode == 13) {
+                        var _keyword_val = $.trim(_Element.val());
+
+                        var reg = new RegExp("^" + keyword_content);
+                        _keyword_val = _keyword_val.replace(reg, '');
+                        console.log("_keyword_val", _keyword_val);
+                        if (/^[\d]{8,}$/.test(_keyword_val) && (new Date().getTime() - start_microtime) < 50) {
+                            _Element.val(_keyword_val);
+                            getScanninggungoodsinfo(_keyword_val);
+                        }
+
+                    }
+                });
+
+
+
+            }
+
+            function getScanninggungoodsinfo(_val) {
+                $.get('/Goods/scanninggungoodsinfo.html', { barcode: _val }, function (_Result) {
+                    setFormVsl(_Result);
+                }, 'json');
+            }
+
+            function setFormVsl(_Result) {
+
+                if (_Result['status']) {
+                    $("form input").each(function (index, element) {
+                        var _name = $(this).attr('name');
+                        if (typeof _Result.data[_name] != 'undefined') {
+                            $(this).val(_Result.data[_name]);
+                        }
+                    });
+
+                    //$("select.store_class_select").find("option[text='pxx']").attr("selected",true);
+
+                    $("#category").val(_Result.data.goodsclass2).select2();
+
+                    $(".yun_upload_images img").attr('src', _Result.data['mapthumimg'] + "?t=" + new Date().getTime());
+                }
+
+            }
+
+        })();
+
+
+        $(function () {
+
+            //上传图片
+
+            $("#imgFile").change(function () {
+
+                if (document.getElementById("imgFile").files.length == 0) {
+                    return;
+                }
+
+                //$("#imgWait").show();
+                var formData = new FormData();
+                formData.append("myfile", document.getElementById("imgFile").files[0]);
+                $.ajax({
+                    url: "/Upload/Upload",
+                    type: "POST",
+                    data: formData,
+                    /**
+                    *必须false才会自动加上正确的Content-Type
+                    */
+                    contentType: false,
+                    /**
+                    * 必须false才会避开jQuery对 formdata 的默认处理
+                    * XMLHttpRequest会对 formdata 进行正确的处理
+                    */
+                    processData: false,
+                    success: function (data) {
+                        if (data.code == 0) {
+                            document.getElementById("pimg").src = data.imgurl;
+                            document.getElementById("thumbnail").value = data.imgurl;
+                            //alert("上传成功！");
+                        }
+                        else if (data.msg != "") {
+                            alert(data.msg);
+                        }
+                        //$("#imgWait").hide();
+                    },
+                    error: function () {
+                        alert("上传失败！");
+                        //$("#imgWait").hide();
+                    }
+                });
+            });
+        });
+
+        function isValid() {
+            var result = true;
+            result = IsValueNotEmpty("name", "errname", "商品名称") && result;
+            result = IsValueNotEmpty("barcode", "errbarcode", "条码") && result;
+            result = IsValueNotEmpty("category", "errcategory", "分类") && result;
+            result = IsValueNotEmpty("store", "errstore", "库存") && result;
+            result = IsValueNotEmpty("warn", "errwarn", "预警值") && result;
+            result = IsValueNotEmpty("cost", "errcost", "成本价") && result;
+            result = IsValueNotEmpty("price", "errprice", "价格") && result;
+
+            result = result && IsValueNumber("barcode", "errbarcode", "条码");
+            result = result && IsValueNumber("store", "errstore", "库存");
+            result = result && IsValueNumber("warn", "errwarn", "预警值");
+            result = result && IsValueDecimal("cost", "errcost", "成本价");
+            result = result && IsValueDecimal("price", "errprice", "价格");
+            return result;
+        }
+
+    </script>
+
+</body>
+</html>

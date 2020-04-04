@@ -1,0 +1,12 @@
+﻿@{
+    Layout = null;
+}
+@using (Ajax.BeginForm("Data", null, new AjaxOptions { HttpMethod = "Get", UpdateTargetId = "div_datalist_timedactivityrelmng", LoadingElementId = "div_loading_timedactivityrelmng" },
+    new { @class = "form-horizontal", @id = "timedactivityrelmngfrom", @novalidate = "" }))
+{
+    <div style="float:right;margin-right:80px">
+        <input type="text" id="s_username" name="s_username" class="form-control" style="display:inline;width:200px;" placeholder="查询用户名或姓名" />
+        <button type="submit" class="btn btn-primary" id="searchbtn" style="margin-right:25px">查 询</button>
+        @Ajax.ActionLink("添 加", "Add", null, new AjaxOptions() { HttpMethod = "Get", OnSuccess = "AddRoleShow" }, new { @class = "btn btn-primary", style = "margin-right:15px" })
+    </div>
+}

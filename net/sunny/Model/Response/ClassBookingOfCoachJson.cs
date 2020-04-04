@@ -59,5 +59,14 @@ namespace Sunny.Model.Custom
         /// 场馆id
         /// </summary>
         public int venue_id { get; set; }
+        /// <summary>
+        /// 学生姓名
+        /// </summary>
+        public string student_name { get; set; }
+        /// <summary>
+        /// 学生电话
+        /// </summary>
+        public string student_phone { get; set; }
+
     }
 }

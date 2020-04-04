@@ -1,0 +1,13 @@
+D:\Work\Project\Moqikaka\trunk\Util\C#\Trunk\UtilTest\bin\Debug\Moqikakka.UtilTest.exe.config
+D:\Work\Project\Moqikaka\trunk\Util\C#\Trunk\UtilTest\bin\Debug\Moqikakka.UtilTest.exe
+D:\Work\Project\Moqikaka\trunk\Util\C#\Trunk\UtilTest\bin\Debug\Moqikakka.UtilTest.pdb
+D:\Work\Project\Moqikaka\trunk\Util\C#\Trunk\UtilTest\bin\Debug\Util.dll
+D:\Work\Project\Moqikaka\trunk\Util\C#\Trunk\UtilTest\bin\Debug\Newtonsoft.Json.dll
+D:\Work\Project\Moqikaka\trunk\Util\C#\Trunk\UtilTest\bin\Debug\Ionic.Zip.dll
+D:\Work\Project\Moqikaka\trunk\Util\C#\Trunk\UtilTest\bin\Debug\BouncyCastle.Crypto.dll
+D:\Work\Project\Moqikaka\trunk\Util\C#\Trunk\UtilTest\bin\Debug\Util.pdb
+D:\Work\Project\Moqikaka\trunk\Util\C#\Trunk\UtilTest\bin\Debug\Util.xml
+D:\Work\Project\Moqikaka\trunk\Util\C#\Trunk\UtilTest\bin\Debug\Ionic.Zip.xml
+D:\Work\Project\Moqikaka\trunk\Util\C#\Trunk\UtilTest\obj\Debug\UtilTest.csprojResolveAssemblyReference.cache
+D:\Work\Project\Moqikaka\trunk\Util\C#\Trunk\UtilTest\obj\Debug\Moqikakka.UtilTest.exe
+D:\Work\Project\Moqikaka\trunk\Util\C#\Trunk\UtilTest\obj\Debug\Moqikakka.UtilTest.pdb

@@ -1,0 +1,10 @@
+D:\Work\Project\Moqikaka\trunk\Util\C#\Trunk\bin\Debug\Util.XML
+D:\Work\Project\Moqikaka\trunk\Util\C#\Trunk\bin\Debug\Util.dll
+D:\Work\Project\Moqikaka\trunk\Util\C#\Trunk\bin\Debug\Util.pdb
+D:\Work\Project\Moqikaka\trunk\Util\C#\Trunk\bin\Debug\BouncyCastle.Crypto.dll
+D:\Work\Project\Moqikaka\trunk\Util\C#\Trunk\bin\Debug\Ionic.Zip.dll
+D:\Work\Project\Moqikaka\trunk\Util\C#\Trunk\bin\Debug\newtonsoft.json.dll
+D:\Work\Project\Moqikaka\trunk\Util\C#\Trunk\bin\Debug\Ionic.Zip.xml
+D:\Work\Project\Moqikaka\trunk\Util\C#\Trunk\obj\Debug\Util.csprojResolveAssemblyReference.cache
+D:\Work\Project\Moqikaka\trunk\Util\C#\Trunk\obj\Debug\Util.dll
+D:\Work\Project\Moqikaka\trunk\Util\C#\Trunk\obj\Debug\Util.pdb

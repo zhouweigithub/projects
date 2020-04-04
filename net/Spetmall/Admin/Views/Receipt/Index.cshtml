@@ -1,0 +1,219 @@
+﻿@using Spetmall.Model;
+@{
+    ViewBag.Title = "收银";
+}
+<script src="/static/js/receipt.js?v=@HttpContext.Current.Application["ver"]"></script>
+
+<input type="hidden" id="orderid" value="@ViewBag.orderid" />
+<div class="autoheight clear">
+    <div class=" autoleft">
+        <div class="zonghe"><!--<a href="javascript:;" class="cashregistergoodsinfo">查看详情 >> </a>--><span>共<em id="shoppingcart_goods_number">0</em>件</span> </div>
+        <div class="autolist">
+            <!--<div class="orderbox">
+            <p>猫粮满12件的送一件 <span>-100元</span></p>
+            <p>猫粮满12件的送一件 <span>-100元</span></p>
+            <p>猫粮满12件的送一件 <span>-100元</span></p>
+            <p>10元店铺优惠券，满289元可用</p>
+            <p>10元店铺优惠券，满289元可用</p>
+            <p>10元店铺优惠券，满289元可用</p>
+            </div>-->
+            <div class="orderbox2" id="shoppingcart">
+
+            </div>
+        </div>
+        <div class="leftbtnbox">
+            <div class=" clear">
+                <a class="btnqd" href="javascript:;" yun_type="dialog" dialog_title="取单" uri="/Receipt/qudan" dialog_width="70%" dialog_height="70%">取&nbsp;&nbsp;单</a>
+                <a class="btngd" href="javascript:;" id="system-guadan">挂&nbsp;&nbsp;单</a>
+            </div>
+            @{
+                Spetmall.Model.member member = ViewBag.member as Spetmall.Model.member;
+            }
+            <div class="user receiptmemberinfos" @(member == null ? "style=display:none;" : "")>
+                <input name="memberid" type="hidden" value="@(member!=null?member.id.ToString():"")" />
+                <img src="/images/tx.jpg">
+                <p class="r_username">
+                    <span style="padding-right:20px;">@(member != null ? member.name : "")</span>
+                    <span>余额:<i class="r_total_balance">@(member != null ? member.money.ToString() : "")</i></span>
+                </p>
+                <p>
+                    @*<span>积分:<i class="r_integral"></i></span>*@
+                    <span>折扣:<i class="r_discount">@(member != null ? member.discount.ToString() : "")</i></span>
+                </p>
+                <div class="newchoice"><a href="javascript:;" class="selectmember">修改</a></div>
+                <div class="newchoice2"><a href="javascript:;" class="quitmember">退出</a></div>
+            </div>
+
+            <div class="notlogin" @(member != null ? "style=display:none;" : "")>
+                <a href="javascript:;" class="selectmember">选择会员</a>
+            </div>
+        </div>
+    </div>
+    <div class="pull-right autoright yunsys-goods-container">
+        <table width="100%" style="height:100%; border:0px; border-collapse:collapse;" border="0">
+            <tr>
+                <td height="1">
+                    <div class="fenlei system-class-filter yunmallsuperfish">
+                        <ul class="clear sf-menu">
+                            <li class="active"><a href="javascript:;" data-class="">全部</a></li>
+                            @{
+                                var categorys = ViewBag.categorys as List<category>;
+                                var roots = categorys.Where(a => a.floor == 0);
+                                foreach (category root in roots)
+                                {
+                                    <li>
+                                        <a href="javascript:void(0);" data-class="@root.id">@root.name<i class="iconfont i-shanjiaoxia"></i></a>
+                                        <ul>
+                                            @{
+                                                var subs = categorys.Where(a => a.pid == root.id);
+                                                foreach (category sub in subs)
+                                                {
+                                                    <li>
+                                                        <a href="javascript:;" data-class="@sub.id"><em></em>@sub.name</a>
+                                                    </li>
+                                                }
+                                            }
+                                        </ul>
+                                    </li>
+                                }
+                            }
+                        </ul>
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td style="position:relative;">
+                    <div class="fenleibox" id="goods-items-container">
+                        <div id="goods-items" style="overflow:hidden;"></div>
+                    </div>
+                </td>
+            </tr>
+        </table>
+    </div>
+</div>
+<div class="foot">
+
+    <!--结算-->
+    <div class="shouqian " id="receipt-submit" title="请单击结算">
+        <div class="jieshuanyouhui">优惠:￥<i id="youhui_total_price">0.00</i></div><span>实收:￥<em id="shoppingcart-totalprice">0.00</em></span>
+        收钱
+    </div>
+
+    <!--搜索框-->
+    <div class="sysmenu-search">
+        <div class="txm pull-left ">
+
+            <div class="txminput  pull-left">
+                <span></span>
+                <div class="s-text"><input type="text" name="keyword" placeholder="请输入商品名称(简拼)或者扫描商品条形码"></div>
+                <!--<a href="#" class="a"><em></em></a>-->
+                <input name="" type="button" class="btn receipt-keyword-btn" value="确认" />
+            </div>
+            <!--<a href="#" class="wmsp pull-right">无码<br>商品</a>-->
+
+        </div>
+
+        <!--菜单-->
+        <div class="pull-right footicon sysmenu-map">
+            <span><a href="/" class="active urlbackcheck"><img src="/static/images/ft_01.png"><em>主界面</em></a></span>
+            <span><a href="javascript:;" yun_type="dialog" dialog_title="添加商品" uri="/product/Edit/0" dialog_width="80%" dialog_height="80%"><img src="/static/images/ft_02.png"><em>添加商品</em></a></span>
+            <span><a href="javascript:;" yun_type="dialog" dialog_title="添加会员" uri="/member/Edit/0" dialog_width="80%" dialog_height="80%"><img src="/static/images/ft_03.png"><em>添加会员</em></a></span>
+            <span><a href="javascript:;" yun_type="dialog" dialog_title="添加分类" uri="/category/add?pid=0" dialog_width="80%"><img src="/static/images/mico1.png"><em>添加分类</em></a></span>
+            <span><a href="javascript:;" yun_type="dialog" dialog_title="添加洗澡卡" uri="/railcard/add" dialog_width="80%"><img src="/static/images/ind04.png"><em>洗澡卡</em></a></span>
+        </div>
+    </div>
+</div>
+<script type="text/javascript">
+
+    var receiptcommon = new ReceiptCommon();
+
+    function AndroidMsg(_result) {
+        try {
+            alert(_result);
+
+        } catch (err) {
+            alert(err);
+            //yunmallIframe.error("JSON格式错误");
+        }
+    }
+
+    $(function () {
+
+        receiptcommon.setReceipt(@Html.Raw(ViewBag.orderJson));
+        receiptcommon.test = 15;
+        receiptcommon.bind();
+        receiptcommon.page();
+
+
+        $(".selectmember").bind('click', function () {
+            receiptcommon.selectUserOpen('selectUser2');
+        });
+
+        $(".quitmember").bind('click', function () {
+            receiptcommon.quitmember();
+        });
+
+        $("input.receipt-keyword-btn").bind('click', function () {
+            receiptcommon.filterGoods({ keyword: $("input[name=keyword]").val() });
+        });
+
+        $(".system-class-filter a").bind('click', function (event) {
+            event.stopPropagation();
+            $(this).closest('li').addClass('active').siblings().removeClass('active');
+            receiptcommon.filterGoods({ category: $(this).attr('data-class') });
+        });
+
+        $(document).keyup(function (event) {
+
+            if (event.keyCode == 13) {
+                //$(".receipt-keyword-btn").trigger("click");
+            }
+        });
+
+        //跳转前判断
+        $(".urlbackcheck").bind('click', function (e) {
+            e.stopPropagation();
+            e.preventDefault();
+            var _href = $(this).attr('href');
+            for (var J in receiptcommon.ShoppingGoods) {
+                yunmall_confirm_dialog('有商品在购物车,你确定要离开吗?', _href);
+                return;
+            }
+            window.location.href = _href;
+
+        });
+
+    });
+
+    $(document).ready(function () {
+        var _menuTime = null, _TMPELE = null;
+
+        $(".sf-menu li").mouseover(function (event) {
+            event.stopPropagation();
+            if (_menuTime) window.clearTimeout(_menuTime);
+            $(this).siblings().find("ul:visible").hide();
+            $(this).children('ul').show();
+
+        });
+
+        $(".sf-menu li").mouseout(function (event) {
+            event.stopPropagation();
+            _menuTime = setTimeout(function () {
+                $(".sf-menu ul:visible").hide();
+            }, 50);
+        });
+
+    });
+</script>
+<script type="text/javascript">
+
+    $(document).ready(function () {
+        var hei = $(window).height()
+        var hei2 = $(".autoheight").height()
+        $(".autolist").height(hei2 - 158)
+    })
+    $(window).resize(function () {
+        var hei3 = $(".autoheight").height()
+        $(".autolist").height(hei3 - 158)
+    })
+</script>

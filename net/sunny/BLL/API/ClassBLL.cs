@@ -81,6 +81,5 @@ namespace Sunny.BLL.API
 
             return count1 > 0;
         }
-
     }
 }

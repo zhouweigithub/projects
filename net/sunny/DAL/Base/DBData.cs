@@ -80,8 +80,8 @@ namespace Sunny.DAL
             InstanceList.Add("course_price", new BaseQuery("course_price", "", "", false));
             InstanceList.Add("invitation", new BaseQuery("invitation", "student_id", "student_id", false));
             InstanceList.Add("order_discount", new BaseQuery("order_discount", "", "", false));
+            InstanceList.Add("order_callback_pay", new BaseQuery("order_callback_pay", "id", "id", false));
 
-            
         }
 
         /// <summary>

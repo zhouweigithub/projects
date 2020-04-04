@@ -1,0 +1,52 @@
+﻿@{
+    ViewBag.Title = "系统日志";
+}
+<style>
+    .href a {
+        margin: auto 5px;
+    }
+
+    .tablebox caption {
+        font-size: 20px;
+        text-align: left;
+        margin: 10px;
+    }
+</style>
+
+<div class="mianbox">
+    <div class="searchbar" style="height:52px;">
+        <div class="leftbtn">
+            @Html.ActionLink("CurrentWeb", "LogList", new { type = 1 }, new { target = "_self", @class = "barbtn02" })
+        </div>
+    </div>
+
+    <div class="tablebox padt">
+        <table class="table01" width="100%" border="0" cellspacing="0" cellpadding="0">
+            <caption>@ViewBag.Title</caption>
+            <tbody>
+                <tr>
+                    <th width="300">日志名</th>
+                    <th width="150">大小</th>
+                    <th width="300">更新日间</th>
+                    <th></th>
+                </tr>
+                @{
+                    List<Spetmall.BLL.Page.ServerLog.ServerLogBLL.FileData> datas = ViewBag.datas as List<Spetmall.BLL.Page.ServerLog.ServerLogBLL.FileData>;
+                    if (datas != null && datas.Count > 0)
+                    {
+                        foreach (Spetmall.BLL.Page.ServerLog.ServerLogBLL.FileData item in datas)
+                        {
+                            <tr>
+                                <td>@Html.ActionLink(item.FileName, "LogView", new { type = ViewBag.Type, name = item.FileName }, new { target = "_blank" }) </td>
+                                <td>@item.Size KB</td>
+                                <td>@item.LastModify.ToString("yyyy-MM-dd HH:mm:ss")</td>
+                                <td></td>
+                            </tr>
+                        }
+                    }
+                }
+            </tbody>
+        </table>
+        <div class="pagin"></div>
+    </div>
+</div>

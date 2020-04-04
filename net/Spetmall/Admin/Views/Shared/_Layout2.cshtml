@@ -1,0 +1,81 @@
+﻿<!doctype html>
+<head>
+    <meta charset="UTF-8">
+    <title>@ViewBag.Title</title>
+    <link rel="stylesheet" type="text/css" href="/static/css/common.css?v=@HttpContext.Current.Application["ver"]">
+    <link rel="stylesheet" type="text/css" href="/static/css/ui-dialog.css?v=@HttpContext.Current.Application["ver"]">
+    <link rel="stylesheet" href="/static/extend/honeySwitch/lib/honeySwitch.css?v=@HttpContext.Current.Application["ver"]">
+    <script type="text/javascript" src="/static/js/jquery-1.12.2.min.js?v=@HttpContext.Current.Application["ver"]"></script>
+    <script src="/static/js/artDialog.source.js?v=@HttpContext.Current.Application["ver"]"></script>
+    <script src="/static/js/iframeTools.source.js?v=@HttpContext.Current.Application["ver"]"></script>
+    <script src="/static/extend/laydate/laydate.js?v=@HttpContext.Current.Application["ver"]"></script>
+    <script src="/static/js/iframe.js?v=@HttpContext.Current.Application["ver"]"></script>
+    <script src="/static/js/service-common.js?v=@HttpContext.Current.Application["ver"]"></script>
+    <script src="/static/js/common.js?v=@HttpContext.Current.Application["ver"]"></script>
+    <script src="/static/extend/honeySwitch/lib/honeySwitch.js?v=@HttpContext.Current.Application["ver"]"></script>
+    <script src="/static/js/md5.js?v=@HttpContext.Current.Application["ver"]"></script>
+    <script src="~/Scripts/jquery.unobtrusive-ajax.min.js?v=@HttpContext.Current.Application["ver"]"></script>
+</head>
+
+<body class="@ViewBag.bodyClass mainbody">
+    <div class="head clear">
+        <div class="menubtn system-nav-menu">
+            <img src="/static/images/menubtn.png">
+        </div>
+        <div class="logo"><img src="/static/images/head_01.png"></div>
+        <div class="system-header-right">
+            <div class="pull-left headnav">
+                <div class="app-info" title="退出"><a href="javascript:void(0);" onclick="yunmall_confirm_dialog('您确定要退出系统吗?','/main/logout','reload');"><img src="/static/images/quit.png"></a></div>
+                <div class="app-info" title="收银"><a href="/receipt/index"><img src="/static/images/head_02.png"></a></div>
+                <div class="app-info" title="锁屏"><a href="javascript:;" onclick="syslock.lock();"><img src="/static/images/head_04.png"></a></div>
+                <div class="app-info info-info2"><div class="info-img" title="您当前的系统时间"><img src="/static/images/head_06.png"></div><em id="yunmall_sys_time">2019/05/23 19:39:43</em></div>
+            </div>
+        </div>
+    </div>
+
+    @RenderBody()
+
+    <div class="menu system-nav-menu-list">
+        <a href="/"><img src="/static/images/mico1.png">主界面</a>
+        <a href="/product/index"><img src="/static/images/mico1.png">商品管理</a>
+        <a href="/receipt/index"><img src="/static/images/mico2.png">收银</a>
+        <a href="/FinancialFlow/index"><img src="/static/images/mico3.png">资金流</a>
+        <a href="/reports/index"><img src="/static/images/mico4.png">报表</a>
+        <a href="/transaction/index?time=1"><img src="/static/images/mico5.png">交易明细</a>
+        <a href="/member/index"><img src="/static/images/mico6.png">会员管理</a>
+        <!--<a href="/Yuangong/index"><img src="/static/images/mico7.png">店员管理</a>-->
+        <a href="/railcard/index"><img src="/static/images/mico8.png">洗澡卡</a>
+        <a href="/activity/DiscountIndex"><img src="/static/images/mico9.png">活动管理</a>
+        <a href="/category/index"><img src="/static/images/mico9.png">分类管理</a>
+        <a href="/serverlog/loglist"><img src="/static/images/mico4.png">系统日志</a>
+    </div>
+
+    <script type="text/javascript">
+        $(function () {
+            var _system_nav_menu;
+            $(".system-nav-menu").add($(".system-nav-menu-list")).mouseover(function () {
+                _system_nav_menu && window.clearInterval(_system_nav_menu);
+                $(".system-nav-menu-list").show();
+                $('.menubtn').addClass('menubtn_active');
+            });
+
+            $(".system-nav-menu").add($(".system-nav-menu-list")).mouseout(function () {
+                _system_nav_menu = setTimeout(function () {
+                    $(".system-nav-menu-list").hide();
+                    $('.menubtn').removeClass('menubtn_active');
+                }, 40);
+            });
+        });
+        $(function () {
+            setInterval(function () {
+                var myDate = new Date();
+                var date = myDate.toLocaleDateString();
+                var hours = myDate.getHours();
+                var minutes = myDate.getMinutes();
+                var seconds = myDate.getSeconds();
+                $("#yunmall_sys_time").html(date + " " + hours + ":" + minutes + ":" + seconds); //将值赋给div
+            }, 1000); //每隔一秒运行一次
+        });
+    </script>
+
+</body>

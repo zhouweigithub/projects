@@ -1,0 +1,186 @@
+﻿@model Spetmall.Model.Page.discount_edit
+@{
+    ViewBag.Title = "限时折扣管理";
+}
+
+<script src="/static/js/widget.js?v=@HttpContext.Current.Application["ver"]"></script>
+<link href="/static/extend/select2/select2.min.css?v=@HttpContext.Current.Application["ver"]" rel="stylesheet" />
+<script src="/static/extend/select2/select2.min.js?v=@HttpContext.Current.Application["ver"]"></script>
+
+<div class="common-app-tabs">
+    <div class="common-app-name">限时折扣管理</div>
+    <div class="app-tab">
+        <ul>
+            <li><a href="/Activity/DiscountIndex">限时折扣列表</a></li>
+            <li class="active"><a href="#">添加限时折扣</a></li>
+        </ul>
+    </div>
+</div>
+
+<div class="form-goods-step">
+    <form action="?" id="subtractfromfullForm" method="post">
+        <input name="id" type="hidden" value="@Model.id" />
+        <input name="state" type="hidden" value="@Model.state" />
+        <input name="categoryOrProducts" id="categoryOrProducts" type="hidden" />
+        <input name="rules" id="rules" type="hidden" />
+        <div class="form-goods">
+            <table width="100%" border="1">
+                <tr class="title">
+                    <td colspan="2">商品折扣活动信息</td>
+                </tr>
+                <tr>
+                    <td class="name"><i>*</i> 名称：</td>
+                    <td>
+                        <input name="name" type="text" class="text w400 " value="@Model.name">
+                        <p class="hint">商品折扣活动名称长度至少3个字符，最长50个汉字</p>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="name"><i>*</i>类型：</td>
+                    <td>
+                        <select name="type" class="mySelect" id="type">
+                            <option value="0" @(Model.type == 0 ? "selected" : "")>店铺</option>
+                            <option value="1" @(Model.type == 1 ? "selected" : "")>指定分类</option>
+                            <option value="2" @(Model.type == 2 ? "selected" : "")>指定商品</option>
+                        </select>
+                        <p class="hint">选择分类只能是指定分类下才可以使用。</p>
+                    </td>
+                </tr>
+                <tr class="goodsclasslist" style="height:33.9px;@(Model.type==1?"":"display:none;")">
+                    <td class="name"><i>*</i>商品分类：</td>
+                    <td>
+                        <div id="placeofdelivery" style="width:500px;"></div>
+                        <p class="hint">选择分类只能是指定分类下才可以使用。</p>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="name"></td>
+                    <td><div class="placeofdeliverymsg"></div></td>
+                </tr>
+                <tr class="goodsselectspecid" style="@(Model.type==2?"":"display:none;")">
+                    <td class="name"><i>*</i>请选择商品：</td>
+                    <td>
+                        <div class="selectoption">
+                            <div class="option_button"><input name="formsubmits" id="specbutton" type="button" class="btn dssc-btn" value="选择商品" /></div>
+                            <div class="option_list" id="option_list_id"></div>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="name"></td>
+                    <td>
+                        <cite>
+                            <label>
+                                <input name="way" type="radio" value="0" @(Model.way == 0 ? "checked" : "") />按件折扣&nbsp;&nbsp;&nbsp;&nbsp;
+                            </label>
+                            <label>
+                                <input name="way" type="radio" value="1" @(Model.way == 1 ? "checked" : "") />按价格折扣
+                            </label>
+                        </cite>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="name">创建规则</td>
+                    <td>
+                        <div class="selectoption">
+                            <div class="goodsguizhe_button"><input name="formsubmits" id="discountguizhebutton" type="button" class="btn dssc-btn" value="新建规则" /></div>
+                            <div class="goodsguizhe_list" id="goodsguizhe_list_id"></div>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="name">可同时使用：</td>
+                    <td>
+                        <cite>
+                            <label>
+                                <input name="fullsend" type="checkbox" value="1" @(Model.fullsend == 1 ? "checked" : "") />满就送
+                            </label>
+                        </cite>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="name"><i>*</i>开始时间：</td>
+                    <td>
+                        <div class="widgettxt widgetw156">
+                            <div><input name="starttime" autocomplete="off" class="yunmalldate" value="@Model.starttime.ToString("yyyy-MM-dd")" type="text" /><i class="icon-fl-renminbi"></i></div>
+                        </div>
+                        <p class="hint">价格必须是0.00~9999999之间的数字，此价格为商户对所销售的商品实际成本价格进行备注记录，非必填选项，不会在前台销售页面中显示。</p>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="name"><i>*</i>结速时间：</td>
+                    <td>
+                        <div class="widgettxt widgetw156">
+                            <div><input name="endtime" autocomplete="off" class="yunmalldate" value="@Model.endtime.ToString("yyyy-MM-dd")" type="text" /><i class="icon-fl-renminbi"></i></div>
+                        </div>
+                        <p class="hint">价格必须是0.00~9999999之间的数字，此价格为商户对所销售的商品实际成本价格进行备注记录，非必填选项，不会在前台销售页面中显示。</p>
+                    </td>
+                </tr>
+            </table>
+        </div>
+        <div class="formbottom">
+            <label class="submit-border">
+                <input type="button" id="subtractfromfullsubmit" class="formsubmit" value="填写完成，保存">
+            </label>
+        </div>
+    </form>
+</div>
+
+<script language="javascript">
+
+    var TYPESELECT = function () {
+        var _TYPE = $("select[name=type]"), _GOODSCLASSLIST = $(".goodsclasslist"), _GOODSSELECTSPECID = $(".goodsselectspecid");
+        _TYPE.bind('change', function () {
+            var _VAL = $(this).val();
+            if (_VAL == 1) { _GOODSCLASSLIST.show(); } else { _GOODSCLASSLIST.hide(); }
+            if (_VAL == 2) { _GOODSSELECTSPECID.show(); } else { _GOODSSELECTSPECID.hide(); }
+        });
+    };
+
+    new TYPESELECT();
+
+
+
+    var artspecdata = new ArtSpecData();
+    artspecdata.setCreate(@Html.Raw(ViewBag.products));
+    artspecdata.setDiscountGuizhe(@Html.Raw(ViewBag.rules));
+    artspecdata.init({});
+
+
+    //显示活动分类
+    var Linkage = new SelectLinkage();
+     @{
+             var parents = ViewBag.parents as List<int>;
+             if (parents != null) {
+                 string classString = "";
+                 for (int i = 1; i <= parents.Count; i++)
+                 {
+                     classString += "'class" + i + "',";
+                 }
+                 classString = classString.Substring(0, classString.Length - 1);
+                 @Html.Raw("Linkage.setName([" + classString + "]);");
+                 @Html.Raw("Linkage.setUrl('GetCategorys');");
+                 foreach (int item in parents) {
+                        @Html.Raw("Linkage.add(" + item + ");");
+             }
+         }
+         else
+         {
+             @Html.Raw("Linkage.setName(['class1', 'class2', 'class3']);");
+             @Html.Raw("Linkage.setUrl('GetCategorys');");
+             @Html.Raw("Linkage.add(0);");
+             @Html.Raw("Linkage.add(0);");
+             @Html.Raw("Linkage.add(0);");
+         }
+     }
+
+         Linkage.init('#placeofdelivery', 0);
+
+    function isValid() {
+        var result = true;
+        result = IsValueNotEmpty("name", "errname", "分类分称") && result;
+        return result;
+    }
+
+
+</script>

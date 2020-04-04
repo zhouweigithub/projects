@@ -1,0 +1,56 @@
+﻿@using Spetmall.Model;
+@{
+    ViewBag.Title = "洗澡卡使用日志";
+}
+
+
+<div class="common-app-tabs">
+    <div class="common-app-name">洗澡卡管理</div>
+    <div class="app-tab">
+        <ul>
+            <li><a href="/Railcard/index">洗澡卡列表</a></li>
+            <li class="active"><a href="#">洗澡卡使用日志</a></li>
+        </ul>
+    </div>
+</div>
+<div class="mianbox">
+    @*<div class="searchbar">
+        <div style=" padding-right:430px;">
+            <form action="" method="get">
+                <div class="search">
+                    <input type="text" name="keyWord" value="" placeholder="请输入手机号或姓名">
+                    <a href="javascript:;" id="yunmall_goods_search">查询</a>
+                </div>
+            </form>
+        </div>
+    </div>*@
+
+    <div class="tablebox padt">
+
+        <table class="table01" width="100%" border="0" cellspacing="0" cellpadding="0">
+            <tbody>
+                <tr>
+                    <th width="10%">卡号</th>
+                    <th width="20%">使用时间</th>
+                    <th width="10%">使用次数</th>
+                    <th>备注</th>
+                </tr>
+                @{
+                    foreach (railcard_record item in ViewBag.datas as List<railcard_record>)
+                    {
+                        <tr>
+                            <td>@item.id</td>
+                            <td>@item.crtime</td>
+                            <td>@item.times</td>
+                            <td>@item.remark</td>
+                        </tr>
+                    }
+                }
+
+            </tbody>
+        </table>
+    </div>
+
+    <div class="pagin"></div>
+
+</div>

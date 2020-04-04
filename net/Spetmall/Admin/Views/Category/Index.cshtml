@@ -1,0 +1,129 @@
+﻿@using Spetmall.Model;
+@{
+    ViewBag.Title = "分类管理";
+    ViewBag.bodyClass = "storeclass-index";
+}
+
+<div class="common-app-tabs">
+    <div class="common-app-name">分类管理</div>
+    <div class="app-tab">
+        <ul>
+            <li class="active"><a href="#">分类列表</a></li>
+            <li><a href="javascript:void(0);" yun_type="dialog" dialog_title="添加分类" uri="Add?pid=0" dialog_width="50%" dialog_height="310px">添加分类</a></li>
+        </ul>
+    </div>
+</div>
+
+<!--订单详情-->
+<div class="order-details">
+    <table class="edtitable tablelist ">
+        <thead>
+            <tr>
+                <th width="100">排序</th>
+                <th width=""><a href="javascript:void(0);" id="batch_tree_button" class="tree_opens">全部折叠</a> / 分类名称</th>
+                <th width="10%">是否使用</th>
+                <th width="10%">管理操作</th>
+            </tr>
+        </thead>
+        <tbody>
+            @{
+                foreach (category item in ViewBag.datas as List<category>)
+                {
+                    <tr class="goods-class-list emptypadding treeopen morenode @(item.floor==0?"top-level-tree ":"")" floor="@item.floor">
+                        <td class="rigth-border-none td-padding">
+                            <input name="index" type="text" class="  goodsclassdfinput storeclassattr text editattribute" url="EditField" autocomplete="off" value="@item.index" data-id="@item.id" style="width:70px;" />
+                        </td>
+                        <td class="tree">
+                            <div class="goodsclassnavs">
+                                <div class="goodsclassnav ">
+                                    @{
+                                        for (int i = 0; i < item.floor; i++)
+                                        {
+                                            <span class="tree treenone" data-tmp="[]" dataid="0"></span>
+                                        }
+                                    }
+                                    <em class="tree-end"><i></i></em>
+                                    <div class="goodsclasstxt">
+                                        <div class="imgs"><a href="javascript:;"><img src="/static/images/d05.png" /></a></div>
+                                        <span style="width:150px;display:inline-block;text-align:left;">@item.name</span>
+                                        <a href="javascript:void(0);" yun_type="dialog" dialog_title="添加分类" uri="Add?pid=@item.id" dialog_width="50%" dialog_height="310px" class="dssc-btn">新增下级</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </td>
+                        <td><span class="switch-on switch-attribute" style="zoom:0.7" name="state" data-id="@item.id" url="EditField" data-value="@item.state"></span></td>
+                        <td>
+                            <a href="javascript:void(0);" yun_type="dialog" dialog_title="添加分类" uri="edit/@item.id" dialog_width="50%" dialog_height="310px">修改</a>
+                            | <a href="javascript:yunmall_confirm_dialog('你确定要删除此条分类吗?','delete/@item.id','reload')">删除</a>
+                        </td>
+                    </tr>
+                }
+            }
+        </tbody>
+    </table>
+    <div class="pages"></div>
+</div>
+<script language="javascript">
+    $(function () {
+        var tablelisttrlist = $(".tablelist tr.goods-class-list"), nodedatasize = $(".tablelist tr").size();
+        tablelisttrlist.bind('click', function (event) {
+            var _index = $(this).index(),
+                _this = $(this),
+                _tmpnodedatasize = nodedatasize,
+                _floor = parseInt(_this.attr('floor'));
+
+            var _emobj = _this.find("i");
+
+            if (event.target == _emobj[0]) {
+                var _treestatus;
+
+                if (_this.is('.treeopen')) {
+                    _treestatus = true;
+                    _this.removeClass('treeopen').addClass('tree-close');
+                } else {
+                    _treestatus = false;
+                    _this.removeClass('tree-close').addClass('treeopen');
+                }
+
+                while (_tmpnodedatasize--) {
+                    _index++;
+                    var _dom = tablelisttrlist.eq(_index), _domfloor = parseInt(_dom.attr('floor'));
+                    if (_domfloor <= _floor) {
+                        break;
+                    } else {
+                        if (_treestatus) {
+                            _dom.hide();
+                        } else if (_floor + 1 == _domfloor) {
+                            _dom.show();
+                        }
+                    }
+
+                }
+            }
+
+
+        });
+
+
+        $("#batch_tree_button").bind('click', function () {
+            if ($(this).is(".tree_opens")) {
+
+                $(this).removeClass('tree_opens').html('全部展开');
+                tablelisttrlist.hide().filter(".top-level-tree").show();
+                tablelisttrlist.filter('.morenode').removeClass('treeopen').addClass('tree-close');
+
+            } else {
+
+                $(this).addClass('tree_opens').html('全部折叠');
+                tablelisttrlist.show();
+                tablelisttrlist.filter('.morenode').removeClass('tree-close').addClass('treeopen');
+            }
+
+            //tablelisttrlist.filter(':gt(0)').hide();
+        });
+
+        /*new UpdateAttribute('.storeclassattr',"/seller/store_class/editAttr.html");*/
+
+
+    });
+</script>

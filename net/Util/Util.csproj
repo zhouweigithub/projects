@@ -1,0 +1,136 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{C9D03A47-F3F0-4BC7-BF8F-112A1D0FA6B2}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Util</RootNamespace>
+    <AssemblyName>Util</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <DocumentationFile>bin\Debug\Util.XML</DocumentationFile>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <DocumentationFile>bin\Release\Util.XML</DocumentationFile>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="BouncyCastle.Crypto, Version=1.7.4114.6375, Culture=neutral, PublicKeyToken=0e99375e54769942">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>ReferenceFiles\BouncyCastle.Crypto.dll</HintPath>
+    </Reference>
+    <Reference Include="Ionic.Zip">
+      <HintPath>ReferenceFiles\Ionic.Zip.dll</HintPath>
+    </Reference>
+    <Reference Include="newtonsoft.json, Version=4.5.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>ReferenceFiles\newtonsoft.json.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Configuration" />
+    <Reference Include="System.Configuration.Install" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Management" />
+    <Reference Include="System.ServiceProcess" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Web.Extensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="AppCharge\DataEncoded.cs" />
+    <Compile Include="AppCharge\Receipt.cs" />
+    <Compile Include="AppCharge\ReceiptVerification.cs" />
+    <Compile Include="AppConfigUtil.cs" />
+    <Compile Include="CommonReturnObject.cs" />
+    <Compile Include="Conversion\ConvertUtil.cs" />
+    <Compile Include="DateTimeUtil.cs" />
+    <Compile Include="DeviceUtil.cs" />
+    <Compile Include="Extension\DictionaryExtension.cs" />
+    <Compile Include="FileUtil.cs" />
+    <Compile Include="GameError.cs" />
+    <Compile Include="Json\BsonUtil.cs" />
+    <Compile Include="Json\JsonUtil.cs" />
+    <Compile Include="Lock\LockUtil.cs" />
+    <Compile Include="Lock\MonitorUtil.cs" />
+    <Compile Include="Lock\ReaderWriterLockUtil.cs" />
+    <Compile Include="Log\LogType.cs" />
+    <Compile Include="Log\LogUtil.cs" />
+    <Compile Include="Mail\MailUtil.cs" />
+    <Compile Include="Mail\SendPattern.cs" />
+    <Compile Include="MarshalUtil.cs" />
+    <Compile Include="Math\ByteUtil.cs" />
+    <Compile Include="Math\DoubleUtil.cs" />
+    <Compile Include="Math\IncludeMaxValue.cs" />
+    <Compile Include="Math\IntUtil.cs" />
+    <Compile Include="Math\RandomUtil.cs" />
+    <Compile Include="Message\MessageSKUtil.cs" />
+    <Compile Include="Message\MessageUtil.cs" />
+    <Compile Include="Message\SendMessageObject.cs" />
+    <Compile Include="Conversion\ParseNullableUtil.cs" />
+    <Compile Include="OS\CPUUtil.cs" />
+    <Compile Include="OS\ThreadUtil.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Reflection\ReflectionCache.cs" />
+    <Compile Include="Reflection\ReflectionClass.cs" />
+    <Compile Include="Reflection\ReflectionUtil.cs" />
+    <Compile Include="Security\BigInteger.cs" />
+    <Compile Include="Security\DESUtil.cs" />
+    <Compile Include="Security\HMACSHA1Util.cs" />
+    <Compile Include="Security\HMACMD5Util.cs" />
+    <Compile Include="Security\MD5Util.cs" />
+    <Compile Include="Security\MoqikakaUtil.cs" />
+    <Compile Include="Security\RSAUtil.cs" />
+    <Compile Include="Security\SHA1Util.cs" />
+    <Compile Include="ServiceInstallUtil.cs" />
+    <Compile Include="StringUtil.cs" />
+    <Compile Include="Web\DataCompress.cs" />
+    <Compile Include="Web\GetDataUtil.cs" />
+    <Compile Include="Web\PostDataUtil.cs" />
+    <Compile Include="Web\WebUtil.cs" />
+    <Compile Include="XML\XMLUtil.cs" />
+    <Compile Include="Zlib\Adler32.cs" />
+    <Compile Include="Zlib\Deflate.cs" />
+    <Compile Include="Zlib\InfBlocks.cs" />
+    <Compile Include="Zlib\InfCodes.cs" />
+    <Compile Include="Zlib\Inflate.cs" />
+    <Compile Include="Zlib\InfTree.cs" />
+    <Compile Include="Zlib\StaticTree.cs" />
+    <Compile Include="Zlib\SupportClass.cs" />
+    <Compile Include="Zlib\Tree.cs" />
+    <Compile Include="Zlib\ZInputStream.cs" />
+    <Compile Include="Zlib\Zlib.cs" />
+    <Compile Include="Zlib\ZOutputStream.cs" />
+    <Compile Include="Zlib\ZStream.cs" />
+    <Compile Include="Zlib\ZStreamException.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Security\LetterCase.cs" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

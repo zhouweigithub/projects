@@ -28,6 +28,7 @@ namespace Sunny.Model
         /// <summary>
         /// 性别0男 1女
         /// </summary>
+        [TableField]
         public short sex { get; set; }
         /// <summary>
         /// 电话号码

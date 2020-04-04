@@ -7,6 +7,7 @@ using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Threading.Tasks;
+using System.Web;
 using System.Web.Http;
 
 namespace Sunny.API.Controllers
@@ -49,6 +50,11 @@ namespace Sunny.API.Controllers
                 throw new HttpResponseException(HttpStatusCode.UnsupportedMediaType);
             }
             string rootPath = Const.RootWebPath + GetUploadFolder(uploadType);
+            if (!Directory.Exists(rootPath))
+            {
+                Directory.CreateDirectory(rootPath);
+            }
+
             var provider = new MultipartFileStreamProvider(rootPath);
             var task = Request.Content.ReadAsMultipartAsync(provider).
                 ContinueWith<HttpResponseMessage>(t =>
@@ -66,6 +72,9 @@ namespace Sunny.API.Controllers
                                 + Function.GetRangeCharaters(4, RangeType.Number)
                                 + Path.GetExtension(name);
 
+                            Util.Log.LogUtil.Write("item.LocalFileName：" + item.LocalFileName, Util.Log.LogType.Debug);
+                            Util.Log.LogUtil.Write("newFileName：" + newFileName, Util.Log.LogType.Debug);
+
                             File.Move(item.LocalFileName, Path.Combine(rootPath, newFileName));
 
                             //Request.RequestUri.PathAndQury为需要去掉域名的后面地址
@@ -73,17 +82,17 @@ namespace Sunny.API.Controllers
                             //Request.RequestUri.AbsoluteUri则为http://localhost:8084/api/upload/post
 
                             Uri baseuri = new Uri(Request.RequestUri.AbsoluteUri.Replace(Request.RequestUri.PathAndQuery, string.Empty));
-                            string fileRelativePath = rootPath + "\\" + newFileName;
+                            string fileRelativePath = rootPath.Replace(Const.RootWebPath, string.Empty) + "\\" + newFileName;
                             Uri fileFullPath = new Uri(baseuri, fileRelativePath);
-                            savedFilePath.Add(fileFullPath.ToString());
+                            savedFilePath.Add(fileFullPath.ToString().Replace("\\", "//"));
                         }
                         catch (Exception ex)
                         {
-                            string message = ex.Message;
+                            Util.Log.LogUtil.Write("上传文件失败：" + ex, Util.Log.LogType.Error);
                         }
                     }
 
-                    return Request.CreateResponse(HttpStatusCode.Created, JsonConvert.SerializeObject(savedFilePath));
+                    return Request.CreateResponse(HttpStatusCode.Created, savedFilePath);
                 });
             return task;
         }
@@ -99,16 +108,30 @@ namespace Sunny.API.Controllers
             switch (uploadType)
             {
                 case UploadType.CoachImg:
-                    result = "coach_images";
+                    result = "/Images/coach_images";
                     break;
                 case UploadType.CoachComment:
-                    result = "coach_comment";
+                    result = "/Images/coach_comment";
                     break;
                 default:
+                    result = "/Images/undefined";
                     break;
             }
 
             return result;
+        }
+
+        /// <summary>
+        /// 本地路径转换成URL相对路径
+        /// </summary>
+        /// <param name="url"></param>
+        /// <returns></returns>
+        private string UrlConvertToR(string url)
+        {
+            string tmpRootDir = HttpContext.Current.Server.MapPath(HttpContext.Current.Request.ApplicationPath.ToString()); //获取程序根目录
+            string imageurl2 = url.Replace(tmpRootDir, "");  //转换成相对路径
+            imageurl2 = imageurl2.Replace(@"\", @"/");
+            return imageurl2;
         }
     }
 }

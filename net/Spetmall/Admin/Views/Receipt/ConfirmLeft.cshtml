@@ -1,0 +1,140 @@
+﻿@using Spetmall.Model.Page;
+@{
+    ViewBag.Title = "订单详情";
+    Layout = null;
+}
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>订单详情</title>
+    <link rel="stylesheet" type="text/css" href="/static/css/receipt.css?v=@HttpContext.Current.Application["ver"]" />
+    <style>
+        body {
+            font-size: 14px;
+            padding: 0;
+            letter-spacing: 1px;
+            margin: 0;
+            font-family: "微软雅黑";
+        }
+
+        html, body {
+            margin: 0px;
+            padding: 0px;
+        }
+
+        h1, h2, h3, h4, h5, h6 {
+            font-weight: normal
+        }
+
+        li {
+            list-style-type: none;
+        }
+
+        a {
+            text-decoration: none
+        }
+
+        em {
+            font-style: normal
+        }
+    </style>
+    <script type="text/javascript" src="/static/js/jquery-1.12.2.min.js?v=@HttpContext.Current.Application["ver"]"></script>
+</head>
+
+<body>
+    <div class="re_left">
+        <div class="h_title">商品详情</div>
+        <table width="100%" border="0" class="rc_goods_list">
+            <tr>
+                <th class="rc_htitle"><div class="buy-td">商品名称</div></th>
+                <th class="rc_price"><div class="buy-td">单价</div></th>
+                <th class="rc_number"><div class="buy-td">数量</div></th>
+                <th class="rc_count"><div class="buy-td">小计</div></th>
+            </tr>
+            @{
+                foreach (var item in ViewBag.products as List<receipt_confirm_products>)
+                {
+                    <tr>
+                        <td>
+                            <div class="rctitle">
+                                <div class="rcimgs"><img src="@item.thumbnail" onerror="this.src='/static/images/cpin.png';" class="gd" /></div>
+                                @item.productName
+                            </div>
+                        </td>
+                        <td>
+                            <span class="price-now">@item.price.ToString("g0")</span>
+                        </td>
+                        <td align="center">
+                            @item.count
+                        </td>
+                        <td><span class="simple-price">@item.money.ToString("g0")</span></td>
+                    </tr>
+
+                    if (item.discount_money > 0 || item.fullSend_money > 0 || item.member_money > 0)
+                    {
+                        <tr class="split">
+                            <td colspan="4">
+                                <div class="goodsyouhui">
+                                    <div class="youuhi1">
+                                        <h3>优惠</h3>
+                                        @if (item.discount_money > 0)
+                                        {
+                                            <div class="youhuixiangqing"><span class="green">-￥@item.discount_money.ToString("g0")</span>@item.discountMsg</div>
+                                        }
+                                        @if (item.fullSend_money > 0)
+                                        {
+                                            <div class="youhuixiangqing"><span class="green">-￥@item.fullSend_money.ToString("g0")</span>@item.fullSendMsg</div>
+                                        }
+                                        @if (item.member_money > 0)
+                                        {
+                                            <div class="youhuixiangqing"><span class="green">-￥@item.member_money.ToString("g0")</span>@item.memberMsg</div>
+                                        }
+                                    </div>
+                                </div>
+                            </td>
+                        </tr>
+                    }
+                }
+            }
+
+        </table>
+
+        @*<div class="rc_store">
+                <h3>全店满优惠</h3>
+                <div class="youhui zhekou"><span>-￥60.00元</span>满200元,8折</div>
+            </div>*@
+
+        <div class="rc_button">
+            <a class="cla-conf-btn continue-add-goods ">
+                继续添加商品
+            </a>
+        </div>
+    </div>
+
+
+    <script language="javascript">
+        $(function () {
+            $('.continue-add-goods').click(function () {
+                parent.receiptcommon.close();
+            });
+
+            $('.continue-add-goods').click(function () {
+                window.top.receiptcommon.close();
+            });
+
+            @{
+                var datas = ViewBag.products as List<receipt_confirm_products>;
+                var originaltotalprice = datas.Sum(a => a.money);   //原始总金额
+                var activitytotalprice = datas.Sum(a => a.total_sale_money);  //折扣总金额
+            }
+            window.top.receiptcommon.setReceiptdata({ "originaltotalprice": @originaltotalprice, "discounttotalprice": @activitytotalprice });
+        });
+
+    </script>
+
+</body>
+</html>
+

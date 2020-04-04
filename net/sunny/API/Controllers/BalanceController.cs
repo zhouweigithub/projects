@@ -1,4 +1,5 @@
-﻿using Sunny.DAL;
+﻿using Sunny.BLL.API;
+using Sunny.DAL;
 using Sunny.Model;
 using Sunny.Model.Response;
 using System;
@@ -28,9 +29,9 @@ namespace Sunny.API.Controllers
             {
                 int userid = 0;
                 if (type == 0)
-                    userid = DBData.GetInstance(DBTable.student).GetEntity<Student>($"username='{token}'").id;
+                    userid = GeneralBLL.GetStudentByUserName(token).id;
                 else
-                    userid = DBData.GetInstance(DBTable.coach).GetEntity<Coach>($"username='{token}'").id;
+                    userid = GeneralBLL.GetCoachByUserName(token).id;
 
                 string where = $"crtime>='{DateTime.Now.AddMonths(-3).ToString("yyyy-MM-dd")}' and user_id='{userid}' and user_type='{type}'";
                 IList<PayRecord> records = DBData.GetInstance(DBTable.pay_record).GetList<PayRecord>(where);

@@ -1,0 +1,17 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using Spetmall.Model.Common;
+
+namespace Spetmall.Model
+{
+    /// <summary>
+    /// #tablecomment#
+    /// </summary>
+    public class #tablename#
+    {
+#columeitems#
+
+    }
+}

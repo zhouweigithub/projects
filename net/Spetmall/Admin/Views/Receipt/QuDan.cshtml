@@ -1,0 +1,67 @@
+﻿@using Spetmall.Model.Page;
+@{
+    ViewBag.Title = "取单";
+    Layout = null;
+}
+
+
+<!doctype html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>取单</title>
+    <link rel="stylesheet" type="text/css" href="/static/css/common.css?v=@HttpContext.Current.Application["ver"]">
+    <link rel="stylesheet" type="text/css" href="/static/css/ui-dialog.css?v=@HttpContext.Current.Application["ver"]">
+    <link rel="stylesheet" type="text/css" href="/static/css/buttons.css?v=@HttpContext.Current.Application["ver"]">
+    <link rel="stylesheet" href="/static/extend/honeySwitch/lib/honeySwitch.css?v=@HttpContext.Current.Application["ver"]">
+
+    <script type="text/javascript" src="/static/js/jquery-1.12.2.min.js?v=@HttpContext.Current.Application["ver"]"></script>
+    <script src="/static/extend/honeySwitch/lib/honeySwitch.js?v=@HttpContext.Current.Application["ver"]"></script>
+    <script src="/static/extend/laydate/laydate.js?v=@HttpContext.Current.Application["ver"]"></script>
+    <script src="/static/js/artDialog.source.js?v=@HttpContext.Current.Application["ver"]"></script>
+    <script src="/static/js/iframeTools.source.js?v=@HttpContext.Current.Application["ver"]"></script>
+    <script src="/static/js/iframe.js?v=@HttpContext.Current.Application["ver"]"></script>
+    <script src="/static/js/common.js?v=@HttpContext.Current.Application["ver"]"></script>
+
+</head>
+
+<body class="iframebody">
+
+
+    <div class="rightinfo" style="padding:0px; min-width:200px;">
+
+        <form action="/admin/Goods_Storage/getSpecData.html" method="post" id="SpecData" name="glform">
+            <table class="tablelist" width="100%">
+                <thead>
+                    <tr>
+                        <th>类型</th>
+                        <th>姓名</th>
+                        <th>备注</th>
+                        <th>创建时间</th>
+                        <th>操作</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @{
+                        foreach (guadan item in ViewBag.datas as List<guadan>)
+                        {
+                            <tr class="odd">
+                                <td>@item.type</td>
+                                <td>@item.name</td>
+                                <td>@item.remark</td>
+                                <td>@item.crtime</td>
+                                <td>
+                                    <a href="javascript:;" onclick='window.top.receiptcommon.qudan(@item.orderid)' class="dssc-btn">选择</a>
+                                    <a href="javascript:;" onclick='yunmall_confirm_dialog("您确定要删除吗？","DeleteOrder?orderid=@item.orderid","reload")' class="dssc-btn">删除</a>
+                                </td>
+                            </tr>
+                        }
+                    }
+                </tbody>
+            </table>
+        </form>
+
+    </div>
+
+</body>
+</html>

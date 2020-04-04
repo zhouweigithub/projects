@@ -1,0 +1,68 @@
+﻿@{
+    ViewBag.Title = "Login";
+    Layout = null;
+}
+
+<!doctype html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>圣宠收银系统</title>
+    <link rel="stylesheet" type="text/css" href="/static/css/common.css?v=@HttpContext.Current.Application["ver"]">
+    <link rel="stylesheet" type="text/css" href="/static/css/ui-dialog.css?v=@HttpContext.Current.Application["ver"]">
+    <script type="text/javascript" src="/static/js/jquery-1.12.2.min.js?v=@HttpContext.Current.Application["ver"]"></script>
+    <script src="/static/js/artDialog.source.js?v=@HttpContext.Current.Application["ver"]"></script>
+    <script src="/static/js/iframeTools.source.js?v=@HttpContext.Current.Application["ver"]"></script>
+    <script src="/static/extend/laydate/laydate.js?v=@HttpContext.Current.Application["ver"]"></script>
+    <script src="/static/js/iframe.js?v=@HttpContext.Current.Application["ver"]"></script>
+    <script src="/static/js/md5.js?v=@HttpContext.Current.Application["ver"]"></script>
+    <script src="/static/js/common.js?v=@HttpContext.Current.Application["ver"]"></script>
+    <script src="/Scripts/common.js?v=@HttpContext.Current.Application["ver"]"></script>
+    <style>
+        html, body {
+            min-height: 100%;
+        }
+    </style>
+</head>
+<body style="background:url(/static/images/bg.png) no-repeat; background-size: 100% 100%">
+    <form action="?" method="post">
+        <div class="login">
+            <div class="dog"><img src="/static/images/dog.png"></div>
+            <div class="loginnav">
+                <div class="lgtit"><span>欢迎使用圣宠宠物管理系统</span></div>
+                <div class="loginput">
+                    <input type="text" name="username" id="username" placeholder="用户名">
+                    <span id="errusername" class="error"></span>
+                    <input type="password" name="password" id="password" encryption="md5" placeholder="密码">
+                    <span id="errpassword" class="error"></span>
+                    <a class="btn btn-info btn-lg btn-block yunmall_button" href="javascript:void(0);">登录</a>
+                    @*<a class="pull-right padtb" href="http://www.spetmall.com//seller/Getpass/forgetpass.html">找回密码？</a>*@
+                </div>
+            </div>
+        </div>
+    </form>
+    <script language="javascript">
+        yunmallIframe.Callback = function (_RESULT) {
+            if (_RESULT['status'] == true || _RESULT['status'] > 0) {
+                var returnUrl = getUrlParam("returnUrl");
+                if (returnUrl == "") {
+                    window.location.href = "/Receipt/Index";
+                }
+                else {
+                    window.location.href = returnUrl;
+                }
+            }
+            else {
+                iframe_Callback.error(_RESULT);
+            }
+        };
+
+        function isValid() {
+            var result = true;
+            result = IsValueNotEmpty("username", "errusername", "用户名") && result;
+            result = IsValueNotEmpty("password", "errpassword", "密码") && result;
+            return result;
+        }
+    </script>
+</body>
+</html>

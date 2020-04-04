@@ -1,0 +1,146 @@
+﻿@using Spetmall.Model.Page;
+@{
+    ViewBag.Title = "交易明细";
+    ViewBag.bodyClass = "transaction-index";
+}
+
+<link href="~/static/extend/jquery.pagination-1.2.7/jquery.pagination.css?ver=@HttpContext.Current.Application["ver"]" rel="stylesheet" />
+<script src="~/static/extend/jquery.pagination-1.2.7/jquery.pagination-1.2.7.js?ver=@HttpContext.Current.Application["ver"]"></script>
+
+<div class="mianbox">
+    <div class="searchbar">
+        <form action="?" method="get">
+            <div style=" padding-right:660px;">
+                <div class="search">
+                    @Html.TextBox("keyword", null, new { autocomplete = "off", placeholder = "请输入订单号或会员手机号或会员ID" })
+                </div>
+            </div>
+            <div class="rightbtn">
+                <div class="time">
+                    @Html.TextBox("starttime", null, new { autocomplete = "off", placeholder = "开始时间", @class = "test1 yunmalldate" })
+                    <span>至</span>
+                    @Html.TextBox("endtime", null, new { autocomplete = "off", placeholder = "结束时间", @class = "test2 yunmalldate" })
+                </div>
+                <a href="javascript:;" class="barbtn01" id="yunmall_goods_search">查询</a>
+            </div>
+        </form>
+    </div>
+
+    <div class="tablebox padt">
+        <div class="fenlei2">
+            <ul class="clear">
+                <li><a href="?keyword=@ViewBag.keyword&starttime=@ViewBag.starttime&endtime=@ViewBag.endtime&time=1" class="@(ViewBag.time=="1"?"active2":"")">今天</a></li>
+                <li><a href="?keyword=@ViewBag.keyword&starttime=@ViewBag.starttime&endtime=@ViewBag.endtime&time=2" class="@(ViewBag.time=="2"?"active2":"")">近二天</a></li>
+                <li><a href="?keyword=@ViewBag.keyword&starttime=@ViewBag.starttime&endtime=@ViewBag.endtime&time=7" class="@(ViewBag.time=="7"?"active2":"")">近一周</a></li>
+                <li><a href="?keyword=@ViewBag.keyword&starttime=@ViewBag.starttime&endtime=@ViewBag.endtime&time=30" class="@(ViewBag.time=="30"?"active2":"")">近一月</a></li>
+                <li><a href="?keyword=@ViewBag.keyword&starttime=@ViewBag.starttime&endtime=@ViewBag.endtime&time=365" class="@(ViewBag.time=="365"?"active2":"")">近一年</a></li>
+                <li><a href="?keyword=@ViewBag.keyword&starttime=@ViewBag.starttime&endtime=@ViewBag.endtime&time=36500" class="@(ViewBag.time=="36500"?"active2":"")">所有</a></li>
+            </ul>
+        </div>
+        <table class="table01" width="100%" border="0" cellspacing="0" cellpadding="0">
+            <tbody>
+                <tr>
+                    <th width="15%">交易订单号</th>
+                    <th width="9%">商品金额</th>
+                    <th width="10%">实际支付</th>
+                    <th width="9%">优惠</th>
+                    <th width="9%">调价</th>
+                    <th width="9%">支付方式</th>
+                    <th width="9%">用户</th>
+                    <th width="15%">交易时间</th>
+                    <th width="15%">操作</th>
+                </tr>
+                @{
+                    var datas = ViewBag.datas as IList<order_detail>;
+                    foreach (order_detail item in datas)
+                    {
+                        bool isIn24Hour = (DateTime.Now - item.crtime).TotalHours < 48;
+                        <tr>
+                            <td>@item.id</td>
+                            <td>@item.productMoney.ToString("g0")</td>
+                            <td>@item.payMoney.ToString("g0")</td>
+                            <td>@((-item.discountMoney).ToString("g0"))</td>
+                            <td>@((-item.adjustMomey).ToString("g0"))</td>
+                            <td>@item.payTypeString</td>
+                            <td>@item.memberName</td>
+                            <td>@item.crtime</td>
+                            <td>
+                                @Html.ActionLink("查看详情", "Detail", new { id = item.id })
+                                | @Ajax.ActionLink("打印小票", "Print", new { id = item.id }, new AjaxOptions() { HttpMethod = "Post", Confirm = "确定要打印该订单的小票吗？" })
+                                @{
+                                    if (isIn24Hour)
+                                    {
+                                        @Html.Raw(" | ")
+                                        <a href="javascript:;" yun_type="dialog" dialog_title="修改订单" uri="edit/@item.id" dialog_width="50%" dialog_height="410px" title="下单后48小时以内可修改">修改</a>
+                                        @Html.Raw(" | ")
+                                        @Html.ActionLink("删除", "", null, new { href = "javascript:void(0);", onclick = "yunmall_confirm_dialog('您确定要删除这个订单吗?', 'delete/" + item.id + "', 'reload')", title = "下单后48小时以内可删除" });
+                                    }
+                                }
+                            </td>
+                        </tr>
+                    }
+                    if (ViewBag.total != null)
+                    {
+                        var total = ViewBag.total as order_detail;
+                        <tr class="total">
+                            <td>数据汇总</td>
+                            <td>@total.productMoney.ToString("g0")</td>
+                            <td>@total.payMoney.ToString("g0")</td>
+                            <td>@((-total.discountMoney).ToString("g0"))</td>
+                            <td>@((-total.adjustMomey).ToString("g0"))</td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                        </tr>
+                    }
+                }
+
+            </tbody>
+        </table>
+
+        <div id="pager" class="m-pagination"></div>
+    </div>
+</div>
+
+<script language="javascript">
+    var page=@ViewBag.Page;
+    var pagesize=@ViewBag.PageSize;
+    var totalTotalRecordCount=@ViewBag.TotalDataCount;
+
+    $(function () {
+        $("#yunmall_goods_search").bind('click', function () {
+            $(this).closest("form").submit();
+        });
+
+        //分页
+        $("#pager").page({
+            pageSize: pagesize,
+            total: totalTotalRecordCount,
+            pageSizeItems: [20, 50, 100],
+            showJump: true,
+            showPageSizes: true,
+            pageBtnCount: 15,
+            showInfo: false,
+            firstBtnText: "|<<",
+            lastBtnText: ">>|",
+            prevBtnText: "<",
+            nextBtnText: ">"
+        }).on("pageClicked", function (event, pageNumber) {
+            location.href = "Index?keyword=" + getUrlParam("keyword") + "&starttime=" + getUrlParam("starttime") + "&endtime=" + getUrlParam("endtime")
+                + "&time=" + getUrlParam("time") + "&pagesize=" + pagesize + "&page=" + (pageNumber + 1);
+        }).on("jumpClicked", function (event, pageNumber) {
+            location.href = "Index?keyword=" + getUrlParam("keyword") + "&starttime=" + getUrlParam("starttime") + "&endtime=" + getUrlParam("endtime")
+                + "&time=" + getUrlParam("time")  + "&pagesize=" + pagesize + "&page=" + (pageNumber + 1);
+        }).on("pageSizeChanged", function (event, pageSize) {
+            location.href = "Index?keyword=" + getUrlParam("keyword") + "&starttime=" + getUrlParam("starttime") + "&endtime=" + getUrlParam("endtime")
+                + "&time=" + getUrlParam("time")   + "&pagesize=" + pageSize + "&page=1";
+        }).page("setPage", page - 1);
+
+    });
+</script>
+
+
+<script>
+    lay('#version').html('-v' + laydate.v);
+</script>

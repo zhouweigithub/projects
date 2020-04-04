@@ -1,0 +1,323 @@
+﻿@{
+    ViewBag.Title = "订单确认";
+    Layout = null;
+}
+
+
+<!doctype html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>订单确认</title>
+    <link rel="stylesheet" type="text/css" href="/static/css/common.css?v=@HttpContext.Current.Application["ver"]">
+    <link rel="stylesheet" type="text/css" href="/static/css/ui-dialog.css?v=@HttpContext.Current.Application["ver"]">
+    <link rel="stylesheet" type="text/css" href="/static/css/buttons.css?v=@HttpContext.Current.Application["ver"]">
+    <link rel="stylesheet" href="/static/extend/honeySwitch/lib/honeySwitch.css?v=@HttpContext.Current.Application["ver"]">
+
+    <script type="text/javascript" src="/static/js/jquery-1.12.2.min.js?v=@HttpContext.Current.Application["ver"]"></script>
+    <script src="/static/extend/honeySwitch/lib/honeySwitch.js?v=@HttpContext.Current.Application["ver"]"></script>
+    <script src="/static/extend/laydate/laydate.js?v=@HttpContext.Current.Application["ver"]"></script>
+    <script src="/static/js/artDialog.source.js?v=@HttpContext.Current.Application["ver"]"></script>
+    <script src="/static/js/iframeTools.source.js?v=@HttpContext.Current.Application["ver"]"></script>
+    <script src="/static/js/iframe.js?v=@HttpContext.Current.Application["ver"]"></script>
+    <script src="/static/js/common.js?v=@HttpContext.Current.Application["ver"]"></script>
+
+    <link rel="stylesheet" type="text/css" href="/static/css/receipt.css?v=@HttpContext.Current.Application["ver"]">
+    <script src="/static/js/receipt.js?t=1558754049"></script>
+    <style>
+        .mid {
+            vertical-align: -webkit-baseline-middle;
+        }
+    </style>
+</head>
+
+<body class="iframebody">
+
+
+    <div class="receiptconfirm">
+        <div class="iframe_rc_left receiptconfirm_auto_height">
+            <iframe src='ConfirmLeft?products=@ViewBag.products&memberid=@(ViewBag.member != null ? ViewBag.member.id : 0)' width="100%" height="100%" frameborder="0" id="external-frame"></iframe>
+        </div>
+
+        <div class="rc_right receiptconfirm_auto_height">
+            <form action="CreateOrder" method="post" id="receiptconfirm_Form">
+                @*<input name="uid" class="receipt_member" type="hidden" value="@(ViewBag.member != null ? ViewBag.member.id : 0)" />*@
+                <input name="orderid" type="hidden" value="@ViewBag.orderid" />
+                <input name="paytype" type="hidden" value="" />
+                <input name="products" type="hidden" value='@ViewBag.products' />
+                <input name="memberid" class="receipt_member" type="hidden" value="@(ViewBag.member != null ? ViewBag.member.id : 0)" />
+                <input name="isMemberDiscount" class="discount_type_text" type="hidden" value="@(ViewBag.member == null ? "0" : "1")" />
+                <input name="totalMoney" type="hidden" value="" />
+                <input name="totalNeedMoney" type="hidden" value="" />
+
+                <div class="h_title">订单详情</div>
+                <div class="receipt-order-list">
+                    <div class="receipt-order-item">
+                        <div class="item-name"><span>客户类型：</span></div>
+                        <div class="item-val customer-type">
+
+                            <a href="javascript:;" data-customer-type="2" class="button  button-pill button-small @(ViewBag.member!=null?"button-primary":"")">会员</a>
+                            <a href="javascript:;" data-customer-type="1" class="button  button-pill button-small @(ViewBag.member==null?"button-primary":"") ">散客</a>
+
+
+                            <div class="huiyuan" style="@(ViewBag.member==null?"display:none":"")">
+                                <div class="sel_huiyuan" style="@(ViewBag.member==null?"":"display:none")"> <a href="javascript:;">请选择会员</a></div>
+                                <div class="huiyuaninfo" style="@(ViewBag.member==null?"display:none":"")">
+                                    <div class="himgs">
+                                        <img src="https://snailpet.com/assets/img/vip_boy.png" />
+                                    </div>
+                                    <div class="userinfo">
+                                        <p>
+                                            <span><label class="uname">@(ViewBag.member != null ? ViewBag.member.name : "")</label></span><em></em>
+                                            <span><i></i><label class="uphone">@(ViewBag.member != null ? ViewBag.member.phone : "")</label></span><em></em>
+                                            @*<span>积分:<label class="uintegral"> </label></span>*@
+                                        </p>
+                                        <p>
+                                            <span><i></i>余额:<font>￥<label class="utotal_balance">@(ViewBag.member != null ? ViewBag.member.money : "")</label>元</font></span> <em></em>
+                                            <span>折扣:<label class="udiscount">@(ViewBag.member != null ? ViewBag.member.discount : "")</label>折</span>
+                                        </p>
+                                    </div>
+
+                                    <div class="sel_user"><a href="javascript:;" class="select-members">修改</a></div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+
+
+                    <div class="receipt-order-item">
+                        <div class="item-name">收款：</div>
+                        <div class="item-val">
+                            <a href="javascript:;" class="payoptions button   button-pill button-small" data-key="1">现金支付</a>
+                            <a href="javascript:;" class="payoptions button   button-pill button-small" data-key="2">微信</a>
+                            <a href="javascript:;" class="payoptions button   button-pill button-small" data-key="3">支付宝</a>
+                            <a href="javascript:;" class="payoptions button   button-pill button-small" data-key="4">余额支付</a>
+                            @*<a href="javascript:;" class="payoptions button   button-pill button-small" data-key="5">刷卡支付</a>*@
+                            <a href="javascript:;" class="payoptions button   button-pill button-small" data-key="6">其它</a>
+                        </div>
+                    </div>
+
+                    <div class="receipt-order-item enabling-membership-discounts" style="@(ViewBag.member==null?"display:none":"")">
+                        <div class="item-name">启用会员折扣：</div>
+                        <div class="item-val">
+                            <cite>
+                                <label>
+                                    <input name="discount_type" type="radio" value="1" @(ViewBag.member == null ? "" : "checked") />启用&nbsp;&nbsp;&nbsp;
+                                </label>
+                                <label>
+                                    <input name="discount_type" type="radio" value="0" @(ViewBag.member == null ? "checked" : "") />不启用
+                                </label>
+                            </cite>
+
+                        </div>
+                    </div>
+
+                    <div class="receipt-order-item">
+                        <div class="item-name">总金额：</div>
+                        <div class="item-val"><span class="price mid">￥<i class="confiem_total_amount ">0.00</i> 元</span> </div>
+                    </div>
+
+                    <div class="receipt-order-item">
+                        <div class="item-name">优惠金额：</div>
+                        <div class="item-val"><span class="price green mid">-￥<i class="confiem_preferential_amount ">0.00</i> 元</span> </div>
+                    </div>
+
+                    <div class="receipt-order-item">
+                        <div class="item-name">应收：</div>
+                        <div class="item-val"><span class="price ">￥<i class="maxSize need_pay_amount">0.00</i> 元</span> </div>
+                    </div>
+
+                    <div class="receipt-order-item">
+                        <div class="item-name">实收：</div>
+                        <div class="item-val"><input name="totalPayMoney" class="form-control pay_amount" value="0.00" type="text" /> </div>
+                    </div>
+
+                    <div class="receipt-order-item">
+                        <div class="item-name">备注信息：</div>
+                        <div class="item-val"><textarea name="remark" class="form-textarea confiem_remarks_information" style="height:40px;" cols="" rows=""></textarea></div>
+                    </div>
+
+                    <div class="receipt-order-item">
+                        <div class="item-name"></div>
+                        <div class="item-val">
+                            <div class="buttons">
+                                <span><input type="button" class="button button-glow button-rounded button-raised button-primary" id="Receiptguadan" value="挂单" /></span>
+                                <span><input type="button" class="button button-glow button-rounded button-caution" id="ReceiptsetOrder" value="提交" /></span>
+                            </div>
+                        </div>
+
+                    </div>
+
+                </div>
+            </form>
+        </div>
+
+    </div>
+
+    <script language="javascript">
+
+        var receiptcommon = new ReceiptCommon();
+        //receiptcommon.setReceiptconfirm();
+        receiptcommon.getReceiptcommon().Ele['external-frame'] = $("#external-frame");
+        receiptcommon.getReceiptcommon().Ele['huiyuaninfo'] = $(".huiyuaninfo");
+        receiptcommon.getReceiptcommon().Ele['sel_huiyuan'] = $(".sel_huiyuan");
+
+        receiptcommon.getReceiptcommon().Ele['receipt_member'] = $("input.receipt_member");
+        receiptcommon.getReceiptcommon().Ele['discount_type'] = $("input[name=discount_type]");
+        receiptcommon.getReceiptcommon().Ele['totalMoney'] = $("input[name=totalMoney]");
+        receiptcommon.getReceiptcommon().Ele['totalNeedMoney'] = $("input[name=totalNeedMoney]");
+        receiptcommon.getReceiptcommon().Ele['isMemberDiscount'] = $("input[name=isMemberDiscount]");
+
+
+        receiptcommon.getReceiptcommon().Ele['confiem_total_amount'] = $(".confiem_total_amount");
+        receiptcommon.getReceiptcommon().Ele['confiem_preferential_amount'] = $(".confiem_preferential_amount");
+        receiptcommon.getReceiptcommon().Ele['confiem_remarks_information'] = $(".confiem_remarks_information");
+        receiptcommon.getReceiptcommon().Ele['need_pay_amount'] = $(".need_pay_amount");
+        receiptcommon.getReceiptcommon().Ele['pay_amount'] = $(".pay_amount");
+
+
+
+        function AndroidMsg(_result) {
+
+            try {
+                alert(_result);
+            } catch (err) {
+                alert(err);
+                //yunmallIframe.error("JSON格式错误");
+            }
+
+        }
+
+
+        var UIDEle = $('input[name=memberid]'),
+            receiptconfirm_FormEle = $("#receiptconfirm_Form"),
+            ReceiptsetOrderEle = $("#ReceiptsetOrder");
+
+        receiptcommon.close = function () {
+            //parent.receiptcommon.close();
+        };
+
+        $(".select-members").bind('click', function () {
+            receiptcommon.selectUserOpen('selectUser');
+        });
+
+        $(".sel_huiyuan").bind('click', function () {
+            receiptcommon.selectUserOpen('selectUser');
+        });
+
+        $(".payoptions").bind('click', function () {
+            var _paytype = $(this).attr('data-key');
+
+            if (_paytype == '4' && (UIDEle.val() == '' || UIDEle.val() == '0')) {
+                alert('请选择会员');
+                return false;
+            }
+            $("input[name=paytype]").val(_paytype);
+            $(this).addClass('button-primary').siblings().removeClass('button-primary');
+
+            if (_paytype == '4' && UIDEle.val() > 0) {
+                var memberBalance = goods_price(parseFloat($(".utotal_balance").text()));
+                var payMoney = goods_price(parseFloat($("input[name='totalPayMoney']").val()));
+                if (memberBalance == 0) {
+                    alert("该会员没有余额");
+                }
+                else if (memberBalance < payMoney) {
+                    alert("会员余额不足，需要额外支付 " + goods_price(payMoney - memberBalance) + " 元");
+                }
+            }
+        });
+
+        /*挂单*/
+        $("#Receiptguadan").bind('click', function () {
+            receiptconfirm_FormEle.attr('action', 'guadan');
+            receiptcommon.guadan($(this));
+        });
+
+        $("input[name=discount_type]").bind('click', function () {
+            $("input.discount_type_text").val($(this).val());
+            //receiptcommon.getReceiptcommon().MembershipDiscount($(this).val());
+            /*$.post("/Receipt/receiptShoppingCart.html?isAjax=1&_t="+ new Date().getTime() ,{shoppinggoods:$("input[name=goodsdata]").val(),uid:$("input[name=uid]").val(),discount_type:$(this).val()},function(_RESULT){
+
+                   $(".confiem_preferential_amount").html(  goods_price( (_RESULT['originaltotalprice'] - _RESULT['activitytotalprice'])/100 ) );
+                   $("input[name=goods_total]").val( goods_price(_RESULT['activitytotalprice']/100) );
+                   $("input[name=activitytotalprice]").val( _RESULT['activitytotalprice'] );
+
+
+            },'JSON');*/
+            receiptcommon.selectDiscountType({ isDiscount: strToint($(this).val()), memberid: strToint($("input[name=memberid]").val()) });
+
+        });
+
+        $(".customer-type a.button").bind('click', function () {
+            var _val = $(this).attr('data-customer-type');
+            $(this).addClass('button-primary').siblings().removeClass('button-primary');
+            $("input[name=customertype]").val(_val);
+            if (_val == 2) {
+                $(".huiyuan").show();
+                $(".enabling-membership-discounts").show();
+                var _uid = strToint($("input[name=memberid]").val());
+                if (_uid > 0) {
+                    receiptcommon.selectMemberType({ memberid: _uid });
+                }
+
+
+            } else {
+                receiptcommon.selectMemberType({ memberid: 0 });
+                $(".enabling-membership-discounts").hide();
+                //$("input.receipt_member").val(0);
+                $(".huiyuan").hide();
+            }
+        });
+
+        //默认需要选择一个会员
+        /*if( $(".customer-type a.button-primary").size() < 1){
+                   $(".customer-type a[data-customer-type=2]").click();
+        }*/
+
+        //$(".customer-type a[data-customer-type=2]").click();
+
+
+
+        ReceiptsetOrderEle.bind('click', function () {
+            var that = $(this)
+            art.dialog.confirm("确认要提交订单吗？", function () {
+                if (validate()) {
+                    new yunmall_reqeust(that, null, 'window.top.receiptcommon.Receiptresult');
+                }
+            });
+        });
+
+        function validate() {
+            if ($("input[name=customertype]").val() == 2 && (UIDEle.val() == '' || UIDEle.val() <= 0)) {
+                yunmallIframe.error('亲请选择会员');
+                return false;
+            }
+
+            if ($("input[name=paytype]").val() == '') {
+                yunmallIframe.error('亲请选择收款类型');
+                return false;
+            }
+            return true;
+        }
+
+
+
+
+
+                                                                                                                                                                        /*function setIframeHeight(iframe) {
+                                                                                                                                                                            if (iframe) {
+                                                                                                                                                                            var iframeWin = iframe.contentWindow || iframe.contentDocument.parentWindow;
+                                                                                                                                                                            if (iframeWin.document.body) {
+                                                                                                                                                                            iframe.height = iframeWin.document.documentElement.scrollHeight || iframeWin.document.body.scrollHeight;
+                                                                                                                                                                            }
+                                                                                                                                                                            }
+                                                                                                                                                                        };
+
+                                                                                                                                                                        window.onload = function () {
+                                                                                                                                                                            setIframeHeight(document.getElementById('external-frame'));
+                                                                                                                                                                        };*/
+    </script>
+
+</body>
+</html>

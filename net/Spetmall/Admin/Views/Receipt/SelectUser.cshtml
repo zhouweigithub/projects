@@ -1,0 +1,116 @@
+﻿@using Spetmall.Model;
+@{
+    ViewBag.Title = "选择会员";
+    Layout = null;
+}
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>选择会员</title>
+    <link href="/static/css/common.css?v=@HttpContext.Current.Application["ver"]" rel="stylesheet" type="text/css" />
+    <style>
+        body {
+            min-width: 695px;
+        }
+    </style>
+    <script type="text/javascript" src="/static/js/jquery-1.12.2.min.js?v=@HttpContext.Current.Application["ver"]"></script>
+    <script type="text/javascript" src="/static/js/iframe.js?v=@HttpContext.Current.Application["ver"]"></script>
+    <style>
+        body {
+            min-width: 200px;
+        }
+
+        .formsearch {
+            overflow: hidden;
+            position: relative;
+            padding-right: 120px;
+            margin-bottom: 10px;
+        }
+
+        .searchtxt {
+            width: 100%;
+        }
+
+            .searchtxt input.text {
+                width: 100%;
+            }
+
+        .formsearch .formbtn {
+            position: absolute;
+            top: 0px;
+            right: 0px;
+            width: 120px;
+            height: 34px;
+            text-align: center;
+            line-height: 34px;
+            border-radius: 3px;
+            font-size: 13px;
+            color: #fff;
+            float: left;
+            background: linear-gradient(#2fb3f1, #1991ce);
+            border: 0px;
+        }
+
+            .formsearch .formbtn:hover {
+                background: linear-gradient(#1991ce, #2fb3f1);
+            }
+    </style>
+</head>
+
+<body>
+
+    <div class="rightinfo" style="padding:0px; min-width:200px;margin:10px 10px;">
+        <form action="?" method="get">
+            <input name="callback" type="hidden" value="selectUser2" />
+            <div class="formsearch">
+                <div class="searchtxt">
+                    <input name="keyWord" type="text" class="scinput text" placeholder="请输入手机号或姓名(简拼)" value="" />
+                </div>
+                <input name="" type="submit" class="scbtn formbtn" value="查询" />
+            </div>
+        </form>
+        <form action="?" method="post" id="SpecData" name="glform">
+            <table class="tablelist" width="100%">
+                <thead>
+                    <tr>
+                        <th>姓名</th>
+                        <th>手机</th>
+                        <th>余额</th>
+                        <th>折扣</th>
+                        <th>操作</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @{
+                        foreach (member item in ViewBag.datas as IEnumerable<member>)
+                        {
+                            <tr if1=if1 class="odd">
+                                <td align="center">@item.name</td>
+                                <td>@item.phone</td>
+                                <td>@item.money</td>
+                                <td>@item.discount</td>
+                                <td>
+                                    <a href="javascript:;" onclick="parent.receiptcommon.@ViewBag.callback (@Util.Json.JsonUtil.Serialize(item))" data-addressid="@item.id" class="dssc-btn">选择</a>
+                                </td>
+                            </tr>
+                        }
+                    }
+                </tbody>
+
+            </table>
+        </form>
+
+        <div class="pagin"></div>
+
+    </div>
+
+
+
+</body>
+</html>
+
+
+

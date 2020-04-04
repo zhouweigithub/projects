@@ -1,0 +1,264 @@
+﻿@using Spetmall.Model;
+@{
+    ViewBag.Title = "商品管理";
+    ViewBag.bodyClass = "goods-index";
+}
+<script src="~/static/js/selectpage.js?v=@HttpContext.Current.Application["ver"]"></script>
+<link href="~/static/dialog/css/dialog.css?v=@HttpContext.Current.Application["ver"]" rel="stylesheet" />
+<script src="~/static/dialog/js/dialog.min.js?v=@HttpContext.Current.Application["ver"]"></script>
+<link href="~/static/extend/jquery.pagination-1.2.7/jquery.pagination.css?ver=@HttpContext.Current.Application["ver"]" rel="stylesheet" />
+<script src="~/static/extend/jquery.pagination-1.2.7/jquery.pagination-1.2.7.js?ver=@HttpContext.Current.Application["ver"]"></script>
+<style>
+    .table01 td {
+        padding: 3px;
+    }
+</style>
+<div class="mianbox">
+    <div class="searchbar">
+        <form method="get">
+            <div style="padding-right: 470px;">
+                <div class="search">
+                    @Html.TextBox("keyword", null, new { placeholder = "请输入商品名称(简拼)或条形码" })
+                    <a href="javascript:;" id="yunmall_goods_search">查询</a>
+                </div>
+
+            </div>
+            <div class="rightbtn">
+                <a href="javascript:;" yun_type="dialog" dialog_title="添加商品" uri="edit/0" dialog_width="60%" dialog_height="80%" class="barbtn01" id="open">添加商品</a>
+                <a href="?orderBy=sales" class="barbtn02 @(ViewBag.orderBy == "sales" ? "active" : "")">按销量</a>
+                <a href="?orderBy=store" class="barbtn02 @(ViewBag.orderBy == "store" ? "active" : "" )">按库存</a>
+                <a id="export" href="#" class="barbtn02" target="_blank">导出Excel</a>
+            </div>
+        </form>
+    </div>
+    <div class="padt">
+        <div class="fenlei2 yunmallsuperfish" id="yunmallgoodsclass">
+            <ul class="clear sf-menu">
+                <li class="active"><a href="?time=1558613802">全部</a></li>
+
+                @{
+                    var categorys = ViewBag.categorys as List<category>;
+                    var roots = categorys.Where(a => a.floor == 0);
+                    foreach (category root in roots)
+                    {
+                        <li>
+                            <a href="javascript:void(0);" data-class="@root.id">@root.name<i class="iconfont i-shanjiaoxia"></i></a>
+                            <ul>
+                                @{
+                                    var subs = categorys.Where(a => a.pid == root.id);
+                                    foreach (category sub in subs)
+                                    {
+                                        <li>
+                                            <a href="index?category=@sub.id" data-class="@sub.id"><em></em>@sub.name</a>
+                                        </li>
+                                    }
+                                }
+                            </ul>
+                        </li>
+                    }
+                }
+            </ul>
+        </div>
+
+        <div class="chanpin clear">
+
+            @*<ul id="goods-list">
+                    @{
+                        foreach (product item in ViewBag.datas)
+                        {
+                            <li class="@(item.store<=item.warn?"warningactive":"")">
+                                <a href="javascript:;" yun_type="dialog" dialog_title="修改商品" uri="edit/@item.id" dialog_width="60%">
+                                    <img src="@item.thumbnail" onerror="this.src='/static/images/defaultgoods.jpg';" style="width:100%;height:250px;">
+                                    <div class="cpnav">
+                                        <ol>@item.name</ol>
+                                        <p>单价：<strong>@item.price 元</strong></p>
+                                        <div class="clear goods_attr_info">
+                                            <span class="">库存：@item.store</span>
+                                            <span class="">销量：@item.sales</span>
+                                        </div>
+                                    </div>
+                                </a>
+                            </li>
+                        }
+                    }
+                </ul>*@
+
+            <table class="table01" width="100%" border="0" cellspacing="0" cellpadding="0">
+                <tbody>
+                    <tr>
+                        <th width="5%">ID</th>
+                        <th width="5%">缩略图</th>
+                        <th width="16%">商品名称</th>
+                        <th width="10%">条码</th>
+                        <th width="7%">分类</th>
+                        <th width="7%">价格</th>
+                        <th width="7%">成本</th>
+                        <th width="7%">库存</th>
+                        <th width="7%">库存预警</th>
+                        <th width="7%">销量</th>
+                        <th width="7%">会员折扣</th>
+                        <th width="7%">备注</th>
+                        <th width="8%">操作</th>
+                    </tr>
+                    @{
+                        foreach (product_show item in ViewBag.datas)
+                        {
+                            <tr>
+                                <td>@item.id</td>
+                                <td><img src="@item.thumbnail" onerror="this.src='/static/images/defaultgoods.jpg';" style="height:50px;width:50px"></td>
+                                <td>@item.name</td>
+                                <td>@item.barcode</td>
+                                <td>@item.categoryName</td>
+                                <td>@item.price.ToString("g0")</td>
+                                <td>@item.cost.ToString("g0")</td>
+                                <td style="@(item.store<=item.warn?"background-color:#f1debd":"")">@item.store</td>
+                                <td>@item.warn</td>
+                                <td>@item.sales</td>
+                                <td>@(item.ismemberdiscount == 0 ? "未启用" : "启用")</td>
+                                <td>@item.remark</td>
+                                <td>
+                                    <a href="javascript:;" yun_type="dialog" dialog_title="修改商品" uri="edit/@item.id" dialog_width="60%" dialog_height="80%">修改</a>
+                                    | <a href="javascript:void(0);" onclick="yunmall_confirm_dialog('您确定要删除这条记录吗?','delete/@item.id','reload')">删除</a>
+                                </td>
+                            </tr>
+                        }
+                    }
+                </tbody>
+            </table>
+
+            <div class="emptydata" style="display:none;">没有数据了</div>
+            <div class="emptydatasearch" style="display:none;">没有搜索到相关数据,请换一个关键词试一下</div>
+        </div>
+
+        <div id="pager" class="m-pagination"></div>
+    </div>
+</div>
+<script language="javascript">
+
+    var page=@ViewBag.Page;
+    var pagesize=@ViewBag.PageSize;
+    var totalTotalRecordCount=@ViewBag.TotalDataCount;
+
+    $(function () {
+
+        var selectpage = new selectPage();
+        selectpage.empty = function (_data, _request) {
+
+            if (this.config.page <= 1 && _request['keyword'] && _request['keyword'] != '') {
+
+                $(".emptydatasearch").show();
+            } else {
+                $(".emptydata").show();
+            }
+        };
+
+        selectpage.successBefore = function (_data) {
+            if (this.config.page <= 1) {
+                this.config.content.empty();
+                $(".emptydatasearch").hide();
+                if (_data.datacount > 1) {
+                    $(".search_empty").hide();
+                }
+            }
+        };
+
+        selectpage.bind = function (_dom) {
+            yunmalldialog(_dom.find("[yun_type=dialog]"));
+        };
+
+        selectpage.afterAll = function () {
+            //this.config.content.append('<div class="loaded">已经没有更多商品了</div>');
+            $(".emptydata").show();
+        };
+
+        //selectpage.init({ url: 'Index', page: 1, scroll: $(window), content: $("#goods-list") });
+        //selectpage.setData({});
+        //selectpage.paginate();
+
+        //$("#yunmallgoodsclass a").bind('click', function (event) {
+        //    event.preventDefault();
+        //    selectpage.setPage(1);
+        //    selectpage.setData({ "category": $(this).attr('data-class') });
+        //    selectpage.paginate();
+        //});
+
+
+
+        //$("#yunmall_goods_search").bind('click', function (event) {
+        //    event.preventDefault();
+        //    selectpage.setPage(1);
+        //    selectpage.setData({ "keyword": $.trim($("input[name=keyword]").val()) });
+        //    selectpage.paginate();
+        //});
+
+        //$(document).keyup(function (event) {
+        //    if (event.keyCode == 13) {
+        //        selectpage.setPage(1);
+        //        selectpage.setData({ "keyword": $.trim($("input[name=keyword]").val()) });
+        //        selectpage.paginate();
+        //    }
+        //});
+
+        $("#yunmall_goods_search").bind('click', function (event) {
+            $("#yunmall_goods_search").closest("form").submit();
+        });
+
+        $("#export").click(function () {
+            window.location.href = "export?category=" + getUrlParam("category")
+                + "&keyWord=" + encodeURI(getUrlParam("keyWord")) + "&orderBy=" + encodeURI(getUrlParam("orderBy"));
+        });
+
+        //分页
+        $("#pager").page({
+            pageSize: pagesize,
+            total: totalTotalRecordCount,
+            pageSizeItems: [20, 50, 100],
+            showJump: true,
+            showPageSizes: true,
+            pageBtnCount: 15,
+            showInfo: false,
+            firstBtnText: "|<<",
+            lastBtnText: ">>|",
+            prevBtnText: "<",
+            nextBtnText: ">"
+        }).on("pageClicked", function (event, pageNumber) {
+            location.href = "Index?category=" + getUrlParam("category") + "&keyWord=" + getUrlParam("keyWord")
+                + "&orderBy=" + getUrlParam("orderBy") + "&pagesize=" + pagesize + "&page=" + (pageNumber + 1);
+        }).on("jumpClicked", function (event, pageNumber) {
+            location.href = "Index?category=" + getUrlParam("category") + "&keyWord=" + getUrlParam("keyWord")
+                + "&orderBy=" + getUrlParam("orderBy") + "&pagesize=" + pagesize + "&page=" + (pageNumber + 1);
+        }).on("pageSizeChanged", function (event, pageSize) {
+            location.href = "Index?category=" + getUrlParam("category") + "&keyWord=" + getUrlParam("keyWord")
+                + "&orderBy=" + getUrlParam("orderBy")+ "&pagesize=" + pageSize + "&page=1" ;
+        }).page("setPage", page - 1);
+
+
+    });
+
+</script>
+<script type="text/javascript">
+
+    $(document).ready(function () {
+        var _menuTime = null, _TMPELE = null;
+
+        $(".sf-menu li").mouseover(function (event) {
+            event.stopPropagation();
+            if (_menuTime) window.clearTimeout(_menuTime);
+            $(this).siblings().find("ul:visible").hide();
+            $(this).children('ul').show();
+
+        });
+
+        $(".sf-menu li").mouseout(function (event) {
+            event.stopPropagation();
+            _menuTime = setTimeout(function () {
+                $(".sf-menu ul:visible").hide();
+            }, 50);
+        });
+
+        //$(document).bind('click', function () {
+        //    $("input[name=title]").focus();
+        //}).trigger('click');
+
+    });
+</script>

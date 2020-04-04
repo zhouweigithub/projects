@@ -1,0 +1,264 @@
+﻿@model Spetmall.Admin.Models.UserViewModel
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <script src="~/Scripts/1.11.3-jquery.min.js?v=@HttpContext.Current.Application["ver"]"></script>
+    <script src="~/Content/bootstrap/js/bootstrap.min.js?v=@HttpContext.Current.Application["ver"]"></script>
+    <link href="~/Content/bootstrap/css/bootstrap.min.css?v=@HttpContext.Current.Application["ver"]" rel="stylesheet" />
+    <script src="~/Scripts/common.js?v=@HttpContext.Current.Application["ver"]"></script>
+    <title>登录</title>
+    <script type="text/javascript">
+        $("#posttype").val("");
+        $("#newpage").val("");
+        var needBindMobile = '@ViewBag.needBindMobile';
+        var needSmsCode = '@ViewBag.needSmsCode';
+        var modemsg = '@Model.Message';
+        var wait = 60;
+
+        window.onload=function () {
+
+            if (modemsg != null && typeof (modemsg) != "undefined" && modemsg != '') {
+                alert(modemsg);
+            }
+            if (needBindMobile == 1) {
+                $("#bindmobilediv").show();
+                $("#posttype").val("bindmobile");
+                $("#needbindmobile").val("1");
+            } else {
+                $("#bindmobilediv").hide();
+                $("#needbindmobile").val("0");
+            }
+
+            if (needSmsCode == 1) {
+                $("#mobilecodediv").show();
+                $("#needsmscode").val("1");
+            } else {
+                $("#mobilecodediv").hide();
+                $("#needsmscode").val("0");
+            }
+            if ("@Model.Mobile"!="null" &&  "@Model.Mobile"!="") {
+                $("#Mobile").val("@Model.Mobile");
+            }
+         }
+        function getSmsCode(obj) {
+            var btn = $(obj);
+
+            if (wait == 0) {
+                btn.removeAttr("disabled");
+                btn.html("获取");
+                wait = 60;
+
+            } else {
+                if (wait == 60) {
+                    btn.attr("disabled", true);
+
+                    var UserName = $("#UserName").val();
+                    var Password = $("#Password").val();
+                    var Mobile = $("#Mobile").val();
+                    //var vcode = $("#vcode").val();
+                    if (UserName == null || UserName == "" || Password == null || Password == "" || ($("#posttype").val()=="bindmobile" && (Mobile == null || Mobile == ""))) {
+                        btn.removeAttr("disabled");
+                        alert("请输入用户名、密码、手机号、验证码");
+                        return false;
+                    }
+                    else if (!IsMobile(Mobile)) {
+                        btn.removeAttr("disabled");
+                        alert("手机号格式不正确");
+                        return false;
+                    } else {
+                        $.post("/Home/GetSmsCode",
+                            { UserName: UserName, Password: Password, Mobile: Mobile,posttype:$("#posttype").val() },
+                            function (data, status, jqXHR) {
+                                if (data.Result) {
+                                    alert(data.Message);
+
+                                    btn.html(wait);
+                                    wait--;
+                                    setTimeout(function() {
+                                            getSmsCode(btn);
+                                        },
+                                        1000);
+
+                                } else {
+                                    btn.removeAttr("disabled");
+                                    alert(data.Message);
+                                }
+                                //$("#pullvcode").trigger('click');
+                            },
+                            "json");
+                    }
+                }
+                else
+                {
+                    btn.html(wait);
+                    wait--;
+                    setTimeout(function() {
+                            getSmsCode(btn);
+                        },
+                        1000);
+                }
+
+            }
+        }
+
+        $(function () {
+            $("#pullvcode").click(function () {
+                var $this = $(this);
+                $this.attr("src", '@Url.Action("VCode", "Home")?_dc=' + new Date().getTime());
+            });
+        });
+        function beforeSubmit() {
+            var name = $('#UserName');
+            var pass = $("#Password");
+            //var code = $("#vcode");
+            if (name.val() == "") {
+                alert("请输入用户名");
+                name.focus();
+                return false;
+            }
+            if (pass.val() == "") {
+                alert("请输入密码");
+                pass.focus();
+                return false;
+            }
+            //if (code.val() == "") {
+            //    alert("请输入验证码");
+            //    code.focus();
+            //    return false;
+            //}
+            if ($('#posttype').val() == "bindmobile") {
+                if ($('#Mobile').val() == "") {
+                    alert("请输入手机号");
+                    $('#Mobile').focus();
+                    return false;
+                }
+                if ($('#SmsCode').val() == "") {
+                    alert("请输入短信验证码");
+                    $('#SmsCode').focus();
+                    return false;
+                }
+                if (!IsMobile($('#Mobile').val())) {
+                    alert("手机号格式不正确");
+                    return false;
+                }
+            }
+            if (needSmsCode == "1") {
+                if ($('#SmsCode').val() == "") {
+                    alert("请输入短信验证码");
+                    $('#SmsCode').focus();
+                    return false;
+                }
+            }
+        }
+    </script>
+</head>
+
+<body style="text-align:center;">
+    <header>
+        <nav class="navbar" style="background-color: #428bca; ">
+            <div class="container-fluid">
+                <div class="navbar-header">
+                    <a class="navbar-brand" style="padding:0px 0px 0px 50px;"><img src="~/Content/images/logo_blue.png" style="height:50px;" /> </a>
+                </div>
+                <div>
+                    <ul class="nav navbar-nav">
+                        <li class="active" style="color:#ffffff;height:50px;line-height:50px;font-size:26px;"><p>摩奇卡卡官网后台管理系统 </p> </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    </header>
+    <div>
+        <div style="width:800px; margin: 100px auto;">
+            <div class="media">
+                <div class="media-left">
+                    <a><img src="~/Content/images/pic_login.jpg" /></a>
+                </div>
+                <div class="media-body">
+                    <div class="panel panel-default">
+                        <div class="panel-heading"><h3 style="color: #428bca;"><strong>管理员登录</strong></h3> </div>
+                        <div class="panel-body">
+                            @using (Html.BeginForm("Login", "Home", FormMethod.Post, new { @class = "form-inline", onsubmit = "return beforeSubmit()" }))
+                            {
+                                <input type="hidden" name="posttype" id="posttype" value="" />
+                                <input type="hidden" name="needbindmobile" id="needbindmobile" value="0" />
+                                <input type="hidden" name="needsmscode" id="needsmscode" value="0" />
+                                @Html.HiddenFor(model => model.ReturnUrl)
+                                <div class="form-group">
+                                    <div class="input-group">
+                                        <div class="input-group-addon"><span class="glyphicon glyphicon-user" style="color: #428bca;"></span></div>
+                                        @Html.TextBoxFor(model => model.UserName, new { placeholder = Html.DisplayNameFor(model => model.UserName).ToString(), @class = "form-control" })
+                                        @*<div class="input-group-addon"></div>*@
+                                    </div>
+                                    @*<div>用户名不对的提示</div>*@
+                                </div><br /><br />
+                                <div class="form-group">
+                                    <div class="input-group">
+                                        <div class="input-group-addon"><span class="glyphicon glyphicon-lock" style="color: #428bca;"></span></div>
+                                        @Html.TextBoxFor(model => model.Password, new { placeholder = Html.DisplayNameFor(model => model.Password).ToString(), @class = "form-control", type = "password" })
+                                        @*<div class="input-group-addon"></div>*@
+                                    </div>
+                                </div><br /><br />
+                                @*<div class="form-group">
+                                    <div class="input-group" style="width: 135px !important;">
+                                        <div class="input-group-addon"><span class="glyphicon glyphicon-exclamation-sign" style="color: #428bca;"></span></div>
+                                        <input type="text" maxlength="2" class="form-control" id="vcode" name="vcode" placeholder="输入结果">
+                                    </div>
+                                    <img id="pullvcode" style="width:100px;height:30px;border:1px solid #449cde;  cursor:pointer"
+                                         alt="验证码" title="点击刷新验证码" src="@Url.Action("VCode", "Home")" />
+                                </div><br /><br />*@
+                                @*<div class="form-group">
+                                    <div class="input-group">
+                                        <img id="pullvcode" style="width:100px;height:30px;border:1px solid #449cde;  cursor:pointer"
+                                             alt="验证码" title="点击刷新验证码" src="@Url.Action("VCode", "Home")" />
+                                    </div>
+                                </div><br /><br />*@
+
+                                <div id="bindmobilediv" style="display: none">
+                                    <div class="form-group">
+                                        <div class="input-group">
+                                            <div class="input-group-addon"><span class="glyphicon glyphicon-phone" style="color: #428bca;"></span></div>
+                                            @Html.TextBoxFor(model => model.Mobile, new { placeholder = Html.DisplayNameFor(model => model.Mobile).ToString(), @class = "form-control" })
+                                        </div>
+
+                                    </div>
+                                    <br />
+                                    <br />
+                                </div>
+                                <div id="mobilecodediv" style="display: none">
+                                    <div class="form-group">
+
+                                        <div class="input-group">
+                                            <input type="text" class="form-control" id="SmsCode" name="SmsCode" placeholder="短信验证码">
+                                            <span class="input-group-btn">
+                                                <button class="btn btn-default" id="sendsms" type="button" style="padding-left: 6px; padding-right: 6px;width: 42px !important;" onclick="getSmsCode(this)">获取</button>
+                                            </span>
+                                        </div>
+                                    </div>
+                                    <br />
+                                    <br />
+                                </div>
+
+                                <button type="submit" class="btn btn-primary" style="width:150px;"> &nbsp;&nbsp; 登&nbsp;录 &nbsp;&nbsp; </button>
+                            }
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <footer class="navbar-fixed-bottom">
+        <div data-role="footer" style="background-color: #428bca; color: #ffffff; padding-top: 10px; ">
+            <div style="text-align: center;padding:10px;font-size:xx-small;">
+                <a href="http://www.com" style="color:#ffffff;">成都摩奇卡卡科技有限责任公司</a>
+                版权所有 Copyright @@ 2016 All rights reserved&nbsp;
+            </div>
+        </div>
+    </footer>
+</body>
+</html>

@@ -163,7 +163,7 @@ namespace API.Controllers
             ResponseResult result = null;
             try
             {
-                int student_id = DBData.GetInstance(DBTable.student).GetEntity<Student>($"username='{token}'").id;
+                int student_id = GeneralBLL.GetStudentByUserName(token).id;
                 IList<ReceiverInfo> list = DBData.GetInstance(DBTable.receiver_info).GetList<ReceiverInfo>($"student_id='{student_id}'");
                 result = new ResponseResult(0, "ok", list);
             }

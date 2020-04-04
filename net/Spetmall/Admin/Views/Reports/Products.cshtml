@@ -1,0 +1,82 @@
+﻿@using Spetmall.Model;
+@{
+    ViewBag.Title = "商品销量报表";
+}
+
+<link href="~/static/extend/jquery.pagination-1.2.7/jquery.pagination.css?ver=@HttpContext.Current.Application["ver"]" rel="stylesheet" />
+<script src="~/static/extend/jquery.pagination-1.2.7/jquery.pagination-1.2.7.js?ver=@HttpContext.Current.Application["ver"]"></script>
+
+<div class="mianbox">
+    <div class="fenlei2 fenlei6">
+        <ul class="clear">
+            <li><a href="index">基本交易报表</a></li>
+            <li><a href="SalePerformance">销售业绩报表</a></li>
+            <li class="active"><a href="Products">商品销量报表</a></li>
+            <li><a href="Category">分类统计</a></li>
+            <li><a href="Member">会员报表</a></li>
+        </ul>
+    </div>
+
+    <div class="tablebox padt">
+        <table class="table01" width="100%" border="0" cellspacing="0" cellpadding="0">
+            <tbody>
+                <tr>
+                    <th width="10%">ID</th>
+                    <th width="30%">商品名称</th>
+                    <th width="10%">价格</th>
+                    <th width="10%">商品库存</th>
+                    <th width="10%">销量</th>
+                    <th width="20%">入库时间</th>
+                    <th width="10%">操作</th>
+                </tr>
+                @{
+                    foreach (product item in ViewBag.datas as List<product>)
+                    {
+                        <tr>
+                            <td>@item.id</td>
+                            <td align="left">@item.name</td>
+                            <td>@item.price.ToString("g0")</td>
+                            <td>@item.store</td>
+                            <td>@item.sales</td>
+                            <td>@item.crtime</td>
+                            <td><a href="ProductDetail?productid=@item.id">查看销售</a></td>
+                        </tr>
+                    }
+                }
+            </tbody>
+        </table>
+
+        <div id="pager" class="m-pagination"></div>
+    </div>
+</div>
+
+<script language="javascript">
+
+    var page=@ViewBag.Page;
+    var pagesize=@ViewBag.PageSize;
+    var totalTotalRecordCount=@ViewBag.TotalDataCount;
+
+    $(function () {
+        //分页
+        $("#pager").page({
+            pageSize: pagesize,
+            total: totalTotalRecordCount,
+            pageSizeItems: [20, 50, 100],
+            showJump: true,
+            showPageSizes: true,
+            pageBtnCount: 15,
+            showInfo: false,
+            firstBtnText: "|<<",
+            lastBtnText: ">>|",
+            prevBtnText: "<",
+            nextBtnText: ">"
+        }).on("pageClicked", function (event, pageNumber) {
+            location.href = "products?pagesize=" + pagesize + "&page=" + (pageNumber + 1);
+        }).on("jumpClicked", function (event, pageNumber) {
+            location.href = "products?pagesize=" + pagesize + "&page=" + (pageNumber + 1);
+        }).on("pageSizeChanged", function (event, pageSize) {
+            location.href = "products?pagesize=" + pageSize + "&page=1" ;
+        }).page("setPage", page - 1);
+    });
+
+</script>

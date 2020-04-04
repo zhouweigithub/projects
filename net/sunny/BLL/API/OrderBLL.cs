@@ -117,7 +117,7 @@ namespace Sunny.DAL
         /// <returns></returns>
         private static string CreateOrderId(int userid)
         {
-            return string.Format("{0}_{1}", "1" + userid.ToString().PadLeft(6, '0'),
+            return string.Format("{0}{1}", "1" + userid.ToString().PadLeft(6, '0'),
                 DateTime.Now.ToString("yyyyMMddHHmmssffff") + Common.Function.GetRangeCharaters(4, Common.RangeType.Number)
             );
         }
