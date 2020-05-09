@@ -2,8 +2,11 @@ import commonData from 'js/commonData.js';
 import commonBLL from 'js/commonBLL.js';
 
 App({
-  onLaunch: function() {
-
+  onLaunch: function () {
+    wx.cloud.init({
+      env: "mycloud-ylmm4"
+    });
+    
     //生成用户唯一标识，并存储起来
     if (wx.getStorageSync(commonData.deviceTokenCacheName) == "")
       wx.setStorageSync(commonData.deviceTokenCacheName, commonBLL.getRandomString(8));

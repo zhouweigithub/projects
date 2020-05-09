@@ -1,5 +1,6 @@
 {
   "pages": [
+    "pages/test/test",
     "pages/index/index",
     "pages/my/my",
     "pages/artical/artical",
@@ -12,6 +13,7 @@
     "backgroundTextStyle": "light",
     "navigationBarBackgroundColor": "#248311",
     "navigationBarTitleText": "WeChat",
-    "navigationBarTextStyle": "light"
-  }
+    "navigationBarTextStyle": "white"
+  },
+  "sitemapLocation": "sitemap.json"
 }
