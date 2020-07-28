@@ -1,12 +1,11 @@
-﻿using HtmlSpider.Model;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Net;
 using System.Text;
 using System.Text.RegularExpressions;
-using System.Threading.Tasks;
+using HtmlSpider.Model;
 
 namespace HtmlSpider
 {
@@ -22,10 +21,10 @@ namespace HtmlSpider
         /// </summary>
         /// <param name="url"></param>
         /// <returns></returns>
-        public static (string html, string charset) GetRemoteHtml(string url, Encoding encoding)
+        public static (String html, String charset) GetRemoteHtml(String url, Encoding encoding)
         {
-            string html = string.Empty;
-            string charSet = string.Empty;
+            String html = String.Empty;
+            String charSet = String.Empty;
             try
             {
                 HttpWebRequest myRequest = (HttpWebRequest)WebRequest.Create(url);
@@ -38,12 +37,12 @@ namespace HtmlSpider
                 reader.Close();
                 myResponse.Close();
 
-                string htmlCharset = GetCharset(html);
-                if (!string.IsNullOrEmpty(htmlCharset))
+                String htmlCharset = GetCharset(html);
+                if (!String.IsNullOrEmpty(htmlCharset))
                     charSet = htmlCharset;
 
                 Encoding htmlEncoding = Encoding.GetEncoding(charSet);
-                if (encoding != htmlEncoding && string.Compare(charSet, "ISO-8859-1", true) != 0)
+                if (encoding != htmlEncoding && String.Compare(charSet, "ISO-8859-1", true) != 0)
                 {   //如果远网页的实际编码不是default同时实际编码不是ISO-8859-1，则重新按照实际编码再获取一次源码
                     (html, charSet) = GetRemoteHtml(url, htmlEncoding);
                 }
@@ -62,55 +61,58 @@ namespace HtmlSpider
         /// </summary>
         /// <param name="html"></param>
         /// <returns></returns>
-        public static string GetCharset(string html)
+        public static String GetCharset(String html)
         {
             Match match = charsetReg.Match(html);
             if (match.Success)
             {
                 return match.Groups["charset"].Value.Trim();
             }
-            return string.Empty;
+            return String.Empty;
         }
 
-        public static string GetTitle(string html)
+        public static String GetTitle(String html)
         {
             return GetRegexValue(html, titleReg, "title");
         }
 
-        public static string GetH1(string html)
+        public static String GetH1(String html)
         {
-            return GetRegexValue(html, h1Reg, "h1");
+            String h1 = GetRegexValue(html, h1Reg, "h1");
+            if (h1.Length > 50)
+                return h1.Substring(0, 50);
+            return h1;
         }
 
-        public static string GetKeywords(string html)
+        public static String GetKeywords(String html)
         {
             return GetRegexValue(html, keyWordsReg, "keywords");
         }
 
-        private static string GetRegexValue(string html, Regex reg, string groupName)
+        private static String GetRegexValue(String html, Regex reg, String groupName)
         {
             Match match = reg.Match(html);
             if (match.Success)
             {
                 return match.Groups[groupName].Value.Trim();
             }
-            return string.Empty;
+            return String.Empty;
         }
 
-        public static string GetContent(string html)
+        public static String GetContent(String html)
         {
             html = html.Replace("&nbsp;", " ").Replace("<br />", "");
 
             //移除这些标签内的所有字符
-            string[] tags1 = new string[] { "<head|</head>", "<script|</script>", "<style|</style>", "<ul|</ul>", "<!--|-->" };
+            String[] tags1 = new String[] { "<head|</head>", "<script|</script>", "<style|</style>", "<ul|</ul>", "<!--|-->", "<nav|</nav>" };
             html = RemoveExtroChars(html, tags1);
 
             //移除这些标签，但保留之间的文本
-            string[] tags2 = new string[] { "<a|</a>", "<span|</span>", "<p|</p>", "<strong|</strong>", "<u|</u>", "<b|</b>", "<big|</big>", "<del|</del>", "<em|</em>", "<ins|</ins>", "<small|</small>", "<sub|</sub>", "<sup|</sup>" };
+            String[] tags2 = new String[] { "<a|</a>", "<h|</h>", "<span|</span>", "<p|</p>", "<strong|</strong>", "<u|</u>", "<b|</b>", "<big|</big>", "<del|</del>", "<em|</em>", "<ins|</ins>", "<small|</small>", "<sub|</sub>", "<sup|</sup>" };
             html = RemoveExtroCharsLeaveInnerTHML(html, tags2);
 
             //移除这些标签内的所有字符
-            string[] tags3 = new string[] { "<|>" };
+            String[] tags3 = new String[] { "<|>" };
             html = RemoveExtroChars(html, tags3);
 
             html = FilterContent(html);
@@ -122,7 +124,7 @@ namespace HtmlSpider
         /// </summary>
         /// <param name="html"></param>
         /// <returns></returns>
-        public static string RemoveExtroChars(string html, string[] tags)
+        public static String RemoveExtroChars(String html, String[] tags)
         {
             foreach (var item in tags)
             {
@@ -130,7 +132,7 @@ namespace HtmlSpider
                 HtmlTagInfo endTag = searchedTags.FirstOrDefault(a => a.Value == -1);
                 while (endTag != null)
                 {
-                    int index = searchedTags.IndexOf(endTag);
+                    Int32 index = searchedTags.IndexOf(endTag);
                     HtmlTagInfo preTag = index >= 1 ? searchedTags[index - 1] : null;
                     if (preTag == null)
                     {
@@ -142,7 +144,7 @@ namespace HtmlSpider
                     }
                     else if (preTag.Value == 1)
                     {   //前一个为开始标签
-                        int removeCount = endTag.TagIndex + endTag.TagCode.Length - preTag.TagIndex;
+                        Int32 removeCount = endTag.TagIndex + endTag.TagCode.Length - preTag.TagIndex;
                         html = html.Remove(preTag.TagIndex, removeCount);
                         html = html.Insert(preTag.TagIndex, "\n");  //增加了一个换行符
 
@@ -173,7 +175,7 @@ namespace HtmlSpider
         /// </summary>
         /// <param name="html"></param>
         /// <returns></returns>
-        public static string RemoveExtroCharsLeaveInnerTHML(string html, string[] tags)
+        public static String RemoveExtroCharsLeaveInnerTHML(String html, String[] tags)
         {
             foreach (var item in tags)
             {
@@ -181,7 +183,7 @@ namespace HtmlSpider
                 HtmlTagInfo endTag = searchedTags.FirstOrDefault(a => a.Value == -1);
                 while (endTag != null)
                 {
-                    int index = searchedTags.IndexOf(endTag);
+                    Int32 index = searchedTags.IndexOf(endTag);
                     HtmlTagInfo preTag = index >= 1 ? searchedTags[index - 1] : null;
                     if (preTag == null)
                     {
@@ -194,8 +196,8 @@ namespace HtmlSpider
                     }
                     else if (preTag.Value == 1)
                     {   //前一个为开始标签
-                        int removeCount = endTag.TagIndex + endTag.TagCode.Length - preTag.TagIndex;
-                        string innerHTML = GetInnerHTML(html.Substring(preTag.TagIndex, removeCount));
+                        Int32 removeCount = endTag.TagIndex + endTag.TagCode.Length - preTag.TagIndex;
+                        String innerHTML = GetInnerHTML(html.Substring(preTag.TagIndex, removeCount));
                         html = html.Remove(preTag.TagIndex, removeCount);
                         html = html.Insert(preTag.TagIndex, innerHTML);     //将标签及内容替换为内容
 
@@ -226,28 +228,28 @@ namespace HtmlSpider
         /// </summary>
         /// <param name="html"></param>
         /// <returns></returns>
-        private static string FilterContentByMaxLength(string html)
+        private static String FilterContentByMaxLength(String html)
         {
-            string[] htmlArray = html.Split(new string[] { "\n" }, StringSplitOptions.None);
-            for (int i = 0; i < htmlArray.Length; i++)
+            String[] htmlArray = html.Split(new String[] { "\n" }, StringSplitOptions.None);
+            for (Int32 i = 0; i < htmlArray.Length; i++)
             {
                 htmlArray[i] = htmlArray[i].Trim();
             }
             var htmlList = htmlArray.ToList();
-            htmlList.RemoveAll(a => string.IsNullOrEmpty(a));
+            htmlList.RemoveAll(a => String.IsNullOrEmpty(a));
 
-            string maxContentItem = htmlList.OrderByDescending(a => a.Length).FirstOrDefault();
-            int maxContentIndex = Array.IndexOf(htmlArray, maxContentItem);
+            String maxContentItem = htmlList.OrderByDescending(a => a.Length).FirstOrDefault();
+            Int32 maxContentIndex = Array.IndexOf(htmlArray, maxContentItem);
 
-            int validLineCount = 3;     //视为有效的间隔最大空白行数
-            int sepreteCount = 0;       //已间隔的行数
+            Int32 validLineCount = 3;     //视为有效的间隔最大空白行数
+            Int32 sepreteCount = 0;       //已间隔的行数
             StringBuilder sb = new StringBuilder();
 
             //往前取文章有效部分
-            for (int i = maxContentIndex; i >= 0; i--)
+            for (Int32 i = maxContentIndex; i >= 0; i--)
             {
-                string item = htmlArray[i];
-                if (string.IsNullOrWhiteSpace(item))
+                String item = htmlArray[i];
+                if (String.IsNullOrWhiteSpace(item))
                 {
                     sepreteCount++;
                     if (sepreteCount > validLineCount)
@@ -271,10 +273,10 @@ namespace HtmlSpider
 
             sepreteCount = 0;
             //往后取文章有效部分
-            for (int i = maxContentIndex + 1; i < htmlArray.Length; i++)
+            for (Int32 i = maxContentIndex + 1; i < htmlArray.Length; i++)
             {
-                string item = htmlArray[i];
-                if (string.IsNullOrWhiteSpace(item))
+                String item = htmlArray[i];
+                if (String.IsNullOrWhiteSpace(item))
                 {
                     sepreteCount++;
                     if (sepreteCount > validLineCount)
@@ -299,23 +301,23 @@ namespace HtmlSpider
             return sb.ToString();
         }
 
-        private static string FilterContent(string html)
+        private static String FilterContent(String html)
         {
-            string[] htmlArray = html.Split(new string[] { "\n" }, StringSplitOptions.None);
-            for (int i = 0; i < htmlArray.Length; i++)
+            String[] htmlArray = html.Split(new String[] { "\n" }, StringSplitOptions.None);
+            for (Int32 i = 0; i < htmlArray.Length; i++)
             {
                 htmlArray[i] = htmlArray[i].Trim();
             }
 
-            int validLineCount = 3;     //视为有效的间隔最大空白行数
-            int sepreteCount = 0;       //已间隔的行数
-            List<string> lists = new List<string>();
+            Int32 validLineCount = 3;     //视为有效的间隔最大空白行数
+            Int32 sepreteCount = 0;       //已间隔的行数
+            List<String> lists = new List<String>();
 
             //往后取文章有效部分
-            for (int i = 0; i < htmlArray.Length; i++)
+            for (Int32 i = 0; i < htmlArray.Length; i++)
             {
-                string item = htmlArray[i];
-                if (string.IsNullOrWhiteSpace(item))
+                String item = htmlArray[i];
+                if (String.IsNullOrWhiteSpace(item))
                 {   //此行为空白行，则记录空白行数
                     sepreteCount++;
                 }
@@ -350,15 +352,15 @@ namespace HtmlSpider
         /// <param name="html"></param>
         /// <param name="tagPair"></param>
         /// <returns></returns>
-        private static List<HtmlTagInfo> GetPositions(string html, string tagPair)
+        private static List<HtmlTagInfo> GetPositions(String html, String tagPair)
         {
-            string[] tags = tagPair.Split('|');
+            String[] tags = tagPair.Split('|');
             List<HtmlTagInfo> searchedTags = new List<HtmlTagInfo>();
 
-            for (int i = 0; i <= 1; i++)
+            for (Int32 i = 0; i <= 1; i++)
             {
-                int index = 0;
-                string tagCode = tags[i];
+                Int32 index = 0;
+                String tagCode = tags[i];
                 while (index != -1)
                 {
                     index = html.IndexOf(tagCode, index, StringComparison.CurrentCultureIgnoreCase);
@@ -393,7 +395,7 @@ namespace HtmlSpider
 
 
             linkList.Add(searchedTags[0]);
-            for (int i = 1; i < searchedTags.Count; i++)
+            for (Int32 i = 1; i < searchedTags.Count; i++)
             {
                 var pre = searchedTags[i - 1];
                 var cur = searchedTags[i];
@@ -418,9 +420,9 @@ namespace HtmlSpider
         /// </summary>
         /// <param name="linkList"></param>
         /// <returns></returns>
-        private static bool IsAllTagsPaired(MyLinkList<HtmlTagInfo> linkList)
+        private static Boolean IsAllTagsPaired(MyLinkList<HtmlTagInfo> linkList)
         {
-            int sum = 0;
+            Int32 sum = 0;
             MyLinkListNode<HtmlTagInfo> curNode = linkList.FirstNode;
             while (curNode != null)
             {
@@ -436,18 +438,18 @@ namespace HtmlSpider
         /// </summary>
         /// <param name="html">单个标签内容</param>
         /// <returns></returns>
-        private static string GetInnerHTML(string html)
+        private static String GetInnerHTML(String html)
         {
-            int index1 = html.IndexOf("<");
-            int index2 = html.IndexOf(">", index1);
-            int startIndex = index2 + 1;
+            Int32 index1 = html.IndexOf("<");
+            Int32 index2 = html.IndexOf(">", index1);
+            Int32 startIndex = index2 + 1;
 
-            int index3 = html.LastIndexOf(">");
-            int index4 = html.LastIndexOf("<", index3);
-            int endIndex = index4;
+            Int32 index3 = html.LastIndexOf(">");
+            Int32 index4 = html.LastIndexOf("<", index3);
+            Int32 endIndex = index4;
 
-            char xxxx = html[startIndex];
-            char yyy = html[endIndex];
+            Char xxxx = html[startIndex];
+            Char yyy = html[endIndex];
 
             return html.Substring(startIndex, endIndex - startIndex);
         }

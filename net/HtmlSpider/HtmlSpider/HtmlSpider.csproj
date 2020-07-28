@@ -53,7 +53,9 @@
     <Compile Include="Common.cs" />
     <Compile Include="Model\HtmlTagInfo.cs" />
     <Compile Include="Model\LinkList.cs" />
+    <Compile Include="Model\Njjzw.cs" />
     <Compile Include="Model\PageInfo.cs" />
+    <Compile Include="NjjzwBLL.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
