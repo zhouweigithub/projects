@@ -51,6 +51,7 @@ namespace HtmlSpider
             catch (Exception e)
             {
                 Util.Log.LogUtil.Write($"获取网页内容失败。url:{url}\r\n{e.Message}", Util.Log.LogType.Error);
+                Console.WriteLine("获取网页内容失败");
             }
 
             return (html, charSet);
@@ -101,34 +102,155 @@ namespace HtmlSpider
 
         public static String GetContent(String html)
         {
-            html = html.Replace("&nbsp;", " ").Replace("<br />", "");
+            html = html.Replace("&nbsp;", " ").Replace("<br />", "\n").Replace("<br/>", "\n");
 
-            //移除这些标签内的所有字符
-            String[] tags1 = new String[] { "<head|</head>", "<script|</script>", "<style|</style>", "<ul|</ul>", "<!--|-->", "<nav|</nav>" };
+            String attrFormatString = "<{0} [^>]*?(id|class)=[^>]*?{1}.*?>";
+
+            List<String> tags1 = new List<String> { "<head||</head>", "<script||</script>", "<style||</style>", "<!--||-->", "<nav||</nav>" };
+
+            List<String> singleTas = new List<String>() { "br", "hr", "img", "input" };
+
+            String[] tags2 = new String[] { "<a||</a>", "<h||</h>", "<span||</span>", "<p||</p>", "<strong||</strong>", "<u||</u>", "<b||</b>", "<big||</big>", "<del||</del>", "<em||</em>", "<ins||</ins>", "<small||</small>", "<sub||</sub>", "<sup||</sup>" };
+
+            List<String> tags3 = new List<String> { "<||>" };
+
+            List<String> regStrings = new List<String>();
+
+            //标签集
+            List<String> tags = new List<String>() { "div", "ul", "table" };
+
+            List<String> contentTags = new List<String>() { "div" };
+
+
+            //标签内的关键字集
+            List<String> names = new List<String>() { "page", "nav", "head", "comment", "hot", "foot" };
+
+            foreach (String tag in tags)
+            {
+                foreach (String name in names)
+                {
+                    regStrings.Add(String.Format(attrFormatString, tag, name));
+                }
+            }
+
+
+            //文章内容存放区域
+            List<String> contentTagNamess = new List<String>() { "content", "detail", "article" };
+
+            List<String> contentRegStrings = new List<String>();
+
+            foreach (String tag in contentTags)
+            {
+                foreach (String name in contentTagNamess)
+                {
+                    contentRegStrings.Add(String.Format(attrFormatString, tag, name));
+                }
+            }
+
+            //移除无用标签及内容，并在末尾添加换行符
             html = RemoveExtroChars(html, tags1);
 
+            //删除一些无需单独结尾标记的标签内容
+            html = RemoveSingleTag(html, singleTas);
+
+            //直接根据可能的标签取内容
+            html = GetContentByRegex(html, contentRegStrings);
+
+            //根据正则式移除部分节点
+            html = RemoveByRegex(html, regStrings);
+
             //移除这些标签，但保留之间的文本
-            String[] tags2 = new String[] { "<a|</a>", "<h|</h>", "<span|</span>", "<p|</p>", "<strong|</strong>", "<u|</u>", "<b|</b>", "<big|</big>", "<del|</del>", "<em|</em>", "<ins|</ins>", "<small|</small>", "<sub|</sub>", "<sup|</sup>" };
             html = RemoveExtroCharsLeaveInnerTHML(html, tags2);
 
             //移除这些标签内的所有字符
-            String[] tags3 = new String[] { "<|>" };
             html = RemoveExtroChars(html, tags3);
 
+            //过滤文本
             html = FilterContent(html);
+
+            html = WebUtility.HtmlDecode(html);
+
             return html;
         }
 
         /// <summary>
-        /// 移除相关标签及内容，并在末尾添加换行符
+        /// 根据正则式移除部分节点
+        /// </summary>
+        /// <param name="html"></param>
+        /// <param name="tags"></param>
+        /// <returns></returns>
+        public static String RemoveByRegex(String html, List<String> tags)
+        {
+            foreach (var tag in tags)
+            {
+                Regex reg = new Regex(tag);
+                Match match = reg.Match(html);
+
+                while (match.Success)
+                {
+                    HtmlTagInfo endTag = GetEndTag(html, match.Value, match.Index);
+
+                    if (endTag != null)
+                    {
+                        String node = html.Substring(match.Index, endTag.TagIndex + endTag.TagContent.Length - match.Index + 1);
+                        html = html.Remove(match.Index, endTag.TagIndex - match.Index + endTag.TagContent.Length);
+                        match = reg.Match(html);
+                    }
+
+                    match = reg.Match(html, match.Index + 1);
+                }
+            }
+
+            return html;
+        }
+
+        /// <summary>
+        /// 直接根据标签取内容
+        /// </summary>
+        /// <param name="html"></param>
+        /// <param name="tags"></param>
+        /// <returns></returns>
+        public static String GetContentByRegex(String html, List<String> tags)
+        {
+            List<String> contents = new List<String>();
+
+            foreach (var tag in tags)
+            {
+                Regex reg = new Regex(tag);
+                Match match = reg.Match(html);
+
+
+                while (match.Success)
+                {
+                    HtmlTagInfo endTag = GetEndTag(html, match.Value, match.Index);
+
+                    if (endTag != null)
+                    {
+                        String nodeHtml = html.Substring(match.Index, endTag.TagIndex + endTag.TagContent.Length - match.Index + 1);
+                        contents.Add(GetInnerHTML(nodeHtml));
+                    }
+                    match = reg.Match(html, match.Index + 1);
+                }
+            }
+
+            //取内容最多的那个
+            if (contents.Count > 0)
+                return contents.OrderByDescending(a => a.Length).First();
+            else
+                return String.Empty;
+        }
+
+
+        /// <summary>
+        /// 移除无用标签及内容，并在末尾添加换行符
         /// </summary>
         /// <param name="html"></param>
         /// <returns></returns>
-        public static String RemoveExtroChars(String html, String[] tags)
+        public static String RemoveExtroChars(String html, List<String> tags)
         {
-            foreach (var item in tags)
+            foreach (var tag in tags)
             {
-                List<HtmlTagInfo> searchedTags = GetPositions(html, item);
+                List<HtmlTagInfo> searchedTags = GetPositions(html, tag);
                 HtmlTagInfo endTag = searchedTags.FirstOrDefault(a => a.Value == -1);
                 while (endTag != null)
                 {
@@ -136,15 +258,15 @@ namespace HtmlSpider
                     HtmlTagInfo preTag = index >= 1 ? searchedTags[index - 1] : null;
                     if (preTag == null)
                     {
-                        html = html.Remove(endTag.TagIndex, endTag.TagCode.Length);
+                        html = html.Remove(endTag.TagIndex, endTag.TagContent.Length);
                         html = html.Insert(endTag.TagIndex, "\n");  //增加了一个换行符
-                        searchedTags.Where(a => a.TagIndex > endTag.TagIndex).ToList().ForEach(b => b.TagIndex -= endTag.TagCode.Length - 1);
+                        searchedTags.Where(a => a.TagIndex > endTag.TagIndex).ToList().ForEach(b => b.TagIndex -= endTag.TagContent.Length - 1);
                         searchedTags.Remove(endTag);
                         endTag = searchedTags.FirstOrDefault(a => a.Value == -1);
                     }
                     else if (preTag.Value == 1)
                     {   //前一个为开始标签
-                        Int32 removeCount = endTag.TagIndex + endTag.TagCode.Length - preTag.TagIndex;
+                        Int32 removeCount = endTag.TagIndex + endTag.TagContent.Length - preTag.TagIndex;
                         html = html.Remove(preTag.TagIndex, removeCount);
                         html = html.Insert(preTag.TagIndex, "\n");  //增加了一个换行符
 
@@ -187,22 +309,31 @@ namespace HtmlSpider
                     HtmlTagInfo preTag = index >= 1 ? searchedTags[index - 1] : null;
                     if (preTag == null)
                     {
-                        html = html.Remove(endTag.TagIndex, endTag.TagCode.Length);
+                        html = html.Remove(endTag.TagIndex, endTag.TagContent.Length);
                         html = html.Insert(endTag.TagIndex, "\n");  //增加了一个换行符
-                        searchedTags.Where(a => a.TagIndex > endTag.TagIndex).ToList().ForEach(b => b.TagIndex -= endTag.TagCode.Length - 1);
+                        searchedTags.Where(a => a.TagIndex > endTag.TagIndex).ToList().ForEach(b => b.TagIndex -= endTag.TagContent.Length - 1);
 
                         searchedTags.Remove(endTag);
                         endTag = searchedTags.FirstOrDefault(a => a.Value == -1);
                     }
                     else if (preTag.Value == 1)
                     {   //前一个为开始标签
-                        Int32 removeCount = endTag.TagIndex + endTag.TagCode.Length - preTag.TagIndex;
+                        Int32 removeCount = endTag.TagIndex + endTag.TagContent.Length - preTag.TagIndex;
                         String innerHTML = GetInnerHTML(html.Substring(preTag.TagIndex, removeCount));
                         html = html.Remove(preTag.TagIndex, removeCount);
                         html = html.Insert(preTag.TagIndex, innerHTML);     //将标签及内容替换为内容
 
+                        //p标签末尾加上换行符
+                        Int32 addChars = 0;
+                        if (endTag.TagContent == "</p>")
+                        {
+                            String addCharString = "\n";
+                            html = html.Insert(preTag.TagIndex + innerHTML.Length, addCharString);
+                            addChars = addCharString.Length;
+                        }
+
                         //更新节点之后的节点的index
-                        searchedTags.Where(a => a.TagIndex > preTag.TagIndex).ToList().ForEach(b => b.TagIndex -= removeCount - innerHTML.Length);
+                        searchedTags.Where(a => a.TagIndex > preTag.TagIndex).ToList().ForEach(b => b.TagIndex -= removeCount - innerHTML.Length - addChars);
 
                         //去除相关HTML代码后，移除相关节点数据
                         searchedTags.Remove(preTag);
@@ -220,7 +351,7 @@ namespace HtmlSpider
 
             }
 
-            return html;
+            return html.Trim();
         }
 
         /// <summary>
@@ -354,27 +485,27 @@ namespace HtmlSpider
         /// <returns></returns>
         private static List<HtmlTagInfo> GetPositions(String html, String tagPair)
         {
-            String[] tags = tagPair.Split('|');
+            String[] tags = tagPair.Split(new String[] { "||" }, StringSplitOptions.RemoveEmptyEntries);
             List<HtmlTagInfo> searchedTags = new List<HtmlTagInfo>();
 
             for (Int32 i = 0; i <= 1; i++)
             {
-                Int32 index = 0;
                 String tagCode = tags[i];
-                while (index != -1)
+                Regex reg = new Regex(tagCode);
+                String tmpHtml = html;
+
+                MatchCollection matchs = Regex.Matches(tmpHtml, tagCode, RegexOptions.IgnoreCase);
+
+                foreach (Match item in matchs)
                 {
-                    index = html.IndexOf(tagCode, index, StringComparison.CurrentCultureIgnoreCase);
-                    if (index != -1)
+                    HtmlTagInfo tag = new HtmlTagInfo()
                     {
-                        HtmlTagInfo tag = new HtmlTagInfo()
-                        {
-                            TagCode = tagCode,
-                            TagIndex = index,
-                            Value = i == 0 ? 1 : -1
-                        };
-                        index++;
-                        searchedTags.Add(tag);
-                    }
+                        TagCode = tagCode,
+                        TagContent = item.Value,
+                        TagIndex = item.Index,
+                        Value = i == 0 ? 1 : -1
+                    };
+                    searchedTags.Add(tag);
                 }
             }
 
@@ -452,6 +583,121 @@ namespace HtmlSpider
             Char yyy = html[endIndex];
 
             return html.Substring(startIndex, endIndex - startIndex);
+        }
+
+        /// <summary>
+        /// 取结束标签位置
+        /// </summary>
+        /// <param name="html"></param>
+        /// <param name="startTag"></param>
+        /// <param name="startIndex"></param>
+        /// <returns></returns>
+        private static HtmlTagInfo GetEndTag(String html, String startTag, Int32 startIndex)
+        {
+            //起始标签
+            Regex regStart = new Regex("<[^/].*?>");
+
+            //结束标签
+            Regex regEnd = new Regex("( *?/>)|(</.+?>)");
+
+            MatchCollection mcStart = regStart.Matches(html, startIndex);
+
+            MatchCollection mcEnd = regEnd.Matches(html, startIndex);
+
+            List<HtmlTagInfo> tagInfos = new List<HtmlTagInfo>();
+
+            foreach (Match item in mcStart)
+            {
+                tagInfos.Add(new HtmlTagInfo()
+                {
+                    TagCode = regStart.ToString(),
+                    TagContent = item.Value,
+                    TagIndex = item.Index,
+                    Value = 1
+                });
+            }
+
+            foreach (Match item in mcEnd)
+            {
+                tagInfos.Add(new HtmlTagInfo()
+                {
+                    TagCode = regEnd.ToString(),
+                    TagContent = item.Value,
+                    TagIndex = item.Index,
+                    Value = -1
+                });
+            }
+
+            tagInfos = tagInfos.OrderBy(a => a.TagIndex).ToList();
+
+            HtmlTagInfo tmpTagInfo = tagInfos.FirstOrDefault();
+
+            Int32 startCount = 0;
+
+            Int32 endCount = 0;
+
+            while (tmpTagInfo != null)
+            {
+                if (tmpTagInfo.Value == 1)
+                {
+                    startCount++;
+                }
+                else if (tmpTagInfo.Value == -1)
+                {
+                    //当开始标签与结束标签数量相等，又取到一个结束标签时，即为所找的结束标签
+                    String startTagName = startTag.Split(' ')[0].Replace("<", String.Empty);
+                    if (startCount == endCount + 1 && (tmpTagInfo.TagContent == " />" || tmpTagInfo.TagContent == $"</{startTagName}>"))
+                    {
+                        break;
+                    }
+                    else
+                    {
+                        endCount++;
+                    }
+                }
+
+                //移除第一个
+                tagInfos.Remove(tmpTagInfo);
+
+                //重新取第一个
+                tmpTagInfo = tagInfos.FirstOrDefault();
+            }
+
+            //if (tmpTagInfo != null)
+            //{
+            //    String nodeHtml = html.Substring(startIndex, tmpTagInfo.TagIndex + tmpTagInfo.TagContent.Length - startIndex);
+            //    Console.WriteLine(nodeHtml);
+            //}
+            //else
+            //{
+            //    Console.WriteLine("未找到结束结点");
+            //}
+
+            return tmpTagInfo;
+        }
+
+
+        /// <summary>
+        /// 删除一些无需单独结尾标记的标签内容
+        /// </summary>
+        /// <param name="html"></param>
+        /// <param name="tags"></param>
+        /// <returns></returns>
+        private static String RemoveSingleTag(String html, List<String> tags)
+        {
+            foreach (String tag in tags)
+            {
+                Regex reg = new Regex($"<{tag}.*?/*?>");
+
+                MatchCollection mc = reg.Matches(html);
+
+                foreach (Match match in mc)
+                {
+                    html = html.Replace(match.Value, String.Empty);
+                }
+            }
+
+            return html;
         }
     }
 }
