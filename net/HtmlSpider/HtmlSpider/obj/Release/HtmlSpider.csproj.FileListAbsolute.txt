@@ -14,3 +14,4 @@ E:\wwxx\projects\net\HtmlSpider\HtmlSpider\obj\Release\HtmlSpider.csproj.CoreCom
 E:\wwxx\projects\net\HtmlSpider\HtmlSpider\obj\Release\HtmlSpider.csproj.CopyComplete
 E:\wwxx\projects\net\HtmlSpider\HtmlSpider\obj\Release\HtmlSpider.exe
 E:\wwxx\projects\net\HtmlSpider\HtmlSpider\obj\Release\HtmlSpider.pdb
+E:\wwxx\projects\net\HtmlSpider\HtmlSpider\obj\Release\HtmlSpider.csprojAssemblyReference.cache

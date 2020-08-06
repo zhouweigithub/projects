@@ -11,10 +11,10 @@ namespace HtmlSpider
 {
     public class Common
     {
-        private static readonly Regex h1Reg = new Regex("<h1.*>(?<h1>(.|\n)*?)</h1>", RegexOptions.IgnoreCase);
-        private static readonly Regex titleReg = new Regex("<title.*>(?<title>(.|\n)*?)</title>", RegexOptions.IgnoreCase);
-        private static readonly Regex keyWordsReg = new Regex("<meta.* name=\"keywords\".* content=\"(?<keywords>.*?)\" */*>", RegexOptions.IgnoreCase);
-        private static readonly Regex charsetReg = new Regex("<meta.*charset=\"*(?<charset>.*?)\".*/*>", RegexOptions.IgnoreCase);
+        private static readonly Regex h1Reg = new Regex("<h1.*?>(?<h1>(.|\\n)*?)</h1>", RegexOptions.IgnoreCase);
+        private static readonly Regex titleReg = new Regex("<title.*?>(?<title>(.|\\n)*?)</title>", RegexOptions.IgnoreCase);
+        private static readonly Regex keyWordsReg = new Regex("<meta.*? name=\"keywords\".*? content=\"(?<keywords>.*?)\" */*?>", RegexOptions.IgnoreCase);
+        private static readonly Regex charsetReg = new Regex("<meta.*?charset=\"*(?<charset>.*?)\".*?/*?>", RegexOptions.IgnoreCase);
 
         /// <summary>
         /// 以当前计算机默认编码读取网页源代码
@@ -23,6 +23,7 @@ namespace HtmlSpider
         /// <returns></returns>
         public static (String html, String charset) GetRemoteHtml(String url, Encoding encoding)
         {
+            Console.WriteLine("获取远程页面内容...");
             String html = String.Empty;
             String charSet = String.Empty;
             try
@@ -74,11 +75,13 @@ namespace HtmlSpider
 
         public static String GetTitle(String html)
         {
+            Console.WriteLine("读取标题...");
             return GetRegexValue(html, titleReg, "title");
         }
 
         public static String GetH1(String html)
         {
+            Console.WriteLine("读取h1...");
             String h1 = GetRegexValue(html, h1Reg, "h1");
             if (h1.Length > 50)
                 return h1.Substring(0, 50);
@@ -87,28 +90,23 @@ namespace HtmlSpider
 
         public static String GetKeywords(String html)
         {
+            Console.WriteLine("读取关键字...");
             return GetRegexValue(html, keyWordsReg, "keywords");
-        }
-
-        private static String GetRegexValue(String html, Regex reg, String groupName)
-        {
-            Match match = reg.Match(html);
-            if (match.Success)
-            {
-                return match.Groups[groupName].Value.Trim();
-            }
-            return String.Empty;
         }
 
         public static String GetContent(String html)
         {
+            Console.WriteLine("分析页面核心内容...");
+
             html = html.Replace("&nbsp;", " ").Replace("<br />", "\n").Replace("<br/>", "\n");
 
             String attrFormatString = "<{0} [^>]*?(id|class)=[^>]*?{1}.*?>";
 
+            String displayNoneRegString = "<{0} [^>]*?style=.*?display:.*?none.*?>";
+
             List<String> tags1 = new List<String> { "<head||</head>", "<script||</script>", "<style||</style>", "<!--||-->", "<nav||</nav>" };
 
-            List<String> singleTas = new List<String>() { "br", "hr", "img", "input" };
+            List<String> singleTas = new List<String>() { "br", "hr", "img", "input", "link" };
 
             String[] tags2 = new String[] { "<a||</a>", "<h||</h>", "<span||</span>", "<p||</p>", "<strong||</strong>", "<u||</u>", "<b||</b>", "<big||</big>", "<del||</del>", "<em||</em>", "<ins||</ins>", "<small||</small>", "<sub||</sub>", "<sup||</sup>" };
 
@@ -117,13 +115,13 @@ namespace HtmlSpider
             List<String> regStrings = new List<String>();
 
             //标签集
-            List<String> tags = new List<String>() { "div", "ul", "table" };
+            List<String> tags = new List<String>() { "div", "ul", "table", "section" };
 
-            List<String> contentTags = new List<String>() { "div" };
+            List<String> contentTags = new List<String>() { "div", "section" };
 
 
             //标签内的关键字集
-            List<String> names = new List<String>() { "page", "nav", "head", "comment", "hot", "foot" };
+            List<String> names = new List<String>() { "page", "nav", "head", "comment", "hot", "foot", "commend", "more", "grid", "list", "menu" };
 
             foreach (String tag in tags)
             {
@@ -133,9 +131,17 @@ namespace HtmlSpider
                 }
             }
 
+            List<String> displyNoneRegs = new List<String>();
+
+            foreach (String tag in tags)
+            {
+                displyNoneRegs.Add(String.Format(displayNoneRegString, tag));
+            }
+
+
 
             //文章内容存放区域
-            List<String> contentTagNamess = new List<String>() { "content", "detail", "article" };
+            List<String> contentTagNamess = new List<String>() { "content", "detail", "article", "text" };
 
             List<String> contentRegStrings = new List<String>();
 
@@ -153,14 +159,21 @@ namespace HtmlSpider
             //删除一些无需单独结尾标记的标签内容
             html = RemoveSingleTag(html, singleTas);
 
-            //直接根据可能的标签取内容
-            html = GetContentByRegex(html, contentRegStrings);
-
             //根据正则式移除部分节点
             html = RemoveByRegex(html, regStrings);
 
+            html = RemoveByRegex(html, displyNoneRegs);
+
+            //直接根据可能的标签取内容
+            String content = GetContentByRegex(html, contentRegStrings);
+
+            if (!String.IsNullOrEmpty(content))
+                html = content;
+
             //移除这些标签，但保留之间的文本
             html = RemoveExtroCharsLeaveInnerTHML(html, tags2);
+
+            html = RemoveEmptyTabs(html);
 
             //移除这些标签内的所有字符
             html = RemoveExtroChars(html, tags3);
@@ -171,6 +184,16 @@ namespace HtmlSpider
             html = WebUtility.HtmlDecode(html);
 
             return html;
+        }
+
+        private static String GetRegexValue(String html, Regex reg, String groupName)
+        {
+            Match match = reg.Match(html);
+            if (match.Success)
+            {
+                return match.Groups[groupName].Value.Trim();
+            }
+            return String.Empty;
         }
 
         /// <summary>
@@ -184,7 +207,7 @@ namespace HtmlSpider
             foreach (var tag in tags)
             {
                 Regex reg = new Regex(tag);
-                Match match = reg.Match(html);
+                Match match = Regex.Match(html, tag, RegexOptions.IgnoreCase);
 
                 while (match.Success)
                 {
@@ -194,10 +217,12 @@ namespace HtmlSpider
                     {
                         String node = html.Substring(match.Index, endTag.TagIndex + endTag.TagContent.Length - match.Index + 1);
                         html = html.Remove(match.Index, endTag.TagIndex - match.Index + endTag.TagContent.Length);
-                        match = reg.Match(html);
+                        match = Regex.Match(html, tag, RegexOptions.IgnoreCase);
                     }
-
-                    match = reg.Match(html, match.Index + 1);
+                    else
+                    {
+                        match = reg.Match(html, match.Index + 1);
+                    }
                 }
             }
 
@@ -217,10 +242,9 @@ namespace HtmlSpider
             foreach (var tag in tags)
             {
                 Regex reg = new Regex(tag);
-                Match match = reg.Match(html);
+                MatchCollection mc = Regex.Matches(html, tag, RegexOptions.IgnoreCase);
 
-
-                while (match.Success)
+                foreach (Match match in mc)
                 {
                     HtmlTagInfo endTag = GetEndTag(html, match.Value, match.Index);
 
@@ -229,8 +253,8 @@ namespace HtmlSpider
                         String nodeHtml = html.Substring(match.Index, endTag.TagIndex + endTag.TagContent.Length - match.Index + 1);
                         contents.Add(GetInnerHTML(nodeHtml));
                     }
-                    match = reg.Match(html, match.Index + 1);
                 }
+
             }
 
             //取内容最多的那个
@@ -291,6 +315,24 @@ namespace HtmlSpider
 
             return html;
         }
+
+        /// <summary>
+        /// 删除空白内容标签
+        /// </summary>
+        /// <param name="html"></param>
+        /// <returns></returns>
+        public static String RemoveEmptyTabs(String html)
+        {
+            MatchCollection mc = Regex.Matches(html, "<[^/>]+?> *?</.+?>", RegexOptions.IgnoreCase);
+
+            foreach (Match match in mc)
+            {
+                html = html.Replace(match.Value, String.Empty);
+            }
+
+            return html;
+        }
+
 
         /// <summary>
         /// 将部分标签及内容替换为纯内容，末尾不添加换行符
@@ -473,7 +515,7 @@ namespace HtmlSpider
 
             //找到最长的那部分作为正文内容
             lists = lists.OrderByDescending(a => a.Length).ToList();
-            return lists[0];
+            return lists.Count == 0 ? String.Empty : lists[0];
         }
 
 
@@ -636,6 +678,8 @@ namespace HtmlSpider
 
             Int32 endCount = 0;
 
+            String startTagName = startTag.Split(' ')[0].Replace("<", String.Empty);
+
             while (tmpTagInfo != null)
             {
                 if (tmpTagInfo.Value == 1)
@@ -645,7 +689,6 @@ namespace HtmlSpider
                 else if (tmpTagInfo.Value == -1)
                 {
                     //当开始标签与结束标签数量相等，又取到一个结束标签时，即为所找的结束标签
-                    String startTagName = startTag.Split(' ')[0].Replace("<", String.Empty);
                     if (startCount == endCount + 1 && (tmpTagInfo.TagContent == " />" || tmpTagInfo.TagContent == $"</{startTagName}>"))
                     {
                         break;
