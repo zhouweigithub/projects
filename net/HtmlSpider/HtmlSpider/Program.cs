@@ -1,21 +1,20 @@
-﻿using HtmlSpider.Model;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System;
+using HtmlSpider.Model;
 
 namespace HtmlSpider
 {
     internal class Program
     {
-        private static void Main(string[] args)
+        private static void Main(String[] args)
         {
             //GetNjjzw();
             //Console.WriteLine("操作完成，请按任意键退出...");
             //Console.ReadKey();
 
+            Util.Log.LogUtil.SetLogPath(AppDomain.CurrentDomain.BaseDirectory + "Log");
+
             GetHtmlText();
+
         }
 
         private static void GetHtmlText()
@@ -23,8 +22,8 @@ namespace HtmlSpider
             while (true)
             {
                 Console.WriteLine("请输入地址：");
-                string url = Console.ReadLine();
-                if (!string.IsNullOrWhiteSpace(url))
+                String url = Console.ReadLine();
+                if (!String.IsNullOrWhiteSpace(url))
                 {
                     PageInfo info = BLL.GetPageInfo(url);
 
