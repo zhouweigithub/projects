@@ -1,22 +1,20 @@
-﻿using HtmlSpider.Model;
-using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System;
 using System.Text;
-using System.Threading.Tasks;
-using System.Text.RegularExpressions;
+using HtmlSpider.Model;
 
 namespace HtmlSpider
 {
     public class BLL
     {
 
-        public static PageInfo GetPageInfo(string url)
+        public static PageInfo GetPageInfo(String url)
         {
-            (string html, string charset) = Common.GetRemoteHtml(url, Encoding.Default);
+            (String html, String charset) = Common.GetRemoteHtml(url, Encoding.Default);
 
-            if (string.IsNullOrEmpty(html))
+            if (String.IsNullOrEmpty(html))
                 return null;
+
+            html = html.Replace("\r", String.Empty).Replace("\n", String.Empty).Replace("\t", String.Empty);
 
             PageInfo result = new PageInfo
             {
@@ -30,9 +28,9 @@ namespace HtmlSpider
         }
 
 
-        private static string GetInnerHtml(string html)
+        private static String GetInnerHtml(String html)
         {
-            return string.Empty;
+            return String.Empty;
         }
     }
 }

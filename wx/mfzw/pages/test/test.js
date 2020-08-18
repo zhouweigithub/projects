@@ -1,4 +1,3 @@
-
 // pages/test/test.js
 Page({
 
@@ -10,7 +9,7 @@ Page({
   },
   qiuhe() {
     wx.cloud.callFunction({
-      name: "getData",
+      name: "getArticalInfo",
       success(res) {
         console.log(res);
       },
@@ -18,6 +17,20 @@ Page({
         console.log(err);
       }
     })
+
+    wx.cloud.callFunction({
+      name: "getArticalContent",
+      data: {
+        _id: "17b0c7775e9a9eb9005b8f466b9614db"
+      },
+      success(res) {
+        console.log(res);
+      },
+      fail(err) {
+        console.log(err);
+      }
+    })
+
   },
   /**
    * 生命周期函数--监听页面加载

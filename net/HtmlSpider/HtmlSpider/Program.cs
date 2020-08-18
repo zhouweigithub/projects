@@ -1,32 +1,53 @@
-﻿using HtmlSpider.Model;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System;
+using HtmlSpider.Model;
 
 namespace HtmlSpider
 {
     internal class Program
     {
-        private static void Main(string[] args)
+        private static void Main(String[] args)
         {
-            //string url = "https://news.163.com/19/0710/08/EJNA0AJF0001875O.html";
-            //string url = "http://www.sohu.com/a/325776574_267106?g=0?code=16c94ea212bd093ba101a88e09c362b8&spm=smpc.home.top-news1.2.1562752238299HdPTTob&_f=index_cpc_1_0";
-            string url = "https://baijiahao.baidu.com/s?id=1618166798631963919&wfr=spider&for=pc";
+            //GetNjjzw();
+            //Console.WriteLine("操作完成，请按任意键退出...");
+            //Console.ReadKey();
 
+            Util.Log.LogUtil.SetLogPath(AppDomain.CurrentDomain.BaseDirectory + "Log");
 
-            PageInfo info = BLL.GetPageInfo(url);
+            GetHtmlText();
 
-            if (info != null)
+        }
+
+        private static void GetHtmlText()
+        {
+            while (true)
             {
-                Console.WriteLine($"title: {info.Title}");
-                Console.WriteLine($"h1: {info.H1}");
-                Console.WriteLine($"keywords: {info.KeyWords}");
-                Console.WriteLine($"content: {info.Content}");
-            }
+                Console.WriteLine("请输入地址：");
+                String url = Console.ReadLine();
+                if (!String.IsNullOrWhiteSpace(url))
+                {
+                    PageInfo info = BLL.GetPageInfo(url);
 
-            Console.ReadKey();
+                    if (info != null)
+                    {
+                        Console.WriteLine($"title: {info.Title}");
+                        Console.WriteLine($"h1: {info.H1}");
+                        Console.WriteLine($"keywords: {info.KeyWords}");
+                        Console.WriteLine($"content: {info.Content}");
+                    }
+                }
+            }
+        }
+
+        private static void GetNjjzw()
+        {
+            NjjzwBLL bll = new NjjzwBLL();
+
+            bll.GetData("http://www.hydcd.com/baike/naojinjizhuanwan.htm");
+            bll.GetData("http://www.hydcd.com/baike/naojinjizhuanwan2.htm");
+            bll.GetData("http://www.hydcd.com/baike/naojinjizhuanwan3.htm");
+            bll.GetData("http://www.hydcd.com/baike/naojinjizhuanwan4.htm");
+
+            bll.SaveDatas();
         }
     }
 }

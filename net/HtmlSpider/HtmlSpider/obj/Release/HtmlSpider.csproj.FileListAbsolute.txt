@@ -1,0 +1,17 @@
+E:\wwxx\projects\net\HtmlSpider\HtmlSpider\bin\Release\HtmlSpider.exe.config
+E:\wwxx\projects\net\HtmlSpider\HtmlSpider\bin\Release\HtmlSpider.exe
+E:\wwxx\projects\net\HtmlSpider\HtmlSpider\bin\Release\HtmlSpider.pdb
+E:\wwxx\projects\net\HtmlSpider\HtmlSpider\bin\Release\System.ValueTuple.dll
+E:\wwxx\projects\net\HtmlSpider\HtmlSpider\bin\Release\Util.dll
+E:\wwxx\projects\net\HtmlSpider\HtmlSpider\bin\Release\Ionic.Zip.dll
+E:\wwxx\projects\net\HtmlSpider\HtmlSpider\bin\Release\Newtonsoft.Json.dll
+E:\wwxx\projects\net\HtmlSpider\HtmlSpider\bin\Release\System.ValueTuple.xml
+E:\wwxx\projects\net\HtmlSpider\HtmlSpider\bin\Release\Util.pdb
+E:\wwxx\projects\net\HtmlSpider\HtmlSpider\bin\Release\Util.xml
+E:\wwxx\projects\net\HtmlSpider\HtmlSpider\bin\Release\Ionic.Zip.xml
+E:\wwxx\projects\net\HtmlSpider\HtmlSpider\bin\Release\Newtonsoft.Json.xml
+E:\wwxx\projects\net\HtmlSpider\HtmlSpider\obj\Release\HtmlSpider.csproj.CoreCompileInputs.cache
+E:\wwxx\projects\net\HtmlSpider\HtmlSpider\obj\Release\HtmlSpider.csproj.CopyComplete
+E:\wwxx\projects\net\HtmlSpider\HtmlSpider\obj\Release\HtmlSpider.exe
+E:\wwxx\projects\net\HtmlSpider\HtmlSpider\obj\Release\HtmlSpider.pdb
+E:\wwxx\projects\net\HtmlSpider\HtmlSpider\obj\Release\HtmlSpider.csprojAssemblyReference.cache
