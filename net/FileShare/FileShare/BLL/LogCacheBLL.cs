@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using Public.CSUtil.Log;
 
 namespace FileShare.BLL
 {
@@ -54,6 +55,7 @@ namespace FileShare.BLL
         /// <returns></returns>
         public static Boolean IsExists(String ip, String path)
         {
+            LogUtil.Debug($"IsExists {ip} {path}");
             path = path.Replace("\\", "/").TrimStart('/');
             return cache.ContainsKey(ip) && cache[ip].Contains(path);
         }

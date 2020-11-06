@@ -21,7 +21,14 @@ namespace FileShare.BLL
         {
             //如果缓存里存在则直接从缓存取数据
             if (FileCacheBLL.IsExists(folder))
-                return FileCacheBLL.GetData(folder);
+            {
+                List<FileDetail> datas = FileCacheBLL.GetData(folder);
+                foreach (var item in datas)
+                {   //刷新是否为创建者
+                    item.IsCreater = LogCacheBLL.IsExists(ip, folder + "/" + item.Name);
+                }
+                return datas;
+            }
 
             List<FileDetail> result = new List<FileDetail>();
             String path = Path.Combine(rootPath, Common.UploadFolder, folder);
