@@ -1,0 +1,277 @@
+﻿
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title>云深不知处</title>
+    <script src="~/Scripts/jquery-3.4.1.min.js"></script>
+    <link href="~/Content/loading.css" rel="stylesheet" />
+    <style>
+        * {
+            font-size: 13px;
+            font-family: monospace
+        }
+
+        #nav {
+            display: block;
+            font-size: 25px;
+            font-weight: bold;
+        }
+
+        .container {
+            display: block;
+        }
+
+            .container table {
+                display: block;
+                border: 0px;
+            }
+
+                .container table td {
+                    padding: 0px 5px;
+                }
+
+        .toparent {
+            display: block;
+            padding: 5px 0px;
+        }
+
+        hr {
+            display: block;
+        }
+
+        .delete {
+            margin-left: 20px;
+        }
+    </style>
+</head>
+<body>
+
+    <div id="nav"></div>
+
+    <hr />
+
+    <div class="toparent">
+        <a href="javascript:goParent()">[转到父目录]</a>
+        <a href="javascript:refresh()" style="margin-left:20px;">[刷新]</a>
+    </div>
+
+    <div class="container">
+        <table id="tb">
+        </table>
+    </div>
+
+    <hr />
+
+    <script>
+        var currentFolder = '';
+        var loading;
+
+        $(function () {
+            loading = $("#background,#progressBar");
+            getData('');
+        });
+
+        //跳转到父目录
+        function goParent() {
+            if (currentFolder != '') {
+                //退到父级的父级目录
+                currentFolder = currentFolder.substring(0, currentFolder.lastIndexOf("/"));
+                var lastIndex = currentFolder.lastIndexOf("/");
+                var parentFolder = currentFolder.substr(lastIndex + 1);
+                currentFolder = currentFolder.substring(0, currentFolder.lastIndexOf("/"));
+                get(parentFolder, true);
+            }
+        }
+
+        //刷新当前目录
+        function refresh() {
+            if (currentFolder != '') {
+                //退到父级的父级目录
+                var lastIndex = currentFolder.lastIndexOf("/");
+                var parentFolder = currentFolder.substr(lastIndex + 1);
+                currentFolder = currentFolder.substring(0, currentFolder.lastIndexOf("/"));
+                get(parentFolder, true);
+            }
+            else {
+                get(currentFolder, true);
+            }
+        }
+
+
+        //name:子目录名
+        function get(name, isFolder) {
+            if (isFolder) {
+                currentFolder = getFullName(name);
+                getData(currentFolder);
+            }
+            else
+                download(name);
+        }
+
+        function download(file) {
+            var path = getFullName(file);
+            window.open("/file/DownLoad?filePath=" + path, "download");
+        }
+
+        function getDownloadUrl(file) {
+            var path = getFullName(file);
+            return "/file/DownLoad?filePath=" + path;
+        }
+
+        function del(file, isFolder) {
+            if (!confirm("确定要删除 " + file + " 吗？"))
+                return;
+
+            var path = getFullName(file);
+            ajax("/file/delete",
+                "get",
+                {
+                    filePath: path,
+                    isFolder: isFolder
+                }, function (res) {
+                    alert(res.msg);
+                    refresh();
+                }, function (err) {
+                    alert(err.responseText);
+                }
+            );
+        }
+
+        function getFullName(name) {
+            if (currentFolder != '')
+                return currentFolder + "/" + name;
+            else
+                return currentFolder + name;
+        }
+
+        //获取子目录内容
+        function getData(folder) {
+            $("#nav").html("/" + folder);
+
+            ajax('/file/GetList',
+                'get',
+                { folder: folder },
+                function (data) {
+                    $("#tb").empty();
+
+                    if (data.data.length > 0) {
+                        var html = '<tr><td width="80">{date}</td><td width="60">{time}</td><td width="80" align="right">{size}</td><td><a href="javascript:get(\'{name}\',{isfolder})">{name}</a><span class="delete">{delete}</span></td></tr>';
+                        for (var i = 0; i < data.data.length; i++) {
+                            var item = data.data[i];
+                            var size = item.IsFolder ? "[dir]" : item.SizeString;
+
+                            var deleteString = '';
+                            if (item.IsCreater) {
+                                deleteString = '<a href="javascript:del(\'' + item.Name + '\',' + item.IsFolder + ')">删除</a>';
+                            }
+
+                            var tr = html.replace(/{date}/g, item.Date).replace(/{time}/g, item.Time).replace(/{size}/g, size).replace(/{name}/g, item.Name).replace(/{isfolder}/g, item.IsFolder).replace(/{delete}/g, deleteString);
+                            $("#tb").append(tr);
+                        }
+                    }
+                },
+                function (response) {
+                    alert(response.responseText);
+                }
+            );
+        }
+
+        function ajax(url, action, data, success, error) {
+            $.ajax({
+                url: url,
+                dataType: 'json',
+                type: action,
+                async: true,
+                data: data,
+                success: success,
+                error: error,
+            });
+
+        }
+    </script>
+
+
+
+    <div>上传目录</div>
+    <form id="folderForm" enctype="multipart/form-data" method="post" action="/file/upload">
+        @*<input type="text" name="uid" size="50">*@
+        <input type='file' name="file" webkitdirectory>
+        <input type="submit" name="log1" value="提交">
+    </form>
+
+    <div style="margin-top:5px;">上传文件</div>
+    <form id="fileForm" enctype="multipart/form-data" method="post" action="/file/upload">
+        @*<input type="text" name="uid" size="50">*@
+        <input type='file' name="file" multiple>
+        <input type="submit" name="log1" value="提交">
+    </form>
+    <div style="margin-top:5px;">注意：</div>
+    <div>1、上传文件到当前目录</div>
+    <div>2、上传者可删除当日上传的文件</div>
+    @*<div>每日寄语</div>*@
+    <script>
+
+        $(function () {
+            $("#folderForm").on("submit", function () { upload('folderForm'); return false; });
+
+            $("#fileForm").on("submit", function () { upload('fileForm'); return false; });
+        });
+
+
+        function upload(formid) {
+            var crowd_file = $('#' + formid + ' input[name=file]')[0].files;
+
+            if (crowd_file.length == 0) {
+                alert("请选择上传的文件或目录");
+                return false;
+            }
+
+            var formData = new FormData();
+
+            formData.append("folder", currentFolder);
+
+            for (var i = 0; i < crowd_file.length; i++) {
+                formData.append("crowd_file", crowd_file[i]);
+            }
+
+            loading.show();
+
+            $.ajax({
+                url: '/file/upload',
+                dataType: 'json',
+                type: 'POST',
+                async: true,
+                data: formData,     // formdata对象作为参数
+                processData: false, // 使数据不做处理
+                contentType: false, // 不要设置Content-Type请求头
+                success: function (data) {
+                    loading.hide();
+                    if (data.code == 0) {
+                        alert('成功上传 ' + data.successCount + ' 个文件！');
+                        refresh();
+                        $("#" + formid + " input[type=file]").val('');
+                    }
+                    else
+                        alert(data.msg);
+                },
+                error: function (response) {
+                    loading.hide();
+                    alert(response);
+                }
+            });
+
+            return false;
+        }
+    </script>
+
+    <div id="background" class="background" style="display: none; "></div>
+    <div id="progressBar" class="progressBar" style="display: none; ">Loading ...</div>
+
+</body>
+</html>
+
