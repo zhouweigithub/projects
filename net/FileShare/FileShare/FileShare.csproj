@@ -123,6 +123,7 @@
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="BLL\ManagerConfigBLL.cs" />
     <Compile Include="BLL\ContentTypeBLL.cs" />
     <Compile Include="BLL\FileBLL.cs" />
     <Compile Include="BLL\FileCacheBLL.cs" />
@@ -138,6 +139,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="App_Data\config.txt" />
     <Content Include="App_Data\contenttype.txt" />
     <Content Include="Content\bootstrap-theme.css" />
     <Content Include="Content\bootstrap-theme.min.css" />

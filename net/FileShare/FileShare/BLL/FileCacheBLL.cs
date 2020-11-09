@@ -31,8 +31,8 @@ namespace FileShare.BLL
             {
                 var list = cache[path].GetRange(0, cache[path].Count);
 
-                if (DateTime.Now.Subtract(lastClearTime).TotalMinutes > 10)
-                {   //如果距离上次清空缓存时间超过10分钟，则再次清空缓存
+                if (DateTime.Now.Subtract(lastClearTime).TotalMinutes > 60 * 24)
+                {   //如果距离上次清空缓存时间超过x分钟，则再次清空缓存
                     cache.Clear();
                     lastClearTime = DateTime.Now;
                 }
