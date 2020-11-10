@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.29613.14
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CreateImportExportMysqlDataScript", "CreateImportExportMysqlDataScript.csproj", "{FF72113E-E632-45CB-B3F1-B0DF18098BB8}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{FF72113E-E632-45CB-B3F1-B0DF18098BB8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FF72113E-E632-45CB-B3F1-B0DF18098BB8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FF72113E-E632-45CB-B3F1-B0DF18098BB8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FF72113E-E632-45CB-B3F1-B0DF18098BB8}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {42D713F2-6AE4-40F1-BEB2-667F1C61259A}
+	EndGlobalSection
+EndGlobal
