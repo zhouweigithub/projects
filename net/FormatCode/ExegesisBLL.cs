@@ -10,7 +10,7 @@ using System;
 using System.Configuration;
 using System.IO;
 
-namespace test
+namespace FormatCode
 {
     /// <summary>
     /// cs文件添加顶部注释
@@ -22,7 +22,7 @@ namespace test
         /// </summary>
         private const String filter = "*.cs";
 
-        private static readonly String author = ConfigurationManager.GetSection("Author").ToString();
+        private static readonly String author = ConfigurationManager.AppSettings.Get("Author");
 
         /// <summary>
         /// cs文件添加顶部注释，已有注释的不再添加

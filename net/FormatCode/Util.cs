@@ -1,7 +1,15 @@
-﻿using System;
+﻿// ****************************************************
+// FileName:Util.cs
+// Description:
+// Tables:
+// Author:ZhouWei
+// Create Date:2020-11-11
+// Revision History:
+// ****************************************************
+using System;
 using System.IO;
 
-namespace test
+namespace FormatCode
 {
     public static class Util
     {
@@ -28,10 +36,12 @@ namespace test
         public static String ReadFileText(String path)
         {
             String content = File.ReadAllText(path, CommonData.EncodingUTF8);
+
             if (content.Contains(utf8Char))
             {
                 content = File.ReadAllText(path, CommonData.EncodingGB2312);
             }
+
             return content;
         }
 
@@ -43,14 +53,17 @@ namespace test
         public static String[] ReadFileAllLines(String path)
         {
             String[] contentArray = File.ReadAllLines(path, CommonData.EncodingUTF8);
+
             foreach (var item in contentArray)
             {
                 if (item.Contains(utf8Char))
                 {
                     contentArray = File.ReadAllLines(path, CommonData.EncodingGB2312);
+
                     break;
                 }
             }
+
             return contentArray;
         }
 

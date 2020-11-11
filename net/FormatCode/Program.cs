@@ -8,7 +8,7 @@
 //***********************************************************************************
 using System;
 
-namespace test
+namespace FormatCode
 {
     class Program
     {

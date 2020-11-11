@@ -1,6 +1,14 @@
-﻿using System.Text;
+﻿// ****************************************************
+// FileName:CommonData.cs
+// Description:
+// Tables:
+// Author:ZhouWei
+// Create Date:2020-11-11
+// Revision History:
+// ****************************************************
+using System.Text;
 
-namespace test
+namespace FormatCode
 {
     public static class CommonData
     {

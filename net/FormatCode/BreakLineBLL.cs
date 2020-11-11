@@ -11,7 +11,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Text.RegularExpressions;
 
-namespace test
+namespace FormatCode
 {
     /// <summary>
     /// 处理代码换行

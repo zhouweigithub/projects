@@ -1,25 +1,25 @@
-//***********************************************************************************
-//ÎÄ¼şÃû³Æ£ºExegesisBLL.cs
-//¹¦ÄÜÃèÊö£ºÒÆ¶¯usingÒıÓÃ´úÂë£¬ÏµÍ³ÒıÓÃ·Åµ½ÃüÃû¿Õ¼äÍâ£¬ÆäËûÒıÓÃ·Åµ½ÃüÃû¿Õ¼äÄÚ
-//Êı¾İ±í£º
-//×÷Õß£ºÖÜÎ§
-//ÈÕÆÚ£º2020-03-30
-//ĞŞ¸Ä¼ÇÂ¼£º
+ï»¿//***********************************************************************************
+//æ–‡ä»¶åç§°ï¼šExegesisBLL.cs
+//åŠŸèƒ½æè¿°ï¼šç§»åŠ¨usingå¼•ç”¨ä»£ç ï¼Œç³»ç»Ÿå¼•ç”¨æ”¾åˆ°å‘½åç©ºé—´å¤–ï¼Œå…¶ä»–å¼•ç”¨æ”¾åˆ°å‘½åç©ºé—´å†…
+//æ•°æ®è¡¨ï¼š
+//ä½œè€…ï¼šå‘¨å›´
+//æ—¥æœŸï¼š2020-03-30
+//ä¿®æ”¹è®°å½•ï¼š
 //***********************************************************************************
 using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 
-namespace test
+namespace FormatCode
 {
     /// <summary>
-    /// ÒÆ¶¯usingÒıÓÃ´úÂë£¬ÏµÍ³ÒıÓÃ·Åµ½ÃüÃû¿Õ¼äÍâ£¬ÆäËûÒıÓÃ·Åµ½ÃüÃû¿Õ¼äÄÚ
+    /// ç§»åŠ¨usingå¼•ç”¨ä»£ç ï¼Œç³»ç»Ÿå¼•ç”¨æ”¾åˆ°å‘½åç©ºé—´å¤–ï¼Œå…¶ä»–å¼•ç”¨æ”¾åˆ°å‘½åç©ºé—´å†…
     /// </summary>
     public static class MoveUsingBLL
     {
         /// <summary>
-        /// µ±¹ıÂËÀàĞÍ³öÏÖ¶à¸öÊ±£¬»áÓĞÎÊÌâ£¬ĞèÒªÑ­»·µ÷ÓÃ
+        /// å½“è¿‡æ»¤ç±»å‹å‡ºç°å¤šä¸ªæ—¶ï¼Œä¼šæœ‰é—®é¢˜ï¼Œéœ€è¦å¾ªç¯è°ƒç”¨
         /// </summary>
         private const String filter = "*.cs";
 
@@ -38,18 +38,18 @@ namespace test
 
                 foreach (String filePath in files)
                 {
-                    //ÓÃÓÚ¸÷ÖÖ´¦Àí£¬»á¸Ä¶¯Ô­Ê¼ÎÄ±¾
+                    //ç”¨äºå„ç§å¤„ç†ï¼Œä¼šæ”¹åŠ¨åŸå§‹æ–‡æœ¬
                     String[] contentLines = Util.ReadFileAllLines(filePath);
 
-                    //±£ÁôÔ­Ê¼ÎÄ±¾
+                    //ä¿ç•™åŸå§‹æ–‡æœ¬
                     List<String> contentLinesCopy = contentLines.ToList();
 
                     for (Int32 i = 0; i < contentLines.Length; i++)
-                    {   //ÒÆ³ıÊ×Î²¿Õ°××Ö·û
+                    {   //ç§»é™¤é¦–å°¾ç©ºç™½å­—ç¬¦
                         contentLines[i] = contentLines[i].Trim();
                     }
 
-                    //ÃüÃû¿Õ¼äÎ»ÖÃ
+                    //å‘½åç©ºé—´ä½ç½®
                     List<Int32> namespaceIndexList = GetStartIndexList(contentLines, "namespace ");
 
                     if (namespaceIndexList.Count == 0)
@@ -57,28 +57,29 @@ namespace test
 
                     Int32 namespaceIndex = namespaceIndexList[0];
 
-                    //ÏµÍ³ÒıÓÃ
+                    //ç³»ç»Ÿå¼•ç”¨
                     List<Int32> systemUsingLineIndexList = GetStartIndexList(contentLines, "using System");
 
-                    //·ÇÏµÍ³ÒıÓÃ
+                    //éç³»ç»Ÿå¼•ç”¨
                     List<Int32> notSystemUsingLineIndexList = GetNotSystemUsingList(contentLines);
 
-                    //ÒÆ³ıÔ­Ê¼µÄusingĞĞ
+                    //ç§»é™¤åŸå§‹çš„usingè¡Œ
                     RemoveLines(contentLinesCopy, systemUsingLineIndexList.Union(notSystemUsingLineIndexList).ToList());
 
-                    //»ñÈ¡ĞÂµÄÃüÃû¿Õ¼äµÄÎ»ÖÃ
+                    //è·å–æ–°çš„å‘½åç©ºé—´çš„ä½ç½®
                     namespaceIndex = GetStartIndexList(contentLinesCopy.ToArray(), "namespace ")[0];
 
-                    //ÒÆ³ıÃüÃû¿Õ¼ä¸½½üµÄ¿ÕĞĞ
+                    //ç§»é™¤å‘½åç©ºé—´é™„è¿‘çš„ç©ºè¡Œ
                     RemoveWhiteLinesNearNamespace(contentLinesCopy, ref namespaceIndex);
 
-                    //²åÈëÒıÓÃ
+                    //æ’å…¥å¼•ç”¨
                     InsertUsingLines(contentLines, contentLinesCopy, namespaceIndex, systemUsingLineIndexList, notSystemUsingLineIndexList);
 
-                    //±£´æÎÄ¼ş
+                    //ä¿å­˜æ–‡ä»¶
                     if (IsChanged(contentLines, contentLinesCopy))
                     {
                         File.WriteAllLines(filePath, contentLinesCopy, CommonData.EncodingUTF8);
+
                         successCount++;
                     }
                 }
@@ -92,13 +93,13 @@ namespace test
         }
 
         /// <summary>
-        /// ÒÆ³ı²»ÊÇÒıÓÃµÄĞĞ
+        /// ç§»é™¤ä¸æ˜¯å¼•ç”¨çš„è¡Œ
         /// </summary>
         /// <param name="contentLines"></param>
         /// <param name="notSystemUsingLineIndexList"></param>
         private static void RemoveExtraLines(String[] contentLines, List<Int32> notSystemUsingLineIndexList)
         {
-            //Èô°üº¬ÒÔÏÂ×Ö·û£¬ÔòÈÏÎª²»ÊÇÒıÓÃÓï¾ä
+            //è‹¥åŒ…å«ä»¥ä¸‹å­—ç¬¦ï¼Œåˆ™è®¤ä¸ºä¸æ˜¯å¼•ç”¨è¯­å¥
             String[] exceptChars = new String[] { "(", ")" };
 
             for (Int32 i = notSystemUsingLineIndexList.Count - 1; i >= 0; i--)
@@ -115,9 +116,9 @@ namespace test
 
         private static void InsertUsingLines(String[] contentLines, List<String> contentLinesCopy, Int32 namespaceIndex, List<Int32> systemUsingLineIndexList, List<Int32> notSystemUsingLineIndexList)
         {
-            //ÏÈ²åÈë·ÇÏµÍ³ÒıÓÃ
+            //å…ˆæ’å…¥éç³»ç»Ÿå¼•ç”¨
 
-            //²åÈëÃüÃû¿Õ¼äµÄÏÂÒ»ĞĞ
+            //æ’å…¥å‘½åç©ºé—´çš„ä¸‹ä¸€è¡Œ
             Int32 index = namespaceIndex + 2;
 
             if (notSystemUsingLineIndexList.Count > 0)
@@ -129,16 +130,16 @@ namespace test
                     index++;
                 }
 
-                //²åÈëÒ»¿ÕĞĞ
+                //æ’å…¥ä¸€ç©ºè¡Œ
                 contentLinesCopy.Insert(index, "");
             }
 
-            //ÔÙ²åÈëÏµÍ³ÒıÓÃ
+            //å†æ’å…¥ç³»ç»Ÿå¼•ç”¨
             index = namespaceIndex;
 
             if (systemUsingLineIndexList.Count > 0)
             {
-                //ÏÈ²åÈë¿ÕĞĞ
+                //å…ˆæ’å…¥ç©ºè¡Œ
                 contentLinesCopy.Insert(index, "");
 
                 foreach (var item in systemUsingLineIndexList)
@@ -151,7 +152,7 @@ namespace test
         }
 
         /// <summary>
-        /// »ñÈ¡ĞèÒªÒÆ¶¯µÄÏî
+        /// è·å–éœ€è¦ç§»åŠ¨çš„é¡¹
         /// </summary>
         /// <param name="contentLines"></param>
         /// <returns></returns>
@@ -163,7 +164,7 @@ namespace test
 
             var list = usingLineIndexList.Except(systemUsingLineIndexList).ToList();
 
-            //Èô°üº¬ÒÔÏÂ×Ö·û£¬ÔòÈÏÎª²»ÊÇÒıÓÃÓï¾ä
+            //è‹¥åŒ…å«ä»¥ä¸‹å­—ç¬¦ï¼Œåˆ™è®¤ä¸ºä¸æ˜¯å¼•ç”¨è¯­å¥
             String[] exceptChars = new String[] { "=", "(", ")" };
 
             for (Int32 i = list.Count - 1; i >= 0; i--)
@@ -185,10 +186,10 @@ namespace test
         }
 
         /// <summary>
-        /// »ñÈ¡ÒÔÖ¸¶¨×Ö·û¿ªÍ·µÄÎ»ÖÃ
+        /// è·å–ä»¥æŒ‡å®šå­—ç¬¦å¼€å¤´çš„ä½ç½®
         /// </summary>
         /// <param name="contentLines"></param>
-        /// <param name="startChars">¿ªÊ¼×Ö·û</param>
+        /// <param name="startChars">å¼€å§‹å­—ç¬¦</param>
         /// <returns></returns>
         private static List<Int32> GetStartIndexList(String[] contentLines, String startChars)
         {
@@ -208,10 +209,10 @@ namespace test
         }
 
         /// <summary>
-        /// »ñÈ¡²»ÒÔÖ¸¶¨×Ö·û¿ªÍ·µÄÎ»ÖÃ
+        /// è·å–ä¸ä»¥æŒ‡å®šå­—ç¬¦å¼€å¤´çš„ä½ç½®
         /// </summary>
         /// <param name="contentLines"></param>
-        /// <param name="startChars">¿ªÊ¼×Ö·û</param>
+        /// <param name="startChars">å¼€å§‹å­—ç¬¦</param>
         /// <returns></returns>
         private static List<Int32> GetNotStartIndexList(String[] contentLines, String startChars)
         {
@@ -230,7 +231,7 @@ namespace test
 
 
         /// <summary>
-        /// ÒÆ³ı²¿·ÖĞĞ
+        /// ç§»é™¤éƒ¨åˆ†è¡Œ
         /// </summary>
         /// <param name="contentLines"></param>
         /// <param name="indexs"></param>
@@ -250,7 +251,7 @@ namespace test
 
         private static void RemoveWhiteLinesNearNamespace(List<String> contentLines, ref Int32 namespaceIndex)
         {
-            //ÒÆ³ıÃüÃû¿Õ¼äºóÃæµÄ¿ÕĞĞ
+            //ç§»é™¤å‘½åç©ºé—´åé¢çš„ç©ºè¡Œ
             Int32 index = namespaceIndex + 2;
 
             while (String.IsNullOrWhiteSpace(contentLines[index]))
@@ -258,7 +259,7 @@ namespace test
                 contentLines.RemoveAt(index);
             }
 
-            //ÒÆ³ıÃüÃû¿Õ¼äÇ°ÃæµÄ¿ÕĞĞ
+            //ç§»é™¤å‘½åç©ºé—´å‰é¢çš„ç©ºè¡Œ
             index = namespaceIndex - 1;
 
             while (String.IsNullOrWhiteSpace(contentLines[index]))
@@ -272,7 +273,7 @@ namespace test
         }
 
         /// <summary>
-        /// ¼ì²âÄÚÈİÊÇ·ñ·¢ÉúÁË¸Ä±ä
+        /// æ£€æµ‹å†…å®¹æ˜¯å¦å‘ç”Ÿäº†æ”¹å˜
         /// </summary>
         /// <param name="contents"></param>
         /// <param name="contentsCopy"></param>

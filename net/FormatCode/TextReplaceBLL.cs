@@ -10,7 +10,7 @@ using System;
 using System.IO;
 using System.Text.RegularExpressions;
 
-namespace test
+namespace FormatCode
 {
     /// <summary>
     /// 替换项目中的部分字符，用于项目中移除Moqikaka字符，以及更新Util的引用

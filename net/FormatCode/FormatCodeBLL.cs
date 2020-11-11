@@ -9,7 +9,7 @@
 using System;
 using System.IO;
 
-namespace test
+namespace FormatCode
 {
     public static class FormatCodeBLL
     {
