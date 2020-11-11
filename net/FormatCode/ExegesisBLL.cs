@@ -7,6 +7,7 @@
 // 修改记录：
 // ***********************************************************************************
 using System;
+using System.Configuration;
 using System.IO;
 
 namespace test
@@ -20,6 +21,8 @@ namespace test
         /// 当过滤类型出现多个时，会有问题，需要循环调用
         /// </summary>
         private const String filter = "*.cs";
+
+        private static readonly String author = ConfigurationManager.GetSection("Author").ToString();
 
         /// <summary>
         /// cs文件添加顶部注释，已有注释的不再添加
@@ -66,7 +69,7 @@ namespace test
 // FileName:{fileName}
 // Description:
 // Tables:
-// Author:ZhouWei
+// Author:{author}
 // Create Date:{DateTime.Now:yyyy-MM-dd}
 // Revision History:
 // ****************************************************
