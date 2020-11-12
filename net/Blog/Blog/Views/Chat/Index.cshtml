@@ -1,0 +1,116 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+
+<div class="container">
+    在线用户 <select id="online_users" multiple style="width:120px;"></select> 自己ID @ViewBag.token
+    <div class="panel-heading">消息</div>
+    <div class="panel-body">
+        <div id="msg">history</div>
+        <div>
+            <textarea id="sendData" rows="5" style="width:100%"></textarea>
+            <button id="send" onclick="sendData()">Send</button>
+        </div>
+    </div>
+</div>
+
+<script>
+    //http://www.ruanyifeng.com/blog/2017/05/websocket.html
+
+    var ws;
+    var currentUser = '@ViewBag.token';
+    var onlineUsers = [];
+
+    function connect() {
+        ws = new WebSocket("ws://localhost:59865/Chat/WebServer?token=@ViewBag.token");
+
+        ws.onopen = function (evt) {
+            console.log("Connection open ...");
+        };
+
+        ws.onmessage = function (evt) {
+            receivedMsg(evt.data);
+        };
+
+        ws.onclose = function (evt) {
+            console.log("Connection closed.");
+        };
+
+        ws.onerror = function (event) {
+            console.log("error");
+        };
+    }
+
+    function receivedMsg(msg) {
+        var msgObj = JSON.parse(msg);
+        if (msgObj.MsgType == MsgType.Command) {
+            if (msgObj.CommandType == CommandType.AddUser) {
+                var userArray = msgObj.Content.split('|');
+                console.log("添加 " + msgObj.Content);
+                for (var i = 0; i < userArray.length; i++) {
+                    if (onlineUsers.indexOf(userArray[i]) == -1) {
+                        onlineUsers.push(userArray[i]);
+                        var disabled = currentUser == userArray[i] ? "disabled" : "";
+                        $("#online_users").append("<option value='" + userArray[i] + "' " + disabled + ">" + userArray[i] + "</option>");
+                    }
+                }
+            }
+            else if (msgObj.CommandType == CommandType.RemoveUser) {
+                console.log("删除 " + msgObj.Content);
+                onlineUsers.splice(onlineUsers.indexOf(msgObj.Content), 1);
+                $("#online_users option[value='" + msgObj.Content + "']").remove();
+            }
+        }
+        else if (msgObj.MsgType == MsgType.Text) {
+            $('#msg').html($('#msg').html() + "<br />" + msgObj.From + "：" + msgObj.Content);
+        }
+    }
+
+    function sendData() {
+        if (ws.readyState == WebSocket.OPEN) {
+            var msg = $("#sendData").val();
+            sendMsg(msg, $("#online_users").val());
+            msg = html2Escape(msg);
+            $('#msg').html($('#msg').html() + "<br />" + currentUser + '：' + msg);
+        }
+        else {
+            $('#msg').html($('#msg').html() + "<br />" + '连接已经断开');
+        }
+    }
+
+    function sendMsg(content, to) {
+        if (ws.readyState != WebSocket.OPEN) {
+            connect();
+            console.log("re connected");
+        }
+
+        var msg = {
+            MsgType: MsgType.Text,
+            Content: content,
+            To: to,
+        };
+
+        var msgStr = JSON.stringify(msg);
+        ws.send(msgStr);
+    }
+
+    var MsgType = { Command: 0, Text: 1 };
+    var CommandType = { AddUser: 0, RemoveUser: 1 };
+
+
+    function html2Escape(sHtml) {
+        return sHtml.replace(/[<>&"]/g, function (c) { return { '<': '&lt;', '>': '&gt;', '&': '&amp;', '"': '&quot;' }[c]; });
+    }
+
+    window.onunload = function () {
+        ws.close();
+    }
+
+    window.onload = function () {
+        connect();
+    }
+
+</script>

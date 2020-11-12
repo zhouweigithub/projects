@@ -25,7 +25,7 @@ namespace FileShare.BLL
                 List<FileDetail> datas = FileCacheBLL.GetData(folder);
                 foreach (var item in datas)
                 {   //刷新是否为创建者
-                    item.IsCreater = LogCacheBLL.IsExists(ip, folder + "/" + item.Name);
+                    item.IsCreater = IsManagerOrCreater(ip, folder + "/" + item.Name);
                 }
                 return datas;
             }
@@ -47,7 +47,7 @@ namespace FileShare.BLL
                     IsFolder = false,
                     Size = fi.Length,
                     LastModifyTime = fi.LastWriteTime,
-                    IsCreater = LogCacheBLL.IsExists(ip, folder + "/" + fi.Name),
+                    IsCreater = IsManagerOrCreater(ip, folder + "/" + fi.Name),
                 });
             }
 
@@ -61,7 +61,7 @@ namespace FileShare.BLL
                     IsFolder = true,
                     Size = 0,
                     LastModifyTime = di.LastWriteTime,
-                    IsCreater = LogCacheBLL.IsExists(ip, folder + "/" + di.Name),
+                    IsCreater = IsManagerOrCreater(ip, folder + "/" + di.Name),
                 });
             }
 
@@ -71,6 +71,24 @@ namespace FileShare.BLL
             FileCacheBLL.Add(folder, result);
 
             return result;
+        }
+
+        /// <summary>
+        /// 是否为管理员或创建者
+        /// </summary>
+        /// <param name="ip"></param>
+        /// <param name="path">子目录名或文件相对路径名</param>
+        /// <returns></returns>
+        private static Boolean IsManagerOrCreater(String ip, String path)
+        {
+            //是否为管理员
+            String managers = ManagerConfigBLL.GetConfig("managers");
+            String[] managerArray = managers.Split(new Char[] { ',' }, StringSplitOptions.RemoveEmptyEntries);
+            if (managerArray.Contains(ip))
+                return true;
+
+            //是否为创建者
+            return LogCacheBLL.IsExists(ip, path);
         }
 
         public static String GetFullFileName(String path)
@@ -91,6 +109,12 @@ namespace FileShare.BLL
         {
             try
             {
+                if (!IsManagerOrCreater(ip, path))
+                {
+                    LogUtil.Error($"{ip} 试图删除 {path} 时出错：无相应权限");
+                    return "access denied";
+                }
+
                 String fullPath = Path.Combine(rootPath, Common.UploadFolder, path);
                 if (isFolder)
                 {

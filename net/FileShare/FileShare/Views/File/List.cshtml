@@ -56,8 +56,8 @@
     <hr />
 
     <div class="toparent">
-        <a href="javascript:goParent()">[转到父目录]</a>
-        <a href="javascript:refresh()" style="margin-left:20px;">[刷新]</a>
+        <a href="back" onclick="goParent();return false;">[转到父目录]</a>
+        <a href="refresh" onclick="refresh();return false;" style="margin-left:20px;">[刷新]</a>
     </div>
 
     <div class="container">
@@ -111,6 +111,8 @@
             }
             else
                 download(name);
+
+            return false;
         }
 
         function download(file) {
@@ -160,14 +162,14 @@
                     $("#tb").empty();
 
                     if (data.data.length > 0) {
-                        var html = '<tr><td width="80">{date}</td><td width="60">{time}</td><td width="80" align="right">{size}</td><td><a href="javascript:get(\'{name}\',{isfolder})">{name}</a><span class="delete">{delete}</span></td></tr>';
+                        var html = '<tr><td width="80">{date}</td><td width="60">{time}</td><td width="80" align="right">{size}</td><td><a href="{name}" onclick="get(\'{name}\',{isfolder});return false;">{name}</a><span class="delete">{delete}</span></td></tr>';
                         for (var i = 0; i < data.data.length; i++) {
                             var item = data.data[i];
                             var size = item.IsFolder ? "[dir]" : item.SizeString;
 
                             var deleteString = '';
                             if (item.IsCreater) {
-                                deleteString = '<a href="javascript:del(\'' + item.Name + '\',' + item.IsFolder + ')">删除</a>';
+                                deleteString = '<a href="' + item.Name + '" onclick="del(\'' + item.Name + '\',' + item.IsFolder + ');return false;">[删除]</a>';
                             }
 
                             var tr = html.replace(/{date}/g, item.Date).replace(/{time}/g, item.Time).replace(/{size}/g, size).replace(/{name}/g, item.Name).replace(/{isfolder}/g, item.IsFolder).replace(/{delete}/g, deleteString);

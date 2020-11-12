@@ -10,7 +10,7 @@ namespace FileShare.BLL
         /// <summary>
         /// 类型文件名
         /// </summary>
-        private const String contentTypeFileName = "contenttype.txt";
+        private const String fileName = "contenttype.txt";
 
         /// <summary>
         /// 最近更新时间
@@ -50,7 +50,7 @@ namespace FileShare.BLL
         /// </summary>
         private static void RefreshDic()
         {
-            String fullFileName = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "App_Data", contentTypeFileName);
+            String fullFileName = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "App_Data", fileName);
 
             if (!File.Exists(fullFileName))
             {
@@ -58,7 +58,7 @@ namespace FileShare.BLL
                 return;
             }
 
-            LogUtil.Debug($"读取磁盘文件内容：{contentTypeFileName}");
+            LogUtil.Debug($"读取磁盘文件内容：{fileName}");
 
             String[] lines = File.ReadAllLines(fullFileName, Common.encoding);
 
