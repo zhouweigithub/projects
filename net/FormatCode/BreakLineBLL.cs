@@ -19,18 +19,12 @@ namespace FormatCode
     public static class BreakLineBLL
     {
         /// <summary>
-        /// 当过滤类型出现多个时，会有问题，需要循环调用
-        /// </summary>
-        private const String filter = "*.cs";
-
-        /// <summary>
         /// cs文件添加顶部注释，已有注释的不再添加
         /// </summary>
-        public static void Do(String path)
+        /// <param name="files"></param>
+        public static void Do(List<String> files)
         {
             Console.WriteLine("BREAK LINE...");
-
-            String[] files = Directory.GetFiles(path, filter, SearchOption.AllDirectories);
 
             Int32 successCount = 0;
 

@@ -19,20 +19,14 @@ namespace FormatCode
     public static class MoveUsingBLL
     {
         /// <summary>
-        /// 当过滤类型出现多个时，会有问题，需要循环调用
+        /// cs文件添加顶部注释，已有注释的不再添加
         /// </summary>
-        private const String filter = "*.cs";
-
-        /// <summary>
-        /// 
-        /// </summary>
-        public static void Do(String path)
+        /// <param name="files"></param>
+        public static void Do(List<String> files)
         {
             try
             {
                 Console.WriteLine("MOVE USING...");
-
-                String[] files = Directory.GetFiles(path, filter, SearchOption.AllDirectories);
 
                 Int32 successCount = 0;
 

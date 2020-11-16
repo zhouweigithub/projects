@@ -7,6 +7,7 @@
 // 修改记录：
 // ***********************************************************************************
 using System;
+using System.Collections.Generic;
 using System.Configuration;
 using System.IO;
 
@@ -17,23 +18,16 @@ namespace FormatCode
     /// </summary>
     public static class ExegesisBLL
     {
-        /// <summary>
-        /// 当过滤类型出现多个时，会有问题，需要循环调用
-        /// </summary>
-        private const String filter = "*.cs";
 
         private static readonly String author = ConfigurationManager.AppSettings.Get("Author");
 
         /// <summary>
         /// cs文件添加顶部注释，已有注释的不再添加
         /// </summary>
-        public static void Do(String path)
+        /// <param name="files"></param>
+        public static void Do(List<String> files)
         {
             Console.WriteLine("ADD TOP COMMENT...");
-
-            String[] files = Directory.GetFiles(path, filter, SearchOption.AllDirectories);
-
-            Console.WriteLine("FILE COUNT:" + files.Length);
 
             Int32 successCount = 0;
 

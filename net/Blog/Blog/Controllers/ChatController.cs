@@ -50,8 +50,6 @@ namespace Blog.Controllers
                     clientSockets[userToken] = socket;
             }
 
-            LogUtil.Debug($"添加{userToken}");
-
             //给当前用户发送所有在线用户信息
             await ChatBLL.SendMsg(new MessageModel()
             {
@@ -61,7 +59,7 @@ namespace Blog.Controllers
                 To = new List<String>() { userToken },
             }, clientSockets, userToken);
 
-            //给其他用户发送自己上线信息
+            //通知所有用户自己上线信息
             await ChatBLL.SendMsg(new MessageModel()
             {
                 MsgType = MsgType.Command,
@@ -79,7 +77,8 @@ namespace Blog.Controllers
                     if (socket.State != WebSocketState.Open)
                     {
                         clientSockets.Remove(userToken);
-                        LogUtil.Debug($"移除{userToken}");
+
+                        //通知所有用户
                         await ChatBLL.SendMsg(new MessageModel()
                         {
                             MsgType = MsgType.Command,
@@ -96,6 +95,7 @@ namespace Blog.Controllers
                     MessageModel msg = JsonUtil.Deserialize<MessageModel>(userMsg);
                     msg.From = userToken;
 
+                    //传递信息给指定用户
                     await ChatBLL.SendMsg(msg, clientSockets, userToken);
                 }
                 catch (Exception e)

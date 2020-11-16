@@ -1,4 +1,4 @@
-// ****************************************************
+﻿// ****************************************************
 // FileName:FormatCodeBLL.cs
 // Description:
 // Tables:
@@ -7,12 +7,21 @@
 // Revision History:
 // ****************************************************
 using System;
+using System.Collections.Generic;
+using System.Configuration;
 using System.IO;
 
 namespace FormatCode
 {
     public static class FormatCodeBLL
     {
+
+        /// <summary>
+        /// 当过滤类型出现多个时，会有问题，需要循环调用
+        /// </summary>
+        private const String filter = "*.cs";
+
+        private static readonly String exceptFolders = ConfigurationManager.AppSettings.Get("ExceptFolders");
 
         public static void Do()
         {
@@ -39,7 +48,7 @@ namespace FormatCode
         }
 
         /// <summary>
-        /// ��ʽ������
+        /// 格式化代码
         /// </summary>
         /// <param name="path"></param>
         public static void Do(String path)
@@ -60,12 +69,17 @@ namespace FormatCode
                     return;
                 }
 
+                List<String> files = new List<String>();
 
-                ExegesisBLL.Do(path);
+                GetAllFiles(path, filter, files);
 
-                MoveUsingBLL.Do(path);
+                Console.WriteLine("FILE COUNT:" + files.Count);
 
-                BreakLineBLL.Do(path);
+                ExegesisBLL.Do(files);
+
+                MoveUsingBLL.Do(files);
+
+                BreakLineBLL.Do(files);
 
                 Console.WriteLine("OVER");
             }
@@ -76,6 +90,45 @@ namespace FormatCode
                 Console.WriteLine(e.ToString());
 
                 Console.WriteLine();
+            }
+        }
+
+        /// <summary>
+        /// 获取目录中的所有文件
+        /// </summary>
+        /// <param name="path">目录路径</param>
+        /// <param name="filter">过滤条件</param>
+        /// <param name="result">结果集合</param>
+        private static void GetAllFiles(String path, String filter, List<String> result)
+        {
+            String[] files = Directory.GetFiles(path, filter, SearchOption.TopDirectoryOnly);
+
+            result.AddRange(files);
+
+            String[] folders = Directory.GetDirectories(path);
+
+            String[] exceptFolderArray = exceptFolders.Split(new Char[] { ',' }, StringSplitOptions.RemoveEmptyEntries);
+
+            foreach (var folderItem in folders)
+            {
+                String folderName = Path.GetFileName(folderItem);
+
+                Boolean isFiltered = false;
+
+                foreach (var filterItem in exceptFolderArray)
+                {
+                    if (String.Compare(folderName, filterItem, true) == 0)
+                    {
+                        isFiltered = true;
+
+                        break;
+                    }
+                }
+
+                if (isFiltered)
+                    continue;
+
+                GetAllFiles(folderItem, filter, result);
             }
         }
     }

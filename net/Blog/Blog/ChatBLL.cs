@@ -14,7 +14,7 @@ namespace Blog
     {
 
         /// <summary>
-        /// 发送消息
+        /// 发送消息，异步发送，无等等
         /// </summary>
         /// <param name="msg">消息体</param>
         /// <param name="onlineUsers">当前在线用户集</param>
@@ -33,11 +33,11 @@ namespace Blog
                     if (msg.To != null && msg.To.Count > 0)
                     {
                         if (msg.To.Contains(item.Key))
-                            await item.Value.SendAsync(new ArraySegment<Byte>(bts), WebSocketMessageType.Text, true, CancellationToken.None);
+                            item.Value.SendAsync(new ArraySegment<Byte>(bts), WebSocketMessageType.Text, true, CancellationToken.None);
                     }
                     else if (item.Key != currentUser)
                     {   //发送给自己以外的人
-                        await item.Value.SendAsync(new ArraySegment<Byte>(bts), WebSocketMessageType.Text, true, CancellationToken.None);
+                        item.Value.SendAsync(new ArraySegment<Byte>(bts), WebSocketMessageType.Text, true, CancellationToken.None);
                     }
                 }
                 catch (Exception e)
