@@ -49,7 +49,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="BLL.cs" />
+    <Compile Include="PageBLL.cs" />
     <Compile Include="Common.cs" />
     <Compile Include="Model\HtmlTagInfo.cs" />
     <Compile Include="Model\LinkList.cs" />

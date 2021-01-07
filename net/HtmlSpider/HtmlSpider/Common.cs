@@ -22,6 +22,8 @@ namespace HtmlSpider
 
         private static readonly String attrFormatString = "<{0} [^>]*?(id|class)=[^>=]*?{1}.*?>";
 
+        private static readonly Regex aReg = new Regex(@"<a .*?href=""(?<href>.*?)"".*?>.*?</a>", RegexOptions.IgnoreCase);
+
 
         /// <summary>
         /// 以当前计算机默认编码读取网页源代码
@@ -47,7 +49,9 @@ namespace HtmlSpider
 
                 String htmlCharset = GetCharset(html);
                 if (!String.IsNullOrEmpty(htmlCharset))
+                {
                     charSet = htmlCharset;
+                }
 
                 Encoding htmlEncoding = Encoding.GetEncoding(charSet);
                 if (encoding != htmlEncoding && String.Compare(charSet, "ISO-8859-1", true) != 0)
@@ -92,8 +96,19 @@ namespace HtmlSpider
             Console.WriteLine("读取h1...");
             String h1 = GetRegexValue(html, h1Reg, "h1");
             if (h1.Contains("<"))
+            {
                 h1 = GetInnerText(h1);
+            }
+
             return h1;
+        }
+
+        public static List<String> GetHrefs(String html)
+        {
+            Console.WriteLine("读取a...");
+            List<String> hrefs = GetRegexValues(html, aReg, "href");
+
+            return hrefs;
         }
 
         public static String GetKeywords(String html)
@@ -168,7 +183,9 @@ namespace HtmlSpider
             String content = GetContentByRegex(html, contentRegStrings);
 
             if (!String.IsNullOrEmpty(content))
+            {
                 html = content;
+            }
 
             //根据正则式移除部分节点
             html = RemoveByRegex(html, regStrings);
@@ -198,6 +215,17 @@ namespace HtmlSpider
                 return match.Groups[groupName].Value.Trim();
             }
             return String.Empty;
+        }
+
+        private static List<String> GetRegexValues(String html, Regex reg, String groupName)
+        {
+            List<String> result = new List<String>();
+            MatchCollection matches = reg.Matches(html);
+            foreach (Match item in matches)
+            {
+                result.Add(item.Groups[groupName].Value.Trim());
+            }
+            return result;
         }
 
         /// <summary>
@@ -314,7 +342,9 @@ namespace HtmlSpider
             {
                 Match mmm = Regex.Match(html, String.Format(attrFormatString, "div", tag));
                 if (Regex.IsMatch(html, String.Format(attrFormatString, "div", tag)))
+                {
                     return true;
+                }
             }
 
             return false;
@@ -566,9 +596,13 @@ namespace HtmlSpider
                     if (sepreteCount <= validLineCount)
                     {   //间隔三个空白行之内则仍然视为文章内容
                         if (lists.Count == 0)
+                        {
                             lists.Add(item + "\n");
+                        }
                         else
+                        {
                             lists[lists.Count - 1] = lists[lists.Count - 1] + item + "\n";
+                        }
                     }
                     else
                     {
@@ -631,8 +665,9 @@ namespace HtmlSpider
         {
             MyLinkList<HtmlTagInfo> linkList = new MyLinkList<HtmlTagInfo>();
             if (searchedTags.Count == 0)
+            {
                 return linkList;
-
+            }
 
             linkList.Add(searchedTags[0]);
             for (Int32 i = 1; i < searchedTags.Count; i++)

@@ -1,68 +1,73 @@
-// ****************************************************
-// FileName:TextReplaceBLL.cs
-// Description:
-// Tables:
-// Author:ZhouWei
-// Create Date:2020-04-27
-// Revision History:
-// ****************************************************
+ï»¿
 using System;
+using System.Collections.Generic;
+using System.Configuration;
 using System.IO;
-using System.Text.RegularExpressions;
 
 namespace FormatCode
 {
     /// <summary>
-    /// Ìæ»»ÏîÄ¿ÖĞµÄ²¿·Ö×Ö·û£¬ÓÃÓÚÏîÄ¿ÖĞÒÆ³ıMoqikaka×Ö·û£¬ÒÔ¼°¸üĞÂUtilµÄÒıÓÃ
+    /// æ›¿æ¢é¡¹ç›®ä¸­çš„éƒ¨åˆ†å­—ç¬¦
     /// </summary>
     public static class TextReplaceBLL
     {
+        public static void Do()
+        {
+            Console.WriteLine("REPLACE TEXT");
 
-        /// <summary>
-        /// µ±¹ıÂËÀàĞÍ³öÏÖ¶à¸öÊ±£¬»áÓĞÎÊÌâ£¬ĞèÒªÑ­»·µ÷ÓÃ
-        /// </summary>
-        private static readonly String[] filterList = new String[] { "*.csproj", "*.cs", "*.cshtml", "*.ashx", "*.asax" };
+            Console.Write("INPUT FOLDER ");
 
-        public static void Do(String path)
+            String folder = Console.ReadLine();
+
+            folder = folder.Trim();
+
+            if (String.IsNullOrEmpty(folder))
+            {
+                Console.WriteLine("INPUT ERROR");
+            }
+            else
+            {
+                Doing(folder);
+            }
+
+            Console.Write("PRESS ANY KEY TO CONTINUE...");
+
+            Console.ReadKey();
+
+        }
+
+        public static void Doing(String path)
         {
             Console.WriteLine("REPLACE TEXT...");
             try
             {
+                //æ–‡ä»¶ç±»å‹é™å®š
+                String replaceTextFileLimit = ConfigurationManager.AppSettings.Get("ReplaceTextFileLimit");
+
+                String[] filterList = replaceTextFileLimit.Split(new Char[] { ',' }, StringSplitOptions.RemoveEmptyEntries);
+
+                Dictionary<String, String> replaceDic = GetRepalcePaic();
+
 
                 foreach (var filter in filterList)
                 {
-                    String[] files = Directory.GetFiles(path, filter, SearchOption.AllDirectories);
+                    String filterString = filter.Trim();
 
-                    Regex regUtil = new Regex(" Util\\.");
+                    String[] files = Directory.GetFiles(path, filterString, SearchOption.AllDirectories);
 
                     Int32 successCount = 0;
 
                     foreach (String filePath in files)
                     {
-                        //Ô­Ê¼ÎÄ±¾
+                        //åŸå§‹æ–‡æœ¬
                         String content = Util.ReadFileText(filePath);
-
-                        //Ìæ»»ºóµÄÎÄ±¾
                         String newContent = content;
 
-                        if (filter == "*.csproj")
+                        foreach (var replaceInfo in replaceDic)
                         {
-                            //String folderPath = Path.GetDirectoryName(filePath);
-                            //String utilPath = GetUtilPath(folderPath);
-                            newContent = newContent.Replace("Util.dll", "Public.CSUtil.dll")
-                                //.Replace(@"..\Lib\Util.dll", utilPath)
-                                .Replace("Include=\"Util", "Include=\"CSUtil")
-                                .Replace("Moqikaka.", "");
+                            //æ›¿æ¢åçš„æ–‡æœ¬
+                            newContent = newContent.Replace(replaceInfo.Key, replaceInfo.Value);
                         }
-                        else
-                        {
-                            newContent = newContent
-                                .Replace("Moqikaka.Util", "Public.CSUtil")
-                                .Replace("Moqikaka.", "");
-
-                            newContent = regUtil.Replace(newContent, " Public.CSUtil.");
-                        }
-
                         if (newContent != content)
                         {
                             File.WriteAllText(filePath, newContent, CommonData.EncodingUTF8);
@@ -71,7 +76,7 @@ namespace FormatCode
                         }
                     }
 
-                    Console.WriteLine("REPLACE TEXT FILES:" + successCount);
+                    Console.WriteLine($"REPLACE TEXT FILESï¼Œ{filterString}:{successCount}");
                 }
             }
             catch (Exception e)
@@ -81,38 +86,28 @@ namespace FormatCode
         }
 
         /// <summary>
-        /// »ñÈ¡Util.dllµÄÏà¶ÔÎ»ÖÃ
+        /// è·å–æ›¿æ¢çš„æ•°æ®ç»„
         /// </summary>
-        /// <param name="folderPath"></param>
         /// <returns></returns>
-        private static String GetUtilPath(String folderPath)
+        private static Dictionary<String, String> GetRepalcePaic()
         {
-            String parent = String.Empty;
-
-            String path = @"Public.CSUtil.dll";
-
-            String[] dllFolderList = new String[] { "Lib" };
-
-            for (Int32 i = 0; i < 5; i++)
+            Dictionary<String, String> result = new Dictionary<String, String>();
+            String replaceTextPair = ConfigurationManager.AppSettings.Get("ReplaceTextPair");
+            if (String.IsNullOrWhiteSpace(replaceTextPair))
             {
-                parent += @"..\";
-
-                foreach (var lib in dllFolderList)
+                return result;
+            }
+            else
+            {
+                String[] replacePairArray = replaceTextPair.Split(new Char[] { ',' }, StringSplitOptions.RemoveEmptyEntries);
+                foreach (var item in replacePairArray)
                 {
-                    String fullPath = Path.Combine(folderPath, parent, lib, path);
-
-                    if (File.Exists(fullPath))
-                    {
-                        Console.WriteLine("ÕÒµ½ Public.CSUtil.dll Â·¾¶£º" + fullPath);
-
-                        return Path.Combine(parent, lib, path); ;
-                    }
+                    String[] replacePair = item.Split(new Char[] { '|' }, StringSplitOptions.RemoveEmptyEntries);
+                    result.Add(replacePair[0], replacePair.Length > 1 ? replacePair[1] : String.Empty);
                 }
             }
 
-            Console.WriteLine("Î´ÕÒµ½ Public.CSUtil.dll Â·¾¶");
-
-            return String.Empty;
+            return result;
         }
 
     }

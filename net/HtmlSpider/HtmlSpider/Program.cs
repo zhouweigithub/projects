@@ -1,5 +1,4 @@
 ﻿using System;
-using HtmlSpider.Model;
 
 namespace HtmlSpider
 {
@@ -25,15 +24,17 @@ namespace HtmlSpider
                 String url = Console.ReadLine();
                 if (!String.IsNullOrWhiteSpace(url))
                 {
-                    PageInfo info = BLL.GetPageInfo(url);
+                    //PageInfo info = PageBLL.GetPageInfo(url, String.Empty);
 
-                    if (info != null)
-                    {
-                        Console.WriteLine($"title: {info.Title}");
-                        Console.WriteLine($"h1: {info.H1}");
-                        Console.WriteLine($"keywords: {info.KeyWords}");
-                        Console.WriteLine($"content: {info.Content}");
-                    }
+                    //if (info != null)
+                    //{
+                    //    Console.WriteLine($"title: {info.Title}");
+                    //    Console.WriteLine($"h1: {info.H1}");
+                    //    Console.WriteLine($"keywords: {info.KeyWords}");
+                    //    Console.WriteLine($"content: {info.Content}");
+                    //}
+
+                    PageBLL.LoopGetPageInfo(url, String.Empty);
                 }
             }
         }
