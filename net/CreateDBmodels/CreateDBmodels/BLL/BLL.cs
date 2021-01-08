@@ -1,17 +1,16 @@
-﻿using CreateDBmodels.Models;
-using Moqikaka.Util.Log;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
+using CreateDBmodels.Models;
+using Util.Log;
 
 namespace CreateDBmodels.BLL
 {
     public class BLL
     {
-        private static readonly string columnTempleteString = @"
+        private static readonly String columnTempleteString = @"
         /// <summary>
         /// {0}
         /// </summary>
@@ -27,15 +26,15 @@ namespace CreateDBmodels.BLL
 
         private static void CreateTableModelFiles(List<TableModel> tableModels, List<ColumeModel> columnModels)
         {
-            string templete = GetTemplete();
-            if (string.IsNullOrWhiteSpace(templete))
+            String templete = GetTemplete();
+            if (String.IsNullOrWhiteSpace(templete))
             {
                 LogUtil.Write($"数据库表模型文件为空", LogType.Error);
                 return;
             }
 
-            List<string> tableNames = columnModels.GroupBy(a => new { a.TABLE_NAME }).Select(b => b.Key.TABLE_NAME).ToList();
-            foreach (string tableName in tableNames)
+            List<String> tableNames = columnModels.GroupBy(a => new { a.TABLE_NAME }).Select(b => b.Key.TABLE_NAME).ToList();
+            foreach (String tableName in tableNames)
             {
                 try
                 {
@@ -46,11 +45,13 @@ namespace CreateDBmodels.BLL
                     {
                         sb.AppendFormat(columnTempleteString, column.COLUMN_COMMENT, GetDataType(column.DATA_TYPE), column.COLUMN_NAME);
                     }
-                    string content = templete.Replace("#tablecomment#", $"{tableInfo?.TABLE_COMMENT}({tableInfo?.TABLE_TYPE})").Replace("#tablename#", tableName).Replace("#columeitems#", sb.ToString());
+                    String content = templete.Replace("#tablecomment#", $"{tableInfo?.TABLE_COMMENT}({tableInfo?.TABLE_TYPE})").Replace("#tablename#", tableName).Replace("#columeitems#", sb.ToString());
 
-                    string folderPath = AppDomain.CurrentDomain.BaseDirectory + "Results";
+                    String folderPath = AppDomain.CurrentDomain.BaseDirectory + "Results";
                     if (!Directory.Exists(folderPath))
+                    {
                         Directory.CreateDirectory(folderPath);
+                    }
 
                     File.WriteAllText($"{folderPath}\\{tableName}.cs", content);
                 }
@@ -67,14 +68,16 @@ namespace CreateDBmodels.BLL
         /// 读取模板内容
         /// </summary>
         /// <returns></returns>
-        private static string GetTemplete()
+        private static String GetTemplete()
         {
             try
             {
-                string filePath = AppDomain.CurrentDomain.BaseDirectory + "\\Templete\\model.txt";
+                String filePath = AppDomain.CurrentDomain.BaseDirectory + "\\Templete\\model.txt";
 
                 if (!File.Exists(filePath))
-                    return string.Empty;
+                {
+                    return String.Empty;
+                }
 
                 return File.ReadAllText(filePath);
             }
@@ -83,7 +86,7 @@ namespace CreateDBmodels.BLL
                 LogUtil.Write("读取模板文件出错：" + e, LogType.Error);
             }
 
-            return string.Empty;
+            return String.Empty;
         }
 
         /// <summary>
@@ -91,9 +94,9 @@ namespace CreateDBmodels.BLL
         /// </summary>
         /// <param name="mysqlType">mysql的类型</param>
         /// <returns></returns>
-        private static string GetDataType(string mysqlType)
+        private static String GetDataType(String mysqlType)
         {
-            string result = string.Empty;
+            String result = String.Empty;
             switch (mysqlType)
             {
                 case "char":

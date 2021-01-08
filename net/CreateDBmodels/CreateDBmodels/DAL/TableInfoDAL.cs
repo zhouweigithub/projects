@@ -1,11 +1,8 @@
-﻿using CreateDBmodels.Models;
-using Moqikaka.Util.Log;
-using MySql.Data.MySqlClient;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Data;
-using System.Linq;
-using System.Text;
+using CreateDBmodels.Models;
+using Util.Log;
 
 namespace CreateDBmodels.DAL
 {
@@ -14,9 +11,9 @@ namespace CreateDBmodels.DAL
     /// </summary>
     public class TableInfoDAL : BaseQuery
     {
-        private static readonly string dbType = "mysql";
-        private static readonly string dbName = Common.Config.GetConfigToString("DbName");
-        private static readonly string conn = System.Configuration.ConfigurationManager.ConnectionStrings["conn"].ConnectionString;
+        private static readonly String dbType = "mysql";
+        private static readonly String dbName = Common.Config.GetConfigToString("DbName");
+        private static readonly String conn = System.Configuration.ConfigurationManager.ConnectionStrings["conn"].ConnectionString;
 
         /// <summary>
         /// 读取数据库各表的字段信息
@@ -28,7 +25,7 @@ namespace CreateDBmodels.DAL
             {
                 using (DBHelper dbhelper = new DBHelper(dbType, conn))
                 {
-                    string sql = $"SELECT TABLE_NAME, column_name, DATA_TYPE, column_comment FROM  information_schema.COLUMNS WHERE TABLE_SCHEMA = '{dbName}' ;";
+                    String sql = $"SELECT TABLE_NAME, column_name, DATA_TYPE, column_comment FROM  information_schema.COLUMNS WHERE TABLE_SCHEMA = '{dbName}' ;";
                     DataTable dt = dbhelper.ExecuteDataTable(sql);
                     if (dt != null && dt.Rows.Count > 0)
                     {
@@ -54,7 +51,7 @@ namespace CreateDBmodels.DAL
             {
                 using (DBHelper dbhelper = new DBHelper(dbType, conn))
                 {
-                    string sql = $"SELECT table_name,table_type,table_comment FROM INFORMATION_SCHEMA.TABLES WHERE table_schema='{dbName}' ;";
+                    String sql = $"SELECT table_name,table_type,table_comment FROM INFORMATION_SCHEMA.TABLES WHERE table_schema='{dbName}' ;";
                     DataTable dt = dbhelper.ExecuteDataTable(sql);
                     if (dt != null && dt.Rows.Count > 0)
                     {

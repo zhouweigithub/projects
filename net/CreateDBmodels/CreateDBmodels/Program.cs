@@ -1,17 +1,13 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace CreateDBmodels
 {
     public class Program
     {
-        private static void Main(string[] args)
+        private static void Main(String[] args)
         {
-            string dbName = Common.Config.GetConfigToString("DbName");
-            string nameSpace = Common.Config.GetConfigToString("NameSpace");
+            String dbName = Common.Config.GetConfigToString("DbName");
+            String nameSpace = Common.Config.GetConfigToString("NameSpace");
             Console.WriteLine();
             Console.WriteLine("功能：根据数据库生成所有表的模型文件");
             Console.WriteLine();

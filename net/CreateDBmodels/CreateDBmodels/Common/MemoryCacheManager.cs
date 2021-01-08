@@ -18,13 +18,7 @@ namespace CreateDBmodels.Common
     /// </summary>
     public partial class MemoryCacheManager
     {
-        protected static ObjectCache Cache
-        {
-            get
-            {
-                return MemoryCache.Default;
-            }
-        }
+        protected static ObjectCache Cache => MemoryCache.Default;
 
         /// <summary>
         /// 获取已经设置的缓存值
@@ -32,7 +26,7 @@ namespace CreateDBmodels.Common
         /// <typeparam name="T">类型</typeparam>
         /// <param name="key">键</param>
         /// <returns>指定的键对应的值</returns>
-        public static T Get<T>(string key)
+        public static T Get<T>(String key)
         {
             return (T)Cache[key];
         }
@@ -43,13 +37,17 @@ namespace CreateDBmodels.Common
         /// <param name="key">键</param>
         /// <param name="data">值</param>
         /// <param name="cacheTime">保存时间（分钟）</param>
-        public static void Set(string key, object data, int cacheTime)
+        public static void Set(String key, Object data, Int32 cacheTime)
         {
             if (data == null)
+            {
                 return;
+            }
 
-            var policy = new CacheItemPolicy();
-            policy.AbsoluteExpiration = DateTime.Now + TimeSpan.FromMinutes(cacheTime);
+            var policy = new CacheItemPolicy
+            {
+                AbsoluteExpiration = DateTime.Now + TimeSpan.FromMinutes(cacheTime)
+            };
             Cache.Add(new CacheItem(key, data), policy);
         }
 
@@ -58,7 +56,7 @@ namespace CreateDBmodels.Common
         /// </summary>
         /// <param name="key">键</param>
         /// <returns>结果</returns>
-        public static bool IsSet(string key)
+        public static Boolean IsSet(String key)
         {
             return (Cache.Contains(key));
         }
@@ -67,7 +65,7 @@ namespace CreateDBmodels.Common
         /// 删除缓存中指定的键
         /// </summary>
         /// <param name="key">/键</param>
-        public static void Remove(string key)
+        public static void Remove(String key)
         {
             Cache.Remove(key);
         }
@@ -76,16 +74,20 @@ namespace CreateDBmodels.Common
         /// 通过正则表达式模式删除
         /// </summary>
         /// <param name="pattern">正则表达式模式</param>
-        public static void RemoveByPattern(string pattern)
+        public static void RemoveByPattern(String pattern)
         {
             var regex = new Regex(pattern, RegexOptions.Singleline | RegexOptions.Compiled | RegexOptions.IgnoreCase);
             var keysToRemove = new List<String>();
 
             foreach (var item in Cache)
+            {
                 if (regex.IsMatch(item.Key))
+                {
                     keysToRemove.Add(item.Key);
+                }
+            }
 
-            foreach (string key in keysToRemove)
+            foreach (String key in keysToRemove)
             {
                 Remove(key);
             }
@@ -97,7 +99,9 @@ namespace CreateDBmodels.Common
         public static void Clear()
         {
             foreach (var item in Cache)
+            {
                 Remove(item.Key);
+            }
         }
     }
 }

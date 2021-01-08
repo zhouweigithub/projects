@@ -18,7 +18,7 @@ namespace CreateDBmodels.Common
         /// <param name="data">数据</param>
         /// <param name="timeOut">超时时间,单位：分</param>
         /// <param name="isAbsolute">是否按绝对时间缓存:超过多少秒后直接过期、相对时间：超过多少时间不调用就失效，默认按绝对时间缓存</param>
-        public static void Add(string cacheKey, object data, int timeOut, bool isAbsolute = true)
+        public static void Add(String cacheKey, Object data, Int32 timeOut, Boolean isAbsolute = true)
         {
             timeOut = Math.Max(1, timeOut);
             //HttpContext.Current.Cache.Insert(cacheKey, data, null, System.Web.Caching.Cache.NoAbsoluteExpiration, TimeSpan.FromMinutes(timeOut));
@@ -30,7 +30,7 @@ namespace CreateDBmodels.Common
         /// 删除缓存数据
         /// </summary>
         /// <param name="cacheKey">键值</param>
-        public static void Remove(string cacheKey)
+        public static void Remove(String cacheKey)
         {
             //HttpContext.Current.Cache.Remove(cacheKey);
             HttpRuntime.Cache.Remove(cacheKey);
@@ -41,7 +41,7 @@ namespace CreateDBmodels.Common
         /// </summary>
         /// <param name="cacheKey">键值</param>
         /// <returns>找到则返回 object数据,否则为null </returns>
-        public static object Get(string cacheKey)
+        public static Object Get(String cacheKey)
         {
             //return HttpContext.Current.Cache.Get(cacheKey);
             return HttpRuntime.Cache.Get(cacheKey);

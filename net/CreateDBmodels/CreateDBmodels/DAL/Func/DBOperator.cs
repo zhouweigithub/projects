@@ -1,9 +1,9 @@
-﻿using MySql.Data.MySqlClient;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.Common;
 using System.Text;
+using MySql.Data.MySqlClient;
 
 namespace CreateDBmodels.DAL
 {
@@ -18,7 +18,7 @@ namespace CreateDBmodels.DAL
         /// <summary>
         /// 命令执行时长（秒，默认为30）
         /// </summary>
-        public int CommandTimeout = 30;
+        public Int32 CommandTimeout = 30;
 
         /// <summary>
         /// SQL命令
@@ -63,14 +63,14 @@ namespace CreateDBmodels.DAL
         /// </summary>
         /// <param name="command">SQL语句或命令</param>
         /// <returns></returns>
-        protected abstract DbCommand CreateCommand(string command);
+        protected abstract DbCommand CreateCommand(String command);
 
         /// <summary>
         /// 构造包含参数的SQL语句或命令
         /// </summary>
         /// <param name="command">SQL语句或命令</param>
         /// <param name="value">参数值列表</param>
-        protected abstract DbCommand CreateCommand(string command, params MySqlParameter[] commandParameters);
+        protected abstract DbCommand CreateCommand(String command, params MySqlParameter[] commandParameters);
 
         #region 无参数调用
 
@@ -78,7 +78,7 @@ namespace CreateDBmodels.DAL
         /// 执行SQL语句，返回受影响记录条数
         /// </summary>
         /// <param name="sql">SQL语句</param>
-        public int ExecuteNonQuery(string sql)
+        public Int32 ExecuteNonQuery(String sql)
         {
             DbCommand comm = CreateCommand(sql);
 
@@ -90,14 +90,14 @@ namespace CreateDBmodels.DAL
         /// </summary>
         /// <param name="sql">SQL语句或命令</param>
         /// <returns>DataSet</returns>
-        public abstract DataSet ExecuteDataSet(string sql);
+        public abstract DataSet ExecuteDataSet(String sql);
 
         /// <summary>
         /// A3执行一条SQL语句，返回一个object
         /// </summary>
         /// <param name="sql">SQL语句或命令</param>
         /// <returns>object</returns>
-        public object ExecuteScalar(string sql)
+        public Object ExecuteScalar(String sql)
         {
             DbCommand comm = CreateCommand(sql);
 
@@ -109,7 +109,7 @@ namespace CreateDBmodels.DAL
         /// </summary>
         /// <param name="sql">SQL语句或命令</param>
         /// <returns>DbDataReader</returns>
-        public DbDataReader ExecuteReader(string sql)
+        public DbDataReader ExecuteReader(String sql)
         {
             DbCommand comm = CreateCommand(sql);
 
@@ -121,7 +121,7 @@ namespace CreateDBmodels.DAL
         /// </summary>
         /// <param name="sql">SQL语句（为了Oracle上能够使用，表的别名前不要加AS）</param>
         /// <returns>DataTable</returns>
-        public DataTable ExecuteDataTable(string sql)
+        public DataTable ExecuteDataTable(String sql)
         {
             DataSet ds = ExecuteDataSet(sql);
             if (ds != null && ds.Tables.Count > 0)
@@ -143,7 +143,7 @@ namespace CreateDBmodels.DAL
         /// <param name="sql">SQL语句或命令</param>
         /// <param name="value">参数值列表</param>
         /// <returns>受影响行数</returns>
-        public int ExecuteNonQueryParams(string sql, params MySqlParameter[] commandParameters)
+        public Int32 ExecuteNonQueryParams(String sql, params MySqlParameter[] commandParameters)
         {
             DbCommand comm = CreateCommand(sql, commandParameters);
 
@@ -156,7 +156,7 @@ namespace CreateDBmodels.DAL
         /// <param name="sql">SQL语句或命令</param>
         /// <param name="value">参数值列表</param>
         /// <returns>DataSet</returns>
-        public abstract DataSet ExecuteDataSetParams(string sql, params MySqlParameter[] commandParameters);
+        public abstract DataSet ExecuteDataSetParams(String sql, params MySqlParameter[] commandParameters);
 
         /// <summary>
         /// B3执行一条SQL语句，返回一个object
@@ -164,7 +164,7 @@ namespace CreateDBmodels.DAL
         /// <param name="sql">SQL语句或命令</param>
         /// <param name="value">参数值列表</param>
         /// <returns>object</returns>
-        public object ExecuteScalarParams(string sql, params MySqlParameter[] commandParameters)
+        public Object ExecuteScalarParams(String sql, params MySqlParameter[] commandParameters)
         {
             DbCommand comm = CreateCommand(sql, commandParameters);
             comm.CommandTimeout = 0;
@@ -178,7 +178,7 @@ namespace CreateDBmodels.DAL
         /// <param name="sql">SQL语句或命令</param>
         /// <param name="value">参数值列表</param>
         /// <returns>DbDataReader</returns>
-        public DbDataReader ExecuteReaderParams(string sql, params MySqlParameter[] commandParameters)
+        public DbDataReader ExecuteReaderParams(String sql, params MySqlParameter[] commandParameters)
         {
             DbCommand comm = CreateCommand(sql, commandParameters);
 
@@ -191,7 +191,7 @@ namespace CreateDBmodels.DAL
         /// <param name="sql">SQL语句或命令（为了Oracle上能够使用，表的别名前不要加AS）</param>
         /// <param name="value">参数值列表</param>
         /// <returns>DataTable</returns>
-        public DataTable ExecuteDataTableParams(string sql, params MySqlParameter[] commandParameters)
+        public DataTable ExecuteDataTableParams(String sql, params MySqlParameter[] commandParameters)
         {
             DataSet ds = ExecuteDataSetParams(sql, commandParameters);
             if (ds != null && ds.Tables.Count > 0)
@@ -215,7 +215,7 @@ namespace CreateDBmodels.DAL
         /// <param name="pageSize">页面大小（单页记录条数）</param>
         /// <param name="pageIndex">当前页码（页号从1开始）</param>
         /// <returns></returns>
-        public abstract DataSet ExecuteDataSetPage(string sql, int pageSize, int pageIndex);
+        public abstract DataSet ExecuteDataSetPage(String sql, Int32 pageSize, Int32 pageIndex);
 
         /// <summary>
         /// 分页查询，返回DataSet
@@ -225,7 +225,7 @@ namespace CreateDBmodels.DAL
         /// <param name="pageIndex">当前页码（页号从1开始）</param>
         /// <param name="value">参数列表</param>
         /// <returns></returns>
-        public abstract DataSet ExecuteDataSetPageParams(string sql, int pageSize, int pageIndex, params MySqlParameter[] commandParameters);
+        public abstract DataSet ExecuteDataSetPageParams(String sql, Int32 pageSize, Int32 pageIndex, params MySqlParameter[] commandParameters);
 
         /// <summary>
         /// 分页查询，返回DataTable
@@ -234,7 +234,7 @@ namespace CreateDBmodels.DAL
         /// <param name="pageSize">页面大小（单页记录条数）</param>
         /// <param name="pageIndex">当前页码（页号从1开始）</param>
         /// <returns></returns>
-        public DataTable ExecuteDataTablePage(string sql, int pageSize, int pageIndex)
+        public DataTable ExecuteDataTablePage(String sql, Int32 pageSize, Int32 pageIndex)
         {
             DataSet ds = ExecuteDataSetPage(sql, pageSize, pageIndex);
             if (ds != null && ds.Tables.Count > 0)
@@ -255,7 +255,7 @@ namespace CreateDBmodels.DAL
         /// <param name="pageIndex">当前页码（页号从1开始）</param>
         /// <param name="value">参数列表</param>
         /// <returns></returns>
-        public DataTable ExecuteDataTablePageParams(string sql, int pageSize, int pageIndex, params MySqlParameter[] commandParameters)
+        public DataTable ExecuteDataTablePageParams(String sql, Int32 pageSize, Int32 pageIndex, params MySqlParameter[] commandParameters)
         {
             DataSet ds = ExecuteDataSetPageParams(sql, pageSize, pageIndex, commandParameters);
             if (ds != null && ds.Tables.Count > 0)
@@ -281,7 +281,7 @@ namespace CreateDBmodels.DAL
         /// <param name="condition">筛选条件，可以为空，不带"WHERE"关键字</param>
         /// <param name="value">参数列表</param>
         /// <returns>DataTable</returns>
-        public abstract DataTable ExecuteDataTablePageParams(string tableName, string fields, string keyField, string groupBy, string orderBy, int pageSize, int pageIndex, string condition, params MySqlParameter[] commandParameters);
+        public abstract DataTable ExecuteDataTablePageParams(String tableName, String fields, String keyField, String groupBy, String orderBy, Int32 pageSize, Int32 pageIndex, String condition, params MySqlParameter[] commandParameters);
 
         #endregion
 
@@ -293,7 +293,7 @@ namespace CreateDBmodels.DAL
         /// <param name="tableName">表名</param>
         /// <param name="fileName">本地文件名</param>
         /// <returns></returns>
-        public abstract int LoadDataInLocalFile(string tableName, string fileName);
+        public abstract Int32 LoadDataInLocalFile(String tableName, String fileName);
 
         /// <summary>
         /// 从本地文件导入数据到数据库表中
@@ -302,7 +302,7 @@ namespace CreateDBmodels.DAL
         /// <param name="fileName">本地文件名</param>
         /// <param name="fieldsTerminated">字段列表</param>
         /// <returns></returns>
-        public abstract int LoadDataInLocalFile(string tableName, string fileName, List<string> fields);
+        public abstract Int32 LoadDataInLocalFile(String tableName, String fileName, List<String> fields);
 
         /// <summary>
         /// 从本地文件导入数据到数据库表中
@@ -311,7 +311,7 @@ namespace CreateDBmodels.DAL
         /// <param name="fileName">本地文件名</param>
         /// <param name="fields">字段分隔符</param>
         /// <returns></returns>
-        public abstract int LoadDataInLocalFile(string tableName, string fileName, string fieldsTerminated);
+        public abstract Int32 LoadDataInLocalFile(String tableName, String fileName, String fieldsTerminated);
 
         /// <summary>
         /// 从本地文件导入数据到数据库表中
@@ -321,7 +321,7 @@ namespace CreateDBmodels.DAL
         /// <param name="fields">字段列表</param>
         /// <param name="fieldsTerminated">字段分隔符</param>
         /// <returns></returns>
-        public abstract int LoadDataInLocalFile(string tableName, string fileName, List<string> fields, string fieldsTerminated);
+        public abstract Int32 LoadDataInLocalFile(String tableName, String fileName, List<String> fields, String fieldsTerminated);
 
         /// <summary>
         /// 从本地文件导入数据到数据库表中
@@ -332,7 +332,7 @@ namespace CreateDBmodels.DAL
         /// <param name="fieldsTerminated">字段分隔符</param>
         /// <param name="linesTerminated">记录分隔符</param>
         /// <returns></returns>
-        public abstract int LoadDataInLocalFile(string tableName, string fileName, List<string> fields, string fieldsTerminated, string linesTerminated);
+        public abstract Int32 LoadDataInLocalFile(String tableName, String fileName, List<String> fields, String fieldsTerminated, String linesTerminated);
 
         #endregion
 
@@ -343,7 +343,7 @@ namespace CreateDBmodels.DAL
         /// </summary>
         /// <param name="tableName">表名</param>
         /// <returns>表字段列表</returns>
-        public abstract List<string> GetFieldsList(string tableName);
+        public abstract List<String> GetFieldsList(String tableName);
 
         #endregion
 
@@ -354,7 +354,7 @@ namespace CreateDBmodels.DAL
         /// </summary>
         /// <param name="paramsList"></param>
         /// <returns></returns>
-        public string ShowParamsList(params MySqlParameter[] commandParameters)
+        public String ShowParamsList(params MySqlParameter[] commandParameters)
         {
             StringBuilder sb = new StringBuilder();
 

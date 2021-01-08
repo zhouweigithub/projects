@@ -1,9 +1,9 @@
-﻿using CreateDBmodels.Common;
-using MySql.Data.MySqlClient;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Text;
+using CreateDBmodels.Common;
+using MySql.Data.MySqlClient;
 
 namespace CreateDBmodels.DAL
 {
@@ -15,27 +15,27 @@ namespace CreateDBmodels.DAL
     /// </summary>
     public class DBHelper : IDisposable
     {
-        private string _dbType;
-        private string _connStr;
+        private String _dbType;
+        private String _connStr;
         private DBOperator _db;
         /// <summary>
         /// 配置文件中数据库类型定义的键名
         /// </summary>
-        protected string ConfigKeyForDataBaseType = "DataBaseType";
+        protected String ConfigKeyForDataBaseType = "DataBaseType";
 
         /// <summary>
         /// 配置文件中数据库连接字符串的键名
         /// </summary>
-        protected string ConfigKeyForConnString = "ConnString";
+        protected String ConfigKeyForConnString = "ConnString";
 
         /// <summary>
         /// 数据库类型
         /// </summary>
-        public string DbType { get { return _dbType; } }
+        public String DbType => _dbType;
         /// <summary>
         /// 数据库连接字符串
         /// </summary>
-        public string ConnStr { get { return _connStr; } }
+        public String ConnStr => _connStr;
 
         /// <summary>
         /// 构造函数,数据库类型及连接字符串会读取默认配置项DataBaseType、ConnString
@@ -53,7 +53,7 @@ namespace CreateDBmodels.DAL
         /// </summary>
         /// <param name="dbType">数据库类型（MYSQL/ORACLE/SQLSERVER/POSTGRESQL）</param>
         /// <param name="connStr">连接字符串</param>
-        public DBHelper(string dbType, string connStr)
+        public DBHelper(String dbType, String connStr)
         {
             _dbType = dbType;
             _connStr = connStr;
@@ -93,7 +93,7 @@ namespace CreateDBmodels.DAL
         /// <param name="dbType">数据库类型</param>
         /// <param name="connStr">连接字符串</param>
         /// <returns>数据库操作实例</returns>
-        private static DBOperator GetDBOperator(string dbType, string connStr)
+        private static DBOperator GetDBOperator(String dbType, String connStr)
         {
             switch (dbType.ToUpper())
             {
@@ -145,7 +145,7 @@ namespace CreateDBmodels.DAL
         /// 执行SQL语句，返回受影响记录条数
         /// </summary>
         /// <param name="sql">SQL语句</param>
-        public int ExecuteNonQuery(string sql)
+        public Int32 ExecuteNonQuery(String sql)
         {
             try
             {
@@ -153,7 +153,7 @@ namespace CreateDBmodels.DAL
             }
             catch (Exception ex)
             {
-                throw new Exception(string.Format("查询失败！\r\nSQL语句为：{0}。\r\n{1}", sql, ex.ToString()));
+                throw new Exception(String.Format("查询失败！\r\nSQL语句为：{0}。\r\n{1}", sql, ex.ToString()));
             }
         }
 
@@ -163,7 +163,7 @@ namespace CreateDBmodels.DAL
         /// <param name="sql">SQL语句或命令（参数用问号?占位。为了Oracle上能够使用，表的别名前不要加AS）</param>
         /// <param name="value">参数值列表</param>
         /// <returns>受影响记录条数</returns>
-        public int ExecuteNonQueryParams(string sql, params MySqlParameter[] commandParameters)
+        public Int32 ExecuteNonQueryParams(String sql, params MySqlParameter[] commandParameters)
         {
             try
             {
@@ -171,7 +171,7 @@ namespace CreateDBmodels.DAL
             }
             catch (Exception ex)
             {
-                throw new Exception(string.Format("查询失败！\r\n数据库：{0}。\r\nSQL语句：{1}。\r\n参数列表{2}。\r\n{3}", DbType, sql, _db.ShowParamsList(commandParameters), ex.ToString()));
+                throw new Exception(String.Format("查询失败！\r\n数据库：{0}。\r\nSQL语句：{1}。\r\n参数列表{2}。\r\n{3}", DbType, sql, _db.ShowParamsList(commandParameters), ex.ToString()));
             }
         }
 
@@ -184,7 +184,7 @@ namespace CreateDBmodels.DAL
         /// </summary>
         /// <param name="sql">SQL语句（为了Oracle上能够使用，表的别名前不要加AS）</param>
         /// <returns>object</returns>
-        public object ExecuteScalar(string sql)
+        public Object ExecuteScalar(String sql)
         {
             try
             {
@@ -192,7 +192,7 @@ namespace CreateDBmodels.DAL
             }
             catch (Exception ex)
             {
-                throw new Exception(string.Format("查询失败！\r\nSQL语句为：{0}。\r\n{1}", sql, ex.ToString()));
+                throw new Exception(String.Format("查询失败！\r\nSQL语句为：{0}。\r\n{1}", sql, ex.ToString()));
             }
         }
 
@@ -201,9 +201,9 @@ namespace CreateDBmodels.DAL
         /// </summary>
         /// <param name="sql">SQL语句（为了Oracle上能够使用，表的别名前不要加AS）</param>
         /// <returns>int</returns>
-        public int ExecuteScalarInt(string sql)
+        public Int32 ExecuteScalarInt(String sql)
         {
-            object obj = ExecuteScalar(sql);
+            Object obj = ExecuteScalar(sql);
             if (obj is DBNull)
             {
                 return 0;
@@ -223,12 +223,12 @@ namespace CreateDBmodels.DAL
         /// </summary>
         /// <param name="sql">SQL语句（为了Oracle上能够使用，表的别名前不要加AS）</param>
         /// <returns>string</returns>
-        public string ExecuteScalarString(string sql)
+        public String ExecuteScalarString(String sql)
         {
-            object obj = ExecuteScalar(sql);
+            Object obj = ExecuteScalar(sql);
             if (obj is DBNull)
             {
-                return string.Empty;
+                return String.Empty;
             }
             try
             {
@@ -236,7 +236,7 @@ namespace CreateDBmodels.DAL
             }
             catch
             {
-                return string.Empty;
+                return String.Empty;
             }
         }
 
@@ -246,7 +246,7 @@ namespace CreateDBmodels.DAL
         /// <param name="sql">SQL语句或命令（为了Oracle上能够使用，表的别名前不要加AS）</param>
         /// <param name="value">参数值列表</param>
         /// <returns>object</returns>
-        public object ExecuteScalarParams(string sql, params MySqlParameter[] commandParameters)
+        public Object ExecuteScalarParams(String sql, params MySqlParameter[] commandParameters)
         {
             try
             {
@@ -254,7 +254,7 @@ namespace CreateDBmodels.DAL
             }
             catch (Exception ex)
             {
-                throw new Exception(string.Format("查询失败！\r\n数据库：{0}。\r\nSQL语句：{1}。\r\n参数列表{2}。\r\n{3}", DbType, sql, _db.ShowParamsList(commandParameters), ex.ToString()));
+                throw new Exception(String.Format("查询失败！\r\n数据库：{0}。\r\nSQL语句：{1}。\r\n参数列表{2}。\r\n{3}", DbType, sql, _db.ShowParamsList(commandParameters), ex.ToString()));
             }
         }
 
@@ -264,9 +264,9 @@ namespace CreateDBmodels.DAL
         /// <param name="sql">SQL语句或命令（为了Oracle上能够使用，表的别名前不要加AS）</param>
         /// <param name="value">参数值列表</param>
         /// <returns>int</returns>
-        public int ExecuteScalarIntParams(string sql, params MySqlParameter[] commandParameters)
+        public Int32 ExecuteScalarIntParams(String sql, params MySqlParameter[] commandParameters)
         {
-            object obj = ExecuteScalarParams(sql, commandParameters);
+            Object obj = ExecuteScalarParams(sql, commandParameters);
             if (obj is DBNull)
             {
                 return 0;
@@ -287,12 +287,12 @@ namespace CreateDBmodels.DAL
         /// <param name="sql">SQL语句或命令（为了Oracle上能够使用，表的别名前不要加AS）</param>
         /// <param name="value">参数值列表</param>
         /// <returns>string</returns>
-        public string ExecuteScalarStringParams(string sql, params MySqlParameter[] commandParameters)
+        public String ExecuteScalarStringParams(String sql, params MySqlParameter[] commandParameters)
         {
-            object obj = ExecuteScalarParams(sql, commandParameters);
+            Object obj = ExecuteScalarParams(sql, commandParameters);
             if (obj is DBNull)
             {
-                return string.Empty;
+                return String.Empty;
             }
             try
             {
@@ -300,7 +300,7 @@ namespace CreateDBmodels.DAL
             }
             catch
             {
-                return string.Empty;
+                return String.Empty;
             }
         }
 
@@ -313,7 +313,7 @@ namespace CreateDBmodels.DAL
         /// </summary>
         /// <param name="sql">SQL语句（为了Oracle上能够使用，表的别名前不要加AS）</param>
         /// <returns>DataRow</returns>
-        public DataRow ExecuteDataRow(string sql)
+        public DataRow ExecuteDataRow(String sql)
         {
             try
             {
@@ -329,7 +329,7 @@ namespace CreateDBmodels.DAL
             }
             catch (Exception ex)
             {
-                throw new Exception(string.Format("查询失败！\r\nSQL语句为：{0}。\r\n{1}", sql, ex.ToString()));
+                throw new Exception(String.Format("查询失败！\r\nSQL语句为：{0}。\r\n{1}", sql, ex.ToString()));
             }
         }
 
@@ -339,7 +339,7 @@ namespace CreateDBmodels.DAL
         /// <param name="sql">SQL语句或命令（为了Oracle上能够使用，表的别名前不要加AS）</param>
         /// <param name="value">参数值列表</param>
         /// <returns>DataRow</returns>
-        public DataRow ExecuteDataRowParams(string sql, params MySqlParameter[] commandParameters)
+        public DataRow ExecuteDataRowParams(String sql, params MySqlParameter[] commandParameters)
         {
             try
             {
@@ -355,7 +355,7 @@ namespace CreateDBmodels.DAL
             }
             catch (Exception ex)
             {
-                throw new Exception(string.Format("查询失败！\r\n数据库：{0}。\r\nSQL语句：{1}。\r\n参数列表{2}。\r\n{3}", DbType, sql, commandParameters, ex.ToString()));
+                throw new Exception(String.Format("查询失败！\r\n数据库：{0}。\r\nSQL语句：{1}。\r\n参数列表{2}。\r\n{3}", DbType, sql, commandParameters, ex.ToString()));
             }
         }
 
@@ -368,7 +368,7 @@ namespace CreateDBmodels.DAL
         /// </summary>
         /// <param name="sql">SQL语句（为了Oracle上能够使用，表的别名前不要加AS）</param>
         /// <returns>DataTable</returns>
-        public DataTable ExecuteDataTable(string sql)
+        public DataTable ExecuteDataTable(String sql)
         {
             try
             {
@@ -376,7 +376,7 @@ namespace CreateDBmodels.DAL
             }
             catch (Exception ex)
             {
-                throw new Exception(string.Format("查询失败！\r\nSQL语句为：{0}。\r\n{1}", sql, ex.ToString()));
+                throw new Exception(String.Format("查询失败！\r\nSQL语句为：{0}。\r\n{1}", sql, ex.ToString()));
             }
         }
 
@@ -386,7 +386,7 @@ namespace CreateDBmodels.DAL
         /// <param name="sql">SQL语句或命令（为了Oracle上能够使用，表的别名前不要加AS）</param>
         /// <param name="value">参数值列表</param>
         /// <returns>DataTable</returns>
-        public DataTable ExecuteDataTableParams(string sql, params MySqlParameter[] commandParameters)
+        public DataTable ExecuteDataTableParams(String sql, params MySqlParameter[] commandParameters)
         {
             try
             {
@@ -394,7 +394,7 @@ namespace CreateDBmodels.DAL
             }
             catch (Exception ex)
             {
-                throw new Exception(string.Format("查询失败！\r\n数据库：{0}。\r\nSQL语句：{1}。\r\n参数列表{2}。\r\n{3}", DbType, sql, _db.ShowParamsList(commandParameters), ex.ToString()));
+                throw new Exception(String.Format("查询失败！\r\n数据库：{0}。\r\nSQL语句：{1}。\r\n参数列表{2}。\r\n{3}", DbType, sql, _db.ShowParamsList(commandParameters), ex.ToString()));
             }
         }
 
@@ -407,7 +407,7 @@ namespace CreateDBmodels.DAL
         /// </summary>
         /// <param name="sql">SQL语句（为了Oracle上能够使用，表的别名前不要加AS）</param>
         /// <returns>DataTable</returns>
-        public DataSet ExecuteDataSet(string sql)
+        public DataSet ExecuteDataSet(String sql)
         {
             try
             {
@@ -415,7 +415,7 @@ namespace CreateDBmodels.DAL
             }
             catch (Exception ex)
             {
-                throw new Exception(string.Format("查询失败！\r\nSQL语句为：{0}。\r\n{1}", sql, ex.ToString()));
+                throw new Exception(String.Format("查询失败！\r\nSQL语句为：{0}。\r\n{1}", sql, ex.ToString()));
             }
         }
 
@@ -425,7 +425,7 @@ namespace CreateDBmodels.DAL
         /// <param name="sql">SQL语句或命令（为了Oracle上能够使用，表的别名前不要加AS）</param>
         /// <param name="value">参数值列表</param>
         /// <returns>DataTable</returns>
-        public DataSet ExecuteDataSetParams(string sql, params MySqlParameter[] commandParameters)
+        public DataSet ExecuteDataSetParams(String sql, params MySqlParameter[] commandParameters)
         {
             try
             {
@@ -433,7 +433,7 @@ namespace CreateDBmodels.DAL
             }
             catch (Exception ex)
             {
-                throw new Exception(string.Format("查询失败！\r\n数据库：{0}。\r\nSQL语句：{1}。\r\n参数列表{2}。\r\n{3}", DbType, sql, _db.ShowParamsList(commandParameters), ex.ToString()));
+                throw new Exception(String.Format("查询失败！\r\n数据库：{0}。\r\nSQL语句：{1}。\r\n参数列表{2}。\r\n{3}", DbType, sql, _db.ShowParamsList(commandParameters), ex.ToString()));
             }
         }
 
@@ -447,7 +447,7 @@ namespace CreateDBmodels.DAL
         /// <param name="pageSize">页面大小（单页记录条数）</param>
         /// <param name="pageIndex">当前页码（页号从1开始）</param>
         /// <returns></returns>
-        public DataSet ExecuteDataSetPage(string sql, int pageSize, int pageIndex)
+        public DataSet ExecuteDataSetPage(String sql, Int32 pageSize, Int32 pageIndex)
         {
             try
             {
@@ -455,7 +455,7 @@ namespace CreateDBmodels.DAL
             }
             catch (Exception ex)
             {
-                throw new Exception(string.Format("查询失败！\r\n数据库：{0}。\r\nSQL语句：{1}。\r\n{2}", DbType, sql, ex.ToString()));
+                throw new Exception(String.Format("查询失败！\r\n数据库：{0}。\r\nSQL语句：{1}。\r\n{2}", DbType, sql, ex.ToString()));
             }
         }
 
@@ -467,7 +467,7 @@ namespace CreateDBmodels.DAL
         /// <param name="pageIndex">当前页码（页号从1开始）</param>
         /// <param name="value">参数列表</param>
         /// <returns></returns>
-        public DataSet ExecuteDataSetPageParams(string sql, int pageSize, int pageIndex, params MySqlParameter[] commandParameters)
+        public DataSet ExecuteDataSetPageParams(String sql, Int32 pageSize, Int32 pageIndex, params MySqlParameter[] commandParameters)
         {
             try
             {
@@ -475,7 +475,7 @@ namespace CreateDBmodels.DAL
             }
             catch (Exception ex)
             {
-                throw new Exception(string.Format("查询失败！\r\n数据库：{0}。\r\nSQL语句：{1}。\r\n参数列表{2}。\r\n{3}", DbType, sql, _db.ShowParamsList(commandParameters), ex.ToString()));
+                throw new Exception(String.Format("查询失败！\r\n数据库：{0}。\r\nSQL语句：{1}。\r\n参数列表{2}。\r\n{3}", DbType, sql, _db.ShowParamsList(commandParameters), ex.ToString()));
             }
         }
 
@@ -486,7 +486,7 @@ namespace CreateDBmodels.DAL
         /// <param name="pageSize">页面大小（单页记录条数）</param>
         /// <param name="pageIndex">当前页码（页号从1开始）</param>
         /// <returns></returns>
-        public DataTable ExecuteDataTablePage(string sql, int pageSize, int pageIndex)
+        public DataTable ExecuteDataTablePage(String sql, Int32 pageSize, Int32 pageIndex)
         {
             try
             {
@@ -494,7 +494,7 @@ namespace CreateDBmodels.DAL
             }
             catch (Exception ex)
             {
-                throw new Exception(string.Format("查询失败！\r\n数据库：{0}。\r\nSQL语句：{1}。\r\n{2}", DbType, sql, ex.ToString()));
+                throw new Exception(String.Format("查询失败！\r\n数据库：{0}。\r\nSQL语句：{1}。\r\n{2}", DbType, sql, ex.ToString()));
             }
         }
 
@@ -506,7 +506,7 @@ namespace CreateDBmodels.DAL
         /// <param name="pageIndex">当前页码（页号从1开始）</param>
         /// <param name="value">参数列表</param>
         /// <returns></returns>
-        public DataTable ExecuteDataTablePageParams(string sql, int pageSize, int pageIndex, params MySqlParameter[] commandParameters)
+        public DataTable ExecuteDataTablePageParams(String sql, Int32 pageSize, Int32 pageIndex, params MySqlParameter[] commandParameters)
         {
             try
             {
@@ -514,7 +514,7 @@ namespace CreateDBmodels.DAL
             }
             catch (Exception ex)
             {
-                throw new Exception(string.Format("查询失败！\r\n数据库：{0}。\r\nSQL语句：{1}。\r\n参数列表{2}。\r\n{3}", DbType, sql, _db.ShowParamsList(commandParameters), ex.ToString()));
+                throw new Exception(String.Format("查询失败！\r\n数据库：{0}。\r\nSQL语句：{1}。\r\n参数列表{2}。\r\n{3}", DbType, sql, _db.ShowParamsList(commandParameters), ex.ToString()));
             }
         }
         #endregion
@@ -556,7 +556,7 @@ namespace CreateDBmodels.DAL
         /// <param name="condition">筛选条件，可以为空，不带"WHERE"关键字</param>
         /// <param name="value">参数列表</param>
         /// <returns>DataTable</returns>
-        public DataTable ExecuteDataTablePageParams(string tableName, string fields, string keyField, string groupBy, string orderBy, int pageSize, int pageIndex, string condition, params MySqlParameter[] commandParameters)
+        public DataTable ExecuteDataTablePageParams(String tableName, String fields, String keyField, String groupBy, String orderBy, Int32 pageSize, Int32 pageIndex, String condition, params MySqlParameter[] commandParameters)
         {
             return _db.ExecuteDataTablePageParams(tableName, fields, keyField, groupBy, orderBy, pageSize, pageIndex, condition, commandParameters);
         }
@@ -570,7 +570,7 @@ namespace CreateDBmodels.DAL
         /// <param name="tableName">表名</param>
         /// <param name="fileName">本地文件名</param>
         /// <returns>导入记录条数</returns>
-        public int LoadDataInLocalFile(string tableName, string fileName)
+        public Int32 LoadDataInLocalFile(String tableName, String fileName)
         {
             if (!System.IO.File.Exists(fileName))
             {
@@ -586,7 +586,7 @@ namespace CreateDBmodels.DAL
         /// <param name="fileName">本地文件名</param>
         /// <param name="fieldsTerminated">字段列表</param>
         /// <returns>导入记录条数</returns>
-        public int LoadDataInLocalFile(string tableName, string fileName, List<string> fields)
+        public Int32 LoadDataInLocalFile(String tableName, String fileName, List<String> fields)
         {
             if (!System.IO.File.Exists(fileName))
             {
@@ -602,7 +602,7 @@ namespace CreateDBmodels.DAL
         /// <param name="fileName">本地文件名</param>
         /// <param name="fields">字段分隔符</param>
         /// <returns>导入记录条数</returns>
-        public int LoadDataInLocalFile(string tableName, string fileName, string fieldsTerminated)
+        public Int32 LoadDataInLocalFile(String tableName, String fileName, String fieldsTerminated)
         {
             if (!System.IO.File.Exists(fileName))
             {
@@ -619,7 +619,7 @@ namespace CreateDBmodels.DAL
         /// <param name="fields">字段列表</param>
         /// <param name="fieldsTerminated">字段分隔符</param>
         /// <returns>导入记录条数</returns>
-        public int LoadDataInLocalFile(string tableName, string fileName, List<string> fields, string fieldsTerminated)
+        public Int32 LoadDataInLocalFile(String tableName, String fileName, List<String> fields, String fieldsTerminated)
         {
             if (!System.IO.File.Exists(fileName))
             {
@@ -637,7 +637,7 @@ namespace CreateDBmodels.DAL
         /// <param name="fieldsTerminated">字段分隔符</param>
         /// <param name="linesTerminated">记录分隔符</param>
         /// <returns>导入记录条数</returns>
-        public int LoadDataInLocalFile(string tableName, string fileName, List<string> fields, string fieldsTerminated, string linesTerminated)
+        public Int32 LoadDataInLocalFile(String tableName, String fileName, List<String> fields, String fieldsTerminated, String linesTerminated)
         {
             if (!System.IO.File.Exists(fileName))
             {
@@ -656,24 +656,24 @@ namespace CreateDBmodels.DAL
         /// <param name="tableName">表名</param>
         /// <param name="dt">数据表（字段名通过ColumnName来指定）</param>
         /// <returns></returns>
-        public int LoadDataInDataTable(string tableName, DataTable dt)
+        public Int32 LoadDataInDataTable(String tableName, DataTable dt)
         {
             if (dt == null || dt.Rows.Count < 1)
             {
                 return 0;
             }
 
-            List<string> filed = new List<string>();
+            List<String> filed = new List<String>();
             foreach (DataColumn col in dt.Columns)
             {
                 filed.Add(col.ColumnName);
             }
-            int rowIndex = 0;
-            int colcount = dt.Columns.Count;
+            Int32 rowIndex = 0;
+            Int32 colcount = dt.Columns.Count;
             MySqlParameter[] parList = new MySqlParameter[dt.Rows.Count];
 
             StringBuilder sb = new StringBuilder();
-            sb.AppendFormat("INSERT INTO " + tableName + "({0}) VALUES ", string.Join(",", filed));
+            sb.AppendFormat("INSERT INTO " + tableName + "({0}) VALUES ", String.Join(",", filed));
 
 
             foreach (DataRow dr in dt.Rows)
@@ -684,9 +684,9 @@ namespace CreateDBmodels.DAL
                 }
                 sb.Append("(");
 
-                for (int columnIndex = 0; columnIndex < colcount; columnIndex++)
+                for (Int32 columnIndex = 0; columnIndex < colcount; columnIndex++)
                 {
-                    string tmpPara = string.Format("@{0}{1}", filed[columnIndex], columnIndex);
+                    String tmpPara = String.Format("@{0}{1}", filed[columnIndex], columnIndex);
                     parList[rowIndex] = new MySqlParameter(tmpPara, dr[columnIndex]);
                     if (columnIndex != 0)
                     {
@@ -709,22 +709,22 @@ namespace CreateDBmodels.DAL
         /// <param name="tableName">表名</param>
         /// <param name="list">数据列表（每条记录为一个字典，字典的键为字段名，值为字段值</param>
         /// <returns>导入数据的条数</returns>
-        public int LoadDataInList(string tableName, List<Dictionary<string, object>> list)
+        public Int32 LoadDataInList(String tableName, List<Dictionary<String, Object>> list)
         {
             if (list == null || list.Count < 1 || list[0] == null)
             {
                 return 0;
             }
-            int rowIndex = 0;
-            int colcount = list[0].Count;
+            Int32 rowIndex = 0;
+            Int32 colcount = list[0].Count;
 
             MySqlParameter[] parList = new MySqlParameter[list.Count];
 
             StringBuilder sb = new StringBuilder();
-            sb.AppendFormat("INSERT INTO " + tableName + "({0}) VALUES ", string.Join(",", list[0].Keys));
+            sb.AppendFormat("INSERT INTO " + tableName + "({0}) VALUES ", String.Join(",", list[0].Keys));
 
 
-            foreach (Dictionary<string, object> dic in list)
+            foreach (Dictionary<String, Object> dic in list)
             {
                 if (rowIndex != 0)
                 {
@@ -732,10 +732,10 @@ namespace CreateDBmodels.DAL
                 }
                 sb.Append("(");
 
-                int columnIndex = 0;
+                Int32 columnIndex = 0;
                 foreach (var kvp in dic)
                 {
-                    string tmpPara = string.Format("@{0}{1}", kvp.Key, columnIndex);
+                    String tmpPara = String.Format("@{0}{1}", kvp.Key, columnIndex);
                     parList[rowIndex] = new MySqlParameter(tmpPara, kvp.Value);
 
                     if (columnIndex != 0)
@@ -763,7 +763,7 @@ namespace CreateDBmodels.DAL
         /// </summary>
         /// <param name="tableName">表名</param>
         /// <returns>表字段列表</returns>
-        public List<string> GetFieldsList(string tableName)
+        public List<String> GetFieldsList(String tableName)
         {
             try
             {
@@ -784,14 +784,14 @@ namespace CreateDBmodels.DAL
         /// <param name="keyField">主键字段名</param>
         /// <param name="keyValue">主键值</param>
         /// <returns>bool</returns>
-        public bool IsDuplicate(string tableName, string fieldName, string value, string keyField, string keyValue)
+        public Boolean IsDuplicate(String tableName, String fieldName, String value, String keyField, String keyValue)
         {
-            string sql = string.Format("SELECT COUNT(*) FROM {0} WHERE {1} != @{1} AND {2} = @{2}", tableName, keyField, fieldName);
+            String sql = String.Format("SELECT COUNT(*) FROM {0} WHERE {1} != @{1} AND {2} = @{2}", tableName, keyField, fieldName);
             MySqlParameter[] parList = new MySqlParameter[] {
                 new MySqlParameter("@" + keyField, keyValue),
                 new MySqlParameter("@" + fieldName, value)
             };
-            byte ret = Convert.ToByte(ExecuteScalarParams(sql, parList));
+            Byte ret = Convert.ToByte(ExecuteScalarParams(sql, parList));
             return ret > 0 ? true : false;
         }
 
@@ -803,15 +803,15 @@ namespace CreateDBmodels.DAL
         /// <param name="oldValue">如果是修改，则为旧值；如果是添加，则为string.Empty</param>
         /// <param name="newValue">新值</param>
         /// <returns>bool</returns>
-        public bool IsDuplicate(string tableName, string fieldName, string oldValue, string newValue)
+        public Boolean IsDuplicate(String tableName, String fieldName, String oldValue, String newValue)
         {
             if (oldValue == newValue)
             {
                 return false;
             }
-            string sql = string.Format("SELECT COUNT(*) FROM {0} WHERE {1} = @{1}", tableName, fieldName);
+            String sql = String.Format("SELECT COUNT(*) FROM {0} WHERE {1} = @{1}", tableName, fieldName);
             MySqlParameter[] parList = new MySqlParameter[] { new MySqlParameter("@" + fieldName, newValue) };
-            byte ret = Convert.ToByte(ExecuteScalarParams(sql, parList));
+            Byte ret = Convert.ToByte(ExecuteScalarParams(sql, parList));
             return ret > 0 ? true : false;
         }
 
@@ -824,23 +824,23 @@ namespace CreateDBmodels.DAL
         /// <param name="newValue">新值</param>
         /// <param name="condition">附加判断条件（不带WHERE，不带AND）</param>
         /// <returns>bool</returns>
-        public bool IsDuplicate(string tableName, string fieldName, string oldValue, string newValue, string[] conditions)
+        public Boolean IsDuplicate(String tableName, String fieldName, String oldValue, String newValue, String[] conditions)
         {
             if (oldValue == newValue)
             {
                 return false;
             }
-            string conondition = string.Empty;
-            foreach (string c in conditions)
+            String conondition = String.Empty;
+            foreach (String c in conditions)
             {
                 conondition += " AND " + c;
             }
 
-            string sql = string.Format("SELECT COUNT(*) FROM {0} WHERE {1} = @{1} {2}", tableName, fieldName, conondition);
+            String sql = String.Format("SELECT COUNT(*) FROM {0} WHERE {1} = @{1} {2}", tableName, fieldName, conondition);
             MySqlParameter[] parList = new MySqlParameter[] {
                 new MySqlParameter("@" + fieldName, newValue)
             };
-            byte ret = Convert.ToByte(ExecuteScalarParams(sql, parList));
+            Byte ret = Convert.ToByte(ExecuteScalarParams(sql, parList));
             return ret > 0 ? true : false;
         }
 
@@ -850,10 +850,10 @@ namespace CreateDBmodels.DAL
         /// <param name="tableName">表名</param>
         /// <param name="condition">判断条件（不带关键词WHERE）</param>
         /// <returns>bool</returns>
-        public bool IsDuplicate(string tableName, string condition)
+        public Boolean IsDuplicate(String tableName, String condition)
         {
-            string sql = string.Format("SELECT COUNT(*) FROM {0} WHERE {1}", tableName, condition);
-            byte ret = Convert.ToByte(ExecuteScalar(sql));
+            String sql = String.Format("SELECT COUNT(*) FROM {0} WHERE {1}", tableName, condition);
+            Byte ret = Convert.ToByte(ExecuteScalar(sql));
             return ret > 0 ? true : false;
         }
 
@@ -866,7 +866,7 @@ namespace CreateDBmodels.DAL
         /// 获取数据库连接串中涉及的数据库名,通过database关键字获取
         /// </summary>
         /// <returns></returns>
-        public string GetDBName()
+        public String GetDBName()
         {
             try
             {

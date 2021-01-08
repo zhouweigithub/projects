@@ -31,7 +31,7 @@ namespace CreateDBmodels.DAL
             Type t = typeof(TResult);
 
             //获得TResult 的所有的Public 属性 并找出TResult属性和DataTable的列名称相同的属性(PropertyInfo) 并加入到属性列表   
-            Array.ForEach<PropertyInfo>(t.GetProperties(), p => { if (dt.Columns.IndexOf(p.Name) != -1) propertyInfoList.Add(p); });
+            Array.ForEach<PropertyInfo>(t.GetProperties(), p => { if (dt.Columns.IndexOf(p.Name) != -1) { propertyInfoList.Add(p); } });
 
             //创建返回的集合  
             List<TResult> resultList = new List<TResult>();
@@ -41,7 +41,7 @@ namespace CreateDBmodels.DAL
                 TResult result = new TResult();
 
                 //找到对应的数据  并赋值  
-                propertyInfoList.ForEach(p => { if (row[p.Name] != DBNull.Value) p.SetValue(result, Convert.ChangeType(row[p.Name], p.PropertyType), null); });
+                propertyInfoList.ForEach(p => { if (row[p.Name] != DBNull.Value) { p.SetValue(result, Convert.ChangeType(row[p.Name], p.PropertyType), null); } });
 
                 //放入到返回的集合中.  
                 resultList.Add(result);

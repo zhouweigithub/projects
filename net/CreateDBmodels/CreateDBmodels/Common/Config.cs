@@ -16,7 +16,7 @@ namespace CreateDBmodels.Common
         /// </summary>
         /// <param name="key">键名</param>
         /// <returns>不会捕获异常</returns>
-        public static object GetConfigValue(string key)
+        public static Object GetConfigValue(String key)
         {
             return ConfigurationManager.AppSettings[key];
         }
@@ -26,7 +26,7 @@ namespace CreateDBmodels.Common
         /// </summary>
         /// <param name="key">键名</param>
         /// <returns>捕获异常,当未设置key时,返回空字符串</returns>
-        public static string GetConfigToString(string key)
+        public static String GetConfigToString(String key)
         {
             try
             {
@@ -43,12 +43,12 @@ namespace CreateDBmodels.Common
         /// </summary>
         /// <param name="key">键名</param>
         /// <returns>捕获异常,当未设置key 或key不是数字 时,返回 int 最小值</returns>
-        public static int GetConfigToInt(string key)
+        public static Int32 GetConfigToInt(String key)
         {
-            object obj = GetConfigValue(key);
+            Object obj = GetConfigValue(key);
             if (obj == null)
             {
-                return int.MinValue;
+                return Int32.MinValue;
             }
             else
             {
@@ -58,7 +58,7 @@ namespace CreateDBmodels.Common
                 }
                 catch
                 {
-                    return int.MinValue;
+                    return Int32.MinValue;
                 }
 
             }
@@ -69,12 +69,12 @@ namespace CreateDBmodels.Common
         /// </summary>
         /// <param name="key">键名</param>
         /// <returns>不会捕获异常,当未设置key 或key不是数字 时,返回 长整数 最小值</returns>
-        public static long GetConfigToLong(string key)
+        public static Int64 GetConfigToLong(String key)
         {
-            object obj = GetConfigValue(key);
+            Object obj = GetConfigValue(key);
             if (obj == null)
             {
-                return long.MinValue;
+                return Int64.MinValue;
             }
             else
             {
@@ -84,7 +84,7 @@ namespace CreateDBmodels.Common
                 }
                 catch
                 {
-                    return long.MinValue;
+                    return Int64.MinValue;
                 }
 
             }
@@ -95,9 +95,9 @@ namespace CreateDBmodels.Common
         /// </summary>
         /// <param name="key">键名</param>
         /// <returns>不会捕获异常</returns>
-        public static DateTime GetConfigToDateTime(string key)
+        public static DateTime GetConfigToDateTime(String key)
         {
-            object obj = GetConfigValue(key);
+            Object obj = GetConfigValue(key);
 
             if (obj == null)
             {
@@ -121,9 +121,9 @@ namespace CreateDBmodels.Common
         /// </summary>
         /// <param name="key">键名</param>
         /// <returns>不会捕获异常</returns>
-        public static bool GetConfigToBool(string key)
+        public static Boolean GetConfigToBool(String key)
         {
-            object obj = GetConfigValue(key);
+            Object obj = GetConfigValue(key);
             if (obj == null)
             {
                 return false;
@@ -144,11 +144,11 @@ namespace CreateDBmodels.Common
         /// <summary>
         /// 应用程序当前目录 包含最后一个目录分隔符号
         /// </summary>
-        public static string BaseDirectory
+        public static String BaseDirectory
         {
             get
             {
-                string path = System.AppDomain.CurrentDomain.BaseDirectory;
+                String path = System.AppDomain.CurrentDomain.BaseDirectory;
                 if (!path.EndsWith(System.IO.Path.DirectorySeparatorChar.ToString()))
                 {
                     path += System.IO.Path.DirectorySeparatorChar.ToString();
@@ -160,11 +160,11 @@ namespace CreateDBmodels.Common
         /// <summary>
         /// 临时目录（当前程序下的temp子目录） 包含最后一个目录分隔符号
         /// </summary>
-        public static string TempFilePath
+        public static String TempFilePath
         {
             get
             {
-                string path = BaseDirectory + "temp" + System.IO.Path.DirectorySeparatorChar;
+                String path = BaseDirectory + "temp" + System.IO.Path.DirectorySeparatorChar;
                 if (!System.IO.Directory.Exists(path))
                 {
                     try
@@ -173,7 +173,7 @@ namespace CreateDBmodels.Common
                     }
                     catch
                     {
-                        return string.Empty;
+                        return String.Empty;
                     }
                 }
 

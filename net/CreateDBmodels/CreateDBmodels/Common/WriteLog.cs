@@ -35,18 +35,18 @@
             Fatal = 4,
         }
 
-        private static string _logFilePath = Config.GetConfigToString("LogFilePath");
+        private static System.String _logFilePath = Config.GetConfigToString("LogFilePath");
         //private static int _logFileMaxSize = Config.GetConfigToInt("LogFileMaxSize");
         //private static int _logWriteLevel = WebConfigData.LogWriteLevel;
 
         /// <summary>
         /// 日志文件路径
         /// </summary>
-        public static string LogFilePath
+        public static System.String LogFilePath
         {
             get
             {
-                if (string.IsNullOrWhiteSpace(_logFilePath.ToString()))
+                if (System.String.IsNullOrWhiteSpace(_logFilePath.ToString()))
                 {
                     return Config.BaseDirectory;
                 }
@@ -62,10 +62,10 @@
         /// </summary>
         /// <param name="logLevel">日志等级</param>
         /// <param name="message">日志内容</param>
-        public static void Write(LogLevel logLevel, string message)
+        public static void Write(LogLevel logLevel, System.String message)
         {
-            Moqikaka.Util.Log.LogUtil.SetLogPath(LogFilePath + "Log");
-            Moqikaka.Util.Log.LogUtil.Write(message, (Moqikaka.Util.Log.LogType)logLevel);
+            Util.Log.LogUtil.SetLogPath(LogFilePath + "Log");
+            Util.Log.LogUtil.Write(message, (Util.Log.LogType)logLevel);
         }
     }
 }

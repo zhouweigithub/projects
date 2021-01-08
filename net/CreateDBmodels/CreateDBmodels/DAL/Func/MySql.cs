@@ -1,8 +1,8 @@
-﻿using MySql.Data.MySqlClient;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.Common;
+using MySql.Data.MySqlClient;
 
 namespace CreateDBmodels.DAL
 {
@@ -14,19 +14,19 @@ namespace CreateDBmodels.DAL
     /// </summary>
     public class Mysql : DBOperator
     {
-        private string _connString;
+        private String _connString;
         private MySqlConnection _conn;
         private MySqlTransaction _trans;
         /// <summary>
         /// 当前是否在存储过程中
         /// </summary>
-        protected bool _isInTransaction = false;
+        protected Boolean _isInTransaction = false;
 
         /// <summary>
         /// 构造函数
         /// </summary>
         /// <param name="strConnection"></param>
-        public Mysql(string strConnection)
+        public Mysql(String strConnection)
         {
             _connString = strConnection;
             _conn = new MySqlConnection(strConnection);
@@ -111,11 +111,13 @@ namespace CreateDBmodels.DAL
         /// </summary>
         /// <param name="command"></param>
         /// <returns></returns>
-        protected override DbCommand CreateCommand(string command)
+        protected override DbCommand CreateCommand(String command)
         {
-            MySqlCommand comm = new MySqlCommand();
-            comm.Connection = _conn;
-            comm.CommandText = command;
+            MySqlCommand comm = new MySqlCommand
+            {
+                Connection = _conn,
+                CommandText = command
+            };
 
             return comm;
         }
@@ -125,11 +127,13 @@ namespace CreateDBmodels.DAL
         /// </summary>
         /// <param name="command">SQL语句或命令</param>
         /// <param name="value">参数值列表</param>
-        protected override DbCommand CreateCommand(string command, params MySqlParameter[] commandParameters)
+        protected override DbCommand CreateCommand(String command, params MySqlParameter[] commandParameters)
         {
-            MySqlCommand comm = new MySqlCommand();
-            comm.Connection = _conn;
-            comm.CommandText = command;
+            MySqlCommand comm = new MySqlCommand
+            {
+                Connection = _conn,
+                CommandText = command
+            };
 
             if (commandParameters != null && commandParameters.Length > 0)
             {
@@ -145,7 +149,7 @@ namespace CreateDBmodels.DAL
         /// </summary>
         /// <param name="sql">SQL语句或命令</param>
         /// <returns>DataSet</returns>
-        public override DataSet ExecuteDataSet(string sql)
+        public override DataSet ExecuteDataSet(String sql)
         {
             MySqlCommand comm = (MySqlCommand)CreateCommand(sql);
 
@@ -166,14 +170,15 @@ namespace CreateDBmodels.DAL
         /// <param name="sql">SQL语句或命令</param>
         /// <param name="value">参数值列表</param>
         /// <returns>DataSet</returns>
-        public override DataSet ExecuteDataSetParams(string sql, params MySqlParameter[] commandParameters)
+        public override DataSet ExecuteDataSetParams(String sql, params MySqlParameter[] commandParameters)
         {
             MySqlCommand comm = (MySqlCommand)CreateCommand(sql, commandParameters);
 
             DataSet ds = new DataSet();
-            MySqlDataAdapter adapter = new MySqlDataAdapter();
-
-            adapter.SelectCommand = comm;
+            MySqlDataAdapter adapter = new MySqlDataAdapter
+            {
+                SelectCommand = comm
+            };
             adapter.Fill(ds);
             return ds;
         }
@@ -189,9 +194,9 @@ namespace CreateDBmodels.DAL
         /// <param name="pageSize">页面大小（单页记录条数）</param>
         /// <param name="pageIndex">当前页码（页号从1开始）</param>
         /// <returns></returns>
-        public override DataSet ExecuteDataSetPage(string sql, int pageSize, int pageIndex)
+        public override DataSet ExecuteDataSetPage(String sql, Int32 pageSize, Int32 pageIndex)
         {
-            string s = string.Format("SELECT * FROM ( {0} )t LIMIT {1} OFFSET {2}", sql, pageSize, (pageIndex - 1) * pageSize);
+            String s = String.Format("SELECT * FROM ( {0} )t LIMIT {1} OFFSET {2}", sql, pageSize, (pageIndex - 1) * pageSize);
             return ExecuteDataSet(s);
         }
 
@@ -203,9 +208,9 @@ namespace CreateDBmodels.DAL
         /// <param name="pageIndex">当前页码（页号从1开始）</param>
         /// <param name="value">参数列表</param>
         /// <returns></returns>
-        public override DataSet ExecuteDataSetPageParams(string sql, int pageSize, int pageIndex, params MySqlParameter[] commandParameters)
+        public override DataSet ExecuteDataSetPageParams(String sql, Int32 pageSize, Int32 pageIndex, params MySqlParameter[] commandParameters)
         {
-            string s = string.Format("SELECT * FROM ( {0} )t LIMIT {1} OFFSET {2}", sql, pageSize, (pageIndex - 1) * pageSize);
+            String s = String.Format("SELECT * FROM ( {0} )t LIMIT {1} OFFSET {2}", sql, pageSize, (pageIndex - 1) * pageSize);
             return ExecuteDataSetParams(s, commandParameters);
         }
 
@@ -222,28 +227,28 @@ namespace CreateDBmodels.DAL
         /// <param name="condition">筛选条件，可以为空，不带"WHERE"关键字</param>
         /// <param name="value">参数列表</param>
         /// <returns>DataTable</returns>
-        public override DataTable ExecuteDataTablePageParams(string tableName, string fields, string keyField, string groupBy, string orderBy, int pageSize, int pageIndex, string condition, params MySqlParameter[] commandParameters)
+        public override DataTable ExecuteDataTablePageParams(String tableName, String fields, String keyField, String groupBy, String orderBy, Int32 pageSize, Int32 pageIndex, String condition, params MySqlParameter[] commandParameters)
         {
             if (pageIndex > 0)
             {
                 pageIndex = pageIndex - 1;
             }
 
-            long offset = pageIndex * pageSize;
-            if (!string.IsNullOrEmpty(condition))
+            Int64 offset = pageIndex * pageSize;
+            if (!String.IsNullOrEmpty(condition))
             {
                 condition = " WHERE " + condition + " ";
             }
-            if (!string.IsNullOrEmpty(groupBy))
+            if (!String.IsNullOrEmpty(groupBy))
             {
                 groupBy = " GROUP BY " + groupBy + " ";
             }
-            if (!string.IsNullOrEmpty(orderBy))
+            if (!String.IsNullOrEmpty(orderBy))
             {
                 orderBy = " ORDER BY " + orderBy + " ";
             }
 
-            string sql = string.Format("SELECT * FROM ( SELECT {0} FROM {1} {2} {3} {4} )t LIMIT {5} OFFSET {6}", fields, tableName, condition, groupBy, orderBy, pageSize, offset);
+            String sql = String.Format("SELECT * FROM ( SELECT {0} FROM {1} {2} {3} {4} )t LIMIT {5} OFFSET {6}", fields, tableName, condition, groupBy, orderBy, pageSize, offset);
 
             return ExecuteDataTableParams(sql, commandParameters);
         }
@@ -258,9 +263,9 @@ namespace CreateDBmodels.DAL
         /// <param name="tableName">表名</param>
         /// <param name="fileName">本地文件名</param>
         /// <returns></returns>
-        public override int LoadDataInLocalFile(string tableName, string fileName)
+        public override Int32 LoadDataInLocalFile(String tableName, String fileName)
         {
-            string sql = string.Format("LOAD DATA LOCAL INFILE \"{0}\" INTO TABLE {1}", fileName.Replace('\\', '/'), tableName);
+            String sql = String.Format("LOAD DATA LOCAL INFILE \"{0}\" INTO TABLE {1}", fileName.Replace('\\', '/'), tableName);
             return ExecuteNonQuery(sql);
         }
 
@@ -271,9 +276,9 @@ namespace CreateDBmodels.DAL
         /// <param name="fileName">本地文件名</param>
         /// <param name="fieldsTerminated">字段列表</param>
         /// <returns></returns>
-        public override int LoadDataInLocalFile(string tableName, string fileName, List<string> fields)
+        public override Int32 LoadDataInLocalFile(String tableName, String fileName, List<String> fields)
         {
-            string sql = string.Format("LOAD DATA LOCAL INFILE \"{0}\" INTO TABLE {1} ({2})", fileName.Replace('\\', '/'), tableName, string.Join(",", fields));
+            String sql = String.Format("LOAD DATA LOCAL INFILE \"{0}\" INTO TABLE {1} ({2})", fileName.Replace('\\', '/'), tableName, String.Join(",", fields));
             return ExecuteNonQuery(sql);
         }
 
@@ -284,9 +289,9 @@ namespace CreateDBmodels.DAL
         /// <param name="fileName">本地文件名</param>
         /// <param name="fields">字段分隔符</param>
         /// <returns></returns>
-        public override int LoadDataInLocalFile(string tableName, string fileName, string fieldsTerminated)
+        public override Int32 LoadDataInLocalFile(String tableName, String fileName, String fieldsTerminated)
         {
-            string sql = string.Format("LOAD DATA LOCAL INFILE \"{0}\" INTO TABLE {1} FIELDS TERMINATED BY \"{2}\"", fileName.Replace('\\', '/'), tableName, fieldsTerminated);
+            String sql = String.Format("LOAD DATA LOCAL INFILE \"{0}\" INTO TABLE {1} FIELDS TERMINATED BY \"{2}\"", fileName.Replace('\\', '/'), tableName, fieldsTerminated);
             return ExecuteNonQuery(sql);
         }
 
@@ -298,9 +303,9 @@ namespace CreateDBmodels.DAL
         /// <param name="fields">字段列表</param>
         /// <param name="fieldsTerminated">字段分隔符</param>
         /// <returns></returns>
-        public override int LoadDataInLocalFile(string tableName, string fileName, List<string> fields, string fieldsTerminated)
+        public override Int32 LoadDataInLocalFile(String tableName, String fileName, List<String> fields, String fieldsTerminated)
         {
-            string sql = string.Format("LOAD DATA LOCAL INFILE \"{0}\" INTO TABLE {1} FIELDS TERMINATED BY \"{2}\" ({3})", fileName.Replace('\\', '/'), tableName, fieldsTerminated, string.Join(",", fields));
+            String sql = String.Format("LOAD DATA LOCAL INFILE \"{0}\" INTO TABLE {1} FIELDS TERMINATED BY \"{2}\" ({3})", fileName.Replace('\\', '/'), tableName, fieldsTerminated, String.Join(",", fields));
             return ExecuteNonQuery(sql);
         }
 
@@ -313,9 +318,9 @@ namespace CreateDBmodels.DAL
         /// <param name="fieldsTerminated">字段分隔符</param>
         /// <param name="linesTerminated">记录分隔符</param>
         /// <returns></returns>
-        public override int LoadDataInLocalFile(string tableName, string fileName, List<string> fields, string fieldsTerminated, string linesTerminated)
+        public override Int32 LoadDataInLocalFile(String tableName, String fileName, List<String> fields, String fieldsTerminated, String linesTerminated)
         {
-            string sql = string.Format("LOAD DATA LOCAL INFILE \"{0}\" INTO TABLE {1} FIELDS TERMINATED BY \"{2}\" LINES TERMINATED BY \"{3}\"({4})", fileName.Replace('\\', '/'), tableName, fieldsTerminated, linesTerminated, string.Join(",", fields));
+            String sql = String.Format("LOAD DATA LOCAL INFILE \"{0}\" INTO TABLE {1} FIELDS TERMINATED BY \"{2}\" LINES TERMINATED BY \"{3}\"({4})", fileName.Replace('\\', '/'), tableName, fieldsTerminated, linesTerminated, String.Join(",", fields));
             return ExecuteNonQuery(sql);
         }
 
@@ -328,11 +333,11 @@ namespace CreateDBmodels.DAL
         /// </summary>
         /// <param name="tableName">表名</param>
         /// <returns>表字段列表</returns>
-        public override List<string> GetFieldsList(string tableName)
+        public override List<String> GetFieldsList(String tableName)
         {
-            List<string> list = new List<string>();
+            List<String> list = new List<String>();
 
-            string sql = "SELECT * FROM " + tableName + " WHERE 1=0";
+            String sql = "SELECT * FROM " + tableName + " WHERE 1=0";
             DataTable dt = ExecuteDataTable(sql);
             if (dt != null)
             {
