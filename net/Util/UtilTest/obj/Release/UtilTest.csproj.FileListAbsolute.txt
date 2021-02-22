@@ -41,3 +41,18 @@ E:\wwxx\projects\net\Util\UtilTest\obj\Release\UtilTest.csproj.CoreCompileInputs
 E:\wwxx\projects\net\Util\UtilTest\obj\Release\UtilTest.csproj.CopyComplete
 E:\wwxx\projects\net\Util\UtilTest\obj\Release\Moqikakka.UtilTest.exe
 E:\wwxx\projects\net\Util\UtilTest\obj\Release\Moqikakka.UtilTest.pdb
+E:\F DISK\Git\projects\net\Util\UtilTest\bin\Release\Moqikakka.UtilTest.exe.config
+E:\F DISK\Git\projects\net\Util\UtilTest\bin\Release\Moqikakka.UtilTest.exe
+E:\F DISK\Git\projects\net\Util\UtilTest\bin\Release\Moqikakka.UtilTest.pdb
+E:\F DISK\Git\projects\net\Util\UtilTest\bin\Release\Util.dll
+E:\F DISK\Git\projects\net\Util\UtilTest\bin\Release\Ionic.Zip.dll
+E:\F DISK\Git\projects\net\Util\UtilTest\bin\Release\BouncyCastle.Crypto.dll
+E:\F DISK\Git\projects\net\Util\UtilTest\bin\Release\Newtonsoft.Json.dll
+E:\F DISK\Git\projects\net\Util\UtilTest\bin\Release\Util.pdb
+E:\F DISK\Git\projects\net\Util\UtilTest\bin\Release\Util.xml
+E:\F DISK\Git\projects\net\Util\UtilTest\bin\Release\Ionic.Zip.xml
+E:\F DISK\Git\projects\net\Util\UtilTest\obj\Release\UtilTest.csprojAssemblyReference.cache
+E:\F DISK\Git\projects\net\Util\UtilTest\obj\Release\UtilTest.csproj.CoreCompileInputs.cache
+E:\F DISK\Git\projects\net\Util\UtilTest\obj\Release\UtilTest.csproj.CopyComplete
+E:\F DISK\Git\projects\net\Util\UtilTest\obj\Release\Moqikakka.UtilTest.exe
+E:\F DISK\Git\projects\net\Util\UtilTest\obj\Release\Moqikakka.UtilTest.pdb

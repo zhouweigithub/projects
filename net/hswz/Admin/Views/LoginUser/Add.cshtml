@@ -1,0 +1,107 @@
+﻿@model Hswz.Model.MUser
+@{
+    Layout = null;
+
+    var lstStatus = new List<SelectListItem>();
+    lstStatus.Add(new SelectListItem() { Text = "正常", Value = "0" });
+    lstStatus.Add(new SelectListItem() { Text = "锁定", Value = "1" });
+
+}
+
+<div style="width:480px;margin-bottom:15px;margin-top:5px" id="DivShowFirst" class="modal-dialog well">
+    @using (Ajax.BeginForm("Add", null, new AjaxOptions() { HttpMethod = "Post", LoadingElementId = "div_loading_role", OnSuccess = "onDataMidff" }, new { @class = "form-horizontal" }))
+    {
+        <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+            <h3 style="text-align:left;font-weight:bolder;font-size:16px">用户信息管理【@ViewBag.Title】</h3>
+        </div>
+
+        <div class="modal-body" style="text-align:center">
+            @*角色信息*@
+            <div style="background-color: #eee;">
+                @*角色Id*@
+                @Html.HiddenFor(model => model.Id)
+                <input type="hidden" id="username_old" value="@Model.UserName" />
+                <table style="margin-bottom:5px;margin-top:5px;padding-top:10px;padding-bottom:10px;width:96%;text-align:left;height:35px;vertical-align:middle" class="table-bordered">
+                    <tr style="height:40px;vertical-align:middle">
+                        <th style="text-align: right; margin-right: 10px;width:100px;">用户名：</th>
+                        <td><input type="text" id="username" name="username" maxlength="100" value="@Model.UserName" style="width:220px;" class="form-control" /></td>
+                    </tr>
+                    <tr style="height:40px;vertical-align:middle">
+                        <th style="text-align: right; margin-left: 20px; margin-right: 10px; width: 100px;">密码：</th>
+                        <td><input type="text" id="password" name="password" maxlength="100" value="@Model.Password" style="width:220px;" class="form-control" /></td>
+                    </tr>
+                    <tr style="height:40px;vertical-align:middle">
+                        <th style="text-align: right; margin-right: 10px;width:100px;">姓名：</th>
+                        <td><input type="text" id="name" name="name" maxlength="100" value="@Model.Name" style="width:220px;" class="form-control" /></td>
+                    </tr>
+                    <tr style="height:40px;vertical-align:middle">
+                        <th style="text-align:right;margin-left:20px;margin-right:10px">状态：</th>
+                        <td>
+                            @Html.DropDownListFor(v => v.Status, lstStatus, new { style = "width:220px;", @class = "form-control" })
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <a href="#" class="btn btn-primary" data-dismiss="modal">关闭</a>
+            <button type="button" class="btn btn-primary" id="btnSave">保存</button>
+        </div>
+    }
+</div>
+<script>
+
+    //保存
+    $("#btnSave").on("click", function () {
+
+        debugger;
+
+        var strMsg = "";
+
+        if ($("#Id").val() == "" || $("#Id").val() == "0") {
+            if ($("#password").val().length < 8) {
+                strMsg += "密码长度不小于8位\r\n";
+            }
+        }
+        if ($("#username").val() == "") {
+            strMsg += "请输入用户名\r\n";
+        }
+        if ($("#name").val() == "") {
+            strMsg += "请输入姓名\r\n";
+        }
+
+        if (strMsg.length > 0) {
+            alert(strMsg);
+            return;
+        }
+        else {
+            var username = $("#username").val().trim();
+            var username_old = $("#username_old").val().trim();
+
+            if (username_old != "" && username_old == username) {
+                $("#btnSave").submit();
+                return;
+            }
+
+            $.ajax({
+                type: 'POST',
+                url: 'IsExsitUser',
+                data: { username: username },
+                success: function (data) {
+                    debugger;
+                    if (data == "False") {
+                        $("#btnSave").submit();
+                    }
+                    else {
+                        ShowAlert("已经存在该用户名，请输入其他用户名", "warning")
+                    }
+                },
+                error: function (error) {
+                    alert(GetText("请求异常,信息:") + error.status);
+      }
+            });
+        }
+    });
+
+</script>

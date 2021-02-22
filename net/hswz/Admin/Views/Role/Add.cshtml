@@ -1,0 +1,158 @@
+﻿@model Hswz.Model.RoleModel
+@{
+    Layout = null;
+    var roleRights = ViewBag.RoleRights as Hswz.Admin.Models.MenuModel;
+}
+<div style="height:600px; width:850px;margin-bottom:15px;margin-top:5px" id="DivShowFirst" class="modal-dialog well">
+    @using (Ajax.BeginForm("Add", "Role", null, new AjaxOptions() { HttpMethod = "Post", LoadingElementId = "div_loading_role", OnSuccess = (string)ViewBag.OnSuccess }, new { @class = "form-horizontal" }))
+    {
+        <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+            <h3 style="text-align:left;font-weight:bolder;font-size:16px">角色管理【@ViewBag.Title】</h3>
+        </div>
+
+        <div class="modal-body" style="text-align:center">
+            @*角色信息*@
+            <div style="background-color: #eee;">
+                @*角色Id*@
+                @Html.HiddenFor(model => model.Id)
+                @Html.HiddenFor(model => model.Page)
+                <table style="margin-bottom:5px;margin-top:5px;padding-top:10px;padding-bottom:10px;width:80%;text-align:left;height:35px;vertical-align:middle">
+                    <tr>
+                        <th style="text-align: right; margin-right: 10px">角色名称：</th>
+                        <td><input type="text" id="RolesName" name="RolesName" maxlength="100" class="form-control" style="width:200px;" value="@Model.RolesName" /></td>
+                        <th style="text-align:right;margin-left:20px;margin-right:10px">描述：</th>
+                        <td><input type="text" id="Remark" name="Remark" maxlength="100" value="@Model.Remark" class="form-control" style="width:200px;" /></td>
+                    </tr>
+                </table>
+            </div>
+            @*权限*@
+            <div style="margin-top: 10px; ">
+                @if (roleRights != null && roleRights.MenuGroupList != null && roleRights.MenuGroupList.Count > 0)
+                {
+                    var flag = true;
+                    var iTitleNo = 0;
+                    var hrefText = "";
+                    <ul id="myTab" class="nav nav-tabs">
+                        @foreach (var item in roleRights.MenuGroupList)
+                        {
+                            iTitleNo += 1;
+                            hrefText = "#Tab" + iTitleNo.ToString().PadLeft(3, '0');
+                            <li class="@(iTitleNo == 1?"active":"")">
+                                <a href="@hrefText" data-toggle="tab">
+                                    @item.text
+                                </a>
+                            </li>
+                        }
+                    </ul>
+                    flag = true;
+                    iTitleNo = 0;
+                    var divId = "";
+                    <div id="myTabContent" class="tab-content" style="height:220px; text-align:left">
+                        @foreach (var item in roleRights.MenuGroupList)
+                        {
+                            iTitleNo += 1;
+                            divId = "Tab" + iTitleNo.ToString().PadLeft(3, '0');
+
+                            //当前用户的菜单id列表
+                            string[] ModelPageList = new string[] { };
+                            if (!string.IsNullOrEmpty(Model.Page))
+                            {
+                                ModelPageList = Model.Page.Split(new string[] { "," }, StringSplitOptions.RemoveEmptyEntries);
+                            }
+
+
+                            if (flag)
+                            {
+                                flag = false;
+                                @MvcHtmlString.Create("<div class='tab-pane fade in active' id='" + divId + "' style='background-color: #eee;margin-top:5px;margin-bottom:5px;'>");
+                            }
+                            else
+                            {
+                                @MvcHtmlString.Create("<div id='" + divId + "' class='tab-pane fade' style='margin-bottom:10px'>");
+                            }
+                            <div style="margin-top:20px">
+                                <div style="float: left; width: 175px;padding-left:8px">
+                                    <label>
+                                        <input type="checkbox" value="" onclick="SelAllPage('@divId')" />全选
+                                    </label>
+                                </div>
+                                @foreach (var secondTile in item.MenuItemList)
+                                {
+                                    <div style="float: left; width: 175px; padding-left: 8px">
+                                        <label style="font-weight:normal;">
+                                            <input type="checkbox" value="@secondTile.ID" @(ModelPageList.Contains(secondTile.ID) ? "checked" : "") />@secondTile.Text
+                                        </label>
+                                    </div>
+                                }
+                            </div>
+                            @MvcHtmlString.Create("</div>");
+                        }
+                    </div>
+                }
+            </div>
+
+        </div>
+        <div class="modal-footer">
+            <a href="#" class="btn btn-primary" data-dismiss="modal">关闭</a>
+            <button type="button" class="btn btn-primary" id="btnSave"><i class="icon-save"></i>保存</button>
+        </div>
+
+    }
+</div>
+<script>
+    //选择所有的权限
+    function SelAllPage(tabid) {
+        var isChk = $("#" + tabid).find("input[type='checkbox']:eq(0)").prop("checked");
+        $("#" + tabid).find("input[type='checkbox']").not(":eq(0)").each(function () {
+            $(this).prop("checked", isChk);
+        })
+    }
+
+    //保存
+    $("#btnSave").on("click", function () {
+
+        if ($("#RolesName").val() == "") {
+            debugger;
+            alert("请输入角色名称");
+            return;
+        }
+
+        var pages = "";
+        //获取权限
+        $("#myTabContent input[type='checkbox']:checked").each(function () {
+            if ($(this).val() != '' && $(this).val() != '') {
+                pages += $(this).val() + ',';
+            }
+        });
+
+        if (pages.length == 0) {
+            alert('没有选择权限信息！');
+            return false;
+        }
+
+        $("#Page").val(pages);
+
+        //验证是否有角色信息
+        var roleid = $("#Id").val();
+        var RolesName = $("#RolesName").val();
+        $.ajax({
+            type: 'POST',
+            url: '/Role/IsExsitRole',
+            data: { Id: roleid, RolesName: RolesName },
+            success: function (data) {
+                debugger;
+                if (data == "True") {
+                    $("#btnSave").submit();
+                }
+                else {
+                    alert("已经存在该角色名，请输入其他角色名");
+                }
+            },
+            error: function (error) {
+                alert(GetText("请求异常,信息:") + error.status);
+            }
+        })
+    })
+
+</script>

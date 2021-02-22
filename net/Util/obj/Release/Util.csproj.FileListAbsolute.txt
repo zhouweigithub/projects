@@ -31,3 +31,14 @@ E:\wwxx\projects\net\Util\obj\Release\Util.csproj.CoreCompileInputs.cache
 E:\wwxx\projects\net\Util\obj\Release\Util.csproj.CopyComplete
 E:\wwxx\projects\net\Util\obj\Release\Util.dll
 E:\wwxx\projects\net\Util\obj\Release\Util.pdb
+E:\F DISK\Git\projects\net\Util\bin\Release\Util.XML
+E:\F DISK\Git\projects\net\Util\bin\Release\Util.dll
+E:\F DISK\Git\projects\net\Util\bin\Release\Util.pdb
+E:\F DISK\Git\projects\net\Util\bin\Release\BouncyCastle.Crypto.dll
+E:\F DISK\Git\projects\net\Util\bin\Release\Ionic.Zip.dll
+E:\F DISK\Git\projects\net\Util\bin\Release\newtonsoft.json.dll
+E:\F DISK\Git\projects\net\Util\bin\Release\Ionic.Zip.xml
+E:\F DISK\Git\projects\net\Util\obj\Release\Util.csproj.CoreCompileInputs.cache
+E:\F DISK\Git\projects\net\Util\obj\Release\Util.csproj.CopyComplete
+E:\F DISK\Git\projects\net\Util\obj\Release\Util.dll
+E:\F DISK\Git\projects\net\Util\obj\Release\Util.pdb

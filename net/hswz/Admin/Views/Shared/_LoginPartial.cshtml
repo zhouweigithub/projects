@@ -1,0 +1,20 @@
+﻿@if (Request.IsAuthenticated)
+{
+<span style="color:#f9f9f9;">你好, @User.Identity.Name &nbsp;</span>
+<li class="dropdown">
+    <a class="dropdown-toggle" data-toggle="dropdown" href="#" style="color:#f9f9f9;">
+        <i class="fa fa-user fa-fw"></i> <i class="fa fa-caret-down"></i>
+    </a>
+    <ul class="dropdown-menu dropdown-user">
+        <li>
+            @Ajax.ActionLink("修改密码", "ChangePassword", "LoginUser", new { }, new AjaxOptions() { HttpMethod = "Get", OnSuccess = "AddModalShow" }, new { })
+        </li>
+        <li class="divider"></li>
+        <li>
+            @MvcHtmlString.Create(Html.ActionLink("l1", "LoginOut", "Home").ToHtmlString().Replace("l1", "注销"))
+        </li>
+    </ul>
+    <!-- /.dropdown-user -->
+</li>
+
+}
