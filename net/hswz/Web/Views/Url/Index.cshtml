@@ -1,0 +1,145 @@
+﻿@{
+    Layout = null;
+}
+<!DOCTYPE html>
+<html>
+<head>
+    <title>网址导航</title>
+    <style>
+        div {
+            display: inline-block;
+        }
+
+        .container {
+            width: 500px;
+            padding: 10px;
+            display: block;
+            margin: auto;
+        }
+
+            .container > div {
+                width: 100%;
+                text-align: left;
+            }
+
+        .zan, .cai {
+            position: relative;
+            width: 30px;
+            font-size: 0.8em;
+            cursor: pointer;
+        }
+
+        .items > div {
+            display: block;
+        }
+
+        .progress {
+            width: 100px;
+            border: solid black thin;
+        }
+
+            .progress > div {
+                display: block;
+                background-color: black;
+                height: 10px;
+            }
+
+        .share {
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div></div>
+        <div class="items">
+            <div>
+                <span>www.baidu.com</span>
+                <div class="progress" title="连接时长"><div style="width:30%"></div></div>
+                <span class="zan" color="#f44336" txt="赞">赞(29)</span>
+                <span class="cai" color="#3f51b5" txt="踩">踩(981)</span>
+            </div>
+        </div>
+        <div class="share">
+            <input type="text" id="txt" width="80" />
+            <input type="submit" id="submit" maxlength="200" value="分享" />
+        </div>
+    </div>
+    <script src="http://libs.baidu.com/jquery/2.0.0/jquery.min.js"></script>
+    <script>
+        $(function () {
+            $('.zan').click(function () {
+                addFavor(this);
+            });
+            $('.cai').click(function () {
+                addFavor(this);
+            });
+            $("#submit").click(function () {
+                if (isValid()) {
+                    submit();
+                }
+            });
+        });
+        function addFavor(self) {
+            var fontSize = 15;
+            var top = 0;
+            var right = 0;
+            var opacity = 1;
+            var text = $(self).attr("txt");
+            var color = $(self).attr("color");
+
+            var tag = document.createElement('span');
+            $(tag).text(text);
+            $(tag).css('color', color);
+            $(tag).css('position', 'absolute');
+            $(tag).css('fontSize', fontSize + "px");
+            $(tag).css('right', right + "px");
+            $(tag).css('top', top + 'px');
+            $(tag).css('opacity', opacity);
+            $(self).append(tag);
+
+            var obj = setInterval(function () {
+                fontSize = fontSize + 5;
+                top = top - 10;
+                right = right - 10;
+                opacity = opacity - 0.1;
+
+                $(tag).css('fontSize', fontSize + "px");
+                $(tag).css('right', right + "px");
+                $(tag).css('top', top + 'px');
+                $(tag).css('opacity', opacity);
+                if (opacity < 0) {
+                    clearInterval(obj);
+                    $(tag).remove();
+                }
+            }, 40);
+        }
+
+        function isValid() {
+            var text = $("#txt").val().trim();
+
+            if (text == "") {
+                alert("请输入内容再提交");
+                return false;
+            }
+
+            return true;
+        }
+
+        function submit() {
+            $.ajax({
+                type: 'post',
+                url: "add",
+                data: { txt: $("#txt").val().trim() },
+                success: function (res) {
+                    alert(res.msg);
+                },
+                error: function (a, b, c) {
+                    alert("未知错误，请重试");
+                },
+            });
+        }
+    </script>
+</body>
+</html>
+
