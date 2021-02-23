@@ -7,8 +7,8 @@
     <ProjectGuid>{63807E98-4F05-4B3A-8BFD-7D75EB8A4ED0}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Moqikaka.Tmp.Model</RootNamespace>
-    <AssemblyName>Moqikaka.Tmp.Model</AssemblyName>
+    <RootNamespace>Hswz.Model</RootNamespace>
+    <AssemblyName>Hswz.Model</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <TargetFrameworkProfile />
@@ -67,6 +67,11 @@
     <Compile Include="Role\RoleModel.cs" />
     <Compile Include="TableSetting.cs" />
     <Compile Include="TArtical.cs" />
+    <Compile Include="Urls\url_connect_time.cs" />
+    <Compile Include="Urls\domains.cs" />
+    <Compile Include="Urls\resource.cs" />
+    <Compile Include="Urls\url_attention.cs" />
+    <Compile Include="Urls\urls.cs" />
     <Compile Include="wx\WXLoginResult.cs" />
   </ItemGroup>
   <ItemGroup />

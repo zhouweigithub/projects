@@ -7,8 +7,8 @@
     <ProjectGuid>{7EE488D5-4AF3-4EF5-B36D-170263267E07}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Moqikaka.Tmp.Common</RootNamespace>
-    <AssemblyName>Moqikaka.Tmp.Common</AssemblyName>
+    <RootNamespace>Hswz.Common</RootNamespace>
+    <AssemblyName>Hswz.Common</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <TargetFrameworkProfile />

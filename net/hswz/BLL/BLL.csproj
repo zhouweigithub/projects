@@ -7,8 +7,8 @@
     <ProjectGuid>{587B7667-664E-460B-8967-49ED7E162F90}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Moqikaka.Tmp.BLL</RootNamespace>
-    <AssemblyName>Moqikaka.Tmp.BLL</AssemblyName>
+    <RootNamespace>Hswz.BLL</RootNamespace>
+    <AssemblyName>Hswz.BLL</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <TargetFrameworkProfile />

@@ -1,12 +1,16 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.Xml.Serialization;
 
 namespace Hswz.Model
 {
 
+    [XmlRoot]
+    public class TableList
+    {
+        [XmlElement("TableSetting")]
+        public List<TableSetting> TableSettings { get; set; }
+    }
     /// <summary>
     /// 数据表信息
     /// </summary>
@@ -15,18 +19,17 @@ namespace Hswz.Model
         /// <summary>
         /// 表名
         /// </summary>
-        public string TableName { get; set; }
+        [XmlAttribute]
+        public String TableName { get; set; }
         /// <summary>
         /// 主键
         /// </summary>
-        public string KeyField { get; set; }
+        [XmlAttribute]
+        public String KeyField { get; set; }
         /// <summary>
         /// 排序字段
         /// </summary>
-        public string OrderbyFields { get; set; }
-        /// <summary>
-        /// 是否缓存数据
-        /// </summary>
-        public bool IsAddIntoCache { get; set; }
+        [XmlAttribute]
+        public String OrderbyFields { get; set; }
     }
 }

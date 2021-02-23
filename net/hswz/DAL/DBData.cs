@@ -1,10 +1,9 @@
-﻿using Hswz.Common;
-using Hswz.Model;
-using System;
+﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.Data;
+using Hswz.Common;
+using Hswz.Model;
+using MySql.Data.MySqlClient;
 
 namespace Hswz.DAL
 {
@@ -14,7 +13,7 @@ namespace Hswz.DAL
         /// <summary>
         /// 所有表实例的集合
         /// </summary>
-        private static Dictionary<string, BaseQuery> InstanceList = new Dictionary<string, BaseQuery>();
+        private static readonly Dictionary<String, BaseQuery> InstanceList = new Dictionary<String, BaseQuery>();
 
 
         private DBData()
@@ -32,11 +31,11 @@ namespace Hswz.DAL
         /// </summary>
         private static void CreateInstanceList()
         {
-            string path = System.IO.Path.Combine(Common.Const.RootWebPath, "App_Data\\TableSetting.xml");
-            List<Model.TableSetting> settings = XmlHelper.XmlDeserializeFromFile<List<Model.TableSetting>>(path, Encoding.UTF8);
-            foreach (Model.TableSetting item in settings)
+            String path = System.IO.Path.Combine(Const.RootWebPath, "App_Data\\TableSetting.xml");
+            var settings = XmlHelper.XmlDeserializeFromFile<TableList>(path, Const.DefaultEncoding);
+            foreach (var item in settings.TableSettings)
             {
-                InstanceList[item.TableName] = new BaseQuery(item.TableName, item.KeyField, item.OrderbyFields, item.IsAddIntoCache);
+                InstanceList[item.TableName] = new BaseQuery(item.TableName, item.KeyField, item.OrderbyFields);
             }
         }
 
@@ -45,7 +44,7 @@ namespace Hswz.DAL
         /// </summary>
         /// <param name="tableName">表名</param>
         /// <returns></returns>
-        public static BaseQuery GetInstance(string tableName)
+        public static BaseQuery GetInstance(String tableName)
         {
             if (InstanceList.ContainsKey(tableName))
             {
@@ -57,5 +56,80 @@ namespace Hswz.DAL
             }
         }
 
+        public static List<T> GetDataListBySql<T>(String sql) where T : class, new()
+        {
+            using (DBHelper db = new DBHelper())
+            {
+                var dt = db.ExecuteDataTable(sql);
+                if (dt != null && dt.Rows.Count > 0)
+                {
+                    return dt.ToList<T>();
+                }
+            }
+
+            return new List<T>();
+        }
+
+        public static List<T> GetDataListBySql<T>(String sql, params MySqlParameter[] paras) where T : class, new()
+        {
+            using (DBHelper db = new DBHelper())
+            {
+                var dt = db.ExecuteDataTableParams(sql, paras);
+                if (dt != null && dt.Rows.Count > 0)
+                {
+                    return dt.ToList<T>();
+                }
+            }
+
+            return new List<T>();
+        }
+
+        public static DataTable GetDataTableBySql(String sql)
+        {
+            using (DBHelper db = new DBHelper())
+            {
+                return db.ExecuteDataTable(sql);
+            }
+        }
+
+        public static DataTable GetDataTableBySql(String sql, params MySqlParameter[] paras)
+        {
+            using (DBHelper db = new DBHelper())
+            {
+                return db.ExecuteDataTableParams(sql, paras);
+            }
+        }
+
+        public static Boolean ExecuteScalarIntBySql(String sql)
+        {
+            using (DBHelper db = new DBHelper())
+            {
+                return db.ExecuteScalarIntParams(sql) > 0;
+            }
+        }
+
+        public static Boolean ExecuteScalarIntBySql(String sql, params MySqlParameter[] paras)
+        {
+            using (DBHelper db = new DBHelper())
+            {
+                return db.ExecuteScalarIntParams(sql, paras) > 0;
+            }
+        }
+
+        public static Boolean ExecuteNonQueryBySql(String sql)
+        {
+            using (DBHelper db = new DBHelper())
+            {
+                return db.ExecuteNonQuery(sql) > 0;
+            }
+        }
+
+        public static Boolean ExecuteNonQueryBySql(String sql, params MySqlParameter[] paras)
+        {
+            using (DBHelper db = new DBHelper())
+            {
+                return db.ExecuteNonQueryParams(sql, paras) > 0;
+            }
+        }
     }
 }

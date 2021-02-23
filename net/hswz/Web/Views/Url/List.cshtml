@@ -1,4 +1,5 @@
-﻿@{
+﻿@using Hswz.Model.Urls;
+@{
     Layout = null;
 }
 <!DOCTYPE html>
@@ -35,12 +36,12 @@
 
         .progress {
             width: 100px;
-            border: solid black thin;
+            border: solid green thin;
         }
 
             .progress > div {
                 display: block;
-                background-color: black;
+                background-color: green;
                 height: 10px;
             }
 
@@ -50,19 +51,27 @@
     </style>
 </head>
 <body>
+    @{
+        var datas = ViewBag.Datas as List<url_data>;
+    }
     <div class="container">
         <div></div>
         <div class="items">
-            <div>
-                <span>www.baidu.com</span>
-                <div class="progress" title="连接时长"><div style="width:30%"></div></div>
-                <span class="zan" color="#f44336" txt="赞">赞(29)</span>
-                <span class="cai" color="#3f51b5" txt="踩">踩(981)</span>
-            </div>
+            @{
+                foreach (var item in datas)
+                {
+                    <div>
+                        <span>@item.url</span>
+                        <div class="progress" title="连接时长"><div style="width:@item.percent"></div></div>
+                        <span class="zan" color="#f44336" txt="赞" onclick="did('zan',@item.id)">赞(@item.zan)</span>
+                        <span class="cai" color="#3f51b5" txt="踩" onclick="did('cai',@item.id)">踩(@item.cai)</span>
+                    </div>
+                }
+            }
         </div>
         <div class="share">
             <input type="text" id="txt" width="80" />
-            <input type="submit" id="submit" maxlength="200" value="分享" />
+            <input type="submit" id="share" maxlength="200" value="分享" />
         </div>
     </div>
     <script src="http://libs.baidu.com/jquery/2.0.0/jquery.min.js"></script>
@@ -74,12 +83,13 @@
             $('.cai').click(function () {
                 addFavor(this);
             });
-            $("#submit").click(function () {
+            $("#share").click(function () {
                 if (isValid()) {
-                    submit();
+                    share();
                 }
             });
         });
+
         function addFavor(self) {
             var fontSize = 15;
             var top = 0;
@@ -126,16 +136,31 @@
             return true;
         }
 
-        function submit() {
+        function share() {
             $.ajax({
                 type: 'post',
                 url: "add",
-                data: { txt: $("#txt").val().trim() },
+                data: { url: $("#txt").val().trim() },
                 success: function (res) {
                     alert(res.msg);
+                    document.location.reload();
                 },
                 error: function (a, b, c) {
                     alert("未知错误，请重试");
+                },
+            });
+        }
+
+        function did(type,id) {
+            $.ajax({
+                type: 'post',
+                url: type,
+                data: { urlId: id },
+                success: function (res) {
+                    document.location.reload();
+                },
+                error: function (a, b, c) {
+                    console.log(b);
                 },
             });
         }
