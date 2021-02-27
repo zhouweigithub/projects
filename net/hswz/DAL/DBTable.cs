@@ -17,6 +17,10 @@ namespace Hswz.DAL
         /// </summary>
         public static readonly String url_attention = "url_attention";
         /// <summary>
+        /// 网站点赞或踩的ip信息
+        /// </summary>
+        public static readonly String url_attention_ip = "url_attention_ip";
+        /// <summary>
         /// 网站域名连接时长表
         /// </summary>
         public static readonly String url_connect_time = "url_connect_time";

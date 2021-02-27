@@ -80,9 +80,24 @@ namespace Hswz.Model.Urls
         /// </summary>
         public Int32 connect_time { get; set; }
 
+        public String full_url
+        {
+            get
+            {
+                if (!url.StartsWith("http://") && !url.StartsWith("https://"))
+                {
+                    return "http://" + url;
+                }
+                else
+                {
+                    return url;
+                }
+            }
+        }
+
         /// <summary>
         /// 连接时长进度条显示长度
         /// </summary>
-        public String percent => (connect_time == 0 ? 0 : Math.Round((30 - connect_time) / 30d * 100)) + "%";
+        public String percent => (connect_time == 0 || connect_time >= 30 ? 0 : Math.Round((30 - connect_time) / 30d * 100)) + "%";
     }
 }

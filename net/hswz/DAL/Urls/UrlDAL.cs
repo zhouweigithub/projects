@@ -9,9 +9,12 @@ namespace Hswz.DAL
     /// </summary>
     public class UrlDAL
     {
-        private const String getDataList = @"SELECT a.id,a.url,IFNULL(b.zan,0)zan,IFNULL(b.cai,0)cai,IFNULL(c.connect_time,0)connect_time FROM url a
-LEFT JOIN url_attention b ON a.id=b.url_id
-LEFT JOIN (SELECT * FROM(SELECT * FROM url_connect_time ORDER BY crdate DESC)t GROUP BY url_id,crdate ) c ON a.id=c.url_id";
+        private const String getDataList = @"SELECT * FROM(
+    SELECT a.id,a.url,IFNULL(b.zan,0)zan,IFNULL(b.cai,0)cai,IFNULL(c.connect_time,30)connect_time FROM url a
+    LEFT JOIN url_attention b ON a.id=b.url_id
+    LEFT JOIN (SELECT * FROM(SELECT * FROM url_connect_time ORDER BY crdate DESC)t GROUP BY url_id) c ON a.id=c.url_id
+)t 
+ORDER BY connect_time ASC,zan DESC,id ASC";
 
         /// <summary>
         /// 取所有URL列表
@@ -22,15 +25,34 @@ LEFT JOIN (SELECT * FROM(SELECT * FROM url_connect_time ORDER BY crdate DESC)t G
             return DBData.GetDataListBySql<url_data>(getDataList);
         }
 
+        public static urls GetEntity(String url)
+        {
+            return DBData.GetInstance(DBTable.url).GetEntity<urls>($"url='{url}'");
+        }
+
         /// <summary>
         /// 点赞
         /// </summary>
         /// <param name="urlId"></param>
         /// <returns></returns>
-        public static Boolean Zan(Int32 urlId)
+        public static Boolean Zan(Int32 urlId, String ip)
         {
+            String type = "zan";
+            Boolean isExists = DBData.GetInstance(DBTable.url_attention_ip).GetCount($"url_id='{urlId}' and type='{type}' and ip='{ip}'") > 0;
+
+            if (isExists)
+            {
+                return false;
+            }
+
             var db = DBData.GetInstance(DBTable.url_attention);
             var model = db.GetEntityByKey<url_attention>(urlId);
+            DBData.GetInstance(DBTable.url_attention_ip).Add(new url_attention_ip()
+            {
+                url_id = urlId,
+                type = type,
+                ip = ip
+            });
 
             if (model == null)
             {   //添加数据
@@ -53,10 +75,24 @@ LEFT JOIN (SELECT * FROM(SELECT * FROM url_connect_time ORDER BY crdate DESC)t G
         /// </summary>
         /// <param name="urlId"></param>
         /// <returns></returns>
-        public static Boolean Cai(Int32 urlId)
+        public static Boolean Cai(Int32 urlId, String ip)
         {
+            String type = "cai";
+            Boolean isExists = DBData.GetInstance(DBTable.url_attention_ip).GetCount($"url_id='{urlId}' and type='{type}' and ip='{ip}'") > 0;
+
+            if (isExists)
+            {
+                return false;
+            }
+
             var db = DBData.GetInstance(DBTable.url_attention);
             var model = db.GetEntityByKey<url_attention>(urlId);
+            DBData.GetInstance(DBTable.url_attention_ip).Add(new url_attention_ip()
+            {
+                url_id = urlId,
+                type = type,
+                ip = ip
+            });
 
             if (model == null)
             {   //添加数据
@@ -82,6 +118,7 @@ LEFT JOIN (SELECT * FROM(SELECT * FROM url_connect_time ORDER BY crdate DESC)t G
         /// <returns></returns>
         public static Boolean Add(String url, String ip)
         {
+            url = CheckInput(url);
             var db = DBData.GetInstance(DBTable.url);
 
             return db.Add(new urls()
@@ -90,6 +127,16 @@ LEFT JOIN (SELECT * FROM(SELECT * FROM url_connect_time ORDER BY crdate DESC)t G
                 status = 0,
                 createIp = ip
             }) > 0;
+        }
+
+        public static void UpdaateTime(Int32 urlid, Int32 times)
+        {
+            DBData.GetInstance(DBTable.url_connect_time).Add(new url_connect_time()
+            {
+                url_id = urlid,
+                connect_time = times,
+                crdate = DateTime.Today
+            });
         }
 
         /// <summary>
@@ -104,5 +151,21 @@ LEFT JOIN (SELECT * FROM(SELECT * FROM url_connect_time ORDER BY crdate DESC)t G
             return db.Add(model) > 0;
         }
 
+        private static String CheckInput(String input)
+        {
+            List<String> forbidenString = new List<String>() { "script", "<", ">", "--" };
+
+            foreach (String item in forbidenString)
+            {
+                input = input.Replace(item, String.Empty);
+            }
+
+            if (input.Length > 150)
+            {
+                input = input.Substring(0, 150);
+            }
+
+            return input;
+        }
     }
 }

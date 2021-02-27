@@ -3,7 +3,7 @@ using Hswz.Model.Common;
 
 namespace Hswz.Model.Urls
 {
-    public class url_connect_time
+    public class url_attention_ip
     {
 
         /// <summary>
@@ -13,15 +13,15 @@ namespace Hswz.Model.Urls
         public Int32 url_id { get; set; }
 
         /// <summary>
-        /// 日期
+        /// 类型（zan/cai）
         /// </summary>
         [TableField]
-        public DateTime crdate { get; set; }
+        public String type { get; set; }
 
         /// <summary>
-        /// 连接时间（秒）
+        /// 赞或踩的ips
         /// </summary>
         [TableField]
-        public Int32 connect_time { get; set; }
+        public String ip { get; set; }
     }
 }
