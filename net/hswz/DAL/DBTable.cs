@@ -34,6 +34,10 @@ namespace Hswz.DAL
         /// 资源域名表
         /// </summary>
         public static readonly String domain = "domain";
+        /// <summary>
+        /// 已经搜索过的域名表
+        /// </summary>
+        public static readonly String tmp_searched_domains = "tmp_searched_domains";
 
 
         #region old

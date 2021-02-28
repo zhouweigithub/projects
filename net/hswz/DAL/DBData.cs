@@ -56,20 +56,6 @@ namespace Hswz.DAL
             }
         }
 
-        public static List<T> GetDataListBySql<T>(String sql) where T : class, new()
-        {
-            using (DBHelper db = new DBHelper())
-            {
-                var dt = db.ExecuteDataTable(sql);
-                if (dt != null && dt.Rows.Count > 0)
-                {
-                    return dt.ToList<T>();
-                }
-            }
-
-            return new List<T>();
-        }
-
         public static List<T> GetDataListBySql<T>(String sql, params MySqlParameter[] paras) where T : class, new()
         {
             using (DBHelper db = new DBHelper())
@@ -84,14 +70,6 @@ namespace Hswz.DAL
             return new List<T>();
         }
 
-        public static DataTable GetDataTableBySql(String sql)
-        {
-            using (DBHelper db = new DBHelper())
-            {
-                return db.ExecuteDataTable(sql);
-            }
-        }
-
         public static DataTable GetDataTableBySql(String sql, params MySqlParameter[] paras)
         {
             using (DBHelper db = new DBHelper())
@@ -100,27 +78,19 @@ namespace Hswz.DAL
             }
         }
 
-        public static Boolean ExecuteScalarIntBySql(String sql)
+        public static Int32 ExecuteScalarIntBySql(String sql, params MySqlParameter[] paras)
         {
             using (DBHelper db = new DBHelper())
             {
-                return db.ExecuteScalarIntParams(sql) > 0;
+                return db.ExecuteScalarIntParams(sql, paras);
             }
         }
 
-        public static Boolean ExecuteScalarIntBySql(String sql, params MySqlParameter[] paras)
+        public static Object ExecuteScalarBySql(String sql, params MySqlParameter[] paras)
         {
             using (DBHelper db = new DBHelper())
             {
-                return db.ExecuteScalarIntParams(sql, paras) > 0;
-            }
-        }
-
-        public static Boolean ExecuteNonQueryBySql(String sql)
-        {
-            using (DBHelper db = new DBHelper())
-            {
-                return db.ExecuteNonQuery(sql) > 0;
+                return db.ExecuteScalarParams(sql, paras);
             }
         }
 

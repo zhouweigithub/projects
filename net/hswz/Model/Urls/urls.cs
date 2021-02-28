@@ -47,10 +47,10 @@ namespace Hswz.Model.Urls
         [TableField]
         public String remark { get; set; }
 
-        /// <summary>
-        /// 创建时间
-        /// </summary>
-        public DateTime crtime { get; set; }
+        ///// <summary>
+        ///// 创建时间
+        ///// </summary>
+        //public DateTime crtime { get; set; }
     }
 
     public class url_data

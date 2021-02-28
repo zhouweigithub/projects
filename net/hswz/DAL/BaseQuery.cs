@@ -201,7 +201,7 @@ namespace Hswz.DAL
         /// <returns></returns>
         public Int32 UpdateByKey(List<String> fieldList, List<Object> valueList, Object keyValue)
         {
-            return Update(fieldList, valueList, KeyField + "=" + keyValue);
+            return Update(fieldList, valueList, KeyField + "='" + keyValue + "'");
         }
 
         /// <summary>

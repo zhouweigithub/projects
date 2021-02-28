@@ -15,6 +15,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Common", "Common\Common.csp
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Web", "Web\Web.csproj", "{2A330BE8-5112-47DC-BE7F-92B9A65F6E40}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ResourceSpider", "ResourceSpider\ResourceSpider.csproj", "{96D91693-96A8-4BF3-8129-2F446B3DC560}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -45,13 +47,17 @@ Global
 		{2A330BE8-5112-47DC-BE7F-92B9A65F6E40}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{2A330BE8-5112-47DC-BE7F-92B9A65F6E40}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{2A330BE8-5112-47DC-BE7F-92B9A65F6E40}.Release|Any CPU.Build.0 = Release|Any CPU
+		{96D91693-96A8-4BF3-8129-2F446B3DC560}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{96D91693-96A8-4BF3-8129-2F446B3DC560}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{96D91693-96A8-4BF3-8129-2F446B3DC560}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{96D91693-96A8-4BF3-8129-2F446B3DC560}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
-		SolutionGuid = {9FE08E48-F3DD-4F70-8A1A-FCB83562BB24}
 		VisualSVNWorkingCopyRoot = .
+		SolutionGuid = {9FE08E48-F3DD-4F70-8A1A-FCB83562BB24}
 	EndGlobalSection
 	GlobalSection(SubversionScc) = preSolution
 		Svn-Managed = True

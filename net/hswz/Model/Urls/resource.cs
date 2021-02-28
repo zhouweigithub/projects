@@ -41,9 +41,9 @@ namespace Hswz.Model.Urls
         [TableField]
         public Int32 click { get; set; }
 
-        /// <summary>
-        /// 创建时间
-        /// </summary>
-        public DateTime crtime { get; set; }
+        ///// <summary>
+        ///// 创建时间
+        ///// </summary>
+        //public DateTime crtime { get; set; }
     }
 }
