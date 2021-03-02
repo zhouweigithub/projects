@@ -12,7 +12,7 @@ namespace ResourceSpider
             LogUtil.SetLogPath(System.IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Log"));
             Const.RootWebPath = AppDomain.CurrentDomain.BaseDirectory;
 
-            SearchDomainBLL2.Start();
+            SearchDomainBLL3.Start();
         }
     }
 }

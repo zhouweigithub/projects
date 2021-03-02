@@ -19,8 +19,8 @@ namespace Hswz.Common
     {
 
         private static readonly String contentType = "application/x-www-form-urlencoded";
-        private static readonly String accept = "image/gif, image/x-xbitmap, image/jpeg, image/pjpeg, application/x-shockwave-flash, application/x-silverlight, application/vnd.ms-excel, application/vnd.ms-powerpoint, application/msword, application/x-ms-application, application/x-ms-xbap, application/vnd.ms-xpsdocument, application/xaml+xml, application/x-silverlight-2-b1, */*";
-        private static readonly String userAgent = "Mozilla/4.0 (compatible; MSIE 7.0; Windows NT 6.1; WOW64; Trident/5.0; SLCC2; .NET CLR 2.0.50727; .NET CLR 3.5.30729; .NET CLR 3.0.30729; Media Center PC 6.0; .NET4.0C; .NET4.0E; Zune 4.7; BOIE9;ZHCN)";
+        private static readonly String accept = "text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9";
+        private static readonly String userAgent = "Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/88.0.4324.190 Safari/537.36";
         public static String referer = "http://ui.ptlogin2.qq.com/cgi-bin/login?appid=1006102&s_url=http://id.qq.com/index.html";
 
         /// <summary>  
@@ -108,10 +108,13 @@ namespace Hswz.Common
                 httpWebRequest.Method = method;
                 httpWebRequest.ServicePoint.ConnectionLimit = Int32.MaxValue;
                 httpWebRequest.Timeout = 5 * 1000;
+                httpWebRequest.Headers.Add("accept-language", "zh-CN,zh;q=0.9");
+                httpWebRequest.Headers.Add("cache-control", "no-cache");
+                httpWebRequest.Headers.Add("cookie", "MUID=3C8A6C0D54226D41140363E3550C6C00; MUIDB=3C8A6C0D54226D41140363E3550C6C00; _EDGE_V=1; SRCHD=AF=NOFORM;");
 
                 if (!String.IsNullOrEmpty(paras))
                 {
-                    Byte[] dataArray = System.Text.Encoding.UTF8.GetBytes(paras);
+                    Byte[] dataArray = Encoding.UTF8.GetBytes(paras);
                     httpWebRequest.ContentLength = dataArray.Length;
                     var newStream = httpWebRequest.GetRequestStream();
                     newStream.Write(dataArray, 0, dataArray.Length);
