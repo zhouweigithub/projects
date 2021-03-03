@@ -6,4 +6,5 @@
 	<TableSetting TableName="url_connect_time" KeyField="" OrderbyFields="" />
 	<TableSetting TableName="domain" KeyField="domain" OrderbyFields="" />
 	<TableSetting TableName="resource" KeyField="id" OrderbyFields="id desc" />
+	<TableSetting TableName="url_click" KeyField="id" OrderbyFields="id desc" />
 </TableList>

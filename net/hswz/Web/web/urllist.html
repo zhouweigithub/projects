@@ -96,7 +96,7 @@
                         <th align="left" width="25%"></th>
                     </tr>
                     <tr v-for="(item,index) in datas" :key="index">
-                        <td align="left"><a :href="item.full_url" target="_blank">{{item.url}}</a></td>
+                        <td align="left"><a :href="item.full_url" target="_blank" @click="click(item)">{{item.url}}</a></td>
                         <td align="left"><div class="progress" title="连接时长"><div :style="'width:'+item.percent"></div></div></td>
                         <td align="left">
                             <span class="zan" color="#f44336" txt="赞" @click="did('zan',item)">赞({{item.zan}})</span>
@@ -179,7 +179,10 @@
                         that.msgboxShow = false;
                         that.msg = "";
                     }, 2000);
-                }
+                },
+                click: function (item) {
+                    axios.post("/url/click", { urlId: item.id });
+                },
             }
         });
     </script>

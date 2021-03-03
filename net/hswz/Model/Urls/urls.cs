@@ -33,7 +33,7 @@ namespace Hswz.Model.Urls
         /// 状态 0未启用 1已启用
         /// </summary>
         [TableField]
-        public Int32 status { get; set; }
+        public Int32 status { get; set; } = 0;
 
         /// <summary>
         /// 创建者的IP地址

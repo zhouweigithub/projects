@@ -45,6 +45,26 @@ namespace Web.Controllers
             });
         }
 
+        public String Click(Int32 urlId)
+        {
+            String ip = GetRequestIP();
+            url_click click = new url_click
+            {
+                url_id = urlId,
+                ip = ip,
+                crdate = DateTime.Today,
+                crtime = DateTime.Now
+            };
+            Boolean isOk = DBData.GetInstance(DBTable.url_click).Add(click) > 0;
+            return Util.Json.JsonUtil.Serialize(new
+            {
+                code = 0,
+                msg = "ok",
+                data = isOk,
+            });
+        }
+
+
         public String Add(String url)
         {
             url = url.ToLower();
@@ -92,7 +112,7 @@ namespace Web.Controllers
         {
             var dtStart = DateTime.Now;
             //测试访问地址
-            Boolean isOk = getUrl(url);
+            Boolean isOk = GetUrl(url);
             var dtEnd = DateTime.Now;
 
             Int32 time = 0;
@@ -119,7 +139,7 @@ namespace Web.Controllers
             return time;
         }
 
-        private Boolean getUrl(String url)
+        private Boolean GetUrl(String url)
         {
             try
             {
@@ -197,6 +217,13 @@ namespace Web.Controllers
                 });
 
             Util.Log.LogUtil.Write("测试结束", Util.Log.LogType.Debug);
+
+
+            Util.Log.LogUtil.Write("删除访问太慢的连接", Util.Log.LogType.Debug);
+
+            Int32 deleteCount = UrlDAL.DeleteTimeOutLinks();
+
+            Util.Log.LogUtil.Write($"删除成功 {deleteCount} 项", Util.Log.LogType.Debug);
         }
     }
 }

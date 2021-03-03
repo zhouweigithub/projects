@@ -19,6 +19,11 @@ namespace ResourceSpider
 
         private static readonly List<String> requestedUrls = new List<String>();
 
+        /// <summary>
+        /// 上次访问的url
+        /// </summary>
+        private static String lastRequestedUrl;
+
 
         static SearchDomainBLL3()
         {
@@ -46,96 +51,119 @@ namespace ResourceSpider
 
         private static void Do()
         {
-            //100页
-            String nextUrl = "https://cn.bing.com/search?q=%E5%81%B7%E6%8B%8D+%E5%90%8E%E5%85%A5+%E6%AC%A7%E7%BE%8E&go=%E6%90%9C%E7%B4%A2&qs=ds&form=QBRE";
+            String urlFormat = "/search?q={0}&qs=n&form=QBLH&sp=-1&pq={0}&sc=0-6&sk=&cvid=61EC7E49819341299A065C42F8AC67D0";
 
-            do
+            if (String.IsNullOrWhiteSpace(WebConfigData.SearchKeyWords))
             {
-                //Console.WriteLine($"开始检索第 {i} 页");
+                Console.WriteLine("未配置待检索关键字，自动退出");
+                return;
+            }
 
-                //Int32 page = i == 1 ? 1 : i == 2 ? 3 : 10 * (i - 2) + 3;
-                //String searchUrl = String.Format(urlFormat, page);
-                //nextUrl= HttpUtility.UrlDecode(nextUrl);
+            String[] keywordGroup = WebConfigData.SearchKeyWords.Split(new Char[] { ',' }, StringSplitOptions.RemoveEmptyEntries);
 
-                if (!nextUrl.StartsWith("http"))
+            foreach (String keyword in keywordGroup)
+            {
+                //找到有效资源的数量
+                Int32 okCount = 0;
+                String start = $"开始检索关键字：{keyword}";
+                Util.Log.LogUtil.Write(start, Util.Log.LogType.Debug);
+                Console.WriteLine(start);
+                String url = String.Format(urlFormat, keyword);
+                do
                 {
-                    nextUrl = "https://cn.bing.com" + nextUrl;
-                }
+                    url = url.Replace("&amp;", "&");
 
-                nextUrl = nextUrl.Replace("amp;", String.Empty);
-                Console.WriteLine();
-                Console.WriteLine(nextUrl);
-                String searchContent = HttpHelper.GetHtml(nextUrl, null, "get", String.Empty, out String _);
-
-                if (!String.IsNullOrWhiteSpace(searchContent))
-                {
-                    //搜索结果中的链接
-                    var urls = GetUrls(searchContent, urlReg);
-
-                    //遍历所有搜索到的链接
-                    foreach (String linkItem in urls)
+                    if (url == lastRequestedUrl)
                     {
-                        if (requestedUrls.Contains(linkItem))
-                        {
-                            continue;
-                        }
-
-                        if (linkItem.Contains("google.com"))
-                        {
-                            continue;
-                        }
-
-                        requestedUrls.Add(linkItem);
-
-                        //分别获取各个链接的内容
-                        var startTtime = DateTime.Now;
-                        Console.WriteLine($"connecting: {linkItem}");
-                        String linkContent = HttpHelper.GetHtml(linkItem, null, "get", String.Empty, out String _);
-                        var endTime = DateTime.Now;
-
-                        if (endTime.Subtract(startTtime).TotalSeconds > 10)
-                        {
-                            Util.Log.LogUtil.Write($"访问超时 {endTime.Subtract(startTtime).TotalSeconds}秒 {linkItem}", Util.Log.LogType.Fatal);
-                        }
-
-                        if (String.IsNullOrWhiteSpace(linkContent))
-                        {
-                            continue;
-                        }
-
-                        if (!ValidPage(linkContent))
-                        {
-                            continue;
-                        }
-
-                        try
-                        {
-                            Console.WriteLine($"找到一个目标链接: {linkItem}");
-
-                            DBData.GetInstance(DBTable.tmp_searched_domains).Add(new tmp_searched_domains()
-                            {
-                                domain = linkItem,
-                                status = 0
-                            });
-                        }
-                        catch (Exception e)
-                        {
-                            Util.Log.LogUtil.Write(e.Message, Util.Log.LogType.Error);
-                        }
+                        break;
+                    }
+                    else
+                    {
+                        lastRequestedUrl = url;
                     }
 
-                }
+                    Console.WriteLine();
+                    Console.WriteLine(url);
+                    String searchContent = HttpHelper.GetHtml("https://cn.bing.com" + url, null, "get", String.Empty, out String _);
 
-                nextUrl = String.Empty;
+                    if (!String.IsNullOrWhiteSpace(searchContent))
+                    {
+                        //搜索结果中的链接
+                        var urls = GetUrls(searchContent, urlReg);
 
-                //检索下一页地址
-                var tmpUrls = GetUrls(searchContent, nextUrlReg);
-                if (tmpUrls.Count > 0)
-                {
-                    nextUrl = tmpUrls[0];
-                }
+                        //遍历所有搜索到的链接
+                        foreach (String linkItem in urls)
+                        {
+                            if (requestedUrls.Contains(linkItem))
+                            {
+                                continue;
+                            }
 
-            } while (!String.IsNullOrWhiteSpace(nextUrl));
+                            if (linkItem.Contains("google.com"))
+                            {
+                                continue;
+                            }
+
+                            requestedUrls.Add(linkItem);
+
+                            //分别获取各个链接的内容
+                            var startTtime = DateTime.Now;
+                            Console.WriteLine($"connecting: {linkItem}");
+                            String linkContent = HttpHelper.GetHtml(linkItem, null, "get", String.Empty, out String _);
+                            var endTime = DateTime.Now;
+
+                            if (endTime.Subtract(startTtime).TotalSeconds > 10)
+                            {
+                                Util.Log.LogUtil.Write($"访问超时 {endTime.Subtract(startTtime).TotalSeconds}秒 {linkItem}", Util.Log.LogType.Fatal);
+                            }
+
+                            if (String.IsNullOrWhiteSpace(linkContent))
+                            {
+                                continue;
+                            }
+
+                            if (!ValidPage(linkContent))
+                            {
+                                continue;
+                            }
+
+                            try
+                            {
+                                okCount++;
+
+                                Console.WriteLine($"找到一个目标链接: {linkItem}");
+
+                                DBData.GetInstance(DBTable.url).Add(new urls()
+                                {
+                                    url = linkItem,
+                                    status = 0,
+                                });
+
+                                //查找当前页面中的外链，再检查各个外链是否正常
+                            }
+                            catch (Exception e)
+                            {
+                                Util.Log.LogUtil.Write(e.Message, Util.Log.LogType.Error);
+                            }
+                        }
+
+                    }
+
+                    url = String.Empty;
+
+                    //检索下一页地址
+                    var tmpUrls = GetUrls(searchContent, nextUrlReg);
+                    if (tmpUrls.Count > 0)
+                    {
+                        url = tmpUrls[0];
+                    }
+
+                } while (!String.IsNullOrWhiteSpace(url));
+
+                String msg = $"关键字【{keyword}】成功发现有效资源【{okCount}】个";
+                Console.WriteLine(msg);
+                Util.Log.LogUtil.Write(msg, Util.Log.LogType.Info);
+            }
         }
 
 

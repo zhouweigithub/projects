@@ -94,11 +94,11 @@ namespace Hswz.DAL
             }
         }
 
-        public static Boolean ExecuteNonQueryBySql(String sql, params MySqlParameter[] paras)
+        public static Int32 ExecuteNonQueryBySql(String sql, params MySqlParameter[] paras)
         {
             using (DBHelper db = new DBHelper())
             {
-                return db.ExecuteNonQueryParams(sql, paras) > 0;
+                return db.ExecuteNonQueryParams(sql, paras);
             }
         }
     }

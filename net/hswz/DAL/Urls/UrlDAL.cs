@@ -9,12 +9,24 @@ namespace Hswz.DAL
     /// </summary>
     public class UrlDAL
     {
-        private const String getDataList = @"SELECT * FROM(
+        private const String getDataList = @"
+SELECT * FROM(
     SELECT a.id,a.url,IFNULL(b.zan,0)zan,IFNULL(b.cai,0)cai,IFNULL(c.connect_time,30)connect_time FROM url a
     LEFT JOIN url_attention b ON a.id=b.url_id
     LEFT JOIN (SELECT * FROM(SELECT * FROM url_connect_time ORDER BY crdate DESC)t GROUP BY url_id) c ON a.id=c.url_id
 )t 
 ORDER BY connect_time ASC,zan DESC,id ASC";
+
+        /// <summary>
+        /// 删除5天内累计访问超过150秒的项，每天默认访问最长时间为30秒
+        /// </summary>
+        private const String deleteTimeOutLinks = @"
+DELETE FROM url_connect_time WHERE url_id IN(
+	SELECT DISTINCT url_id FROM(
+        -- b表中的每一项在a表中都能找到比其crdate小的项
+		SELECT url_id,SUM(connect_time)connect_timeSum FROM url_connect_time a WHERE (SELECT COUNT(1) FROM url_connect_time b WHERE a.url_id=b.url_id AND b.crdate>a.crdate)<5 GROUP BY url_id HAVING connect_timeSum>=150
+	)t
+)";
 
         /// <summary>
         /// 取所有URL列表
@@ -166,6 +178,14 @@ ORDER BY connect_time ASC,zan DESC,id ASC";
             }
 
             return input;
+        }
+
+        /// <summary>
+        /// 删除访问时间太慢的项
+        /// </summary>
+        public static Int32 DeleteTimeOutLinks()
+        {
+            return DBData.ExecuteNonQueryBySql(deleteTimeOutLinks);
         }
     }
 }

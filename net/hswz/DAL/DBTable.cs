@@ -24,6 +24,10 @@ namespace Hswz.DAL
         /// 网站域名连接时长表
         /// </summary>
         public static readonly String url_connect_time = "url_connect_time";
+        /// <summary>
+        /// 用户点击信息
+        /// </summary>
+        public static readonly String url_click = "url_click";
 
 
         /// <summary>

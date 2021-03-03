@@ -16,27 +16,33 @@ namespace Hswz.Common
         /// <summary>
         /// 数据库类型：mysql
         /// </summary>
-        public static readonly string DataBaseType;
+        public static readonly String DataBaseType;
         /// <summary>
         /// 主数据库连接字符串
         /// </summary>
-        public static readonly string ConnString;
+        public static readonly String ConnString;
         /// <summary>
         /// JS版本号
         /// </summary>
-        public static readonly string Ver;
+        public static readonly String Ver;
         /// <summary>
         /// 显示特殊页面的用户名集
         /// </summary>
-        public static readonly string ExtraUserNames;
+        public static readonly String ExtraUserNames;
         /// <summary>
         /// 特殊页面的ID集
         /// </summary>
-        public static readonly string ExtraPageMenuIds;
+        public static readonly String ExtraPageMenuIds;
         /// <summary>
         /// 不需要验证手机号就能登录的ip
         /// </summary>
-        public static readonly string IgnoreSmsCodeIp;
+        public static readonly String IgnoreSmsCodeIp;
+
+        /// <summary>
+        /// 检索的关键字信息用空格分隔，每组用逗号分隔
+        /// </summary>
+        public static readonly String SearchKeyWords;
+
 
         static WebConfigData()
         {
@@ -48,6 +54,7 @@ namespace Hswz.Common
                 ExtraUserNames = Config.GetConfigToString("ExtraUserNames");
                 ExtraPageMenuIds = Config.GetConfigToString("ExtraPageMenuIds");
                 IgnoreSmsCodeIp = Config.GetConfigToString("IgnoreSmsCodeIp");
+                SearchKeyWords = Config.GetConfigToString("SearchKeyWords");
             }
             catch (Exception e)
             {
