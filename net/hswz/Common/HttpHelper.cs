@@ -85,8 +85,11 @@ namespace Hswz.Common
         public static String GetHtml(String url, CookieContainer cookieContainer, String method, String paras, out String responseCookie, String contenttype = "application/x-www-form-urlencoded", String refer = "")
         {
             responseCookie = String.Empty;
+
             HttpWebRequest httpWebRequest = null;
             HttpWebResponse httpWebResponse = null;
+            Stream responseStream = null;
+            StreamReader streamReader = null;
             try
             {
                 httpWebRequest = (HttpWebRequest)WebRequest.Create(url);
@@ -103,6 +106,7 @@ namespace Hswz.Common
                     httpWebRequest.Referer = refer;
                 }
 
+                httpWebRequest.KeepAlive = false;
                 httpWebRequest.Accept = accept;
                 httpWebRequest.UserAgent = userAgent;
                 httpWebRequest.Method = method;
@@ -122,8 +126,8 @@ namespace Hswz.Common
                 }
 
                 httpWebResponse = (HttpWebResponse)httpWebRequest.GetResponse();
-                var responseStream = httpWebResponse.GetResponseStream();
-                StreamReader streamReader = new StreamReader(responseStream, Encoding.UTF8);
+                responseStream = httpWebResponse.GetResponseStream();
+                streamReader = new StreamReader(responseStream, Encoding.UTF8);
                 String tmpHtml = streamReader.ReadToEnd();
                 responseCookie = httpWebResponse.Headers["Set-Cookie"];
                 if (cookieContainer != null)
@@ -131,16 +135,33 @@ namespace Hswz.Common
                     cookieContainer.Add(httpWebResponse.Cookies);
                 }
 
-                streamReader.Close();
-
-                httpWebRequest.Abort();
-                httpWebResponse.Close();
-
                 return tmpHtml;
             }
             catch (Exception)
             {
                 return String.Empty;
+            }
+            finally
+            {
+                if (streamReader != null)
+                {
+                    streamReader.Close();
+                }
+
+                if (responseStream != null)
+                {
+                    responseStream.Close();
+                }
+
+                if (httpWebResponse != null)
+                {
+                    httpWebResponse.Close();
+                }
+
+                if (httpWebRequest != null)
+                {
+                    httpWebRequest.Abort();
+                }
             }
         }
 
