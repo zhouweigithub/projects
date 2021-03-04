@@ -17,7 +17,10 @@ namespace Hswz.Common
 
     public class HttpHelper
     {
-
+        /// <summary>
+        /// 超时时间（秒）
+        /// </summary>
+        private const Int32 timeout = 5;
         private static readonly String contentType = "application/x-www-form-urlencoded";
         private static readonly String accept = "text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9";
         private static readonly String userAgent = "Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/88.0.4324.190 Safari/537.36";
@@ -106,12 +109,13 @@ namespace Hswz.Common
                     httpWebRequest.Referer = refer;
                 }
 
+                httpWebRequest.Timeout = timeout * 1000;
+                httpWebRequest.ReadWriteTimeout = timeout * 1000;
                 httpWebRequest.KeepAlive = false;
                 httpWebRequest.Accept = accept;
                 httpWebRequest.UserAgent = userAgent;
                 httpWebRequest.Method = method;
                 httpWebRequest.ServicePoint.ConnectionLimit = Int32.MaxValue;
-                httpWebRequest.Timeout = 5 * 1000;
                 httpWebRequest.Headers.Add("accept-language", "zh-CN,zh;q=0.9");
                 httpWebRequest.Headers.Add("cache-control", "no-cache");
                 httpWebRequest.Headers.Add("cookie", "MUID=3C8A6C0D54226D41140363E3550C6C00; MUIDB=3C8A6C0D54226D41140363E3550C6C00; _EDGE_V=1; SRCHD=AF=NOFORM;");
@@ -129,11 +133,11 @@ namespace Hswz.Common
                 responseStream = httpWebResponse.GetResponseStream();
                 streamReader = new StreamReader(responseStream, Encoding.UTF8);
                 String tmpHtml = streamReader.ReadToEnd();
-                responseCookie = httpWebResponse.Headers["Set-Cookie"];
-                if (cookieContainer != null)
-                {
-                    cookieContainer.Add(httpWebResponse.Cookies);
-                }
+                //responseCookie = httpWebResponse.Headers["Set-Cookie"];
+                //if (cookieContainer != null)
+                //{
+                //    cookieContainer.Add(httpWebResponse.Cookies);
+                //}
 
                 return tmpHtml;
             }
@@ -162,6 +166,8 @@ namespace Hswz.Common
                 {
                     httpWebRequest.Abort();
                 }
+
+                GC.Collect();
             }
         }
 

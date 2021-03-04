@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Text.RegularExpressions;
 using Hswz.Common;
 using Hswz.DAL;
@@ -28,20 +27,52 @@ namespace ResourceSpider
         private static readonly Regex linkReg = new Regex(linkRegString);
 
         private const String userAgent = "Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/88.0.4324.190 Safari/537.36";
+
         private static readonly List<String> httpTypes = new List<String>() { "http://", "https://" };
 
-        private const String urlFormat = "https://cn.bing.com/search?q=偷拍+后入+欧美&qs=n&sc=0-8&sk=&cvid=11B6&first={0}";
-
+        /// <summary>
+        /// 已经请求过的链接集
+        /// </summary>
         private static readonly List<String> requestedUrls = new List<String>();
 
         /// <summary>
-        /// 上次访问的url
+        /// 数据库已经存在的链接
         /// </summary>
-        private static String lastRequestedUrl;
+        private static readonly List<String> existsUrls = new List<String>();
+
+        /// <summary>
+        /// 已经访问过的域名
+        /// </summary>
+        private static readonly List<String> existedDomains = new List<String>();
+
+        /// <summary>
+        /// 已经访问过的搜索链接md5值，防止重复搜索
+        /// </summary>
+        private static readonly List<String> requestedSearchUrl = new List<String>();
 
 
         static SearchDomainBLL3()
         {
+            var datas = DBData.GetInstance(DBTable.url).GetList<urls>();
+            foreach (var item in datas)
+            {
+                String url = item.url;
+                if (!url.StartsWith("http"))
+                {
+                    url = "http://" + url;
+                }
+
+                String urlMd5 = Util.Security.MD5Util.MD5(url);
+                existsUrls.Add(urlMd5);
+
+                if (Uri.TryCreate(url, UriKind.Absolute, out var uri))
+                {
+                    if (uri.IsAbsoluteUri)
+                    {
+                        existedDomains.Add(uri.Host);
+                    }
+                }
+            }
         }
 
         public static void Test()
@@ -57,11 +88,12 @@ namespace ResourceSpider
 
         public static void Start()
         {
-            Console.WriteLine("start");
+            WriteLog("start", Util.Log.LogType.Info);
 
             Do();
 
-            Console.WriteLine("end");
+            WriteLog("end", Util.Log.LogType.Info);
+            Console.ReadKey();
         }
 
         private static void Do()
@@ -70,7 +102,7 @@ namespace ResourceSpider
 
             if (String.IsNullOrWhiteSpace(WebConfigData.SearchKeyWords))
             {
-                Console.WriteLine("未配置待检索关键字，自动退出");
+                WriteLog("未配置待检索关键字，自动退出", Util.Log.LogType.Info);
                 return;
             }
 
@@ -81,24 +113,24 @@ namespace ResourceSpider
                 //找到有效资源的数量
                 Int32 okCount = 0;
                 String start = $"开始检索关键字：{keyword}";
-                Util.Log.LogUtil.Write(start, Util.Log.LogType.Debug);
-                Console.WriteLine(start);
+                WriteLog(start, Util.Log.LogType.Info);
                 String url = String.Format(urlFormat, keyword);
                 do
                 {
                     url = url.Replace("&amp;", "&");
 
-                    if (url == lastRequestedUrl)
+                    String urlMd5 = Util.Security.MD5Util.MD5(url);
+                    if (requestedSearchUrl.Contains(urlMd5))
                     {
                         break;
                     }
                     else
                     {
-                        lastRequestedUrl = url;
+                        requestedSearchUrl.Add(urlMd5);
                     }
 
                     Console.WriteLine();
-                    Console.WriteLine(url);
+                    WriteLog(url, Util.Log.LogType.Info);
                     String searchContent = HttpHelper.GetHtml("https://cn.bing.com" + url, null, "get", String.Empty, out String _);
 
                     if (!String.IsNullOrWhiteSpace(searchContent))
@@ -126,8 +158,7 @@ namespace ResourceSpider
                 } while (!String.IsNullOrWhiteSpace(url));
 
                 String msg = $"关键字【{keyword}】成功发现有效资源【{okCount}】个";
-                Console.WriteLine(msg);
-                Util.Log.LogUtil.Write(msg, Util.Log.LogType.Info);
+                WriteLog(msg, Util.Log.LogType.Info);
             }
         }
 
@@ -139,21 +170,46 @@ namespace ResourceSpider
         /// <param name="deep">链接深度，如果为1，则继续检测页面里的链接，为2则不再检测页面上的链接</param>
         private static void DealLink(String linkItem, ref Int32 okCount, Int32 deep)
         {
-            if (requestedUrls.Contains(linkItem))
-            {
-                return;
-            }
+            linkItem = linkItem.Replace("&amp;", "&");
 
             if (linkItem.Contains("google.com"))
             {
                 return;
             }
 
-            requestedUrls.Add(linkItem);
+            String urlMd5 = Util.Security.MD5Util.MD5(linkItem);
+
+            if (existsUrls.Contains(urlMd5))
+            {
+                return;
+            }
+
+            if (requestedUrls.Contains(urlMd5))
+            {
+                return;
+            }
+
+            requestedUrls.Add(urlMd5);
+
+            if (Uri.TryCreate(linkItem, UriKind.Absolute, out var tmpUri))
+            {
+                if (!tmpUri.IsAbsoluteUri)
+                {
+                    return;
+                }
+                else if (existedDomains.Contains(tmpUri.Host))
+                {
+                    return;
+                }
+                else
+                {
+                    existedDomains.Add(tmpUri.Host);
+                }
+            }
 
             //分别获取各个链接的内容
             var startTtime = DateTime.Now;
-            Console.WriteLine($"connecting: {linkItem}");
+            WriteLog($"connecting: {linkItem}", Util.Log.LogType.Info);
             String linkContent = HttpHelper.GetHtml(linkItem, null, "get", String.Empty, out String _);
             var endTime = DateTime.Now;
 
@@ -175,8 +231,7 @@ namespace ResourceSpider
             try
             {
                 okCount++;
-
-                Console.WriteLine($"找到一个目标链接: {linkItem}");
+                WriteLog($"找到一个目标链接: {linkItem}", Util.Log.LogType.Info);
 
                 DBData.GetInstance(DBTable.url).Add(new urls()
                 {
@@ -196,9 +251,9 @@ namespace ResourceSpider
                     {
                         if (IsUrlValid(url))
                         {
-                            if (Uri.TryCreate(url, UriKind.RelativeOrAbsolute, out var tmpUri))
+                            if (Uri.TryCreate(url, UriKind.RelativeOrAbsolute, out var newUri))
                             {
-                                if (tmpUri.IsAbsoluteUri && baseUri.Host != tmpUri.Host)
+                                if (newUri.IsAbsoluteUri && baseUri.Host != newUri.Host)
                                 {   //不是当前页面的外链
                                     DealLink(url, ref okCount, 2);
                                 }
@@ -209,7 +264,7 @@ namespace ResourceSpider
             }
             catch (Exception e)
             {
-                Util.Log.LogUtil.Write(e.Message, Util.Log.LogType.Error);
+                WriteLog(e.Message, Util.Log.LogType.Error);
             }
 
         }
@@ -265,18 +320,25 @@ namespace ResourceSpider
         /// <returns></returns>
         private static Boolean IsUrlValid(String link)
         {
-            Int32 httpIndex = link.IndexOf("//");
-            String tmpType = httpIndex >= 0 ? link.Substring(0, httpIndex) + "//" : String.Empty;
-            if ((!String.IsNullOrWhiteSpace(tmpType) && !httpTypes.Any(a => a == tmpType))
-                || link.StartsWith("/") || link.StartsWith("#") || link.StartsWith("javascript:") || link.StartsWith("tell:") || link.StartsWith("mailto:"))
-            {
-                return false;
-            }
-            else
-            {
-                return true;
-            }
+            //Int32 httpIndex = link.IndexOf("//");
+            //String tmpType = httpIndex >= 0 ? link.Substring(0, httpIndex) + "//" : String.Empty;
+            //if ((!String.IsNullOrWhiteSpace(tmpType) && !httpTypes.Any(a => a == tmpType))
+            //    || link.StartsWith("/") || link.StartsWith("#") || link.StartsWith("javascript:") || link.StartsWith("tell:") || link.StartsWith("mailto:"))
+            //{
+            //    return false;
+            //}
+            //else
+            //{
+            //    return true;
+            //}
+
+            return link.StartsWith("http");
         }
 
+        private static void WriteLog(String msg, Util.Log.LogType logType)
+        {
+            Console.WriteLine(msg);
+            Util.Log.LogUtil.Write(msg, logType);
+        }
     }
 }
