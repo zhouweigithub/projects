@@ -82,10 +82,14 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="GetItems\GetItemBase.cs" />
     <Compile Include="SearchBLL.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="SearchGoogleBase.cs" />
     <Compile Include="SearchDomainBase.cs" />
+    <Compile Include="SearchGoogleWithFileBLL.cs" />
+    <Compile Include="SearchGoogleWithDbBLL.cs" />
     <Compile Include="SearchUrlWithFileBLL.cs" />
     <Compile Include="SearchUrlWithDbBLL.cs" />
     <Compile Include="SearchDomainBLL2.cs" />

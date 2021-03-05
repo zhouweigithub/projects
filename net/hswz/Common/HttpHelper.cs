@@ -79,12 +79,17 @@ namespace Hswz.Common
 
         }
 
-        /// <summary>  
-        /// 获取HTML  
-        /// </summary>  
-        /// <param name="url"></param>  
-        /// <param name="cookieContainer"></param>  
-        /// <returns></returns>  
+        /// <summary>
+        /// 获取HTML，出现异常时返回空字符
+        /// </summary>
+        /// <param name="url"></param>
+        /// <param name="cookieContainer"></param>
+        /// <param name="method"></param>
+        /// <param name="paras"></param>
+        /// <param name="responseCookie"></param>
+        /// <param name="contenttype"></param>
+        /// <param name="refer"></param>
+        /// <returns></returns>
         public static String GetHtml(String url, CookieContainer cookieContainer, String method, String paras, out String responseCookie, String contenttype = "application/x-www-form-urlencoded", String refer = "")
         {
             responseCookie = String.Empty;
