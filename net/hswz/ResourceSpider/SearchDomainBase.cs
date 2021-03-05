@@ -1,13 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text.RegularExpressions;
+using System.Web;
 using Hswz.Common;
-using Hswz.DAL;
-using Hswz.Model.Urls;
 
 namespace ResourceSpider
 {
-    public class SearchDomainBLL3
+    public abstract class SearchDomainBase
     {
         /// <summary>
         /// 必应搜索结果项
@@ -51,12 +50,12 @@ namespace ResourceSpider
         private static readonly List<String> requestedSearchUrl = new List<String>();
 
 
-        static SearchDomainBLL3()
+        public SearchDomainBase()
         {
-            var datas = DBData.GetInstance(DBTable.url).GetList<urls>();
-            foreach (var item in datas)
+            var datas = GetSavedUrls();
+            foreach (String item in datas)
             {
-                String url = item.url;
+                String url = item;
                 if (!url.StartsWith("http"))
                 {
                     url = "http://" + url;
@@ -75,7 +74,7 @@ namespace ResourceSpider
             }
         }
 
-        public static void Test()
+        public void Test()
         {
             //String url = "http://www.duwenzhang.com/wenzhang/aiqingwenzhang";
             //String content = GetPageContent(url);
@@ -86,7 +85,7 @@ namespace ResourceSpider
             //(String pageUrl, Int32 pageIndex) = GetPageUrl(urls);
         }
 
-        public static void Start()
+        public void Start()
         {
             WriteLog("start", Util.Log.LogType.Info);
 
@@ -96,7 +95,7 @@ namespace ResourceSpider
             Console.ReadKey();
         }
 
-        private static void Do()
+        private void Do()
         {
             String urlFormat = "/search?q={0}&qs=n&form=QBLH&sp=-1&pq={0}&sc=0-6&sk=&cvid=61EC7E49819341299A065C42F8AC67D0";
 
@@ -112,13 +111,11 @@ namespace ResourceSpider
             {
                 //找到有效资源的数量
                 Int32 okCount = 0;
-                String start = $"开始检索关键字：{keyword}";
-                WriteLog(start, Util.Log.LogType.Info);
-                String url = String.Format(urlFormat, keyword);
+                WriteLog($"开始检索关键字：{keyword}", Util.Log.LogType.Info);
+                String encodeWord = HttpUtility.UrlEncode(keyword.Replace(",", " "));
+                String url = String.Format(urlFormat, encodeWord);
                 do
                 {
-                    url = url.Replace("&amp;", "&");
-
                     String urlMd5 = Util.Security.MD5Util.MD5(url);
                     if (requestedSearchUrl.Contains(urlMd5))
                     {
@@ -168,9 +165,9 @@ namespace ResourceSpider
         /// <param name="linkItem">链接地址</param>
         /// <param name="okCount">成功数量</param>
         /// <param name="deep">链接深度，如果为1，则继续检测页面里的链接，为2则不再检测页面上的链接</param>
-        private static void DealLink(String linkItem, ref Int32 okCount, Int32 deep)
+        private void DealLink(String linkItem, ref Int32 okCount, Int32 deep)
         {
-            linkItem = linkItem.Replace("&amp;", "&");
+            linkItem = HttpUtility.UrlDecode(linkItem).Trim().TrimEnd('/');
 
             if (linkItem.Contains("google.com"))
             {
@@ -231,13 +228,9 @@ namespace ResourceSpider
             try
             {
                 okCount++;
-                WriteLog($"找到一个目标链接: {linkItem}", Util.Log.LogType.Info);
+                WriteLog($"发现目标: {linkItem}", Util.Log.LogType.Info);
 
-                DBData.GetInstance(DBTable.url).Add(new urls()
-                {
-                    url = linkItem,
-                    status = 0,
-                });
+                SaveData(linkItem);
 
                 //深度为1就继续查找当前页面中的外链，再检查各个外链是否满足条件
                 if (deep == 1)
@@ -274,11 +267,17 @@ namespace ResourceSpider
         /// </summary>
         /// <param name="content">页面内容</param>
         /// <returns></returns>
-        private static Boolean ValidPage(String content)
+        private Boolean ValidPage(String content)
         {
+            //排队页面上有src="/tj.js"的站点
+            if (content.Contains(@"src=""/tj.js"""))
+            {
+                return false;
+            }
+
             List<String> keywords = new List<String>()
             {
-                "自拍","无码","欧美","自拍","無碼","歐美"
+                "偷拍","无码","欧美","無碼","歐美"
             };
 
             //必须包含至少以上3个关键字
@@ -301,7 +300,7 @@ namespace ResourceSpider
         /// <param name="content"></param>
         /// <param name="reg"></param>
         /// <returns></returns>
-        private static List<String> GetUrls(String content, Regex reg)
+        private List<String> GetUrls(String content, Regex reg)
         {
             List<String> urls = new List<String>();
             var matches = reg.Matches(content);
@@ -318,7 +317,7 @@ namespace ResourceSpider
         /// </summary>
         /// <param name="link"></param>
         /// <returns></returns>
-        private static Boolean IsUrlValid(String link)
+        private Boolean IsUrlValid(String link)
         {
             //Int32 httpIndex = link.IndexOf("//");
             //String tmpType = httpIndex >= 0 ? link.Substring(0, httpIndex) + "//" : String.Empty;
@@ -335,10 +334,14 @@ namespace ResourceSpider
             return link.StartsWith("http");
         }
 
-        private static void WriteLog(String msg, Util.Log.LogType logType)
+        private void WriteLog(String msg, Util.Log.LogType logType)
         {
             Console.WriteLine(msg);
             Util.Log.LogUtil.Write(msg, logType);
         }
+
+        protected abstract List<String> GetSavedUrls();
+
+        protected abstract Boolean SaveData(String url);
     }
 }
