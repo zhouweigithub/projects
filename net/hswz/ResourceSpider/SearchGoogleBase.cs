@@ -6,16 +6,16 @@ using Hswz.Common;
 
 namespace ResourceSpider
 {
-    public abstract class SearchDomainBase
+    public abstract class SearchGoogleBase
     {
         /// <summary>
         /// 必应搜索结果项
         /// </summary>
-        private const String urlRegString = "b_algo.*?<a .*?href=[\"'](?<url>.*?)[\"'].*?>.*?</a>";
+        private const String urlRegString = "<div class=\"g\">.*?<a href=\"(?<url>.*?)\".*?>";
         /// <summary>
         /// 必应下一页
         /// </summary>
-        private const String nextUrlRegString = "<a [^>]*?sb_pagN_bp.*?href=\"(?<url>.*?)\".*?>.*?</a>";
+        private const String nextUrlRegString = "<a href=\"(?<url>.[^>]*?)\" id=\"pnnext\"";
         /// <summary>
         /// 普通链接
         /// </summary>
@@ -50,7 +50,7 @@ namespace ResourceSpider
         private static readonly List<String> requestedSearchUrl = new List<String>();
 
 
-        public SearchDomainBase()
+        public SearchGoogleBase()
         {
             var datas = GetSavedUrls();
             foreach (String item in datas)
@@ -97,7 +97,7 @@ namespace ResourceSpider
 
         private void Do()
         {
-            String urlFormat = "/search?q={0}&qs=n&form=QBLH&sp=-1&pq={0}&sc=0-6&sk=&cvid=61EC7E49819341299A065C42F8AC67D0";
+            String urlFormat = "/search?q={0}&ei=i01CYM-0DeSFhbIP8te44A8&start=0&sa=N&ved=2ahUKEwiPpuadu5nvAhXkQkEAHfIrDvw4HhDy0wN6BAgDEDg&biw=1366&bih=657";
 
             if (String.IsNullOrWhiteSpace(WebConfigData.SearchKeyWords))
             {
@@ -128,7 +128,7 @@ namespace ResourceSpider
 
                     Console.WriteLine();
                     WriteLog(url, Util.Log.LogType.Info);
-                    String searchContent = HttpHelper.GetHtml("https://cn.bing.com" + url, null, "get", String.Empty, out String _);
+                    String searchContent = HttpHelper.GetHtml("https://www.google.com" + url, null, "get", String.Empty, out String _);
 
                     if (!String.IsNullOrWhiteSpace(searchContent))
                     {
@@ -151,6 +151,10 @@ namespace ResourceSpider
                     {
                         url = HttpUtility.HtmlDecode(tmpUrls[0]);
                     }
+                    else
+                    {
+
+                    }
 
                 } while (!String.IsNullOrWhiteSpace(url));
 
@@ -168,6 +172,7 @@ namespace ResourceSpider
         private void DealLink(String linkItem, ref Int32 okCount, Int32 deep)
         {
             linkItem = HttpUtility.HtmlDecode(linkItem).Trim().TrimEnd('/');
+
 
             if (linkItem.Contains("google.com"))
             {
