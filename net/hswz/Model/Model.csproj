@@ -67,6 +67,7 @@
     <Compile Include="Role\RoleModel.cs" />
     <Compile Include="TableSetting.cs" />
     <Compile Include="TArtical.cs" />
+    <Compile Include="Urls\resource_items.cs" />
     <Compile Include="Urls\tmp_searched_domains.cs" />
     <Compile Include="Urls\url_click.cs" />
     <Compile Include="Urls\url_attention_ip.cs" />

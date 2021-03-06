@@ -1,5 +1,6 @@
 ﻿using System;
 using Hswz.Common;
+using ResourceSpider.GetItems;
 using Util.Log;
 
 namespace ResourceSpider
@@ -12,6 +13,20 @@ namespace ResourceSpider
             LogUtil.SetLogPath(System.IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Log"));
             Const.RootWebPath = AppDomain.CurrentDomain.BaseDirectory;
 
+            GetItems();
+
+            Console.WriteLine("over");
+
+            Console.ReadKey();
+        }
+
+        private static void GetItems()
+        {
+            new GetItemBase().Do();
+        }
+
+        private static void Search()
+        {
             Console.WriteLine("请输入搜索方式：");
             Console.WriteLine("1、bing");
             Console.WriteLine("2、google");
@@ -31,8 +46,6 @@ namespace ResourceSpider
             {
                 Console.WriteLine("输入错误，任务结束");
             }
-
-            Console.ReadKey();
         }
     }
 }

@@ -87,10 +87,11 @@ namespace Hswz.Common
         /// <param name="method"></param>
         /// <param name="paras"></param>
         /// <param name="responseCookie"></param>
+        /// <param name="timeOut"></param>
         /// <param name="contenttype"></param>
         /// <param name="refer"></param>
         /// <returns></returns>
-        public static String GetHtml(String url, CookieContainer cookieContainer, String method, String paras, out String responseCookie, String contenttype = "application/x-www-form-urlencoded", String refer = "")
+        public static String GetHtml(String url, CookieContainer cookieContainer, String method, String paras, out String responseCookie, Int32 timeOut = 5, String contenttype = "application/x-www-form-urlencoded", String refer = "")
         {
             responseCookie = String.Empty;
 
@@ -114,8 +115,8 @@ namespace Hswz.Common
                     httpWebRequest.Referer = refer;
                 }
 
-                httpWebRequest.Timeout = timeout * 1000;
-                httpWebRequest.ReadWriteTimeout = timeout * 1000;
+                httpWebRequest.Timeout = (timeOut == 0 ? timeout : timeOut) * 1000;
+                httpWebRequest.ReadWriteTimeout = (timeOut == 0 ? timeout : timeOut) * 1000;
                 httpWebRequest.KeepAlive = false;
                 httpWebRequest.Accept = accept;
                 httpWebRequest.UserAgent = userAgent;

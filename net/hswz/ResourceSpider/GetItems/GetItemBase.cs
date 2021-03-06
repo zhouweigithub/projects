@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text.RegularExpressions;
+using Hswz.DAL;
+using Hswz.Model.Urls;
 
 namespace ResourceSpider.GetItems
 {
@@ -18,29 +20,65 @@ namespace ResourceSpider.GetItems
         /// <summary>
         /// 带detail字符的链接
         /// </summary>
-        private const String detailLinkRegString = "<a .*?href=[\"'](?<url>.*?detail.*?)[\"'].*?>.*?</a>";
+        private const String detailLinkRegString = "<a .*?href=[\"'](?<url>.*?\\d{4,}.*?)[\"'].*? title=[\"'](?<title>.*?)[\"'].*?>.*?</a>";
+
         private static readonly Regex linkReg = new Regex(linkRegString);
         private static readonly Regex numberReg = new Regex(numberRegString);
+        private static readonly Regex detailReg = new Regex(detailLinkRegString);
 
-        public void Do(String url)
+        public void Do()
         {
-            String content = GetHtml(url);
-            var urls = GetAllUrls(content);
+            var urls = GetDbUrls();
+            if (urls != null)
+            {
+                foreach (var item in urls)
+                {
+                    Do(item.url);
+                }
+            }
+        }
+
+        private void Do(String url)
+        {
+            if (!url.StartsWith("http"))
+            {
+                url = "http://" + url;
+            }
+
+            Uri uri = new Uri(url);
+            String host = uri.Scheme + "://" + uri.Host;
+
+            WriteLog($"connecting: {host}", Util.Log.LogType.Info);
+            String content = GetHtml(host);
+            if (String.IsNullOrWhiteSpace(content))
+            {
+                WriteLog("读取页面内容失败", Util.Log.LogType.Info);
+                return;
+            }
+
+            var urls = GetAllUrls(content, linkReg, host);
             (String pageUrl, Int32 pageCharIndex, Int32 pageCharLength) = GetPageUrl(urls);
 
             if (String.IsNullOrWhiteSpace(pageUrl))
             {
+                WriteLog("未检测到数据分页链接", Util.Log.LogType.Info);
                 return;
             }
 
             String listUrlFormat = GetListUrlFormatString(pageUrl, pageCharIndex, pageCharLength);
-            GetItemsLoopPage(listUrlFormat);
+            GetItemsLoopPage(listUrlFormat, host);
+        }
+
+        private IList<urls> GetDbUrls()
+        {
+            return DBData.GetInstance(DBTable.url).GetList<urls>();
         }
 
         private String GetListUrlFormatString(String pageUrl, Int32 pageCharIndex, Int32 pageNumberCount)
         {
             String pre = pageUrl.Substring(0, pageCharIndex);
-            return pre + "{0}" + pageUrl.Substring(pageCharIndex + pageNumberCount - 1);
+            String next = pageCharIndex == pageUrl.Length - 1 ? String.Empty : pageUrl.Substring(pageCharIndex + 1);
+            return pre + "{0}" + next;
         }
 
 
@@ -50,16 +88,59 @@ namespace ResourceSpider.GetItems
         /// <param name="content"></param>
         /// <param name="reg"></param>
         /// <returns></returns>
-        private List<String> GetUrls(String content, Regex reg)
+        private List<String> GetUrls(String content, Regex reg, String host)
         {
             List<String> urls = new List<String>();
             var matches = reg.Matches(content);
             foreach (Match item in matches)
             {
-                urls.Add(item.Groups["url"].Value);
+                String url = item.Groups["url"].Value;
+                if (IsUrlValid(url))
+                {
+                    if (!url.StartsWith("http"))
+                    {
+                        url = host + url;
+                    }
+
+                    urls.Add(url);
+                }
             }
 
             return urls;
+        }
+
+
+        private List<resource_items> GetDetailInfos(String content, String host)
+        {
+            List<resource_items> urls = new List<resource_items>();
+            var matches = detailReg.Matches(content);
+            foreach (Match item in matches)
+            {
+                String url = item.Groups["url"].Value;
+                String title = item.Groups["title"].Value;
+                if (IsUrlValid(url))
+                {
+                    if (!url.StartsWith("http"))
+                    {
+                        url = host + url;
+                    }
+
+                    urls.Add(new resource_items()
+                    {
+                        url = url,
+                        title = title,
+                        domain = host
+                    });
+                }
+            }
+
+            return urls;
+        }
+
+
+        private Boolean IsUrlValid(String url)
+        {
+            return !url.StartsWith("javascript:") && !url.StartsWith("#") && url != "/";
         }
 
         /// <summary>
@@ -67,7 +148,7 @@ namespace ResourceSpider.GetItems
         /// </summary>
         /// <param name="urls"></param>
         /// <returns>分页链接完整URL/页码位置/页码所占字符长度</returns>
-        public (String, Int32, Int32) GetPageUrl(List<String> urls)
+        private (String, Int32, Int32) GetPageUrl(List<String> urls)
         {
             //分页链接应该有以下特征
             //1 同时存在只有一个数字不同的，同时该数字部分连续的多个连续url地址
@@ -125,7 +206,7 @@ namespace ResourceSpider.GetItems
         /// <param name="url"></param>
         /// <param name="pageIndex"></param>
         /// <returns></returns>
-        public (String, Int32) GetAllPageNumber(String url, Int32 pageCharIndex)
+        private (String, Int32) GetAllPageNumber(String url, Int32 pageCharIndex)
         {
             //查找该页码数字紧邻的所有数字
 
@@ -145,6 +226,10 @@ namespace ResourceSpider.GetItems
                         result = charItem + result;
                         minIndex = i;
                     }
+                    else
+                    {
+                        break;
+                    }
                 }
             }
             //向后找
@@ -158,41 +243,71 @@ namespace ResourceSpider.GetItems
                         //如果前面的是数字，就补到前面
                         result += charItem;
                     }
+                    else
+                    {
+                        break;
+                    }
                 }
             }
 
             return (result, minIndex);
         }
 
-        public void GetItemsLoopPage(String urlFormateString)
+        private void GetItemsLoopPage(String urlFormateString, String host)
         {
+            //记录获取列表数据失败的次数，超过3次直接退出
+            Int32 failCount = 0;
             //页码
             for (Int32 i = 1; i < 999; i++)
             {
-                String html = GetHtml(String.Format(urlFormateString, i));
-                if (String.IsNullOrWhiteSpace(html))
+                if (failCount >= 3)
                 {
                     break;
                 }
 
-                //如果取取到的数据项为0也退出
-                var items = GetItems(html);
+                Console.WriteLine($"读取第 {i} 页");
+                String url = String.Format(urlFormateString, i);
+                String html = GetHtml(url);
+
+
+                if (String.IsNullOrWhiteSpace(html))
+                {
+                    failCount++;
+                }
+                else
+                {
+                    //如果取取到的数据项为0也退出
+                    var details = GetDetailInfos(html, host);
+
+                    if (details.Count > 0)
+                    {
+                        failCount = 0;
+                        foreach (var item in details)
+                        {
+                            SaveItem(item.url, host, item.title);
+                        }
+                    }
+                    else
+                    {
+                        failCount++;
+                    }
+                }
             }
         }
 
-        public List<String> GetAllUrls(String content)
+        public List<String> GetAllUrls(String content, Regex regx, String host)
         {
-            return GetUrls(content, linkReg);
+            return GetUrls(content, regx, host);
         }
 
         private String GetHtml(String url)
         {
-            return Hswz.Common.HttpHelper.GetHtml(url, null, "get", null, out _);
+            return Hswz.Common.HttpHelper.GetHtml(url, null, "get", null, out _, 5);
         }
 
-        public List<String> GetItems(String content)
+        private List<String> GetItems(String content, String host)
         {
-            var urls = GetAllUrls(content);
+            var urls = GetAllUrls(content, detailReg, host);
             //移除不包含/符的链接
             urls.RemoveAll(a => !a.Contains("/"));
             //移除所有不包含数字的项
@@ -201,9 +316,21 @@ namespace ResourceSpider.GetItems
             return urls.Where(a => a.Contains("detail")).ToList();
         }
 
-        public void SaveItem(Object o)
+        private void SaveItem(String url, String domain, String title)
         {
-
+            DBData.GetInstance(DBTable.resource_items).Add(new resource_items()
+            {
+                url = url,
+                domain = domain,
+                title = title
+            });
         }
+
+        private void WriteLog(String msg, Util.Log.LogType logType)
+        {
+            Console.WriteLine(msg);
+            Util.Log.LogUtil.Write(msg, logType);
+        }
+
     }
 }
