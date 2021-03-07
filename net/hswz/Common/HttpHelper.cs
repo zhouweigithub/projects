@@ -87,7 +87,7 @@ namespace Hswz.Common
         /// <param name="method"></param>
         /// <param name="paras"></param>
         /// <param name="responseCookie"></param>
-        /// <param name="timeOut"></param>
+        /// <param name="timeOut">超时时间(秒)</param>
         /// <param name="contenttype"></param>
         /// <param name="refer"></param>
         /// <returns></returns>

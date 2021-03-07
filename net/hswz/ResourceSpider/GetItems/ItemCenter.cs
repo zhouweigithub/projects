@@ -38,9 +38,9 @@ namespace ResourceSpider.GetItems
             Task.Factory.StartNew(() => { LoopGetPageList(urlEnteys); });
 
 
-            Comm.WriteLog("strt item task ", Util.Log.LogType.Info);
+            //Comm.WriteLog("strt item task ", Util.Log.LogType.Info);
 
-            Task.Factory.StartNew(() => { source.GetSourceItems(); });
+            //Task.Factory.StartNew(() => { source.GetSourceItems(); });
 
 
 

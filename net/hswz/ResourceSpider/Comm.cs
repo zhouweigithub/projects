@@ -39,7 +39,7 @@ namespace ResourceSpider
                 url = "http://" + url;
             }
 
-            return Hswz.Common.HttpHelper.GetHtml(url, null, "get", null, out _, timeout * 1000);
+            return Hswz.Common.HttpHelper.GetHtml(url, null, "get", null, out _, timeout);
         }
 
         /// <summary>
@@ -108,6 +108,24 @@ namespace ResourceSpider
             }
 
             return String.Empty;
+        }
+
+        /// <summary>
+        /// 检测是不是所有字符都是ASCII码中小于127的字符
+        /// </summary>
+        /// <param name="str"></param>
+        /// <returns></returns>
+        public static Boolean IsBaseChars(String str)
+        {
+            for (Int32 i = 0; i < str.Length; i++)
+            {
+                if (str[i] > 127)
+                {
+                    return false;
+                }
+            }
+
+            return true;
         }
     }
 }

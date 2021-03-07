@@ -46,6 +46,14 @@ namespace Hswz.DAL
         /// 资源详情链接
         /// </summary>
         public static readonly String resource_items = "resource_items";
+        /// <summary>
+        /// 已经获取到的各个站点的数据列表页的链接地址
+        /// </summary>
+        public static readonly String p_list_format = "p_list_format";
+        /// <summary>
+        /// 不再检测是否有列表页的站点
+        /// </summary>
+        public static readonly String p_list_forbid = "p_list_forbid";
         
 
 

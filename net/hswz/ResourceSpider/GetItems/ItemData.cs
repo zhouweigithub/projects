@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace ResourceSpider.GetItems
 {
@@ -44,12 +45,21 @@ namespace ResourceSpider.GetItems
         /// <param name="data"></param>
         public static void AddPageLink(String data)
         {
-            String md5 = Util.Security.MD5Util.MD5(data);
-            if (!pageLinkHistory.Contains(md5))
+            if (!pageLinkHistory.Contains(data))
             {
                 pageLinkQueue.Enqueue(data);
-                pageLinkHistory.Add(md5);
+                pageLinkHistory.Add(data);
             }
+        }
+
+        /// <summary>
+        /// 检测是否已经存在以其为开头的链接
+        /// </summary>
+        /// <param name="url"></param>
+        /// <returns></returns>
+        public static Boolean IsPartofSoMeOne(String url)
+        {
+            return pageLinkHistory.Any(a => a.StartsWith(url));
         }
     }
 }

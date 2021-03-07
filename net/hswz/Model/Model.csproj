@@ -67,10 +67,12 @@
     <Compile Include="Role\RoleModel.cs" />
     <Compile Include="TableSetting.cs" />
     <Compile Include="TArtical.cs" />
+    <Compile Include="Urls\p_list_forbid.cs" />
     <Compile Include="Urls\resource_items.cs" />
     <Compile Include="Urls\tmp_searched_domains.cs" />
     <Compile Include="Urls\url_click.cs" />
     <Compile Include="Urls\url_attention_ip.cs" />
+    <Compile Include="Urls\p_list_format.cs" />
     <Compile Include="Urls\url_connect_time.cs" />
     <Compile Include="Urls\domains.cs" />
     <Compile Include="Urls\resource.cs" />

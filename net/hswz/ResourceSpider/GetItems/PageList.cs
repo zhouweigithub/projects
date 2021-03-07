@@ -9,17 +9,27 @@ namespace ResourceSpider.GetItems
         private readonly List<String> historyList = new List<String>();
 
         /// <summary>
+        /// 一个站点，请求的最大次数，超过这个次数，仍没找到数据就退出
+        /// </summary>
+        private static Int32 maxRequestTimesPerSite = 15;
+
+        /// <summary>
         /// URL中包含以下字符时，直接退出
         /// </summary>
         private static readonly List<String> expectDomains = new List<String>(){"163.com","douban.com","baidu.com","zhihu.com","so.com","google.com","bing.com","sohu.com","sina.com","china","edu","org","qq.com","bbs","github.com","taobao.com","1688.com","jd.com","tmall.com","58.com","12306.cn","tianya.cn","cctv","alipay.com","gov","youdao.com","sogou.com"
         };
 
-        public void SearchPageLink(String url, Int32 deep)
+        public Int32 SearchPageLink(String url, Int32 deep)
         {
+            if (deep == 1)
+            {
+                maxRequestTimesPerSite = 0;
+            }
+
             //如果URL中包含以上任意字符，则不再继续
             if (expectDomains.Any(a => url.Contains(a)))
             {
-                return;
+                return 0;
             }
 
             if (!url.StartsWith("http"))
@@ -30,11 +40,25 @@ namespace ResourceSpider.GetItems
             String md5 = Util.Security.MD5Util.MD5(url);
             if (historyList.Contains(md5))
             {
-                return;
+                return 0;
             }
             else
             {
                 historyList.Add(md5);
+            }
+
+            String host = Comm.GetUrlHost(url);
+
+            //如果是被禁掉的无效站点，就不用再继续
+            if (DbCenter.IsForbiddenDomain(host))
+            {
+                return 0;
+            }
+
+            //如果已有该站点的列表数据，就不再继续
+            if (DbCenter.IsListFormatExists(host))
+            {
+                return 0;
             }
 
             Comm.WriteLog($"connecting: {url}", Util.Log.LogType.Info);
@@ -42,23 +66,42 @@ namespace ResourceSpider.GetItems
             if (String.IsNullOrWhiteSpace(content))
             {
                 Comm.WriteLog("读取页面内容失败", Util.Log.LogType.Info);
-                return;
+                DbCenter.AddToForbiddenDomain(host);
+                return 0;
             }
 
-            String host = Comm.GetUrlHost(url);
             var urls = Comm.GetUrls(content, host);
 
             if (deep == 1)
             {   //首页不存在分页链接，所以直接再取各个子页面进行分析
+
+                //当前页面上的URL，检测过的数量
+                Int32 didCount = 0;
+                Int32 okCount = 0;
                 foreach (String item in urls)
                 {
                     //如果是同一个站点，则继续检测其他页面
                     String tmpHost = Comm.GetUrlHost(item);
                     if (tmpHost == host)
                     {
-                        SearchPageLink(item, 2);
+                        okCount += SearchPageLink(item, 2);
+                    }
+
+                    didCount++;
+                    //每个站点最多只检测前10个站内链接
+                    if (didCount > maxRequestTimesPerSite)
+                    {
+                        break;
                     }
                 }
+
+                //没找到数据列表页面，则记录该站点，下次不用再检测了
+                if (okCount == 0)
+                {
+                    DbCenter.AddToForbiddenDomain(host);
+                }
+
+                return 0;
             }
             else
             {   //非首页再进行列表页面检查
@@ -70,15 +113,53 @@ namespace ResourceSpider.GetItems
                 {
                     Comm.WriteLog("未检测到数据分页链接", Util.Log.LogType.Info);
 
-                    return;
+                    return 0;
                 }
 
                 String listUrlFormat = GetListUrlFormatString(pageUrl, pageCharIndex, pageCharLength);
+
+                //如果已存在包含当前链接的前部分的数据，那么这个就不要了
+                if (!IsFormatUrlOk(listUrlFormat, pageCharIndex))
+                {
+                    return 0;
+                }
+
                 Comm.WriteLog($"检测到分页链接：{listUrlFormat}", Util.Log.LogType.Info);
 
+                //写入缓存
                 ItemData.AddPageLink(listUrlFormat);
+
+                //写入数据库
+                DbCenter.SaveListFormat(host, listUrlFormat);
+
+                return 1;
             }
 
+        }
+
+        private Boolean IsFormatUrlOk(String listUrlFormat, Int32 pageCharIndex)
+        {
+            if (listUrlFormat.Contains("detail"))
+            {
+                return false;
+            }
+
+            //如果已存在包含当前链接的前部分的数据，那么这个就不要了
+            String tmpStart = listUrlFormat.Substring(0, pageCharIndex);
+
+            if (ItemData.IsPartofSoMeOne(tmpStart))
+            {
+                return false;
+            }
+
+            //如果链接中包含中文则排队，防止搜索页面出现
+            String de = System.Web.HttpUtility.UrlDecode(listUrlFormat);
+            if (!Comm.IsBaseChars(de))
+            {
+                return false;
+            }
+
+            return true;
         }
 
         /// <summary>
