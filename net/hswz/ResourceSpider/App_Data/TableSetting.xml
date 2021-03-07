@@ -8,4 +8,5 @@
 	<TableSetting TableName="resource" KeyField="id" OrderbyFields="id desc" />
 	<TableSetting TableName="resource_items" KeyField="id" OrderbyFields="id desc" />
 	<TableSetting TableName="tmp_searched_domains" KeyField="domain" OrderbyFields="domain desc" />
+	<TableSetting TableName="p_list_format" KeyField="id" OrderbyFields="id desc" />
 </TableList>

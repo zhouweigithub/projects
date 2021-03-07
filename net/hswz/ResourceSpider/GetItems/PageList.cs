@@ -76,7 +76,11 @@ namespace ResourceSpider.GetItems
                 String listUrlFormat = GetListUrlFormatString(pageUrl, pageCharIndex, pageCharLength);
                 Comm.WriteLog($"检测到分页链接：{listUrlFormat}", Util.Log.LogType.Info);
 
+                //写入缓存
                 ItemData.AddPageLink(listUrlFormat);
+
+                //写入数据库
+                DbCenter.SaveListFormat(host, listUrlFormat);
             }
 
         }
