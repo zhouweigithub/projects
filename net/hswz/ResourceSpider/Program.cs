@@ -22,7 +22,7 @@ namespace ResourceSpider
 
         private static void GetItems()
         {
-            new GetItemBase().Do();
+            new ItemCenter().Do();
         }
 
         private static void Search()

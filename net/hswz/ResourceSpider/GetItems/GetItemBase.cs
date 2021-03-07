@@ -14,15 +14,10 @@ namespace ResourceSpider.GetItems
         /// </summary>
         private const String numberRegString = "\\d+";
         /// <summary>
-        /// 所有链接
-        /// </summary>
-        private const String linkRegString = "<a .*?href=[\"'](?<url>.*?)[\"'].*?>.*?</a>";
-        /// <summary>
         /// 带detail字符的链接
         /// </summary>
         private const String detailLinkRegString = "<a .*?href=[\"'](?<url>.*?\\d{4,}.*?)[\"'].*? title=[\"'](?<title>.*?)[\"'].*?>.*?</a>";
 
-        private static readonly Regex linkReg = new Regex(linkRegString);
         private static readonly Regex numberReg = new Regex(numberRegString);
         private static readonly Regex detailReg = new Regex(detailLinkRegString);
 
@@ -40,32 +35,7 @@ namespace ResourceSpider.GetItems
 
         private void Do(String url)
         {
-            if (!url.StartsWith("http"))
-            {
-                url = "http://" + url;
-            }
-
-            Uri uri = new Uri(url);
-            String host = uri.Scheme + "://" + uri.Host;
-
-            WriteLog($"connecting: {host}", Util.Log.LogType.Info);
-            String content = GetHtml(host);
-            if (String.IsNullOrWhiteSpace(content))
-            {
-                WriteLog("读取页面内容失败", Util.Log.LogType.Info);
-                return;
-            }
-
-            var urls = GetAllUrls(content, linkReg, host);
-            (String pageUrl, Int32 pageCharIndex, Int32 pageCharLength) = GetPageUrl(urls);
-
-            if (String.IsNullOrWhiteSpace(pageUrl))
-            {
-                WriteLog("未检测到数据分页链接", Util.Log.LogType.Info);
-                return;
-            }
-
-            String listUrlFormat = GetListUrlFormatString(pageUrl, pageCharIndex, pageCharLength);
+            String host = Comm.GetUrlHost(url);
             GetItemsLoopPage(listUrlFormat, host);
         }
 
@@ -82,66 +52,11 @@ namespace ResourceSpider.GetItems
         }
 
 
-        /// <summary>
-        /// 获取内容中的链接地址
-        /// </summary>
-        /// <param name="content"></param>
-        /// <param name="reg"></param>
-        /// <returns></returns>
-        private List<String> GetUrls(String content, Regex reg, String host)
-        {
-            List<String> urls = new List<String>();
-            var matches = reg.Matches(content);
-            foreach (Match item in matches)
-            {
-                String url = item.Groups["url"].Value;
-                if (IsUrlValid(url))
-                {
-                    if (!url.StartsWith("http"))
-                    {
-                        url = host + url;
-                    }
-
-                    urls.Add(url);
-                }
-            }
-
-            return urls;
-        }
 
 
-        private List<resource_items> GetDetailInfos(String content, String host)
-        {
-            List<resource_items> urls = new List<resource_items>();
-            var matches = detailReg.Matches(content);
-            foreach (Match item in matches)
-            {
-                String url = item.Groups["url"].Value;
-                String title = item.Groups["title"].Value;
-                if (IsUrlValid(url))
-                {
-                    if (!url.StartsWith("http"))
-                    {
-                        url = host + url;
-                    }
-
-                    urls.Add(new resource_items()
-                    {
-                        url = url,
-                        title = title,
-                        domain = host
-                    });
-                }
-            }
-
-            return urls;
-        }
 
 
-        private Boolean IsUrlValid(String url)
-        {
-            return !url.StartsWith("javascript:") && !url.StartsWith("#") && url != "/";
-        }
+
 
         /// <summary>
         /// 获取分页链接信息
@@ -200,137 +115,22 @@ namespace ResourceSpider.GetItems
             return (null, -1, 0);
         }
 
-        /// <summary>
-        /// 获取页码及附近并列的所有数字字符串
-        /// </summary>
-        /// <param name="url"></param>
-        /// <param name="pageIndex"></param>
-        /// <returns></returns>
-        private (String, Int32) GetAllPageNumber(String url, Int32 pageCharIndex)
-        {
-            //查找该页码数字紧邻的所有数字
-
-            //数字位置的起始位置
-            Int32 minIndex = pageCharIndex;
-
-            //向前找
-            String result = url[pageCharIndex].ToString();
-            if (pageCharIndex > 0)
-            {
-                for (Int32 i = pageCharIndex - 1; i >= 0; i--)
-                {
-                    Char charItem = url[i];
-                    if (charItem >= 48 && charItem <= 57)
-                    {
-                        //如果前面的是数字，就补到前面
-                        result = charItem + result;
-                        minIndex = i;
-                    }
-                    else
-                    {
-                        break;
-                    }
-                }
-            }
-            //向后找
-            if (pageCharIndex < url.Length - 1)
-            {
-                for (Int32 i = pageCharIndex + 1; i < url.Length; i++)
-                {
-                    Char charItem = url[i];
-                    if (charItem >= 48 && charItem <= 57)
-                    {
-                        //如果前面的是数字，就补到前面
-                        result += charItem;
-                    }
-                    else
-                    {
-                        break;
-                    }
-                }
-            }
-
-            return (result, minIndex);
-        }
-
-        private void GetItemsLoopPage(String urlFormateString, String host)
-        {
-            //记录获取列表数据失败的次数，超过3次直接退出
-            Int32 failCount = 0;
-            //页码
-            for (Int32 i = 1; i < 999; i++)
-            {
-                if (failCount >= 3)
-                {
-                    break;
-                }
-
-                Console.WriteLine($"读取第 {i} 页");
-                String url = String.Format(urlFormateString, i);
-                String html = GetHtml(url);
 
 
-                if (String.IsNullOrWhiteSpace(html))
-                {
-                    failCount++;
-                }
-                else
-                {
-                    //如果取取到的数据项为0也退出
-                    var details = GetDetailInfos(html, host);
 
-                    if (details.Count > 0)
-                    {
-                        failCount = 0;
-                        foreach (var item in details)
-                        {
-                            SaveItem(item.url, host, item.title);
-                        }
-                    }
-                    else
-                    {
-                        failCount++;
-                    }
-                }
-            }
-        }
 
-        public List<String> GetAllUrls(String content, Regex regx, String host)
-        {
-            return GetUrls(content, regx, host);
-        }
+        //private List<String> GetItems(String content, String host)
+        //{
+        //    var urls = Comm.GetUrls(content, detailReg, host);
+        //    //移除不包含/符的链接
+        //    urls.RemoveAll(a => !a.Contains("/"));
+        //    //移除所有不包含数字的项
+        //    urls.RemoveAll(a => !numberReg.IsMatch(a));
 
-        private String GetHtml(String url)
-        {
-            return Hswz.Common.HttpHelper.GetHtml(url, null, "get", null, out _, 5);
-        }
+        //    return urls.Where(a => a.Contains("detail")).ToList();
+        //}
 
-        private List<String> GetItems(String content, String host)
-        {
-            var urls = GetAllUrls(content, detailReg, host);
-            //移除不包含/符的链接
-            urls.RemoveAll(a => !a.Contains("/"));
-            //移除所有不包含数字的项
-            urls.RemoveAll(a => !numberReg.IsMatch(a));
 
-            return urls.Where(a => a.Contains("detail")).ToList();
-        }
-
-        private void SaveItem(String url, String domain, String title)
-        {
-            DBData.GetInstance(DBTable.resource_items).Add(new resource_items()
-            {
-                url = url,
-                domain = domain,
-                title = title
-            });
-        }
-
-        private void WriteLog(String msg, Util.Log.LogType logType)
-        {
-            Console.WriteLine(msg);
-            Util.Log.LogUtil.Write(msg, logType);
-        }
 
     }
 }

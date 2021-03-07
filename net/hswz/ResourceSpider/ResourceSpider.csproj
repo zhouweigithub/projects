@@ -82,7 +82,13 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="GetItems\GetItemBase.cs" />
+    <Compile Include="Comm.cs" />
+    <Compile Include="GetItems\DbCenter.cs" />
+    <Compile Include="GetItems\ItemCenter.cs" />
+    <Compile Include="GetItems\ItemData.cs" />
+    <Compile Include="GetItems\PageList.cs" />
+    <Compile Include="GetItems\SingleSource.cs" />
+    <Compile Include="GetItems\ThreadStatus.cs" />
     <Compile Include="SearchBLL.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
