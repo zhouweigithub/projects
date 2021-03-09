@@ -11,25 +11,35 @@ namespace ResourceSpider.GetItems
         /// <summary>
         /// 一个站点，请求的最大次数，超过这个次数，仍没找到数据就退出
         /// </summary>
-        private static Int32 maxRequestTimesPerSite = 15;
+        private const Int32 maxRequestTimesPerSite = 40;
+
+        /// <summary>
+        /// 没取到任何数据的话，超过此次数就退出
+        /// </summary>
+        private static Int32 maxRequestTimesPerSiteWithoutData = 15;
 
         /// <summary>
         /// URL中包含以下字符时，直接退出
         /// </summary>
-        private static readonly List<String> expectDomains = new List<String>(){"163.com","douban.com","baidu.com","zhihu.com","so.com","google.com","bing.com","sohu.com","sina.com","china","edu","org","qq.com","bbs","github.com","taobao.com","1688.com","jd.com","tmall.com","58.com","12306.cn","tianya.cn","cctv","alipay.com","gov","youdao.com","sogou.com"
+        private static readonly List<String> expectDomains = new List<String>(){"163.com","douban.com","baidu.com","zhihu.com","so.com","google.com","bing.com","sohu.com","sina.com","china","edu","org","qq.com","bbs","github.com","taobao.com","1688.com","jd.com","tmall.com","58.com","12306.cn","tianya.cn","cctv","alipay.com","gov","youdao.com","sogou.com","detail"
         };
 
-        public Int32 SearchPageLink(String url, Int32 deep)
+        /// <summary>
+        /// 对url进行拆分时用到的各个字符
+        /// </summary>
+        private static readonly Char[] urlSplitChars = new Char[] { '/', '-', '_', '.', '?', '=', '*' };
+
+        public String SearchPageLink(String url, Int32 deep)
         {
             if (deep == 1)
             {
-                maxRequestTimesPerSite = 0;
+                maxRequestTimesPerSiteWithoutData = 0;
             }
 
             //如果URL中包含以上任意字符，则不再继续
             if (expectDomains.Any(a => url.Contains(a)))
             {
-                return 0;
+                return String.Empty;
             }
 
             if (!url.StartsWith("http"))
@@ -40,7 +50,7 @@ namespace ResourceSpider.GetItems
             String md5 = Util.Security.MD5Util.MD5(url);
             if (historyList.Contains(md5))
             {
-                return 0;
+                return String.Empty;
             }
             else
             {
@@ -52,14 +62,14 @@ namespace ResourceSpider.GetItems
             //如果是被禁掉的无效站点，就不用再继续
             if (DbCenter.IsForbiddenDomain(host))
             {
-                return 0;
+                return String.Empty;
             }
 
             //如果已有该站点的列表数据，就不再继续
-            if (DbCenter.IsListFormatExists(host))
-            {
-                return 0;
-            }
+            //if (DbCenter.IsListFormatExists(host))
+            //{
+            //    return 0;
+            //}
 
             Comm.WriteLog($"connecting: {url}", Util.Log.LogType.Info);
             String content = Comm.GetHtml(url, 5);
@@ -67,7 +77,7 @@ namespace ResourceSpider.GetItems
             {
                 Comm.WriteLog("读取页面内容失败", Util.Log.LogType.Info);
                 DbCenter.AddToForbiddenDomain(host);
-                return 0;
+                return String.Empty;
             }
 
             var urls = Comm.GetUrls(content, host);
@@ -78,21 +88,88 @@ namespace ResourceSpider.GetItems
                 //当前页面上的URL，检测过的数量
                 Int32 didCount = 0;
                 Int32 okCount = 0;
+                //检测过的无效链接
+                List<String> hisFaileds = new List<String>();
+                //检测过的有效链接
+                List<String> hisSuccesss = new List<String>();
+                //找到分页链接的地址和具体分页链接的对应关系
+                Dictionary<String, String> successUrlFormatDic = new Dictionary<String, String>();
                 foreach (String item in urls)
                 {
                     //如果是同一个站点，则继续检测其他页面
                     String tmpHost = Comm.GetUrlHost(item);
                     if (tmpHost == host)
                     {
-                        okCount += SearchPageLink(item, 2);
+                        //如果已存在类似的无效链接，则不再检测
+                        (String tt, _, _, _) = GetSameAsSomeUrls(item, hisFaileds);
+                        if (!String.IsNullOrWhiteSpace(tt))
+                        {
+                            continue;
+                        }
+
+
+                        //如果已存在类似的有效链接，则直接添加，不用再检测
+                        (String sucItem, Int32 startIndex, Int32 length, String endChar) = GetSameAsSomeUrls(item, hisSuccesss);
+                        if (!String.IsNullOrWhiteSpace(sucItem))
+                        {
+                            if (successUrlFormatDic.ContainsKey(sucItem))
+                            {
+                                String formatUrl = successUrlFormatDic[sucItem];
+                                //检测分页链接中是否包含了完整的分类的URL地址数据
+                                String oldSstartChars = sucItem.Substring(0, startIndex + length);
+                                if (formatUrl.Contains(oldSstartChars))
+                                {
+                                    //默认最后一个字符为结束字符位置
+                                    Int32 newCharEndIndex = item.Length - 1;
+                                    if(!String.IsNullOrWhiteSpace(endChar))
+                                    {
+                                        //查找结束字符下一个字符的位置
+                                        newCharEndIndex = item.IndexOf(endChar, startIndex, length + 1, StringComparison.OrdinalIgnoreCase);
+                                    }
+
+                                    if (newCharEndIndex != -1)
+                                    {
+                                        String newStartChars = item.Substring(0, newCharEndIndex);
+                                        String newFormatUrl = formatUrl.Replace(oldSstartChars, newStartChars);
+
+                                        SuccessHandler(host, ref okCount, hisSuccesss, successUrlFormatDic, item, newFormatUrl);
+                                        continue;
+                                    }
+                                    else
+                                    {
+
+                                    }
+                                }
+
+                            }
+                        }
+
+                        String okFormatString = SearchPageLink(item, 2);
+
+                        //失败时，加入失败队列
+                        if (String.IsNullOrWhiteSpace(okFormatString))
+                        {
+                            hisFaileds.Add(item);
+                        }
+                        else
+                        {
+                            SuccessHandler(host, ref okCount, hisSuccesss, successUrlFormatDic, item, okFormatString);
+                        }
                     }
 
                     didCount++;
-                    //每个站点最多只检测前10个站内链接
-                    if (didCount > maxRequestTimesPerSite)
+
+                    //如果一直没检测到数据，则超过一定次数就退出
+                    if (okCount == 0 && didCount > maxRequestTimesPerSiteWithoutData)
                     {
                         break;
                     }
+
+                    //每个站点最多只检测次数
+                    //if (didCount > maxRequestTimesPerSite)
+                    //{
+                    //    break;
+                    //}
                 }
 
                 //没找到数据列表页面，则记录该站点，下次不用再检测了
@@ -101,7 +178,7 @@ namespace ResourceSpider.GetItems
                     DbCenter.AddToForbiddenDomain(host);
                 }
 
-                return 0;
+                return String.Empty;
             }
             else
             {   //非首页再进行列表页面检查
@@ -113,7 +190,7 @@ namespace ResourceSpider.GetItems
                 {
                     Comm.WriteLog("未检测到数据分页链接", Util.Log.LogType.Info);
 
-                    return 0;
+                    return String.Empty;
                 }
 
                 String listUrlFormat = GetListUrlFormatString(pageUrl, pageCharIndex, pageCharLength);
@@ -121,20 +198,107 @@ namespace ResourceSpider.GetItems
                 //如果已存在包含当前链接的前部分的数据，那么这个就不要了
                 if (!IsFormatUrlOk(listUrlFormat, pageCharIndex))
                 {
-                    return 0;
+                    return String.Empty;
                 }
 
-                Comm.WriteLog($"检测到分页链接：{listUrlFormat}", Util.Log.LogType.Info);
-
-                //写入缓存
-                ItemData.AddPageLink(listUrlFormat);
-
-                //写入数据库
-                DbCenter.SaveListFormat(host, listUrlFormat);
-
-                return 1;
+                return listUrlFormat;
             }
 
+        }
+
+        private void SuccessHandler(String host, ref Int32 okCount, List<String> hisSuccesss, Dictionary<String, String> successUrlFormatDic, String item, String okFormatString)
+        {
+            //成功找到分页链接
+            okCount++;
+            hisSuccesss.Add(item);
+            successUrlFormatDic.Add(item, okFormatString);
+
+            Comm.WriteLog($"检测到分页链接：{okFormatString}", Util.Log.LogType.Info);
+
+            //写入缓存
+            ItemData.AddPageLink(okFormatString);
+
+            //写入数据库
+            DbCenter.SaveListFormat(host, okFormatString);
+        }
+
+        /// <summary>
+        /// 检测目标URL是否和列表中的某个URL存在类似关系
+        /// </summary>
+        /// <param name="url">目标URL</param>
+        /// <param name="urls">等检测列表</param>
+        /// <returns>存在类似关系的URL，两个URL不同处的起始位置，不同处字符长度，两个URL不同处的结束位置的下一个字符</returns>
+        private (String, Int32, Int32, String) GetSameAsSomeUrls(String url, List<String> urls)
+        {
+            //逆序检测，因为后进入的可能会长些
+            for (Int32 i = urls.Count - 1; i >= 0; i--)
+            {
+                String item = urls[i];
+                (Int32 startIndex, Int32 length, String nextChar) = IsUrlSameAs(item, url);
+                if (startIndex != -1)
+                {
+                    return (item, startIndex, length, nextChar);
+                }
+            }
+
+            return (String.Empty, -1, -1, "");
+        }
+
+
+        /// <summary>
+        /// 比较两个url地址是否很相似（只有一个地方不一样）
+        /// </summary>
+        /// <param name="url1"></param>
+        /// <param name="url2"></param>
+        /// <returns>（返回值中所有值都为每一个字符串为基础）不同处的起始位置，不同处字符长度，不同处后面的第一个字符</returns>
+        private (Int32 startIndex, Int32 length, String nextChar) IsUrlSameAs(String url1, String url2)
+        {
+            String[] a1 = url1.Split(urlSplitChars);
+            String[] a2 = url2.Split(urlSplitChars);
+
+            if (a1.Length != a2.Length)
+            {
+                return (-1, 0, "");
+            }
+
+            //不相同地方的数量
+            Int32 notSameCount = 0;
+            //不同处的组索引
+            Int32 index = 0;
+
+            for (Int32 i = 0; i < a1.Length; i++)
+            {
+                if (a1[i] != a2[i])
+                {
+                    index = i;
+                    notSameCount++;
+                }
+
+                if (notSameCount > 1)
+                {
+                    return (-1, 0, "");
+                }
+            }
+            //不同处前面的字符数量
+            Int32 preCharCount = 0;
+            for (Int32 i = 0; i < index; i++)
+            {
+                preCharCount += a1[i].Length;
+            }
+
+            //字符中不同处的起始位置
+            Int32 startIndex = index + preCharCount;
+            //不同处的结束位置
+            Int32 endIndex = startIndex + a1[index].Length;
+
+            //结束后下一个字符
+            String endChar = String.Empty;
+            if (endIndex < url1.Length)
+            {
+                endChar = url1[endIndex].ToString();
+            }
+
+            return (startIndex, a1[index].Length, endChar);
         }
 
         private Boolean IsFormatUrlOk(String listUrlFormat, Int32 pageCharIndex)
@@ -207,8 +371,10 @@ namespace ResourceSpider.GetItems
 
                             //与页码挨在一起的数字串
                             (String allPgeNumber, Int32 startIndex) = GetAllPageNumber(urlItem, i);
-                            if (allPgeNumber.Length <= 3)
-                            {   //页码数字小于等于3个数字才算是真正的页码
+
+                            //页码必须为2才算
+                            if (allPgeNumber == "2")
+                            {
                                 return (urlItem, startIndex, allPgeNumber.Length);
                             }
                         }
