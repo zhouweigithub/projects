@@ -54,7 +54,10 @@ namespace Hswz.DAL
         /// 不再检测是否有列表页的站点
         /// </summary>
         public static readonly String p_list_forbid = "p_list_forbid";
-        
+        /// <summary>
+        /// 当天已经抓取过数据的列表页面
+        /// </summary>
+        public static readonly String p_requested_list = "p_requested_list";
 
 
         #region old

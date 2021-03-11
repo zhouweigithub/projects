@@ -37,6 +37,11 @@ namespace ResourceSpider.GetItems
             }
         }
 
+        public static Boolean IsSourceItemExists(String url)
+        {
+            return DBData.GetInstance(DBTable.resource_items).GetCount($"url='{url}'") > 0;
+        }
+
         /// <summary>
         /// 保存资源详情
         /// </summary>
@@ -70,11 +75,22 @@ namespace ResourceSpider.GetItems
         /// <summary>
         /// 检测是否已经有了该站点的列表数据
         /// </summary>
-        /// <param name="host"></param>
+        /// <param name="host">主域名</param>
         /// <returns></returns>
-        public static Boolean IsListFormatExists(String host)
+        public static Boolean IsListFormatExistsWithHost(String host)
         {
             String sql = String.Format("SELECT COUNT(1) FROM p_list_format WHERE domain='{0}'", host);
+            return DBData.ExecuteScalarIntBySql(sql) > 0;
+        }
+
+        /// <summary>
+        /// 检测是否已经有了该站点的列表数据
+        /// </summary>
+        /// <param name="urlFormat">完整链接</param>
+        /// <returns></returns>
+        public static Boolean IsListFormatExistsWithUrl(String urlFormat)
+        {
+            String sql = String.Format("SELECT COUNT(1) FROM p_list_format WHERE url_format='{0}'", urlFormat);
             return DBData.ExecuteScalarIntBySql(sql) > 0;
         }
 
@@ -95,5 +111,40 @@ namespace ResourceSpider.GetItems
                 domain = host
             });
         }
+
+        /// <summary>
+        /// 检测当天是否已经抓取过该分页地址
+        /// </summary>
+        /// <param name="crdate"></param>
+        /// <param name="url_format"></param>
+        /// <returns></returns>
+        public static Boolean IsRequestedListExists(DateTime crdate, String url_format)
+        {
+            return DBData.GetInstance(DBTable.p_requested_list).GetCount($"crdate='{crdate:yyyy-MM-dd}' and url_format='{url_format}'") > 0;
+        }
+
+        /// <summary>
+        /// 保存当天已抓取过的分页链接地址
+        /// </summary>
+        /// <param name="crdate"></param>
+        /// <param name="url_format"></param>
+        public static void SaveRequestedList(DateTime crdate, String url_format)
+        {
+            DBData.GetInstance(DBTable.p_requested_list).Add(new p_requested_list()
+            {
+                crdate = crdate,
+                url_format = url_format
+            });
+        }
+
+        /// <summary>
+        /// 获取已有的分页链接
+        /// </summary>
+        /// <returns></returns>
+        public static IList<p_list_format> GetFormatList()
+        {
+            return DBData.GetInstance(DBTable.p_list_format).GetList<p_list_format>();
+        }
+
     }
 }

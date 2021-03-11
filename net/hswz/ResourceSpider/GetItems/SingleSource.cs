@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System.Text.RegularExpressions;
 using System.Threading;
+using System.Threading.Tasks;
+using Hswz.Common;
 using Hswz.Model.Urls;
 
 namespace ResourceSpider.GetItems
@@ -11,7 +13,7 @@ namespace ResourceSpider.GetItems
         /// <summary>
         /// 带detail字符的链接
         /// </summary>
-        private const String detailLinkRegString = "<a .*?href=[\"'](?<url>.*?\\d{4,}.*?)[\"'].*? title=[\"'](?<title>.*?)[\"'].*?>";
+        private const String detailLinkRegString = "<a[^>]*?href=[\"'](?<url>.*?\\d{4,}.*?)[\"'][^>]*? title=[\"'](?<title>[^>]*?)[\"'][^>]*?>";
 
         private static readonly Regex detailReg = new Regex(detailLinkRegString);
 
@@ -32,12 +34,53 @@ namespace ResourceSpider.GetItems
             isListTaskOver = status == ThreadStatus.Stoped;
         }
 
+        public void Do()
+        {
+            Int32 threadCount = 5;
+            Int32 successCount = 0;   //已结束任务的线程数
+
+            for (Int32 i = 0; i < threadCount; i++)
+            {
+                try
+                {
+                    Task.Factory.StartNew(() =>
+                    {
+                        GetSourceItems();
+                        Comm.WriteLog($"详细线程结束", Util.Log.LogType.Fatal);
+                        Interlocked.Add(ref successCount, 1);
+                    });
+                    Comm.WriteLog("详情线程启动成功", Util.Log.LogType.Info);
+                }
+                catch (Exception e)
+                {
+                    Comm.WriteLog($"线程出现异常：{e}", Util.Log.LogType.Error);
+                }
+            }
+            while (true)
+            {
+                if (successCount >= threadCount)
+                {
+                    Comm.WriteLog("获取详细数据任务结束", Util.Log.LogType.Info);
+
+                    //需要等到获取list的任务结束才能算结束
+                    CompleteEvent?.Invoke();
+
+                    break;
+                }
+                else
+                {
+                    Thread.Sleep(1000 * 5);
+                }
+            }
+
+        }
+
         /// <summary>
         /// 循环获取各页中的数据项
         /// </summary>
         /// <param name="urlFormatString"></param>
         /// <param name="host"></param>
-        public void GetSourceItems()
+        private void GetSourceItems()
         {
             while (true)
             {
@@ -59,9 +102,6 @@ namespace ResourceSpider.GetItems
                     }
                 }
             }
-
-            //需要等到获取list的任务结束才能算结束
-            CompleteEvent?.Invoke();
         }
 
 
@@ -71,8 +111,9 @@ namespace ResourceSpider.GetItems
 
             //记录获取列表数据失败的次数，超过3次直接退出
             Int32 failCount = 0;
+            Int32 maxPage = WebConfigData.GetDetailType == "1" ? 999 : 3;
             //页码
-            for (Int32 i = 1; i < 999; i++)
+            for (Int32 i = 1; i < maxPage; i++)
             {
                 //如果连续3页都没数据就直接退出
                 if (failCount >= 3)
@@ -101,7 +142,10 @@ namespace ResourceSpider.GetItems
                         Comm.WriteLog($"url: {url}", Util.Log.LogType.Debug);
                         foreach (var item in details)
                         {
-                            DbCenter.SaveSourceItem(item.url, host, item.title);
+                            if (!DbCenter.IsSourceItemExists(item.url))
+                            {
+                                DbCenter.SaveSourceItem(item.url, host, item.title);
+                            }
                         }
                     }
                     else
@@ -117,6 +161,12 @@ namespace ResourceSpider.GetItems
                 {
                     break;
                 }
+            }
+
+            //记录已抓取过数据的日志
+            if (!DbCenter.IsRequestedListExists(DateTime.Today, urlFormateString))
+            {
+                DbCenter.SaveRequestedList(DateTime.Today, urlFormateString);
             }
         }
 

@@ -107,7 +107,6 @@ namespace ResourceSpider.GetItems
                             continue;
                         }
 
-
                         //如果已存在类似的有效链接，则直接添加，不用再检测
                         (String sucItem, Int32 startIndex, Int32 length, String endChar) = GetSameAsSomeUrls(item, hisSuccesss);
                         if (!String.IsNullOrWhiteSpace(sucItem))
@@ -206,20 +205,33 @@ namespace ResourceSpider.GetItems
 
         }
 
+        /// <summary>
+        /// 检测到分页链接后的操作
+        /// </summary>
+        /// <param name="host"></param>
+        /// <param name="okCount"></param>
+        /// <param name="hisSuccesss"></param>
+        /// <param name="successUrlFormatDic"></param>
+        /// <param name="item"></param>
+        /// <param name="okFormatString"></param>
         private void SuccessHandler(String host, ref Int32 okCount, List<String> hisSuccesss, Dictionary<String, String> successUrlFormatDic, String item, String okFormatString)
         {
-            //成功找到分页链接
             okCount++;
-            hisSuccesss.Add(item);
-            successUrlFormatDic.Add(item, okFormatString);
+            //检测该链接在数据库中是否已经存在
+            if (!DbCenter.IsListFormatExistsWithUrl(okFormatString))
+            {
+                //成功找到分页链接
+                hisSuccesss.Add(item);
+                successUrlFormatDic.Add(item, okFormatString);
 
-            Comm.WriteLog($"检测到分页链接：{okFormatString}", Util.Log.LogType.Info);
+                Comm.WriteLog($"检测到分页链接：{okFormatString}", Util.Log.LogType.Info);
 
-            //写入缓存
-            ItemData.AddPageLink(okFormatString);
+                //写入缓存
+                ItemData.AddPageLink(okFormatString);
 
-            //写入数据库
-            DbCenter.SaveListFormat(host, okFormatString);
+                //写入数据库
+                DbCenter.SaveListFormat(host, okFormatString);
+            }
         }
 
         /// <summary>

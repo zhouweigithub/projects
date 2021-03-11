@@ -42,6 +42,14 @@ namespace Hswz.Common
         /// 检索的关键字信息用空格分隔，每组用逗号分隔
         /// </summary>
         public static readonly String SearchKeyWords;
+        /// <summary>
+        /// 分页链接从哪里获取（1从网站上抓取，2从数据库里取已存在的）
+        /// </summary>
+        public static readonly String UrlFormatFrom;
+        /// <summary>
+        /// 获取每页中数据详情的方式（1获取全部，2只获取前几页）
+        /// </summary>
+        public static readonly String GetDetailType;
 
 
         static WebConfigData()
@@ -55,6 +63,8 @@ namespace Hswz.Common
                 ExtraPageMenuIds = Config.GetConfigToString("ExtraPageMenuIds");
                 IgnoreSmsCodeIp = Config.GetConfigToString("IgnoreSmsCodeIp");
                 SearchKeyWords = Config.GetConfigToString("SearchKeyWords");
+                UrlFormatFrom = Config.GetConfigToString("UrlFormatFrom");
+                GetDetailType = Config.GetConfigToString("GetDetailType");
             }
             catch (Exception e)
             {

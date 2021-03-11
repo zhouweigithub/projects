@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
+using Hswz.Common;
 
 namespace ResourceSpider.GetItems
 {
@@ -25,22 +26,15 @@ namespace ResourceSpider.GetItems
             source = new SingleSource();
             source.CompleteEvent += Source_CompleteEvent;
 
-            var urlEnteys = DbCenter.GetDistinctDomainHostUrls();
-
-            if (urlEnteys.Count == 0)
-            {
-                return;
-            }
-
 
             Comm.WriteLog("strt list task ", Util.Log.LogType.Info);
 
-            Task.Factory.StartNew(() => { LoopGetPageList(urlEnteys); });
+            Task.Factory.StartNew(() => { Init(); });
 
 
-            //Comm.WriteLog("strt item task ", Util.Log.LogType.Info);
+            Comm.WriteLog("strt item task ", Util.Log.LogType.Info);
 
-            //Task.Factory.StartNew(() => { source.GetSourceItems(); });
+            Task.Factory.StartNew(() => { source.Do(); });
 
 
 
@@ -57,16 +51,54 @@ namespace ResourceSpider.GetItems
             isItemThreadOver = true;
         }
 
-        public void LoopGetPageList(List<String> urlEntrys)
+        private void Init()
         {
-            foreach (String item in urlEntrys)
-            {
-                plist.SearchPageLink(item, 1);
+
+            if (WebConfigData.UrlFormatFrom == "1")
+            {   //从网站上抓取分页链接
+                var urlEnteys = DbCenter.GetDistinctDomainHostUrls();
+
+                if (urlEnteys.Count == 0)
+                {
+                    return;
+                }
+
+                Comm.WriteLog("开始从各个网站上抓取分页链接", Util.Log.LogType.Info);
+
+                LoopGetPageList(urlEnteys);
+            }
+            else
+            {   //读取数据库中已有的分页链接
+                InitFormatUrlFromDb();
+
+                Comm.WriteLog("已经从数据库中读取所有分页链接", Util.Log.LogType.Info);
             }
 
             Comm.WriteLog("获取列表任务结束", Util.Log.LogType.Info);
 
             isListThreadOver = true;
+
+            source.SetListTaskStatus(ThreadStatus.Stoped);
+        }
+
+        private void LoopGetPageList(List<String> urlEntrys)
+        {
+            foreach (String item in urlEntrys)
+            {
+                plist.SearchPageLink(item, 1);
+            }
+        }
+
+        /// <summary>
+        /// 从数据库加载分页链接
+        /// </summary>
+        private void InitFormatUrlFromDb()
+        {
+            var lst = DbCenter.GetFormatList();
+            foreach (var item in lst)
+            {
+                ItemData.AddPageLink(item.url_format);
+            }
         }
     }
 }
