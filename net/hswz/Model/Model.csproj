@@ -67,6 +67,7 @@
     <Compile Include="Role\RoleModel.cs" />
     <Compile Include="TableSetting.cs" />
     <Compile Include="TArtical.cs" />
+    <Compile Include="Urls\PageResp.cs" />
     <Compile Include="Urls\p_list_forbid.cs" />
     <Compile Include="Urls\p_requested_list.cs" />
     <Compile Include="Urls\resource_items.cs" />
