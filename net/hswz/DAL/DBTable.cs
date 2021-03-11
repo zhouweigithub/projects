@@ -58,6 +58,10 @@ namespace Hswz.DAL
         /// 当天已经抓取过数据的列表页面
         /// </summary>
         public static readonly String p_requested_list = "p_requested_list";
+        /// <summary>
+        /// 资源访问记录
+        /// </summary>
+        public static readonly String resource_click = "resource_click";
 
 
         #region old

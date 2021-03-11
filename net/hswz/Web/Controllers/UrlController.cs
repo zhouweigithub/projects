@@ -9,6 +9,7 @@ namespace Web.Controllers
 {
     public class UrlController : Controller
     {
+        [HttpPost]
         public String List()
         {
             var datas = UrlDAL.GetList();
@@ -21,6 +22,7 @@ namespace Web.Controllers
             return Util.Json.JsonUtil.Serialize(datas);
         }
 
+        [HttpPost]
         public String Zan(Int32 urlId)
         {
             String ip = GetRequestIP();
@@ -33,6 +35,7 @@ namespace Web.Controllers
             });
         }
 
+        [HttpPost]
         public String Cai(Int32 urlId)
         {
             String ip = GetRequestIP();
@@ -45,6 +48,7 @@ namespace Web.Controllers
             });
         }
 
+        [HttpPost]
         public String Click(Int32 urlId)
         {
             String ip = GetRequestIP();
@@ -64,7 +68,7 @@ namespace Web.Controllers
             });
         }
 
-
+        [HttpPost]
         public String Add(String url)
         {
             url = url.ToLower();
@@ -96,6 +100,7 @@ namespace Web.Controllers
         /// </summary>
         /// <param name="url"></param>
         /// <returns></returns>
+        [HttpPost]
         public String Test(Int32 urlid)
         {
             var urlInfo = DBData.GetInstance(DBTable.url).GetEntityByKey<urls>(urlid);
@@ -107,6 +112,8 @@ namespace Web.Controllers
                 data = new url_data() { connect_time = time }.percent,
             });
         }
+
+
 
         private Int32 TestConnect(Int32 urlid, String url)
         {

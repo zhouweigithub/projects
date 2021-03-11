@@ -1222,7 +1222,6 @@
     <Content Include="Images\Delete.jpg" />
     <Content Include="Images\Edit.png" />
     <Content Include="Scripts\1.11.3-jquery.min.js" />
-    <Content Include="Scripts\Artical\Index.js" />
     <Content Include="Scripts\bootstrap-wysiwyg.js" />
     <Content Include="Scripts\common.js" />
     <Content Include="Scripts\jquery-1.8.2.js" />
@@ -1241,7 +1240,6 @@
     <Content Include="Scripts\knockout-2.2.0.js" />
     <Content Include="Scripts\loginuser\EditGameAuthority.js" />
     <Content Include="Scripts\modernizr-2.6.2.js" />
-    <Content Include="Scripts\Shared\_Layout_zui.js" />
     <Content Include="Scripts\Shared\_Layout.js" />
     <Content Include="Scripts\summernote.js" />
     <Content Include="Web.config">
@@ -1277,7 +1275,9 @@
     <Content Include="Views\Artical\Index.cshtml" />
     <Content Include="Views\Shared\_Layout _zui.cshtml" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="Scripts\Artical\" />
+  </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />
   </ItemGroup>

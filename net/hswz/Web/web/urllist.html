@@ -127,7 +127,7 @@
                 timeoutHandler: null,
             },
             created: function () {
-                axios.get("/Url/List")
+                axios.post("/Url/List")
                     .then(data => {
                         this.datas = data.data;
                     })
