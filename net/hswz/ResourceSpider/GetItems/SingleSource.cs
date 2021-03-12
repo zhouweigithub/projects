@@ -107,65 +107,75 @@ namespace ResourceSpider.GetItems
 
         private void GetItemsLoopPage(String urlFormateString)
         {
-            String host = Comm.GetUrlHost(urlFormateString);
-
-            //记录获取列表数据失败的次数，超过3次直接退出
-            Int32 failCount = 0;
-            Int32 maxPage = WebConfigData.GetDetailType == "1" ? 999 : 3;
-            //页码
-            for (Int32 i = 1; i < maxPage; i++)
-            {
-                //如果连续3页都没数据就直接退出
-                if (failCount >= 3)
-                {
-                    break;
-                }
-
-                Console.WriteLine($"读取第 {i} 页");
-                String url = String.Format(urlFormateString, i);
-                String html = Comm.GetHtml(url, 5);
-
-
-                if (String.IsNullOrWhiteSpace(html))
-                {
-                    failCount++;
-                }
-                else
-                {
-                    //如果取取到的数据项为0也退出
-                    var details = GetDetailInfos(html, host);
-
-                    if (details.Count > 0)
-                    {
-                        failCount = 0;
-                        Comm.WriteLog($"检测到 {details.Count} 条数据", Util.Log.LogType.Debug);
-                        Comm.WriteLog($"url: {url}", Util.Log.LogType.Debug);
-                        foreach (var item in details)
-                        {
-                            if (!DbCenter.IsSourceItemExists(item.url))
-                            {
-                                DbCenter.SaveSourceItem(item.url, host, item.title);
-                            }
-                        }
-                    }
-                    else
-                    {
-                        failCount++;
-                    }
-                }
-
-                //如果当前页面中找不到下一页的链接，那么就退出
-                String nextPageUrl = String.Format(urlFormateString, i + 1);
-                String relaiveNextPageUrl = nextPageUrl.Replace(host, String.Empty);
-                if (!html.Contains(nextPageUrl) && !html.Contains(relaiveNextPageUrl))
-                {
-                    break;
-                }
-            }
-
             //记录已抓取过数据的日志
             if (!DbCenter.IsRequestedListExists(DateTime.Today, urlFormateString))
             {
+                String host = Comm.GetUrlHost(urlFormateString);
+
+                if (String.IsNullOrEmpty(host))
+                {
+                    return;
+                }
+
+                if (DbCenter.IsForbiddenDomain(host))
+                {
+                    return;
+                }
+
+                //记录获取列表数据失败的次数，超过3次直接退出
+                Int32 failCount = 0;
+                Int32 maxPage = WebConfigData.GetDetailType == "1" ? 999 : 3;
+                //页码
+                for (Int32 i = 1; i < maxPage; i++)
+                {
+                    //如果连续2页都没数据就直接退出
+                    if (failCount >= 2)
+                    {
+                        break;
+                    }
+
+                    Console.WriteLine($"读取第 {i} 页");
+                    String url = String.Format(urlFormateString, i);
+                    String html = Comm.GetHtml(url, 5);
+
+
+                    if (String.IsNullOrWhiteSpace(html))
+                    {
+                        failCount++;
+                    }
+                    else
+                    {
+                        //如果取取到的数据项为0也退出
+                        var details = GetDetailInfos(html, host);
+
+                        if (details.Count > 0)
+                        {
+                            failCount = 0;
+                            Comm.WriteLog($"检测到 {details.Count} 条数据", Util.Log.LogType.Debug);
+                            Comm.WriteLog($"url: {url}", Util.Log.LogType.Debug);
+                            foreach (var item in details)
+                            {
+                                if (!DbCenter.IsSourceItemExists(item.url))
+                                {
+                                    DbCenter.SaveSourceItem(item.url, host, item.title);
+                                }
+                            }
+                        }
+                        else
+                        {
+                            failCount++;
+                        }
+                    }
+
+                    //如果当前页面中找不到下一页的链接，那么就退出
+                    String nextPageUrl = String.Format(urlFormateString, i + 1);
+                    String relaiveNextPageUrl = nextPageUrl.Replace(host, String.Empty);
+                    if (!html.Contains(nextPageUrl) && !html.Contains(relaiveNextPageUrl))
+                    {
+                        break;
+                    }
+                }
+
                 DbCenter.SaveRequestedList(DateTime.Today, urlFormateString);
             }
         }
