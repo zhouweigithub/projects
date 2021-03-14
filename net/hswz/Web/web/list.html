@@ -127,6 +127,7 @@
                     axios.post("/Search/click", { id: item.Id });
                 },
                 search: function () {
+                    this.page = 1;
                     axios.post("/Search/List", { key: this.key, page: this.page, pagesize: this.pagesize })
                         .then(({ data }) => {
                             for (var i = 0; i < data.datas.length; i++) {
