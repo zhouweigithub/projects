@@ -3,10 +3,11 @@
 namespace CreateDBmodels.Models
 {
     /// <summary>
-    /// 数据表各字段信息
+    /// 数据表主键信息
     /// </summary>
-    public class ColumeModel
+    public class PrimaryKeyModel
     {
+
         /// <summary>
         /// 表名
         /// </summary>
@@ -17,14 +18,5 @@ namespace CreateDBmodels.Models
         /// </summary>
         public String COLUMN_NAME { get; set; }
 
-        /// <summary>
-        /// 数据类型
-        /// </summary>
-        public String DATA_TYPE { get; set; }
-
-        /// <summary>
-        /// 列备注
-        /// </summary>
-        public String COLUMN_COMMENT { get; set; }
     }
 }

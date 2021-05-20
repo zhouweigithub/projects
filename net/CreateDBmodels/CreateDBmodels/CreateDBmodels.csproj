@@ -67,6 +67,7 @@
     <Compile Include="DAL\Func\DBOperator.cs" />
     <Compile Include="DAL\Func\MySql.cs" />
     <Compile Include="DAL\TableInfoDAL.cs" />
+    <Compile Include="Models\PrimaryKeyModel.cs" />
     <Compile Include="Models\TableModel.cs" />
     <Compile Include="Models\ColumeModel.cs" />
     <Compile Include="Program.cs" />
@@ -76,6 +77,12 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Templete\dal.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Templete\model_field.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="Templete\model.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>

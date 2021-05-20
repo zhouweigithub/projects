@@ -1,4 +1,5 @@
 ﻿using System;
+using Util.Log;
 
 namespace CreateDBmodels
 {
@@ -6,6 +7,7 @@ namespace CreateDBmodels
     {
         private static void Main(String[] args)
         {
+            LogUtil.SetLogPath(AppDomain.CurrentDomain.BaseDirectory + "Log");
             String dbName = Common.Config.GetConfigToString("DbName");
             String nameSpace = Common.Config.GetConfigToString("NameSpace");
             Console.WriteLine();

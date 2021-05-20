@@ -1,0 +1,37 @@
+using System;
+using System.Collections.Generic;
+using System.Data;
+
+namespace DAL.Es
+{
+
+    /// <summary>
+    /// #table_comment#
+    /// </summary>
+    public class #dal_name# : SdkBaseQuery
+    {
+        /// <summary>
+        /// 唯一实例
+        /// </summary>
+        public static readonly #dal_name# Instance = new #dal_name#();
+
+        /// <summary>
+        /// 构造函数
+        /// </summary>
+        private #dal_name#()
+        {
+            this.IsAddIntoCache = false;
+
+            this.TableName = "#table_name#";
+
+            this.ItemName = "#table_comment#";
+
+            this.OrderbyFields = "#primary_key# DESC";
+
+            this.KeyField = "#primary_key#";
+        }
+
+    }
+
+
+}

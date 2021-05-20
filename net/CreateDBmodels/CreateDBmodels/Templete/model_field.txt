@@ -1,0 +1,5 @@
+
+        /// <summary>
+        /// #field_comment#
+        /// </summary>
+        public #field_type# #field_name# { get; set; }

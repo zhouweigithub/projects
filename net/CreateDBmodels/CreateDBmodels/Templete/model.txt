@@ -3,16 +3,15 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace Questionnaire.Model
+namespace Model.Es
 {
-    using global::Questionnaire.Model.Common;
 
     /// <summary>
-    /// #tablecomment#
+    /// #table_comment#
     /// </summary>
-    public class #tablename#
+    public class #table_name#
     {
-#columeitems#
+#colume_items#
 
     }
 }
