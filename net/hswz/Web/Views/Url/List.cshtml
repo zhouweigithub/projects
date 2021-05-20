@@ -1,0 +1,170 @@
+﻿@{
+    Layout = null;
+}
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>网址导航</title>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <script src="https://cdn.staticfile.org/vue/2.2.2/vue.min.js"></script>
+    <style>
+        div {
+            display: inline-block;
+        }
+
+        .container {
+            width: 500px;
+            padding: 10px;
+            display: block;
+            margin: auto;
+        }
+
+            .container > div {
+                width: 100%;
+                text-align: left;
+            }
+
+        .zan, .cai {
+            position: relative;
+            width: 30px;
+            font-size: 0.8em;
+            cursor: pointer;
+        }
+
+        .items > div {
+            display: block;
+        }
+
+        .progress {
+            width: 100px;
+            border: solid green thin;
+        }
+
+            .progress > div {
+                display: block;
+                background-color: green;
+                height: 10px;
+            }
+
+        .share {
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container" id="container">
+        <div></div>
+        <div class="items">
+                    <div v-for="(item,index) in datas" :key="index">
+                        <span>{{item.url}}</span>
+                        <div class="progress" title="连接时长"><div style="width:{{item.percent}}"></div></div>
+                        <span class="zan" color="#f44336" txt="赞" @@click="did('zan',{{item.id}})">赞({{item.zan}})</span>
+                        <span class="cai" color="#3f51b5" txt="踩" @@click="did('cai',{{item.id}})">踩({{item.cai}})</span>
+                    </div>
+        </div>
+        <div class="share">
+            <input type="text" :value="shareUrl" width="80" />
+            <input type="submit" id="share" maxlength="200" value="分享" @@click="" />
+        </div>
+    </div>
+    <script>
+        $(function () {
+            $('.zan').click(function () {
+                addFavor(this);
+            });
+            $('.cai').click(function () {
+                addFavor(this);
+            });
+            $("#share").click(function () {
+                if (isValid()) {
+                    share();
+                }
+            });
+        });
+
+        function addFavor(self) {
+            var fontSize = 15;
+            var top = 0;
+            var right = 0;
+            var opacity = 1;
+            var text = $(self).attr("txt");
+            var color = $(self).attr("color");
+
+            var tag = document.createElement('span');
+            $(tag).text(text);
+            $(tag).css('color', color);
+            $(tag).css('position', 'absolute');
+            $(tag).css('fontSize', fontSize + "px");
+            $(tag).css('right', right + "px");
+            $(tag).css('top', top + 'px');
+            $(tag).css('opacity', opacity);
+            $(self).append(tag);
+
+            var obj = setInterval(function () {
+                fontSize = fontSize + 5;
+                top = top - 10;
+                right = right - 10;
+                opacity = opacity - 0.1;
+
+                $(tag).css('fontSize', fontSize + "px");
+                $(tag).css('right', right + "px");
+                $(tag).css('top', top + 'px');
+                $(tag).css('opacity', opacity);
+                if (opacity < 0) {
+                    clearInterval(obj);
+                    $(tag).remove();
+                }
+            }, 40);
+        }
+
+        function did(type,id) {
+            $.ajax({
+                type: 'post',
+                url: type,
+                data: { urlId: id },
+                success: function (res) {
+                    document.location.reload();
+                },
+                error: function (a, b, c) {
+                    console.log(b);
+                },
+            });
+        }
+
+         new Vue({
+                el: "#container",
+                data: {
+                    datas: [],
+                    shareUrl:"",
+                },
+                created: function () {
+                    axios.get("/List/List")
+                        .then(data => {
+                            this.setStatus(data.data, true, false);
+                            this.datas = data.data;
+                        })
+                        .catch(err => alert(err))
+                        .finally();
+                },
+                methods: {
+                    share:function(){
+                        if(this.shareUrl==''){
+                            alert("请输入分享的内容")
+                            return false;
+                        }
+                        axios.post("add",{ url: this.shareUrl.trim() }).then(res=> {
+                            alert(res.msg);
+                            document.location.reload();
+                        })
+                        .catch(err=>function (err) {
+                            alert("未知错误，请重试");
+                        });
+                    }
+                }
+            });
+    </script>
+</body>
+</html>
+

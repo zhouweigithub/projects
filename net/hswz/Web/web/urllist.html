@@ -1,0 +1,190 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>酷酷网址收藏夹</title>
+    <meta name="description" content="酷酷网址收藏夹 好的网站 优秀的网站" />
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <script src="https://cdn.staticfile.org/vue/2.2.2/vue.min.js"></script>
+    <style>
+
+        body {
+            background-color: khaki;
+            font-size: 0.8em;
+        }
+
+        .container {
+            width: 500px;
+            padding: 10px;
+            display: block;
+            margin: auto;
+            background-color: lightpink;
+            margin-bottom: 25px;
+        }
+
+            .container > div {
+                width: 100%;
+                text-align: left;
+            }
+
+        .zan, .cai {
+            position: relative;
+            width: 30px;
+            cursor: pointer;
+        }
+
+        .progress {
+            width: 100px;
+            border: solid green thin;
+            height: 5px;
+        }
+
+            .progress > div {
+                display: block;
+                background-color: green;
+                height: 5px;
+            }
+
+        .share {
+            position: fixed;
+            bottom: 1px;
+        }
+
+
+        .dtable {
+            text-align: center;
+            width: 100%;
+            table-layout: fixed;
+        }
+
+            .dtable th, td {
+                padding: 2px;
+                word-break: break-all
+            }
+
+        input {
+            background-color: khaki;
+        }
+
+        .dialog {
+            text-align: center;
+            width: 100%;
+            position: fixed;
+            top: 100px;
+        }
+
+            .dialog .content {
+                display: inline-block;
+                border: solid thin darksalmon;
+                min-width: 100px;
+                padding: 10px;
+                background-color: gold;
+            }
+    </style>
+</head>
+<body>
+    <div id="app">
+        <div class="container" id="container">
+            <div></div>
+            <div class="items">
+                <table class="dtable">
+                    <caption></caption>
+                    <tr>
+                        <th align="left" width="50%">网址</th>
+                        <th align="left" width="25%">访问速度</th>
+                        <th align="left" width="25%"></th>
+                    </tr>
+                    <tr v-for="(item,index) in datas" :key="index">
+                        <td align="left"><a :href="item.full_url" target="_blank" @click="click(item)">{{item.url}}</a></td>
+                        <td align="left"><div class="progress" title="连接时长"><div :style="'width:'+item.percent"></div></div></td>
+                        <td align="left">
+                            <span class="zan" color="#f44336" txt="赞" @click="did('zan',item)">赞({{item.zan}})</span>
+                            <span class="cai" color="#3f51b5" txt="踩" @click="did('cai',item)">踩({{item.cai}})</span>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+            <div class="share">
+                <input type="text" v-model="shareUrl" width="150" style="width:250px;" />
+                <input type="submit" id="share" maxlength="200" value="分享网址" @click="share" />
+            </div>
+        </div>
+        <div class="dialog" v-show="msgboxShow">
+            <div class="content">
+                <span>{{msg}}</span>
+            </div>
+        </div>
+    </div>
+    <script>
+        new Vue({
+            el: "#app",
+            data: {
+                datas: [],
+                shareUrl: "",
+                msgboxShow: false,
+                msg: "",
+                timeoutHandler: null,
+            },
+            created: function () {
+                axios.post("/Url/List")
+                    .then(data => {
+                        this.datas = data.data;
+                    })
+                    .catch(err => alert(err))
+                    .finally();
+            },
+            methods: {
+                share: function () {
+                    var txtUrl = this.shareUrl.trim();
+                    if (txtUrl == '') {
+                        this.showMessage("请输入分享的内容");
+                        return false;
+                    }
+                    axios.post("/url/add", { url: txtUrl })
+                        .then(({ data }) => {
+                            if (data.data == null)
+                                return;
+                            this.datas.push(data.data);
+                            var urlid = data.data.id;
+                            this.shareUrl = "";
+                            this.showMessage("分享成功，谢谢你的参与");
+                            axios.post("/url/test", { urlid: urlid })
+                                .then(({ data }) => {
+                                    this.datas.find(a => a.id == urlid).percent = data.data;
+                                })
+                                .catch(err => function (err) {
+                                    console.log(err);
+                                });
+                        })
+                        .catch(err => function (err) {
+                            this.showMessage("未知错误，请重试");
+                        });
+                },
+                did: function (type, item) {
+                    axios.post("/url/" + type, { urlId: item.id })
+                        .then(({ data }) => {
+                            if (data.data)
+                                item[type] = item[type] + 1;
+                        })
+                        .catch(err => alert(err))
+                        .finally();
+                },
+                showMessage(msg) {
+                    var that = this;
+                    this.msgboxShow = true;
+                    this.msg = msg;
+                    this.timeoutHandler && clearTimeout(this.timeoutHandler);
+                    this.timeoutHandler = setTimeout(function () {
+                        that.msgboxShow = false;
+                        that.msg = "";
+                    }, 2000);
+                },
+                click: function (item) {
+                    axios.post("/url/click", { urlId: item.id });
+                },
+            }
+        });
+    </script>
+</body>
+</html>

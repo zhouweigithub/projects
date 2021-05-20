@@ -1,0 +1,176 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>迷妹搜索</title>
+    <meta name="description" content="迷妹搜索" />
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <script src="https://cdn.staticfile.org/vue/2.2.2/vue.min.js"></script>
+    <style>
+
+        body {
+            background-color: khaki;
+            font-size: 0.8em;
+        }
+
+        .container {
+            width: 500px;
+            padding: 10px;
+            display: block;
+            margin: auto;
+            background-color: lightpink;
+            margin-bottom: 25px;
+        }
+
+            .container > div {
+                width: 100%;
+                text-align: left;
+            }
+
+        .data-item {
+            margin: 5px auto;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+        }
+
+        .loading {
+            display: block;
+            position: absolute;
+            margin: auto;
+            text-align: center;
+        }
+
+        .cover {
+            display: block;
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: gray;
+            opacity: 0.6;
+        }
+
+        .dialog {
+            text-align: center;
+            width: 100%;
+            position: fixed;
+            top: 100px;
+        }
+
+            .dialog .content {
+                display: inline-block;
+                border: solid thin darksalmon;
+                min-width: 100px;
+                padding: 10px;
+                background-color: gold;
+            }
+    </style>
+</head>
+<body>
+    <div id="app">
+        <div class="container" id="container">
+            <div>
+                <input v-model="key" maxlength="20" width="30" />
+                <input type="submit" @click="search();return false;" value="搜索" />
+            </div>
+            <div class="items">
+                <div v-for="(item,index) in datas" class="data-item">
+                    <a :href="item.Url" target="_blank" v-html="item.Title" @click="click(item)"></a>
+                </div>
+            </div>
+            <div class="page">
+                <a @click="pre()" v-show="show_pre" href="#">上一页</a>
+                <a @click="next()" v-show="show_next" href="#">下一页</a>
+            </div>
+            <!--<div class="cover"></div>
+            <div class="loading"><img src="../Images/loading.gif" /></div>-->
+        </div>
+        <div class="dialog" v-show="msgboxShow">
+            <div class="content">
+                <span>{{msg}}</span>
+            </div>
+        </div>
+    </div>
+    <script>
+        new Vue({
+            el: "#app",
+            data: {
+                datas: [],
+                key: "",
+                page: 1,
+                pagesize: 20,
+                total_page: 0,
+                show_pre: false,
+                show_next: false,
+                msgboxShow: false,
+                msg: "",
+                timeoutHandler: null,
+            },
+            created: function () {
+            },
+            methods: {
+                showMessage(msg) {
+                    var that = this;
+                    this.msgboxShow = true;
+                    this.msg = msg;
+                    this.timeoutHandler && clearTimeout(this.timeoutHandler);
+                    this.timeoutHandler = setTimeout(function () {
+                        that.msgboxShow = false;
+                        that.msg = "";
+                    }, 2000);
+                },
+                click: function (item) {
+                    axios.post("/Search/click", { id: item.Id });
+                },
+                search: function () {
+                    this.page = 1;
+                    axios.post("/Search/List", { key: this.key, page: this.page, pagesize: this.pagesize })
+                        .then(({ data }) => {
+                            for (var i = 0; i < data.datas.length; i++) {
+                                var newChars = "<span style='color:black'>{key}</span>".replace("{key}", this.key);
+                                data.datas[i].Title = data.datas[i].Title.replace(this.key, newChars);
+                            }
+                            this.datas = data.datas;
+                            this.total_page = Math.ceil(data.count / this.pagesize) || 1;
+                            if (this.total_page > 1) {
+                                this.show_next = true;
+                            }
+                            this.show_pre = this.page > 1;
+                            this.show_next = this.page < this.total_page
+                        })
+                        .catch(err => alert(err))
+                        .finally();
+                },
+                pre() {
+                    if (this.page > 1) {
+                        this.page--;
+                        this.search();
+                        if (this.page == 1) {
+                            this.show_pre = false
+                        }
+                        else {
+                            this.show_pre = true;
+                        }
+                    }
+                },
+                next() {
+                    if (this.total_page > 0 && this.page < this.total_page) {
+                        this.page++;
+                        this.search();
+                        if (this.page == this.total_page) {
+                            this.show_next = false
+                        }
+                        else {
+                            this.show_next = true;
+                        }
+                    }
+                }
+            }
+        });
+    </script>
+</body>
+</html>

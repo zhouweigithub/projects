@@ -1,0 +1,12 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TableList xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+	<TableSetting TableName="url" KeyField="id" OrderbyFields="" />
+	<TableSetting TableName="url_attention" KeyField="url_id" OrderbyFields="" />
+	<TableSetting TableName="url_attention_ip" KeyField="" OrderbyFields="" />
+	<TableSetting TableName="url_connect_time" KeyField="" OrderbyFields="" />
+	<TableSetting TableName="domain" KeyField="domain" OrderbyFields="" />
+	<TableSetting TableName="resource" KeyField="id" OrderbyFields="id desc" />
+	<TableSetting TableName="url_click" KeyField="id" OrderbyFields="id desc" />
+	<TableSetting TableName="resource_items" KeyField="id" OrderbyFields="id desc" />
+	<TableSetting TableName="resource_click" KeyField="id" OrderbyFields="id desc" />
+</TableList>
